@@ -290,8 +290,8 @@ public class VetPageEdit extends javax.swing.JFrame {
         logout.setBackground(new java.awt.Color(153, 204, 255));
         logout.setOpaque(false);
         logout.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                logoutMouseClicked(evt);
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                logoutMouseReleased(evt);
             }
         });
 
@@ -805,10 +805,6 @@ public class VetPageEdit extends javax.swing.JFrame {
     private void settingsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsMouseClicked
         System.out.println("nigga");
     }//GEN-LAST:event_settingsMouseClicked
-
-    private void logoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseClicked
-        System.out.println("nigga");
-    }//GEN-LAST:event_logoutMouseClicked
     private void clearTextFields() {
         patientTxtField.setText("");
         ageTxt.setText("");
@@ -1055,74 +1051,84 @@ public class VetPageEdit extends javax.swing.JFrame {
         updateOwner();
     }//GEN-LAST:event_updateOwnerBtnActionPerformed
 
-private void updateVaccine() {
-    // Get the text from the text fields
-    String vaccineName = vaccineNameTxtField.getText();
-    java.util.Date vaccinationDateValue = vaccinationDate.getDate();
-    java.util.Date dueDateValue = dueDate.getDate();
-    int patientId = Integer.parseInt(patientIdTxtField.getText());
+    private void updateVaccine() {
+        // Get the text from the text fields
+        String vaccineName = vaccineNameTxtField.getText();
+        java.util.Date vaccinationDateValue = vaccinationDate.getDate();
+        java.util.Date dueDateValue = dueDate.getDate();
+        int patientId = Integer.parseInt(patientIdTxtField.getText());
 
-    // Convert the dates to SQL Date format
-    java.sql.Date sqlVaccinationDate = new java.sql.Date(vaccinationDateValue.getTime());
-    java.sql.Date sqlDueDate = new java.sql.Date(dueDateValue.getTime());
+        // Convert the dates to SQL Date format
+        java.sql.Date sqlVaccinationDate = new java.sql.Date(vaccinationDateValue.getTime());
+        java.sql.Date sqlDueDate = new java.sql.Date(dueDateValue.getTime());
 
-    String url = "jdbc:mysql://127.0.0.1:3306/database";
-    String dbUsername = "root";
-    String dbPassword = "admin";
+        String url = "jdbc:mysql://127.0.0.1:3306/database";
+        String dbUsername = "root";
+        String dbPassword = "admin";
 
-    String administeredBy = "";
+        String administeredBy = "";
 
-    try {
-        // Establish the database connection
-        Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
+        try {
+            // Establish the database connection
+            Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
 
-        // Query to get the administered_by information
-        String userQuery = "SELECT first_name, last_name FROM user_information WHERE userid = ?";
-        PreparedStatement userStatement = connection.prepareStatement(userQuery);
-        userStatement.setInt(1, realUserId);
+            // Query to get the administered_by information
+            String userQuery = "SELECT first_name, last_name FROM user_information WHERE userid = ?";
+            PreparedStatement userStatement = connection.prepareStatement(userQuery);
+            userStatement.setInt(1, realUserId);
 
-        ResultSet userResultSet = userStatement.executeQuery();
+            ResultSet userResultSet = userStatement.executeQuery();
 
-        if (userResultSet.next()) {
-            String firstName = userResultSet.getString("first_name");
-            String lastName = userResultSet.getString("last_name");
-            administeredBy = firstName + " " + lastName;
-        } else {
-            JOptionPane.showMessageDialog(null, "User information not found.");
-            return;
+            if (userResultSet.next()) {
+                String firstName = userResultSet.getString("first_name");
+                String lastName = userResultSet.getString("last_name");
+                administeredBy = firstName + " " + lastName;
+            } else {
+                JOptionPane.showMessageDialog(null, "User information not found.");
+                return;
+            }
+
+            // Query to insert the vaccine information
+            String vaccineQuery = "INSERT INTO vaccine_history (patient_id, vaccine_name, vaccination_date, next_due_date, administered_by) VALUES (?, ?, ?, ?, ?)";
+            PreparedStatement vaccineStatement = connection.prepareStatement(vaccineQuery);
+            vaccineStatement.setInt(1, patientId);
+            vaccineStatement.setString(2, vaccineName);
+            vaccineStatement.setDate(3, sqlVaccinationDate);
+            vaccineStatement.setDate(4, sqlDueDate);
+            vaccineStatement.setString(5, administeredBy);
+
+            int rowsAffected = vaccineStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                JOptionPane.showMessageDialog(null, "Vaccine information updated successfully.");
+            } else {
+                JOptionPane.showMessageDialog(null, "Failed to update vaccine information.");
+            }
+
+            // Close the statements and the connection
+            userStatement.close();
+            vaccineStatement.close();
+            connection.close();
+        } catch (SQLException e) {
+            // Handle any SQL exceptions
+            e.printStackTrace();
         }
-
-        // Query to insert the vaccine information
-        String vaccineQuery = "INSERT INTO vaccine_history (patient_id, vaccine_name, vaccination_date, next_due_date, administered_by) VALUES (?, ?, ?, ?, ?)";
-        PreparedStatement vaccineStatement = connection.prepareStatement(vaccineQuery);
-        vaccineStatement.setInt(1, patientId);
-        vaccineStatement.setString(2, vaccineName);
-        vaccineStatement.setDate(3, sqlVaccinationDate);
-        vaccineStatement.setDate(4, sqlDueDate);
-        vaccineStatement.setString(5, administeredBy);
-
-        int rowsAffected = vaccineStatement.executeUpdate();
-
-        if (rowsAffected > 0) {
-            JOptionPane.showMessageDialog(null, "Vaccine information updated successfully.");
-        } else {
-            JOptionPane.showMessageDialog(null, "Failed to update vaccine information.");
-        }
-
-        // Close the statements and the connection
-        userStatement.close();
-        vaccineStatement.close();
-        connection.close();
-    } catch (SQLException e) {
-        // Handle any SQL exceptions
-        e.printStackTrace();
     }
-}
 
-    
+
     private void updateVaccineBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateVaccineBtnActionPerformed
         updateVaccine();
     }//GEN-LAST:event_updateVaccineBtnActionPerformed
+
+    private void logoutMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseReleased
+        int response = JOptionPane.showConfirmDialog(this, "Do you want to log out?", "Confirm Logout", JOptionPane.YES_NO_OPTION);
+        if (response == JOptionPane.YES_OPTION) {
+            login.login();
+            setVisible(false);
+        } else {
+            // User clicked 'No' or closed the dialog, do nothing
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_logoutMouseReleased
 
     /**
      * @param args the command line arguments

@@ -12,6 +12,7 @@ import java.awt.LayoutManager;
 import java.awt.RenderingHints;
 import javax.swing.JPanel;
 import java.sql.*;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -287,8 +288,8 @@ public class AdminPageSearch extends javax.swing.JFrame {
         logout.setBackground(new java.awt.Color(153, 204, 255));
         logout.setOpaque(false);
         logout.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                logoutMouseClicked(evt);
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                logoutMouseReleased(evt);
             }
         });
 
@@ -564,10 +565,6 @@ public class AdminPageSearch extends javax.swing.JFrame {
         System.out.println("nigga");
     }//GEN-LAST:event_settingsMouseClicked
 
-    private void logoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseClicked
-        System.out.println("nigga");
-    }//GEN-LAST:event_logoutMouseClicked
-
     private void getByUserId() {
         String userIdText = useridTxtField.getText();
         int userId;
@@ -667,6 +664,16 @@ public class AdminPageSearch extends javax.swing.JFrame {
     private void searchMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchMouseReleased
         System.out.println("HAHA");
     }//GEN-LAST:event_searchMouseReleased
+
+    private void logoutMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseReleased
+        int response = JOptionPane.showConfirmDialog(this, "Do you want to log out?", "Confirm Logout", JOptionPane.YES_NO_OPTION);
+        if (response == JOptionPane.YES_OPTION) {
+            login.login();
+            setVisible(false);
+        } else {
+            // User clicked 'No' or closed the dialog, do nothing
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_logoutMouseReleased
     private void clearTextFields() {
         // Clear all text fields
         firstNameTxtField.setText("");

@@ -310,11 +310,6 @@ public class AdminPageAdd extends javax.swing.JFrame {
         jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel9.setText("LOGOUT");
-        jLabel9.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                jLabel9MouseReleased(evt);
-            }
-        });
 
         javax.swing.GroupLayout logoutLayout = new javax.swing.GroupLayout(logout);
         logout.setLayout(logoutLayout);
@@ -371,7 +366,7 @@ public class AdminPageAdd extends javax.swing.JFrame {
                 .addComponent(settings, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(logout, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel5.setBackground(new java.awt.Color(153, 255, 204));
@@ -799,13 +794,13 @@ public class AdminPageAdd extends javax.swing.JFrame {
         return false;
     }
     private void useridTxtFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_useridTxtFieldKeyReleased
-     //done
+        //done
         String userId = useridTxtField.getText();
 
         Boolean isTrue = userIdEvent();
         if (isTrue) {
             editBtn.setVisible(true);
-jButton1.setVisible(false);
+            jButton1.setVisible(false);
         } else {
             editBtn.setVisible(false);
             jButton1.setVisible(true);
@@ -836,12 +831,8 @@ jButton1.setVisible(false);
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void logoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseClicked
-        System.out.println("nigga");
-    }//GEN-LAST:event_logoutMouseClicked
-
     private void settingsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsMouseClicked
-        System.out.println("nigga");
+        System.out.println("nigga22");
     }//GEN-LAST:event_settingsMouseClicked
 
     private void helpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_helpMouseClicked
@@ -870,95 +861,101 @@ jButton1.setVisible(false);
     }//GEN-LAST:event_searchMouseReleased
 
     private void editBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnActionPerformed
-  // Get data from the text fields
-    String user_Id = useridTxtField.getText();
-    String firstName = firstNameTxtField.getText();
-    String lastName = lastNameTxtField.getText();
-    String address = addressTxtField.getText();
-    String age = ageTxtField.getText();
-    String contact = contactTxtField.getText();
+        // Get data from the text fields
+        String user_Id = useridTxtField.getText();
+        String firstName = firstNameTxtField.getText();
+        String lastName = lastNameTxtField.getText();
+        String address = addressTxtField.getText();
+        String age = ageTxtField.getText();
+        String contact = contactTxtField.getText();
 
-    // Get data from the combo box
-    String sex = sexBox.getSelectedItem().toString();
-    if (sex.equalsIgnoreCase("MALE")) {
-        sex = "M";
-    } else if (sex.equalsIgnoreCase("FEMALE")) {
-        sex = "F";
-    }
-
-    // Get data from the remaining text fields
-    String username = usernameTxtField.getText();
-    String password = passwordTxtField.getText();
-    String answer = answerTxtField.getText();
-    String secretQuestion = secretQuestionBox.getSelectedItem().toString();
-
-    // Get the LOA and convert it to an integer
-    String loaString = loaBox.getSelectedItem().toString();
-    int loa = -1;  // default value if LOA is not recognized
-    switch (loaString.toLowerCase()) {
-        case "cashier":
-            loa = 0;
-            break;
-        case "veterinarian":
-            loa = 1;
-            break;
-        case "admin":
-            loa = 2;
-            break;
-    }
-
-    // Database connection information
-    String url = "jdbc:mysql://127.0.0.1:3306/database";
-    String dbUsername = "root";
-    String dbPassword = "admin";
-
-    try {
-        // Establish the database connection
-        Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
-
-        // Update the 'users' table
-        String updateUsersQuery = "UPDATE users SET username = ?, password = ?, secret_question = ?, secret_answer = ?, LOA = ? WHERE userid = ?";
-        PreparedStatement usersPreparedStatement = connection.prepareStatement(updateUsersQuery);
-        usersPreparedStatement.setString(1, username);
-        usersPreparedStatement.setString(2, password);
-        usersPreparedStatement.setString(3, secretQuestion);
-        usersPreparedStatement.setString(4, answer);
-        usersPreparedStatement.setInt(5, loa);
-        usersPreparedStatement.setInt(6, Integer.parseInt(user_Id));
-        int rowsAffectedUsers = usersPreparedStatement.executeUpdate();
-
-        // Update the 'user_information' table
-        String updateUserInformationQuery = "UPDATE user_information SET first_name = ?, last_name = ?, address = ?, age = ?, contact = ?, sex = ? WHERE userid = ?";
-        PreparedStatement userInformationPreparedStatement = connection.prepareStatement(updateUserInformationQuery);
-        userInformationPreparedStatement.setString(1, firstName);
-        userInformationPreparedStatement.setString(2, lastName);
-        userInformationPreparedStatement.setString(3, address);
-        userInformationPreparedStatement.setString(4, age);
-        userInformationPreparedStatement.setString(5, contact);
-        userInformationPreparedStatement.setString(6, sex);
-        userInformationPreparedStatement.setInt(7, Integer.parseInt(user_Id));
-        int rowsAffectedUserInformation = userInformationPreparedStatement.executeUpdate();
-
-        // Check if updates were successful
-        if (rowsAffectedUsers > 0 && rowsAffectedUserInformation > 0) {
-            JOptionPane.showMessageDialog(null, "User information updated successfully.");
-            updateUserAuditLog(userIdx);
-        } else {
-            JOptionPane.showMessageDialog(null, "Failed to update user information.");
+        // Get data from the combo box
+        String sex = sexBox.getSelectedItem().toString();
+        if (sex.equalsIgnoreCase("MALE")) {
+            sex = "M";
+        } else if (sex.equalsIgnoreCase("FEMALE")) {
+            sex = "F";
         }
 
-        // Close the database connection
-        connection.close();
-    } catch (SQLException e) {
-        // Handle any SQL exceptions
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
-    }
+        // Get data from the remaining text fields
+        String username = usernameTxtField.getText();
+        String password = passwordTxtField.getText();
+        String answer = answerTxtField.getText();
+        String secretQuestion = secretQuestionBox.getSelectedItem().toString();
+
+        // Get the LOA and convert it to an integer
+        String loaString = loaBox.getSelectedItem().toString();
+        int loa = -1;  // default value if LOA is not recognized
+        switch (loaString.toLowerCase()) {
+            case "cashier":
+                loa = 0;
+                break;
+            case "veterinarian":
+                loa = 1;
+                break;
+            case "admin":
+                loa = 2;
+                break;
+        }
+
+        // Database connection information
+        String url = "jdbc:mysql://127.0.0.1:3306/database";
+        String dbUsername = "root";
+        String dbPassword = "admin";
+
+        try {
+            // Establish the database connection
+            Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
+
+            // Update the 'users' table
+            String updateUsersQuery = "UPDATE users SET username = ?, password = ?, secret_question = ?, secret_answer = ?, LOA = ? WHERE userid = ?";
+            PreparedStatement usersPreparedStatement = connection.prepareStatement(updateUsersQuery);
+            usersPreparedStatement.setString(1, username);
+            usersPreparedStatement.setString(2, password);
+            usersPreparedStatement.setString(3, secretQuestion);
+            usersPreparedStatement.setString(4, answer);
+            usersPreparedStatement.setInt(5, loa);
+            usersPreparedStatement.setInt(6, Integer.parseInt(user_Id));
+            int rowsAffectedUsers = usersPreparedStatement.executeUpdate();
+
+            // Update the 'user_information' table
+            String updateUserInformationQuery = "UPDATE user_information SET first_name = ?, last_name = ?, address = ?, age = ?, contact = ?, sex = ? WHERE userid = ?";
+            PreparedStatement userInformationPreparedStatement = connection.prepareStatement(updateUserInformationQuery);
+            userInformationPreparedStatement.setString(1, firstName);
+            userInformationPreparedStatement.setString(2, lastName);
+            userInformationPreparedStatement.setString(3, address);
+            userInformationPreparedStatement.setString(4, age);
+            userInformationPreparedStatement.setString(5, contact);
+            userInformationPreparedStatement.setString(6, sex);
+            userInformationPreparedStatement.setInt(7, Integer.parseInt(user_Id));
+            int rowsAffectedUserInformation = userInformationPreparedStatement.executeUpdate();
+
+            // Check if updates were successful
+            if (rowsAffectedUsers > 0 && rowsAffectedUserInformation > 0) {
+                JOptionPane.showMessageDialog(null, "User information updated successfully.");
+                updateUserAuditLog(userIdx);
+            } else {
+                JOptionPane.showMessageDialog(null, "Failed to update user information.");
+            }
+
+            // Close the database connection
+            connection.close();
+        } catch (SQLException e) {
+            // Handle any SQL exceptions
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+        }
     }//GEN-LAST:event_editBtnActionPerformed
 
-    private void jLabel9MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseReleased
-        
-    }//GEN-LAST:event_jLabel9MouseReleased
+    private void logoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseClicked
+        int response = JOptionPane.showConfirmDialog(this, "Do you want to log out?", "Confirm Logout", JOptionPane.YES_NO_OPTION);
+        if (response == JOptionPane.YES_OPTION) {
+            login.login();
+            setVisible(false);
+        } else {
+            // User clicked 'No' or closed the dialog, do nothing
+        }
+    }//GEN-LAST:event_logoutMouseClicked
     public void updateUserAuditLog(int userId) {
         String url = "jdbc:mysql://127.0.0.1:3306/database";
         String dbUsername = "root";
@@ -975,7 +972,6 @@ jButton1.setVisible(false);
             // Execute the query
             int rowsAffected = preparedStatement.executeUpdate();
 
-         
             // Close the database connection
             connection.close();
         } catch (SQLException e) {
@@ -983,7 +979,8 @@ jButton1.setVisible(false);
             e.printStackTrace();
         }
     }
-      public void addUserAuditLog(int userId) {
+
+    public void addUserAuditLog(int userId) {
         String url = "jdbc:mysql://127.0.0.1:3306/database";
         String dbUsername = "root";
         String dbPassword = "admin";
@@ -999,7 +996,6 @@ jButton1.setVisible(false);
             // Execute the query
             int rowsAffected = preparedStatement.executeUpdate();
 
-         
             // Close the database connection
             connection.close();
         } catch (SQLException e) {
@@ -1007,6 +1003,7 @@ jButton1.setVisible(false);
             e.printStackTrace();
         }
     }
+
     private void addUserToDatabase() {
         String url = "jdbc:mysql://127.0.0.1:3306/database";
         String dbUsername = "root";

@@ -278,8 +278,8 @@ public class VetPageSearch extends javax.swing.JFrame {
         logout.setBackground(new java.awt.Color(153, 204, 255));
         logout.setOpaque(false);
         logout.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                logoutMouseClicked(evt);
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                logoutMouseReleased(evt);
             }
         });
 
@@ -554,9 +554,7 @@ public class VetPageSearch extends javax.swing.JFrame {
                 .addGap(57, 57, 57)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(0, 0, 0)
-                        .addComponent(patientIdTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(patientIdTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
                 .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -675,10 +673,6 @@ public class VetPageSearch extends javax.swing.JFrame {
         System.out.println("nigga");
     }//GEN-LAST:event_settingsMouseClicked
 
-    private void logoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseClicked
-        System.out.println("nigga");
-    }//GEN-LAST:event_logoutMouseClicked
-
     private void addPatientMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addPatientMouseReleased
         new VetPageAdd(realUserId).setVisible(true);
         setVisible(false);
@@ -765,108 +759,119 @@ public class VetPageSearch extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
         }
     }
-    
+
     public void updateMedicalHistoryTable() {
-    // Get the patient ID from the patientIdTxtField
-    int patientId = Integer.parseInt(patientIdTxtField.getText());
+        // Get the patient ID from the patientIdTxtField
+        int patientId = Integer.parseInt(patientIdTxtField.getText());
 
-    String url = "jdbc:mysql://127.0.0.1:3306/database";
-    String dbUsername = "root";
-    String dbPassword = "admin";
+        String url = "jdbc:mysql://127.0.0.1:3306/database";
+        String dbUsername = "root";
+        String dbPassword = "admin";
 
-    try {
-        // Establish the database connection
-        Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
+        try {
+            // Establish the database connection
+            Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
 
-        // Query to fetch medical history information for the specified patient ID
-        String query = "SELECT diagnosis, treatment, medications, visit_date, doctor_name FROM medical_history WHERE patient_id = ?";
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setInt(1, patientId);
-        ResultSet resultSet = preparedStatement.executeQuery();
+            // Query to fetch medical history information for the specified patient ID
+            String query = "SELECT diagnosis, treatment, medications, visit_date, doctor_name FROM medical_history WHERE patient_id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, patientId);
+            ResultSet resultSet = preparedStatement.executeQuery();
 
-        // Create a DefaultTableModel to hold the medical history data
-        DefaultTableModel model = new DefaultTableModel();
-        model.addColumn("Diagnosis");
-        model.addColumn("Treatment");
-        model.addColumn("Medication");
-        model.addColumn("Visit Date");
-        model.addColumn("Attending Doctor");
-        // Populate the model with the retrieved data
-        while (resultSet.next()) {
-            String diagnosis = resultSet.getString("diagnosis");
-            String treatment = resultSet.getString("treatment");
-            String medications = resultSet.getString("medications");
-            String visitDate = resultSet.getString("visit_date");
-            String attendingDoctor = resultSet.getString("doctor_name");
+            // Create a DefaultTableModel to hold the medical history data
+            DefaultTableModel model = new DefaultTableModel();
+            model.addColumn("Diagnosis");
+            model.addColumn("Treatment");
+            model.addColumn("Medication");
+            model.addColumn("Visit Date");
+            model.addColumn("Attending Doctor");
+            // Populate the model with the retrieved data
+            while (resultSet.next()) {
+                String diagnosis = resultSet.getString("diagnosis");
+                String treatment = resultSet.getString("treatment");
+                String medications = resultSet.getString("medications");
+                String visitDate = resultSet.getString("visit_date");
+                String attendingDoctor = resultSet.getString("doctor_name");
 
-            model.addRow(new Object[]{diagnosis, treatment, medications, visitDate, attendingDoctor});
+                model.addRow(new Object[]{diagnosis, treatment, medications, visitDate, attendingDoctor});
+            }
+
+            // Set the model for the medicalHistoryTable
+            medicalHistoryTable.setModel(model);
+
+            // Close the result set, statement, and connection
+            resultSet.close();
+            preparedStatement.close();
+            connection.close();
+        } catch (SQLException e) {
+            // Handle any SQL exceptions
+            e.printStackTrace();
         }
-
-        // Set the model for the medicalHistoryTable
-        medicalHistoryTable.setModel(model);
-
-        // Close the result set, statement, and connection
-        resultSet.close();
-        preparedStatement.close();
-        connection.close();
-    } catch (SQLException e) {
-        // Handle any SQL exceptions
-        e.printStackTrace();
     }
-}
+
     public void updateVaccineHistoryTable() {
-    // Get the patient ID from the patientIdTxtField
-    int patientId = Integer.parseInt(patientIdTxtField.getText());
+        // Get the patient ID from the patientIdTxtField
+        int patientId = Integer.parseInt(patientIdTxtField.getText());
 
-    String url = "jdbc:mysql://127.0.0.1:3306/database";
-    String dbUsername = "root";
-    String dbPassword = "admin";
+        String url = "jdbc:mysql://127.0.0.1:3306/database";
+        String dbUsername = "root";
+        String dbPassword = "admin";
 
-    try {
-        // Establish the database connection
-        Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
+        try {
+            // Establish the database connection
+            Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
 
-        // Query to fetch vaccine history information for the specified patient ID
-        String query = "SELECT vaccine_name, vaccination_date, next_due_date, administered_by FROM vaccine_history WHERE patient_id = ?";
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setInt(1, patientId);
-        ResultSet resultSet = preparedStatement.executeQuery();
+            // Query to fetch vaccine history information for the specified patient ID
+            String query = "SELECT vaccine_name, vaccination_date, next_due_date, administered_by FROM vaccine_history WHERE patient_id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, patientId);
+            ResultSet resultSet = preparedStatement.executeQuery();
 
-        // Create a DefaultTableModel to hold the vaccine history data
-        DefaultTableModel model = new DefaultTableModel();
-        model.addColumn("Vaccine Name");
-        model.addColumn("Vaccination Date");
-        model.addColumn("Next Due Date");
-        model.addColumn("Administered By");
+            // Create a DefaultTableModel to hold the vaccine history data
+            DefaultTableModel model = new DefaultTableModel();
+            model.addColumn("Vaccine Name");
+            model.addColumn("Vaccination Date");
+            model.addColumn("Next Due Date");
+            model.addColumn("Administered By");
 
-        // Populate the model with the retrieved data
-        while (resultSet.next()) {
-            String vaccineName = resultSet.getString("vaccine_name");
-            String vaccinationDate = resultSet.getString("vaccination_date");
-            String dueDate = resultSet.getString("next_due_date");
-            String administeredBy = resultSet.getString("administered_by");
+            // Populate the model with the retrieved data
+            while (resultSet.next()) {
+                String vaccineName = resultSet.getString("vaccine_name");
+                String vaccinationDate = resultSet.getString("vaccination_date");
+                String dueDate = resultSet.getString("next_due_date");
+                String administeredBy = resultSet.getString("administered_by");
 
-            model.addRow(new Object[]{vaccineName, vaccinationDate, dueDate, administeredBy});
+                model.addRow(new Object[]{vaccineName, vaccinationDate, dueDate, administeredBy});
+            }
+
+            // Set the model for the vaccineHistoryTable
+            vaccineHistoryTable.setModel(model);
+
+            // Close the result set, statement, and connection
+            resultSet.close();
+            preparedStatement.close();
+            connection.close();
+        } catch (SQLException e) {
+            // Handle any SQL exceptions
+            e.printStackTrace();
         }
-
-        // Set the model for the vaccineHistoryTable
-        vaccineHistoryTable.setModel(model);
-
-        // Close the result set, statement, and connection
-        resultSet.close();
-        preparedStatement.close();
-        connection.close();
-    } catch (SQLException e) {
-        // Handle any SQL exceptions
-        e.printStackTrace();
     }
-}
-    
+
     private void patientIdTxtFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_patientIdTxtFieldKeyReleased
         searchPatient();
         updateMedicalHistoryTable();
         updateVaccineHistoryTable();
     }//GEN-LAST:event_patientIdTxtFieldKeyReleased
+
+    private void logoutMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseReleased
+        int response = JOptionPane.showConfirmDialog(this, "Do you want to log out?", "Confirm Logout", JOptionPane.YES_NO_OPTION);
+        if (response == JOptionPane.YES_OPTION) {
+            login.login();
+            setVisible(false);
+        } else {
+            // User clicked 'No' or closed the dialog, do nothing
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_logoutMouseReleased
 
     /**
      * @param args the command line arguments

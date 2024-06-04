@@ -15,6 +15,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -26,7 +27,8 @@ public class StaffPage extends javax.swing.JFrame {
     /**
      * Creates new form StaffPage
      */
-       private int realUserId;
+    private int realUserId;
+
     public StaffPage(int realUserId) {
         this.realUserId = realUserId;
         initComponents();
@@ -276,8 +278,8 @@ public class StaffPage extends javax.swing.JFrame {
         logout.setBackground(new java.awt.Color(153, 204, 255));
         logout.setOpaque(false);
         logout.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                logoutMouseClicked(evt);
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                logoutMouseReleased(evt);
             }
         });
 
@@ -411,51 +413,50 @@ public class StaffPage extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-        public void changeWelcome(){
-    String name = getUsernameByUserId(realUserId);
-    jLabel3.setText("Welcome, "+name);
-    
+    public void changeWelcome() {
+        String name = getUsernameByUserId(realUserId);
+        jLabel3.setText("Welcome, " + name);
+
     }
-    
+
     public String getUsernameByUserId(int userId) {
-    String username = null; // Default value if username is not found
+        String username = null; // Default value if username is not found
 
-    String url = "jdbc:mysql://127.0.0.1:3306/database";
-    String dbUsername = "root";
-    String dbPassword = "admin";
+        String url = "jdbc:mysql://127.0.0.1:3306/database";
+        String dbUsername = "root";
+        String dbPassword = "admin";
 
-    try {
-        // Establish the database connection
-        Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
+        try {
+            // Establish the database connection
+            Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
 
-        // Prepare the SQL query to retrieve username by user ID
-        String query = "SELECT first_name FROM user_information WHERE userid = ?";
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setInt(1, userId);
+            // Prepare the SQL query to retrieve username by user ID
+            String query = "SELECT first_name FROM user_information WHERE userid = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, userId);
 
-        // Execute the query
-        ResultSet resultSet = preparedStatement.executeQuery();
+            // Execute the query
+            ResultSet resultSet = preparedStatement.executeQuery();
 
-        // Check if the result set has any rows
-        if (resultSet.next()) {
-            // Retrieve the username from the result set
-            username = resultSet.getString("first_name");
+            // Check if the result set has any rows
+            if (resultSet.next()) {
+                // Retrieve the username from the result set
+                username = resultSet.getString("first_name");
+            }
+
+            // Close the result set, statement, and connection
+            resultSet.close();
+            preparedStatement.close();
+            connection.close();
+        } catch (SQLException e) {
+            // Handle any SQL exceptions
+            e.printStackTrace();
         }
 
-        // Close the result set, statement, and connection
-        resultSet.close();
-        preparedStatement.close();
-        connection.close();
-    } catch (SQLException e) {
-        // Handle any SQL exceptions
-        e.printStackTrace();
+        return username;
     }
 
-    return username;
-}
-    
-    
-    
+
     private void inventoryMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inventoryMouseReleased
 
     }//GEN-LAST:event_inventoryMouseReleased
@@ -484,9 +485,15 @@ public class StaffPage extends javax.swing.JFrame {
         System.out.println("nigga");
     }//GEN-LAST:event_settingsMouseClicked
 
-    private void logoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseClicked
-        System.out.println("nigga");
-    }//GEN-LAST:event_logoutMouseClicked
+    private void logoutMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseReleased
+        int response = JOptionPane.showConfirmDialog(this, "Do you want to log out?", "Confirm Logout", JOptionPane.YES_NO_OPTION);
+        if (response == JOptionPane.YES_OPTION) {
+            login.login();
+            setVisible(false);
+        } else {
+            // User clicked 'No' or closed the dialog, do nothing
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_logoutMouseReleased
 
     /**
      * @param args the command line arguments
@@ -594,6 +601,5 @@ public class StaffPage extends javax.swing.JFrame {
         }
 
     }
-
 
 }

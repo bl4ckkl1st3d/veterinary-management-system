@@ -8,6 +8,7 @@ import java.awt.*;
 import javax.swing.JPanel;
 import javax.swing.JFrame;
 import java.sql.*;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -23,7 +24,7 @@ public class AdminPage extends javax.swing.JFrame {
     public AdminPage(int userId) {
         this.userId = userId;
         initComponents();
-       // setExtendedState(JFrame.MAXIMIZED_BOTH);
+        // setExtendedState(JFrame.MAXIMIZED_BOTH);
         changeWelcome();
     }
 
@@ -274,6 +275,9 @@ public class AdminPage extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jPanel11MouseClicked(evt);
             }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jPanel11MouseReleased(evt);
+            }
         });
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -405,61 +409,61 @@ public class AdminPage extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-    
-    public void changeWelcome(){
-    String name = getUsernameByUserId(userId);
-    jLabel3.setText("Welcome, "+name);
-    
+
+    public void changeWelcome() {
+        String name = getUsernameByUserId(userId);
+        jLabel3.setText("Welcome, " + name);
+
     }
-    
+
     public String getUsernameByUserId(int userId) {
-    String username = null; // Default value if username is not found
+        String username = null; // Default value if username is not found
 
-    String url = "jdbc:mysql://127.0.0.1:3306/database";
-    String dbUsername = "root";
-    String dbPassword = "admin";
+        String url = "jdbc:mysql://127.0.0.1:3306/database";
+        String dbUsername = "root";
+        String dbPassword = "admin";
 
-    try {
-        // Establish the database connection
-        Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
+        try {
+            // Establish the database connection
+            Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
 
-        // Prepare the SQL query to retrieve username by user ID
-        String query = "SELECT username FROM users WHERE userid = ?";
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setInt(1, userId);
+            // Prepare the SQL query to retrieve username by user ID
+            String query = "SELECT username FROM users WHERE userid = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, userId);
 
-        // Execute the query
-        ResultSet resultSet = preparedStatement.executeQuery();
+            // Execute the query
+            ResultSet resultSet = preparedStatement.executeQuery();
 
-        // Check if the result set has any rows
-        if (resultSet.next()) {
-            // Retrieve the username from the result set
-            username = resultSet.getString("username");
+            // Check if the result set has any rows
+            if (resultSet.next()) {
+                // Retrieve the username from the result set
+                username = resultSet.getString("username");
+            }
+
+            // Close the result set, statement, and connection
+            resultSet.close();
+            preparedStatement.close();
+            connection.close();
+        } catch (SQLException e) {
+            // Handle any SQL exceptions
+            e.printStackTrace();
         }
 
-        // Close the result set, statement, and connection
-        resultSet.close();
-        preparedStatement.close();
-        connection.close();
-    } catch (SQLException e) {
-        // Handle any SQL exceptions
-        e.printStackTrace();
+        return username;
     }
 
-    return username;
-}
-    
-    
+
     private void jPanel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel6MouseClicked
         System.out.println("nigga");
     }//GEN-LAST:event_jPanel6MouseClicked
 
     private void jPanel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel7MouseClicked
-       System.out.println("nigga");
+        System.out.println("nigga");
     }//GEN-LAST:event_jPanel7MouseClicked
 
     private void jPanel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel8MouseClicked
-       System.out.println("nigga");
+        System.out.println("nigga");
     }//GEN-LAST:event_jPanel8MouseClicked
 
     private void jPanel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel9MouseClicked
@@ -475,15 +479,25 @@ public class AdminPage extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel11MouseClicked
 
     private void jPanel3MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel3MouseReleased
-           
+
         new AdminPageSearch(userId).setVisible(true);
-     setVisible(false);
+        setVisible(false);
     }//GEN-LAST:event_jPanel3MouseReleased
 
     private void jPanel4MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel4MouseReleased
-           new AdminPageAdd(userId).setVisible(true);
-     setVisible(false);
+        new AdminPageAdd(userId).setVisible(true);
+        setVisible(false);
     }//GEN-LAST:event_jPanel4MouseReleased
+
+    private void jPanel11MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel11MouseReleased
+        int response = JOptionPane.showConfirmDialog(this, "Do you want to log out?", "Confirm Logout", JOptionPane.YES_NO_OPTION);
+        if (response == JOptionPane.YES_OPTION) {
+            login.login();
+            setVisible(false);
+        } else {
+            // User clicked 'No' or closed the dialog, do nothing
+        }
+    }//GEN-LAST:event_jPanel11MouseReleased
 
     /**
      * @param args the command line arguments
