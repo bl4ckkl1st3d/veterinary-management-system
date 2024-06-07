@@ -12,20 +12,19 @@ import java.awt.LayoutManager;
 import java.awt.RenderingHints;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import java.sql.*;
 
 /**
  *
  * @author Kevin
  */
-public class StaffPageAdd extends javax.swing.JFrame {
+public class StaffPageInventory extends javax.swing.JFrame {
 
     /**
-     * Creates new form StaffPageAdd
+     * Creates new form StaffPageInventory
      */
-    
     private int realUserId;
-    public StaffPageAdd(int realUserId) {
+    
+    public StaffPageInventory(int realUserId) {
         initComponents();
         this.realUserId = realUserId;
     }
@@ -43,7 +42,7 @@ public class StaffPageAdd extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         inventory = new RoundedPanel(50,new Color(153, 204, 255));
         jLabel1 = new javax.swing.JLabel();
-        add = new RoundedPanel(50,new Color(255, 255, 153));
+        add = new RoundedPanel(50,new Color(153, 204, 255));
         jLabel2 = new javax.swing.JLabel();
         edit = new RoundedPanel(50,new Color(153, 204, 255));
         jLabel4 = new javax.swing.JLabel();
@@ -74,11 +73,10 @@ public class StaffPageAdd extends javax.swing.JFrame {
         txtPrice = new javax.swing.JTextField();
         txtStocks = new javax.swing.JTextField();
         txtSupplierName = new javax.swing.JTextField();
-        jDateChooserExpirationDate = new com.toedter.calendar.JDateChooser();
         txtCriticalLevel = new javax.swing.JTextField();
         rbtnPerishableNo = new javax.swing.JRadioButton();
         rbtnPerishableYes = new javax.swing.JRadioButton();
-        addBtn = new javax.swing.JButton();
+        txtCriticalLevel2 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -435,17 +433,31 @@ public class StaffPageAdd extends javax.swing.JFrame {
                 .addGap(52, 52, 52))
         );
 
+        txtName.setEditable(false);
+
+        txtBarcode.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtBarcodeKeyReleased(evt);
+            }
+        });
+
+        txtPrice.setEditable(false);
         txtPrice.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtPriceActionPerformed(evt);
             }
         });
 
+        txtStocks.setEditable(false);
+
+        txtSupplierName.setEditable(false);
         txtSupplierName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtSupplierNameActionPerformed(evt);
             }
         });
+
+        txtCriticalLevel.setEditable(false);
 
         rbtnPerishableNo.setText("NO");
         rbtnPerishableNo.addActionListener(new java.awt.event.ActionListener() {
@@ -461,6 +473,8 @@ public class StaffPageAdd extends javax.swing.JFrame {
             }
         });
 
+        txtCriticalLevel2.setEditable(false);
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -468,7 +482,6 @@ public class StaffPageAdd extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jDateChooserExpirationDate, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txtName)
                     .addComponent(txtBarcode, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE)
                     .addComponent(txtPrice)
@@ -482,6 +495,11 @@ public class StaffPageAdd extends javax.swing.JFrame {
                         .addComponent(rbtnPerishableNo, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel4Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(txtCriticalLevel2, javax.swing.GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -494,25 +512,21 @@ public class StaffPageAdd extends javax.swing.JFrame {
                 .addComponent(txtPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(txtStocks, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(txtCriticalLevel, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(84, 84, 84)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(rbtnPerishableYes, javax.swing.GroupLayout.DEFAULT_SIZE, 66, Short.MAX_VALUE)
                     .addComponent(rbtnPerishableNo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jDateChooserExpirationDate, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtCriticalLevel, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(txtSupplierName, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(45, 45, 45))
+            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                    .addContainerGap(324, Short.MAX_VALUE)
+                    .addComponent(txtCriticalLevel2, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(239, 239, 239)))
         );
-
-        addBtn.setText("ADD PRODUCT");
-        addBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addBtnActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -522,9 +536,7 @@ public class StaffPageAdd extends javax.swing.JFrame {
                 .addGap(87, 87, 87)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(addBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(112, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
@@ -534,9 +546,7 @@ public class StaffPageAdd extends javax.swing.JFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(86, Short.MAX_VALUE))
+                .addContainerGap(156, Short.MAX_VALUE))
         );
 
         jScrollPane2.setViewportView(jPanel5);
@@ -578,29 +588,29 @@ public class StaffPageAdd extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void inventoryMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inventoryMouseReleased
-new StaffPageInventory(realUserId).setVisible(true);
-setVisible(false);
 
     }//GEN-LAST:event_inventoryMouseReleased
 
     private void addMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMouseReleased
+new StaffPageAdd(realUserId).setVisible(true);
+setVisible(false);
 
     }//GEN-LAST:event_addMouseReleased
 
     private void editMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editMouseClicked
-        System.out.println("nigga");
+
     }//GEN-LAST:event_editMouseClicked
 
     private void posMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_posMouseClicked
-        System.out.println("nigga");
+        
     }//GEN-LAST:event_posMouseClicked
 
     private void reportsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reportsMouseClicked
-        System.out.println("nigga");
+        
     }//GEN-LAST:event_reportsMouseClicked
 
     private void helpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_helpMouseClicked
-        System.out.println("nigga");
+    
     }//GEN-LAST:event_helpMouseClicked
 
     private void settingsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsMouseClicked
@@ -625,85 +635,19 @@ setVisible(false);
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSupplierNameActionPerformed
 
-    
-    private void addProdToDB(){
-   // Get the necessary information from the text fields and other input controls
-    String barcode = txtBarcode.getText();
-    String name = txtName.getText();
-    String price = txtPrice.getText();
-    int stocks = Integer.parseInt(txtStocks.getText());
-    int criticalLevel = Integer.parseInt(txtCriticalLevel.getText());
-    boolean perishable = rbtnPerishableYes.isSelected(); // Assuming you have two radio buttons for Yes and No
-    java.util.Date expirationDate = jDateChooserExpirationDate.getDate();
-    
-    // Database connection details
-    String url = "jdbc:mysql://127.0.0.1:3306/database";
-    String dbUsername = "root";
-    String dbPassword = "admin";
-    
-    Connection conn = null;
-    PreparedStatement pstmt = null;
-    
-    try {
-        // Establish a connection to the database
-        conn = DriverManager.getConnection(url, dbUsername, dbPassword);
-        
-        // SQL query to insert data into the product_information table
-        String sql = "INSERT INTO product_information (barcode, name, price, stocks, critical_level, perishable, expiration_date, supplier_name) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-        
-        // Prepare the statement
-        pstmt = conn.prepareStatement(sql);
-        pstmt.setString(1, barcode);
-        pstmt.setString(2, name);
-        pstmt.setBigDecimal(3, new java.math.BigDecimal(price));
-        pstmt.setInt(4, stocks);
-        pstmt.setInt(5, criticalLevel);
-        pstmt.setBoolean(6, perishable);
-        
-        if (perishable) {
-            // Convert the java.util.Date to java.sql.Date if the product is perishable
-            java.sql.Date sqlExpirationDate = new java.sql.Date(expirationDate.getTime());
-            pstmt.setDate(7, sqlExpirationDate);
-        } else {
-            // Set expiration_date to null if the product is not perishable
-            pstmt.setNull(7, java.sql.Types.DATE);
-        }
-        
-        pstmt.setString(8, txtSupplierName.getText());
-        
-        // Execute the update
-        int rowsAffected = pstmt.executeUpdate();
-        
-        if (rowsAffected > 0) {
-            JOptionPane.showMessageDialog(this, "Product information added successfully.");
-        }
-        
-    } catch (SQLException e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
-    } finally {
-        try {
-            if (pstmt != null) pstmt.close();
-            if (conn != null) conn.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-    
-    }
-    private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
-        addProdToDB();
-    }//GEN-LAST:event_addBtnActionPerformed
+    private void rbtnPerishableNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnPerishableNoActionPerformed
+        rbtnPerishableYes.setSelected(false);
+        rbtnPerishableNo.setSelected(true);
+    }//GEN-LAST:event_rbtnPerishableNoActionPerformed
 
     private void rbtnPerishableYesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnPerishableYesActionPerformed
         rbtnPerishableYes.setSelected(true);
         rbtnPerishableNo.setSelected(false);
     }//GEN-LAST:event_rbtnPerishableYesActionPerformed
 
-    private void rbtnPerishableNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnPerishableNoActionPerformed
-       rbtnPerishableYes.setSelected(false);
-        rbtnPerishableNo.setSelected(true);
-    }//GEN-LAST:event_rbtnPerishableNoActionPerformed
+    private void txtBarcodeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBarcodeKeyReleased
+        System.out.println("missu");
+    }//GEN-LAST:event_txtBarcodeKeyReleased
 
     /**
      * @param args the command line arguments
@@ -722,13 +666,13 @@ setVisible(false);
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(StaffPageAdd.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(StaffPageInventory.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(StaffPageAdd.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(StaffPageInventory.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(StaffPageAdd.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(StaffPageInventory.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(StaffPageAdd.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(StaffPageInventory.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -736,18 +680,16 @@ setVisible(false);
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 int sample = 0;
-                new StaffPageAdd(sample).setVisible(true);
+                new StaffPageInventory(sample).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel add;
-    private javax.swing.JButton addBtn;
     private javax.swing.JPanel edit;
     private javax.swing.JPanel help;
     private javax.swing.JPanel inventory;
-    private com.toedter.calendar.JDateChooser jDateChooserExpirationDate;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel13;
@@ -778,12 +720,13 @@ setVisible(false);
     private javax.swing.JPanel settings;
     private javax.swing.JTextField txtBarcode;
     private javax.swing.JTextField txtCriticalLevel;
+    private javax.swing.JTextField txtCriticalLevel2;
     private javax.swing.JTextField txtName;
     private javax.swing.JTextField txtPrice;
     private javax.swing.JTextField txtStocks;
     private javax.swing.JTextField txtSupplierName;
     // End of variables declaration//GEN-END:variables
- class RoundedPanel extends JPanel {
+class RoundedPanel extends JPanel {
 
         private Color backgroundColor;
         private int cornerRadius = 15;
@@ -831,6 +774,4 @@ setVisible(false);
 
     }
 
-
 }
-
