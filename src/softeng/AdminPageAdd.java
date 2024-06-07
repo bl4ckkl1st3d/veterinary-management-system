@@ -1087,6 +1087,7 @@ public class AdminPageAdd extends javax.swing.JFrame {
                     if (rowsAffected > 0) {
                         connection.commit(); // Commit transaction
                         JOptionPane.showMessageDialog(null, "User added successfully");
+                        clearAllFields();
                         addUserAuditLog(userIdx);
                     } else {
                         connection.rollback(); // Rollback transaction
