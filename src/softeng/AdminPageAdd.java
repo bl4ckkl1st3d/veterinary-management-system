@@ -1085,6 +1085,7 @@ public class AdminPageAdd extends javax.swing.JFrame {
                     rowsAffected = infoStmt.executeUpdate();
 
                     if (rowsAffected > 0) {
+                        System.out.println("Second try na xsend");
                         connection.commit(); // Commit transaction
                         JOptionPane.showMessageDialog(null, "User added successfully");
                         clearAllFields();
