@@ -20,6 +20,7 @@ public class ForgotPassword extends javax.swing.JFrame {
       
         initComponents();
         System.out.println("kevinbranch");
+        System.out.println("station di kilala ni richard ");
     }
     
    
