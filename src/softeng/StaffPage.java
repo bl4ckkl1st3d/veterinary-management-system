@@ -458,6 +458,8 @@ public class StaffPage extends javax.swing.JFrame {
 
 
     private void inventoryMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inventoryMouseReleased
+        new StaffPageInventory(realUserId).setVisible(true);
+        setVisible(false);
 
     }//GEN-LAST:event_inventoryMouseReleased
 
