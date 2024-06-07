@@ -1085,8 +1085,10 @@ public class AdminPageAdd extends javax.swing.JFrame {
                     rowsAffected = infoStmt.executeUpdate();
 
                     if (rowsAffected > 0) {
+                        System.out.println("Leggo HAHA mictest");
                         connection.commit(); // Commit transaction
                         JOptionPane.showMessageDialog(null, "User added successfully");
+                        clearAllFields();
                         addUserAuditLog(userIdx);
                     } else {
                         connection.rollback(); // Rollback transaction
