@@ -24,6 +24,7 @@ public class AdminPage extends javax.swing.JFrame {
     public AdminPage(int userId) {
         this.userId = userId;
         initComponents();
+        System.out.println("change 1 tanggapin si hesus sa puso");
         // setExtendedState(JFrame.MAXIMIZED_BOTH);
         changeWelcome();
     }
