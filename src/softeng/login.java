@@ -4,6 +4,9 @@
  */
 package softeng;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.sql.*;
 import javax.swing.JOptionPane;
 
@@ -18,6 +21,7 @@ public class login extends javax.swing.JFrame {
      */
     public login() {
         initComponents();
+    
     }
 
     /**
@@ -38,6 +42,7 @@ public class login extends javax.swing.JFrame {
         passTxtField = new javax.swing.JPasswordField();
         loginBtn = new javax.swing.JButton();
         showBtn = new javax.swing.JToggleButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -79,13 +84,26 @@ public class login extends javax.swing.JFrame {
                 showBtnMouseClicked(evt);
             }
         });
+        showBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showBtnActionPerformed(evt);
+            }
+        });
         jPanel2.add(showBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 220, 80, 60));
+
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 340, 120, 40));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 210, 870, 430));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1300, 790));
 
-        setSize(new java.awt.Dimension(1311, 806));
+        setSize(new java.awt.Dimension(1311, 797));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 public void addLoginAuditLog(int userId) {
@@ -203,6 +221,97 @@ public void addLoginAuditLog(int userId) {
         }
     }//GEN-LAST:event_showBtnMouseClicked
 
+    private void showBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_showBtnActionPerformed
+
+private void saveSchema() {
+    String dbHost = "127.0.0.1";
+    String dbPort = "3306";
+    String dbName = "database";
+    String dbUsername = "root";
+    String dbPassword = "admin";
+    String savePath = "schema_dump.sql";
+    
+    // Use the full path to mysqldump
+    String mysqldumpPath = "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\\mysqldump.exe"; // Update this to the actual path
+
+    String command = String.format(
+        "%s --host=%s --port=%s --user=%s --password=%s --no-data %s -r %s",
+        mysqldumpPath, dbHost, dbPort, dbUsername, dbPassword, dbName, savePath
+    );
+
+    try {
+        // Execute the command
+        Process process = Runtime.getRuntime().exec(command);
+
+        // Wait for the command to complete
+        int processComplete = process.waitFor();
+
+        // Check if the command was successful
+        if (processComplete == 0) {
+            JOptionPane.showMessageDialog(null, "Schema saved successfully to " + savePath);
+        } else {
+            JOptionPane.showMessageDialog(null, "Failed to save schema.");
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(null, "An error occurred while saving the schema.");
+    }
+}
+private void restoreSchema() {
+    String dbHost = "127.0.0.1";
+    String dbPort = "3306";
+    String dbName = "database"; // The database to restore the schema into
+    String dbUsername = "root";
+    String dbPassword = "admin";
+    String dumpFilePath = "C:\\path\\to\\your\\schema_dump.sql"; // Update this to the actual path
+
+    // Print out the path being used
+    System.out.println("Using dump file path: " + dumpFilePath);
+
+    // Use the full path to mysql
+    String mysqlPath = "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\\mysql.exe"; // Update this to the actual path
+
+    String command = String.format("%s --host=%s --port=%s --user=%s --password=%s %s -e source %s", 
+                                   mysqlPath, dbHost, dbPort, dbUsername, dbPassword, dbName, dumpFilePath);
+
+    try {
+        // Execute the command
+        Process process = Runtime.getRuntime().exec(command);
+
+        // Handle the output of the process
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+            }
+        }
+
+        // Wait for the command to complete
+        int processComplete = process.waitFor();
+
+        // Check if the command was successful
+        if (processComplete == 0) {
+            JOptionPane.showMessageDialog(null, "Schema restored successfully from " + dumpFilePath);
+        } else {
+            JOptionPane.showMessageDialog(null, "Failed to restore schema.");
+        }
+
+    } catch (IOException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(null, "An error occurred while restoring the schema: " + e.getMessage());
+    } catch (InterruptedException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(null, "The restore process was interrupted: " + e.getMessage());
+    }
+}
+
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        saveSchema();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -239,6 +348,7 @@ public void addLoginAuditLog(int userId) {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

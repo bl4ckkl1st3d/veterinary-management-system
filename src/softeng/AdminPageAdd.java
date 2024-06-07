@@ -10,6 +10,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.LayoutManager;
 import java.awt.RenderingHints;
+import java.io.BufferedReader;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import java.sql.*;
@@ -793,8 +794,13 @@ public class AdminPageAdd extends javax.swing.JFrame {
         }
         return false;
     }
+    
+    
+    
     private void useridTxtFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_useridTxtFieldKeyReleased
         //done
+        System.out.println("bru");
+        
         String userId = useridTxtField.getText();
 
         Boolean isTrue = userIdEvent();
@@ -859,6 +865,7 @@ public class AdminPageAdd extends javax.swing.JFrame {
         new AdminPageSearch(userIdx).setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_searchMouseReleased
+
 
     private void editBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnActionPerformed
         // Get data from the text fields
