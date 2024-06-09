@@ -20,6 +20,12 @@ import java.sql.*;
 import javax.swing.*;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import org.krysalis.barcode4j.impl.code39.Code39Bean;
+import org.krysalis.barcode4j.output.bitmap.BitmapCanvasProvider;
+import java.awt.image.BufferedImage;
+import java.io.File;
 
 /**
  *
@@ -34,6 +40,8 @@ public class VetPageSearch extends javax.swing.JFrame {
     private String pName;
     private String oName;
     private String contacts;
+    private String strCodeText;
+    private String barImgPath = "c:/temp/code39.jpg";
     public VetPageSearch(int realUserId) {
         initComponents();
         this.realUserId = realUserId;
@@ -749,6 +757,7 @@ public class VetPageSearch extends javax.swing.JFrame {
             if (patientResultSet.next()) {
                 // Set the patient information to text fields
                 patientTxtField.setText(patientResultSet.getString("patient_name"));
+                strCodeText = patientResultSet.getString("barcode");
                 ageTxt.setText(String.valueOf(patientResultSet.getInt("age")));
                 weightTxt.setText(String.valueOf(patientResultSet.getFloat("weight")));
                 typeTxtField.setText(patientResultSet.getString("type"));
@@ -759,7 +768,7 @@ public class VetPageSearch extends javax.swing.JFrame {
                 pName = patientResultSet.getString("patient_name");
                
                 String clientName = patientResultSet.getString("client_name");
-
+               
                 // Retrieve client information
                 String clientQuery = "SELECT * FROM client_information WHERE client_name = ?";
                 PreparedStatement clientStmt = connection.prepareStatement(clientQuery);
@@ -791,7 +800,7 @@ public class VetPageSearch extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
         }
     }
-
+   
     public void updateMedicalHistoryTable() {
         // Get the patient ID from the patientIdTxtField
         int patientId = Integer.parseInt(patientIdTxtField.getText());
@@ -910,9 +919,12 @@ public class VetPageSearch extends javax.swing.JFrame {
     }//GEN-LAST:event_patientIdTxtFieldActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       PatientCard card =  new PatientCard(pName,oName,contacts);
+    
+       PatientCard card =  new PatientCard(pName,oName,contacts,strCodeText);
+        System.out.println(strCodeText);
        card.setLocationRelativeTo(null);
        card.setVisible(true);
+       card.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
