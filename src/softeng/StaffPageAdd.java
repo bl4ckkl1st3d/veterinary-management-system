@@ -588,7 +588,8 @@ setVisible(false);
     }//GEN-LAST:event_addMouseReleased
 
     private void editMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editMouseClicked
-        System.out.println("nigga");
+       new StaffPageEdit(realUserId).setVisible(true);
+        setVisible(false);
     }//GEN-LAST:event_editMouseClicked
 
     private void posMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_posMouseClicked
