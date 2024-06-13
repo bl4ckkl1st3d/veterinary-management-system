@@ -662,15 +662,15 @@ public class VetPageSearch extends javax.swing.JFrame {
     }//GEN-LAST:event_addPatientMouseClicked
 
     private void sendMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sendMouseClicked
-        System.out.println("nigga");
+        System.out.println("test");
     }//GEN-LAST:event_sendMouseClicked
 
     private void helpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_helpMouseClicked
-        System.out.println("nigga");
+        System.out.println("test");
     }//GEN-LAST:event_helpMouseClicked
 
     private void settingsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsMouseClicked
-        System.out.println("nigga");
+        System.out.println("test");
     }//GEN-LAST:event_settingsMouseClicked
 
     private void addPatientMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addPatientMouseReleased

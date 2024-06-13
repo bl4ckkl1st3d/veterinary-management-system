@@ -387,8 +387,12 @@ public class AdminPageSearch extends javax.swing.JFrame {
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel13.setText("Contact No:");
 
-        firstNameTxtField.setEditable(false);
         firstNameTxtField.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        firstNameTxtField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                firstNameTxtFieldKeyReleased(evt);
+            }
+        });
 
         jLabel14.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
@@ -414,8 +418,12 @@ public class AdminPageSearch extends javax.swing.JFrame {
         addressTxtField.setRows(5);
         jScrollPane1.setViewportView(addressTxtField);
 
-        lastNameTxtField.setEditable(false);
         lastNameTxtField.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lastNameTxtField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                lastNameTxtFieldKeyReleased(evt);
+            }
+        });
 
         usernameTxtField.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         usernameTxtField.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -674,6 +682,67 @@ public class AdminPageSearch extends javax.swing.JFrame {
             // User clicked 'No' or closed the dialog, do nothing
         }        // TODO add your handling code here:
     }//GEN-LAST:event_logoutMouseReleased
+
+    private void firstNameTxtFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_firstNameTxtFieldKeyReleased
+        searchUser();
+    }//GEN-LAST:event_firstNameTxtFieldKeyReleased
+
+    private void lastNameTxtFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_lastNameTxtFieldKeyReleased
+        searchUser();
+    }//GEN-LAST:event_lastNameTxtFieldKeyReleased
+    private void searchUser() {
+        String firstName = firstNameTxtField.getText();
+        String lastName = lastNameTxtField.getText();
+
+        if (firstName.isEmpty() && lastName.isEmpty()) {
+            return;
+        }
+
+        String url = "jdbc:mysql://127.0.0.1:3306/database";
+        String dbUsername = "root";
+        String dbPassword = "admin";
+
+        try (Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword)) {
+            String query = "SELECT * FROM user_information WHERE first_name = ? AND last_name = ? LIMIT 1";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setString(1, firstName);
+                preparedStatement.setString(2, lastName);
+                ResultSet resultSet = preparedStatement.executeQuery();
+                if (resultSet.next()) {
+                    int userId = resultSet.getInt("userid");
+                    String foundFirstName = resultSet.getString("first_name");
+                    String foundLastName = resultSet.getString("last_name");
+                    String address = resultSet.getString("address");
+                    int age = resultSet.getInt("age");
+                    String sex = resultSet.getString("sex");
+                    String contact = resultSet.getString("contact");
+                    String username = resultSet.getString("username");
+
+                    // Set the retrieved data into the respective text fields
+                    useridTxtField.setText(String.valueOf(userId));
+                    usernameTxtField.setText(username);
+                    firstNameTxtField.setText(foundFirstName);
+                    lastNameTxtField.setText(foundLastName);
+                    addressTxtField.setText(address);
+                    ageTxtField.setText(String.valueOf(age));
+                    sexTxtField.setText(sex);
+                    contactTxtField.setText(contact);
+                } else {
+                    // Handle case where user is not found
+                    addressTxtField.setText("");
+                    ageTxtField.setText("");
+                    sexTxtField.setText("");
+                    contactTxtField.setText("");
+                    useridTxtField.setText("");
+                    usernameTxtField.setText("");
+                }
+            }
+        } catch (SQLException e) {
+            // Handle SQL exception
+            e.printStackTrace();
+        }
+    }
+
     private void clearTextFields() {
         // Clear all text fields
         firstNameTxtField.setText("");

@@ -838,27 +838,27 @@ public class AdminPageAdd extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void settingsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsMouseClicked
-        System.out.println("nigga22");
+        System.out.println("test");
     }//GEN-LAST:event_settingsMouseClicked
 
     private void helpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_helpMouseClicked
-        System.out.println("nigga");
+        System.out.println("test");
     }//GEN-LAST:event_helpMouseClicked
 
     private void reportsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reportsMouseClicked
-        System.out.println("nigga");
+        System.out.println("test");
     }//GEN-LAST:event_reportsMouseClicked
 
     private void cashierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cashierMouseClicked
-        System.out.println("nigga");
+        System.out.println("test");
     }//GEN-LAST:event_cashierMouseClicked
 
     private void vetMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_vetMouseClicked
-        System.out.println("nigga");
+        System.out.println("test");
     }//GEN-LAST:event_vetMouseClicked
 
     private void addMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMouseClicked
-        System.out.println("nigga");
+        System.out.println("test");
     }//GEN-LAST:event_addMouseClicked
 
     private void searchMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchMouseReleased

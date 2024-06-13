@@ -474,19 +474,19 @@ public class StaffPage extends javax.swing.JFrame {
     }//GEN-LAST:event_editMouseClicked
 
     private void posMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_posMouseClicked
-        System.out.println("nigga");
+        System.out.println("test");
     }//GEN-LAST:event_posMouseClicked
 
     private void reportsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reportsMouseClicked
-        System.out.println("nigga");
+        System.out.println("test");
     }//GEN-LAST:event_reportsMouseClicked
 
     private void helpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_helpMouseClicked
-        System.out.println("nigga");
+        System.out.println("test");
     }//GEN-LAST:event_helpMouseClicked
 
     private void settingsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsMouseClicked
-        System.out.println("nigga");
+        System.out.println("test");
     }//GEN-LAST:event_settingsMouseClicked
 
     private void logoutMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseReleased
