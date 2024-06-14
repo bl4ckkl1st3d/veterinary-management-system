@@ -33,6 +33,7 @@ public class Vet_Menu extends javax.swing.JPanel {
         init();
     }
     private void init() {
+        //listMenu1.addItem(new Model_Menu("1","Welcome, Kevin", Model_Menu.MenuType.MENU));
         listMenu1.addItem(new Model_Menu("1", "Search Patient", Model_Menu.MenuType.MENU));
         listMenu1.addItem(new Model_Menu("2", "Edit Patient Info", Model_Menu.MenuType.MENU));
         listMenu1.addItem(new Model_Menu("3", "Add New Patient", Model_Menu.MenuType.MENU));

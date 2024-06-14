@@ -3,6 +3,7 @@ package loa;
 
 import contents.Test1;
 import contents.Test2;
+import contents.Vet_Search;
 import event.EventMenuSelected;
 import java.awt.Color;
 import java.awt.Point;
@@ -22,7 +23,7 @@ public class Vet extends javax.swing.JFrame {
      * Creates new form Vet
      */
     private Test1 home;
-    private Test2 search;
+    private Vet_Search search;
     private int userId;
     private Point initialClick;
     
@@ -30,7 +31,7 @@ public class Vet extends javax.swing.JFrame {
         initComponents();
         setBackground(new Color(0,0,0,0));
         home = new Test1();
-        search = new Test2();
+        search = new Vet_Search();
         
         vet_Menu.initMoving(Vet.this);
         
@@ -38,9 +39,9 @@ public class Vet extends javax.swing.JFrame {
             @Override
             public void selected(int index) {
                 if(index == 0) {
-                    setForm(home);
-                } else if (index == 2){
                     setForm(search);
+                } else if (index == 1){
+                    setForm(home);
                 } else if (index == 6){
                     int response = JOptionPane.showConfirmDialog(null, "Are you sure you want to log out?", "Confirm Logout", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                     if (response == JOptionPane.YES_OPTION) {
