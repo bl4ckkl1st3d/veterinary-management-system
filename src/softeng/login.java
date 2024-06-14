@@ -9,9 +9,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.*;
 import javax.swing.JOptionPane;
-import loa.Admin;
-import loa.Cashier;
-import loa.Vet;
 
 /**
  *
@@ -36,7 +33,7 @@ public class login extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        loginPanel = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -50,13 +47,13 @@ public class login extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        loginPanel.setBackground(new java.awt.Color(255, 153, 153));
-        loginPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel1.setBackground(new java.awt.Color(255, 153, 153));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setFont(new java.awt.Font("Segoe UI Black", 0, 48)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("LOGIN ");
-        loginPanel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 90, 240, 100));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 90, 240, 100));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 204));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -102,9 +99,9 @@ public class login extends javax.swing.JFrame {
         });
         jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 340, 120, 40));
 
-        loginPanel.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 210, 870, 430));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 210, 870, 430));
 
-        getContentPane().add(loginPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1300, 790));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1300, 790));
 
         setSize(new java.awt.Dimension(1311, 797));
         setLocationRelativeTo(null);
@@ -166,16 +163,16 @@ public void addLoginAuditLog(int userId) {
                 addLoginAuditLog(userId);
                 switch (LOA) {
                     case "0":
-                        new Cashier(userId).setVisible(true);
+                        new StaffPage(userId).setVisible(true);
                         setVisible(false);
                         break;
                     case "1":
-                        new Vet(userId).setVisible(true);
+                        new VetPage(userId).setVisible(true);
                         setVisible(false);
                         break;
 
                     case "2":
-                        new Admin(userId).setVisible(true);
+                        new AdminPage(userId).setVisible(true);
                         setVisible(false);
                         break;
                     default:
@@ -355,9 +352,9 @@ private void restoreSchema() {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JButton loginBtn;
-    private javax.swing.JPanel loginPanel;
     private javax.swing.JPasswordField passTxtField;
     private javax.swing.JToggleButton showBtn;
     private javax.swing.JTextField userTxtfield;
