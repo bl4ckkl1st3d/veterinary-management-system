@@ -683,9 +683,7 @@ public class VetPageSearch extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-    
-    
-    
+
     private void searchPatientMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchPatientMouseReleased
 
     }//GEN-LAST:event_searchPatientMouseReleased

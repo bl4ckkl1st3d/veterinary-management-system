@@ -387,11 +387,6 @@ public class AdminPageAdd extends javax.swing.JFrame {
         jLabel13.setText("Contact No:");
 
         firstNameTxtField.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        firstNameTxtField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                firstNameTxtFieldActionPerformed(evt);
-            }
-        });
 
         jLabel14.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
@@ -968,10 +963,6 @@ public class AdminPageAdd extends javax.swing.JFrame {
             // User clicked 'No' or closed the dialog, do nothing
         }
     }//GEN-LAST:event_logoutMouseClicked
-
-    private void firstNameTxtFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_firstNameTxtFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_firstNameTxtFieldActionPerformed
     public void updateUserAuditLog(int userId) {
         String url = "jdbc:mysql://127.0.0.1:3306/database";
         String dbUsername = "root";
@@ -1032,7 +1023,6 @@ public class AdminPageAdd extends javax.swing.JFrame {
         String loaString = (String) loaBox.getSelectedItem();
 
         int loa;
-
         switch (loaString.toLowerCase()) {
             case "cashier":
                 loa = 0;
