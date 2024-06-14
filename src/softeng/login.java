@@ -160,7 +160,7 @@ public void addLoginAuditLog(int userId) {
                 int userId = resultSet.getInt("userid"); // Retrieve userid from resultSet
 
                 JOptionPane.showMessageDialog(null, "Login successful");
-                //addLoginAuditLog(userId);
+                addLoginAuditLog(userId);
                 switch (LOA) {
                     case "0":
                         new StaffPage(userId).setVisible(true);

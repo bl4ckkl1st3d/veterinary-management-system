@@ -1024,13 +1024,13 @@ public class AdminPageAdd extends javax.swing.JFrame {
 
         int loa;
         switch (loaString.toLowerCase()) {
-            case "CASHIER":
+            case "cashier":
                 loa = 0;
                 break;
-            case "VETERINARIAN":
+            case "veterinarian":
                 loa = 1;
                 break;
-            case "ADMIN":
+            case "admin":
                 loa = 2;
                 break;
             default:
