@@ -1,8 +1,9 @@
+package softeng;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package softeng;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -13,6 +14,11 @@ import java.awt.RenderingHints;
 import javax.swing.JPanel;
 import java.sql.*;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import softeng.VetPageAdd;
+import softeng.VetPageSearch;
+import softeng.login;
+
 
 /**
  *
@@ -83,11 +89,11 @@ public class VetPageEdit extends javax.swing.JFrame {
         jLabel23 = new javax.swing.JLabel();
         contactTxtField = new javax.swing.JTextField();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        medicalHistoryTable = new javax.swing.JTable();
         jLabel24 = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        vaccinationHistoryTable = new javax.swing.JTable();
         jLabel26 = new javax.swing.JLabel();
         patientIdTxtField = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
@@ -432,7 +438,7 @@ public class VetPageEdit extends javax.swing.JFrame {
 
         contactTxtField.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        medicalHistoryTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -443,7 +449,7 @@ public class VetPageEdit extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane3.setViewportView(jTable1);
+        jScrollPane3.setViewportView(medicalHistoryTable);
 
         jLabel24.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel24.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -453,7 +459,7 @@ public class VetPageEdit extends javax.swing.JFrame {
         jLabel25.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel25.setText("VACCINE HISTORY");
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        vaccinationHistoryTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -464,7 +470,7 @@ public class VetPageEdit extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane4.setViewportView(jTable2);
+        jScrollPane4.setViewportView(vaccinationHistoryTable);
 
         jLabel26.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel26.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
@@ -795,15 +801,15 @@ public class VetPageEdit extends javax.swing.JFrame {
     }//GEN-LAST:event_addPatientMouseClicked
 
     private void sendMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sendMouseClicked
-        System.out.println("nigga");
+        System.out.println("test");
     }//GEN-LAST:event_sendMouseClicked
 
     private void helpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_helpMouseClicked
-        System.out.println("nigga");
+        System.out.println("test");
     }//GEN-LAST:event_helpMouseClicked
 
     private void settingsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsMouseClicked
-        System.out.println("nigga");
+        System.out.println("test");
     }//GEN-LAST:event_settingsMouseClicked
     private void clearTextFields() {
         patientTxtField.setText("");
@@ -891,6 +897,8 @@ public class VetPageEdit extends javax.swing.JFrame {
 
     private void patientIdTxtFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_patientIdTxtFieldKeyReleased
         searchPatient();
+        updateMedicalHistoryTable();
+        updateVaccineHistoryTable();
     }//GEN-LAST:event_patientIdTxtFieldKeyReleased
     private void updateMedical() {
         // Get the necessary information from text fields
@@ -898,13 +906,16 @@ public class VetPageEdit extends javax.swing.JFrame {
         String treatment = treatmentTxtField.getText();
         String medications = medicationTxtField.getText();
         int patientId = Integer.parseInt(patientIdTxtField.getText());
-
+       
         String url = "jdbc:mysql://127.0.0.1:3306/database";
         String dbUsername = "root";
         String dbPassword = "admin";
 
         String doctorName = "";
-
+         if(diagnosis.isEmpty()|| treatment.isEmpty() || medications.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Must complete all fields.");
+        }
+         else{
         try {
             // Establish the database connection
             Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
@@ -938,6 +949,10 @@ public class VetPageEdit extends javax.swing.JFrame {
 
             if (rowsAffected > 0) {
                 JOptionPane.showMessageDialog(null, "Medical history updated successfully.");
+                
+                diagnosisTxtField.setText("");
+                treatmentTxtField.setText("");
+                medicationTxtField.setText("");
             } else {
                 JOptionPane.showMessageDialog(null, "Failed to update medical history.");
             }
@@ -950,10 +965,108 @@ public class VetPageEdit extends javax.swing.JFrame {
             // Handle any SQL exceptions
             e.printStackTrace();
         }
-    }
+    }}
     private void updateMedicalBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateMedicalBtnActionPerformed
         updateMedical();
+        updateMedicalHistoryTable();
     }//GEN-LAST:event_updateMedicalBtnActionPerformed
+    
+    public void updateMedicalHistoryTable() {
+        // Get the patient ID from the patientIdTxtField
+        int patientId = Integer.parseInt(patientIdTxtField.getText());
+
+        String url = "jdbc:mysql://127.0.0.1:3306/database";
+        String dbUsername = "root";
+        String dbPassword = "admin";
+
+        try {
+            // Establish the database connection
+            Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
+
+            // Query to fetch medical history information for the specified patient ID
+            String query = "SELECT diagnosis, treatment, medications, visit_date, doctor_name FROM medical_history WHERE patient_id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, patientId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            // Create a DefaultTableModel to hold the medical history data
+            DefaultTableModel model = new DefaultTableModel();
+            model.addColumn("Diagnosis");
+            model.addColumn("Treatment");
+            model.addColumn("Medication");
+            model.addColumn("Visit Date");
+            model.addColumn("Attending Doctor");
+            // Populate the model with the retrieved data
+            while (resultSet.next()) {
+                String diagnosis = resultSet.getString("diagnosis");
+                String treatment = resultSet.getString("treatment");
+                String medications = resultSet.getString("medications");
+                String visitDate = resultSet.getString("visit_date");
+                String attendingDoctor = resultSet.getString("doctor_name");
+
+                model.addRow(new Object[]{diagnosis, treatment, medications, visitDate, attendingDoctor});
+            }
+
+            // Set the model for the medicalHistoryTable
+            medicalHistoryTable.setModel(model);
+
+            // Close the result set, statement, and connection
+            resultSet.close();
+            preparedStatement.close();
+            connection.close();
+        } catch (SQLException e) {
+            // Handle any SQL exceptions
+            e.printStackTrace();
+        }
+    }
+
+    public void updateVaccineHistoryTable() {
+        // Get the patient ID from the patientIdTxtField
+        int patientId = Integer.parseInt(patientIdTxtField.getText());
+
+        String url = "jdbc:mysql://127.0.0.1:3306/database";
+        String dbUsername = "root";
+        String dbPassword = "admin";
+
+        try {
+            // Establish the database connection
+            Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
+
+            // Query to fetch vaccine history information for the specified patient ID
+            String query = "SELECT vaccine_name, vaccination_date, next_due_date, administered_by FROM vaccine_history WHERE patient_id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, patientId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            // Create a DefaultTableModel to hold the vaccine history data
+            DefaultTableModel model = new DefaultTableModel();
+            model.addColumn("Vaccine Name");
+            model.addColumn("Vaccination Date");
+            model.addColumn("Next Due Date");
+            model.addColumn("Administered By");
+
+            // Populate the model with the retrieved data
+            while (resultSet.next()) {
+                String vaccineName = resultSet.getString("vaccine_name");
+                String vaccinationDate = resultSet.getString("vaccination_date");
+                String dueDate = resultSet.getString("next_due_date");
+                String administeredBy = resultSet.getString("administered_by");
+
+                model.addRow(new Object[]{vaccineName, vaccinationDate, dueDate, administeredBy});
+            }
+
+            // Set the model for the vaccineHistoryTable
+            vaccinationHistoryTable.setModel(model);
+
+            // Close the result set, statement, and connection
+            resultSet.close();
+            preparedStatement.close();
+            connection.close();
+        } catch (SQLException e) {
+            // Handle any SQL exceptions
+            e.printStackTrace();
+        }
+    }
     private void updatePatient() {
         // Get the data from the text fields
         int patientId = Integer.parseInt(patientIdTxtField.getText());
@@ -993,6 +1106,10 @@ public class VetPageEdit extends javax.swing.JFrame {
 
             if (rowsAffected > 0) {
                 JOptionPane.showMessageDialog(null, "Patient information updated successfully.");
+                clearTextFields();
+                diagnosisTxtField.setText("");
+                treatmentTxtField.setText("");
+                medicationTxtField.setText("");
             } else {
                 JOptionPane.showMessageDialog(null, "Failed to update patient information.");
             }
@@ -1018,7 +1135,7 @@ public class VetPageEdit extends javax.swing.JFrame {
         String url = "jdbc:mysql://127.0.0.1:3306/database";
         String dbUsername = "root";
         String dbPassword = "admin";
-
+       
         try {
             // Establish the database connection
             Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
@@ -1034,7 +1151,14 @@ public class VetPageEdit extends javax.swing.JFrame {
             int rowsAffected = preparedStatement.executeUpdate();
 
             if (rowsAffected > 0) {
-                JOptionPane.showMessageDialog(null, "Client information updated successfully.");
+                JOptionPane.showMessageDialog(null, "Client information updated successfully.");           
+                clearTextFields();
+                diagnosisTxtField.setText("");
+                treatmentTxtField.setText("");
+                medicationTxtField.setText("");
+                vaccineNameTxtField.setText("");
+                vaccinationDate.setDate(null);
+                dueDate.setDate(null);
             } else {
                 JOptionPane.showMessageDialog(null, "Failed to update client information.");
             }
@@ -1067,7 +1191,7 @@ public class VetPageEdit extends javax.swing.JFrame {
         String dbPassword = "admin";
 
         String administeredBy = "";
-
+         JOptionPane.showMessageDialog(null, "Must complete all fields.");
         try {
             // Establish the database connection
             Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
@@ -1101,6 +1225,11 @@ public class VetPageEdit extends javax.swing.JFrame {
 
             if (rowsAffected > 0) {
                 JOptionPane.showMessageDialog(null, "Vaccine information updated successfully.");
+                clearTextFields();
+                vaccineNameTxtField.setText("");
+                vaccinationDate.setDate(null);
+                dueDate.setDate(null);
+                
             } else {
                 JOptionPane.showMessageDialog(null, "Failed to update vaccine information.");
             }
@@ -1111,6 +1240,7 @@ public class VetPageEdit extends javax.swing.JFrame {
             connection.close();
         } catch (SQLException e) {
             // Handle any SQL exceptions
+            JOptionPane.showMessageDialog(null, "Must complete all fields.");
             e.printStackTrace();
         }
     }
@@ -1118,6 +1248,7 @@ public class VetPageEdit extends javax.swing.JFrame {
 
     private void updateVaccineBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateVaccineBtnActionPerformed
         updateVaccine();
+        updateVaccineHistoryTable();
     }//GEN-LAST:event_updateVaccineBtnActionPerformed
 
     private void logoutMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseReleased
@@ -1213,10 +1344,9 @@ public class VetPageEdit extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
     private javax.swing.JPanel logout;
     private javax.swing.JTextField marksTxtField;
+    private javax.swing.JTable medicalHistoryTable;
     private javax.swing.JTextField medicationTxtField;
     private javax.swing.JTextField nameTxtField;
     private javax.swing.JTextField patientIdTxtField;
@@ -1232,6 +1362,7 @@ public class VetPageEdit extends javax.swing.JFrame {
     private javax.swing.JToggleButton updatePatientBtn;
     private javax.swing.JToggleButton updateVaccineBtn;
     private com.toedter.calendar.JDateChooser vaccinationDate;
+    private javax.swing.JTable vaccinationHistoryTable;
     private javax.swing.JTextField vaccineNameTxtField;
     private javax.swing.JTextField weightTxt;
     // End of variables declaration//GEN-END:variables

@@ -4,6 +4,7 @@
  */
 package softeng;
 
+import softeng.VetPageEdit;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -13,7 +14,7 @@ import java.awt.RenderingHints;
 import javax.swing.JPanel;
 import java.sql.*;
 import javax.swing.JOptionPane;
-
+import java.util.UUID;
 /**
  *
  * @author Kevin
@@ -592,15 +593,15 @@ public class VetPageAdd extends javax.swing.JFrame {
     }//GEN-LAST:event_addPatientMouseClicked
 
     private void sendMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sendMouseClicked
-        System.out.println("nigga");
+        System.out.println("test");
     }//GEN-LAST:event_sendMouseClicked
 
     private void helpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_helpMouseClicked
-        System.out.println("nigga");
+        System.out.println("test");
     }//GEN-LAST:event_helpMouseClicked
 
     private void settingsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsMouseClicked
-        System.out.println("nigga");
+        System.out.println("test");
     }//GEN-LAST:event_settingsMouseClicked
 
     private void addPatient() {
@@ -616,7 +617,9 @@ public class VetPageAdd extends javax.swing.JFrame {
         String clientName = nameTxtField.getText();
         String address = addressTxtField.getText();
         String contact = contactTxtField.getText();
-
+          // Step-1 - Generate a random barcode text
+        String strCodeText = UUID.randomUUID().toString().substring(0, 8).toUpperCase(); // Generate a random 8-character string
+    
         String url = "jdbc:mysql://127.0.0.1:3306/database";
         String dbUsername = "root";
         String dbPassword = "admin";
@@ -642,22 +645,24 @@ public class VetPageAdd extends javax.swing.JFrame {
             }
 
             // Insert into patient_information table
-            String insertPatientQuery = "INSERT INTO patient_information (patient_name, age, weight, sex, type, color, breed, marks, client_name, registration_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String insertPatientQuery = "INSERT INTO patient_information (patient_name,barcode, age, weight, sex, type, color, breed, marks, client_name, registration_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement insertPatientStmt = connection.prepareStatement(insertPatientQuery);
             insertPatientStmt.setString(1, patientName);
-            insertPatientStmt.setInt(2, age);
-            insertPatientStmt.setFloat(3, weight);
-            insertPatientStmt.setString(4, sex);
-            insertPatientStmt.setString(5, type);
-            insertPatientStmt.setString(6, color);
-            insertPatientStmt.setString(7, breed);
-            insertPatientStmt.setString(8, marks);
-            insertPatientStmt.setString(9, clientName);
-            insertPatientStmt.setDate(10, new java.sql.Date(System.currentTimeMillis())); // Set the current date
+            insertPatientStmt.setString(2, strCodeText);
+            insertPatientStmt.setInt(3, age);
+            insertPatientStmt.setFloat(4, weight);
+            insertPatientStmt.setString(5, sex);
+            insertPatientStmt.setString(6, type);
+            insertPatientStmt.setString(7, color);
+            insertPatientStmt.setString(8, breed);
+            insertPatientStmt.setString(9, marks);
+            insertPatientStmt.setString(10, clientName);
+            insertPatientStmt.setDate(11, new java.sql.Date(System.currentTimeMillis())); // Set the current date
             insertPatientStmt.executeUpdate();
 
             // Show success message
             JOptionPane.showMessageDialog(null, "Information added successfully!");
+            clearTextFields();
 
             // Close the database connection
             connection.close();
@@ -680,7 +685,20 @@ public class VetPageAdd extends javax.swing.JFrame {
             // User clicked 'No' or closed the dialog, do nothing
         }        // TODO add your handling code here:
     }//GEN-LAST:event_logoutMouseReleased
+    private void clearTextFields() {
+        patientTxtField.setText("");
+        ageTxt.setText("");
+        weightTxt.setText("");
+        typeTxtField.setText("");
+        colorTxtField.setText("");
+        breedTxtField.setText("");
+        marksTxtField.setText("");
+        sexComboBox.setSelectedIndex(-1);
 
+        nameTxtField.setText("");
+        addressTxtField.setText("");
+        contactTxtField.setText("");
+    }
     /**
      * @param args the command line arguments
      */
