@@ -10,9 +10,11 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.LayoutManager;
 import java.awt.RenderingHints;
+import java.math.BigDecimal;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import java.sql.*;
+import java.util.Date;
 
 /**
  *
@@ -23,8 +25,8 @@ public class StaffPageAdd extends javax.swing.JFrame {
     /**
      * Creates new form StaffPageAdd
      */
-    
     private int realUserId;
+
     public StaffPageAdd(int realUserId) {
         initComponents();
         this.realUserId = realUserId;
@@ -65,9 +67,10 @@ public class StaffPageAdd extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
-        jLabel19 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         txtName = new javax.swing.JTextField();
         txtBarcode = new javax.swing.JTextField();
@@ -78,6 +81,12 @@ public class StaffPageAdd extends javax.swing.JFrame {
         txtCriticalLevel = new javax.swing.JTextField();
         rbtnPerishableNo = new javax.swing.JRadioButton();
         rbtnPerishableYes = new javax.swing.JRadioButton();
+        jLabel19 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        cmbCategory = new javax.swing.JComboBox<>();
+        searchSupplier = new javax.swing.JButton();
+        txtSupplierAddress = new javax.swing.JTextField();
+        txtsupplierContact = new javax.swing.JTextField();
         addBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -365,53 +374,59 @@ public class StaffPageAdd extends javax.swing.JFrame {
         jPanel5.setBackground(new java.awt.Color(153, 255, 204));
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel11.setText("BARCODE");
 
         jLabel15.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel15.setText("NAME");
 
         jLabel14.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel14.setText("PRICE");
 
         jLabel16.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel16.setText("STOCKS");
 
         jLabel17.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel17.setText("PERISHABLE");
 
-        jLabel13.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel13.setText("EXP DATE");
-
         jLabel18.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel18.setText("SUPPLIER ");
 
-        jLabel19.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel19.setText("CRITICAL LEVEL");
+        jLabel20.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel20.setText("CATEGORY");
+
+        jLabel21.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel21.setText("SUPPLIER CONTACT");
+
+        jLabel22.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel22.setText("SUPPLIER ADDRESS");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(14, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addGap(0, 25, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel22, javax.swing.GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel21, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE)
+                        .addComponent(jLabel18, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel20, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel16, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel14, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel15, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -420,19 +435,21 @@ public class StaffPageAdd extends javax.swing.JFrame {
                 .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(24, 24, 24)
                 .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(52, 52, 52))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(22, 22, 22))
         );
 
         txtPrice.addActionListener(new java.awt.event.ActionListener() {
@@ -461,6 +478,35 @@ public class StaffPageAdd extends javax.swing.JFrame {
             }
         });
 
+        jLabel19.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel19.setText("CRITICAL LEVEL");
+
+        jLabel13.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel13.setText("EXP DATE");
+
+        cmbCategory.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "FOOD", "VITAMIN", "MEDICINE", "VACCINE", "GROOMING", "ACCCESSORY", "TOY" }));
+
+        searchSupplier.setText("SEARCH");
+        searchSupplier.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchSupplierActionPerformed(evt);
+            }
+        });
+
+        txtSupplierAddress.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtSupplierAddressActionPerformed(evt);
+            }
+        });
+
+        txtsupplierContact.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtsupplierContactActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -468,20 +514,42 @@ public class StaffPageAdd extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jDateChooserExpirationDate, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtName)
-                    .addComponent(txtBarcode, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE)
-                    .addComponent(txtPrice)
-                    .addComponent(txtStocks, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE)
-                    .addComponent(txtSupplierName)
-                    .addComponent(txtCriticalLevel, javax.swing.GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(11, 11, 11)
-                        .addComponent(rbtnPerishableYes, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(63, 63, 63)
-                        .addComponent(rbtnPerishableNo, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel4Layout.createSequentialGroup()
+                                        .addComponent(rbtnPerishableYes, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(rbtnPerishableNo, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel4Layout.createSequentialGroup()
+                                        .addComponent(txtStocks, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, Short.MAX_VALUE)
+                                        .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jDateChooserExpirationDate, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE)
+                                    .addComponent(txtCriticalLevel)))
+                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(txtPrice, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 385, Short.MAX_VALUE)
+                                .addComponent(txtName, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txtBarcode, javax.swing.GroupLayout.Alignment.LEADING)))
+                        .addGap(30, 30, 30))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(txtSupplierName, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(searchSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtSupplierAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtsupplierContact, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cmbCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -493,18 +561,29 @@ public class StaffPageAdd extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(txtPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(txtStocks, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(txtCriticalLevel, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(rbtnPerishableYes, javax.swing.GroupLayout.DEFAULT_SIZE, 66, Short.MAX_VALUE)
-                    .addComponent(rbtnPerishableNo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtStocks, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtCriticalLevel, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jDateChooserExpirationDate, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(rbtnPerishableYes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(rbtnPerishableNo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jDateChooserExpirationDate, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(cmbCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(searchSupplier, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
+                    .addComponent(txtSupplierName))
                 .addGap(18, 18, 18)
-                .addComponent(txtSupplierName, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45))
+                .addComponent(txtSupplierAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtsupplierContact, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16))
         );
 
         addBtn.setText("ADD PRODUCT");
@@ -519,24 +598,24 @@ public class StaffPageAdd extends javax.swing.JFrame {
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(87, 87, 87)
+                .addGap(33, 33, 33)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(addBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(112, Short.MAX_VALUE))
+                .addContainerGap(145, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(75, 75, 75)
+                .addGap(32, 32, 32)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
+                .addGap(35, 35, 35)
                 .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(86, Short.MAX_VALUE))
+                .addContainerGap(107, Short.MAX_VALUE))
         );
 
         jScrollPane2.setViewportView(jPanel5);
@@ -578,8 +657,8 @@ public class StaffPageAdd extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void inventoryMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inventoryMouseReleased
-new StaffPageInventory(realUserId).setVisible(true);
-setVisible(false);
+        new StaffPageInventory(realUserId).setVisible(true);
+        setVisible(false);
 
     }//GEN-LAST:event_inventoryMouseReleased
 
@@ -588,7 +667,7 @@ setVisible(false);
     }//GEN-LAST:event_addMouseReleased
 
     private void editMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editMouseClicked
-       new StaffPageEdit(realUserId).setVisible(true);
+        new StaffPageEdit(realUserId).setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_editMouseClicked
 
@@ -626,41 +705,148 @@ setVisible(false);
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSupplierNameActionPerformed
 
-    
-    private void addProdToDB(){
-   // Get the necessary information from the text fields and other input controls
-    String barcode = txtBarcode.getText();
-    String name = txtName.getText();
-    String price = txtPrice.getText();
-    int stocks = Integer.parseInt(txtStocks.getText());
-    int criticalLevel = Integer.parseInt(txtCriticalLevel.getText());
+ private void addProdToDB() {
+    // Get the necessary information from the text fields and other input controls
+    String barcode = txtBarcode.getText().trim();
+    String name = txtName.getText().trim();
+    String priceStr = txtPrice.getText().trim();
+    String stocksStr = txtStocks.getText().trim();
+    String criticalLevelStr = txtCriticalLevel.getText().trim();
     boolean perishable = rbtnPerishableYes.isSelected(); // Assuming you have two radio buttons for Yes and No
     java.util.Date expirationDate = jDateChooserExpirationDate.getDate();
-    
+    String supplierName = txtSupplierName.getText().trim();
+    String supplierAddress = txtSupplierAddress.getText().trim();
+    String supplierContact = txtsupplierContact.getText().trim();
+    String category = (String) cmbCategory.getSelectedItem(); // Assuming you have a JComboBox for category
+
+    // Validate name
+    if (name.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Please enter a product name.");
+        return;
+    }
+
+    // Validate price
+    BigDecimal price;
+    try {
+        price = new BigDecimal(priceStr);
+        if (price.compareTo(BigDecimal.ZERO) <= 0) {
+            JOptionPane.showMessageDialog(this, "Price must be a positive number.");
+            return;
+        }
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Invalid price format.");
+        return;
+    }
+
+    // Validate stocks
+    int stocks;
+    try {
+        stocks = Integer.parseInt(stocksStr);
+        if (stocks <= 0) {
+            JOptionPane.showMessageDialog(this, "Stocks must be a positive number.");
+            return;
+        }
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Invalid stocks format.");
+        return;
+    }
+
+    // Validate critical level
+    int criticalLevel;
+    try {
+        criticalLevel = Integer.parseInt(criticalLevelStr);
+        if (criticalLevel <= 0) {
+            JOptionPane.showMessageDialog(this, "Critical level must be a positive number.");
+            return;
+        }
+        if (criticalLevel > stocks) {
+            JOptionPane.showMessageDialog(this, "Critical level cannot be greater than stocks.");
+            return;
+        }
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Invalid critical level format.");
+        return;
+    }
+
+    // Validate perishable
+    if (!rbtnPerishableYes.isSelected() && !rbtnPerishableNo.isSelected()) {
+        JOptionPane.showMessageDialog(this, "Please select if the product is perishable.");
+        return;
+    }
+
+    // Validate expiration date
+    if (perishable && expirationDate != null) {
+        Date today = new Date();
+        if (expirationDate.before(today)) {
+            JOptionPane.showMessageDialog(this, "Expiration date cannot be a past date.");
+            return;
+        }
+    }
+
+    // Validate supplier name, address, and contact
+    if (supplierName.isEmpty() || supplierAddress.isEmpty() || supplierContact.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Please enter supplier information.");
+        return;
+    }
+
+    // Validate supplier contact format (11 digits)
+    if (!supplierContact.matches("\\d{11}")) {
+        JOptionPane.showMessageDialog(this, "Supplier contact must be 11 digits.");
+        return;
+    }
+
     // Database connection details
     String url = "jdbc:mysql://127.0.0.1:3306/database";
     String dbUsername = "root";
     String dbPassword = "admin";
-    
+
     Connection conn = null;
     PreparedStatement pstmt = null;
-    
+    PreparedStatement checkSupplierStmt = null;
+    ResultSet rs = null;
+
     try {
         // Establish a connection to the database
         conn = DriverManager.getConnection(url, dbUsername, dbPassword);
-        
+
+        // Check if the supplier already exists
+        String checkSupplierSql = "SELECT supplier_id FROM suppliers WHERE supplier_name = ?";
+        checkSupplierStmt = conn.prepareStatement(checkSupplierSql);
+        checkSupplierStmt.setString(1, supplierName);
+        rs = checkSupplierStmt.executeQuery();
+
+        int supplierId = -1;
+        if (rs.next()) {
+            // Supplier exists, get the supplier ID
+            supplierId = rs.getInt("supplier_id");
+        } else {
+            // Supplier does not exist, insert a new supplier
+            String insertSupplierSql = "INSERT INTO suppliers (supplier_name, supplier_address, supplier_contact) VALUES (?, ?, ?)";
+            pstmt = conn.prepareStatement(insertSupplierSql, Statement.RETURN_GENERATED_KEYS);
+            pstmt.setString(1, supplierName);
+            pstmt.setString(2, supplierAddress);
+            pstmt.setString(3, supplierContact);
+            pstmt.executeUpdate();
+
+            // Get the generated supplier ID
+            rs = pstmt.getGeneratedKeys();
+            if (rs.next()) {
+                supplierId = rs.getInt(1);
+            }
+        }
+
         // SQL query to insert data into the product_information table
-        String sql = "INSERT INTO product_information (barcode, name, price, stocks, critical_level, perishable, expiration_date, supplier_name) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-        
+        String sql = "INSERT INTO product_information (barcode, name, price, stocks, critical_level, perishable, expiration_date, category, supplier_name) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
         // Prepare the statement
         pstmt = conn.prepareStatement(sql);
         pstmt.setString(1, barcode);
         pstmt.setString(2, name);
-        pstmt.setBigDecimal(3, new java.math.BigDecimal(price));
+        pstmt.setBigDecimal(3, price);
         pstmt.setInt(4, stocks);
         pstmt.setInt(5, criticalLevel);
         pstmt.setBoolean(6, perishable);
-        
+
         if (perishable) {
             // Convert the java.util.Date to java.sql.Date if the product is perishable
             java.sql.Date sqlExpirationDate = new java.sql.Date(expirationDate.getTime());
@@ -669,29 +855,41 @@ setVisible(false);
             // Set expiration_date to null if the product is not perishable
             pstmt.setNull(7, java.sql.Types.DATE);
         }
-        
-        pstmt.setString(8, txtSupplierName.getText());
-        
+
+        pstmt.setString(8, category);
+        pstmt.setString(9, supplierName);
+
         // Execute the update
         int rowsAffected = pstmt.executeUpdate();
-        
+
         if (rowsAffected > 0) {
             JOptionPane.showMessageDialog(this, "Product information added successfully.");
         }
-        
+
     } catch (SQLException e) {
         e.printStackTrace();
         JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
     } finally {
         try {
-            if (pstmt != null) pstmt.close();
-            if (conn != null) conn.close();
+            if (rs != null) {
+                rs.close();
+            }
+            if (checkSupplierStmt != null) {
+                checkSupplierStmt.close();
+            }
+            if (pstmt != null) {
+                pstmt.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+}
+
     
-    }
     private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
         addProdToDB();
     }//GEN-LAST:event_addBtnActionPerformed
@@ -702,9 +900,87 @@ setVisible(false);
     }//GEN-LAST:event_rbtnPerishableYesActionPerformed
 
     private void rbtnPerishableNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnPerishableNoActionPerformed
-       rbtnPerishableYes.setSelected(false);
+        rbtnPerishableYes.setSelected(false);
         rbtnPerishableNo.setSelected(true);
     }//GEN-LAST:event_rbtnPerishableNoActionPerformed
+
+    private void txtSupplierAddressActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSupplierAddressActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSupplierAddressActionPerformed
+
+    private void txtsupplierContactActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtsupplierContactActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtsupplierContactActionPerformed
+    private void searchSupplier() {
+        String supplierName = txtSupplierName.getText();
+
+        // Database connection details
+        String url = "jdbc:mysql://127.0.0.1:3306/database";
+        String dbUsername = "root";
+        String dbPassword = "admin";
+
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            // Establish a connection to the database
+            conn = DriverManager.getConnection(url, dbUsername, dbPassword);
+
+            // SQL query to search for the supplier
+            String sql = "SELECT supplier_address, supplier_contact FROM suppliers WHERE supplier_name = ?";
+
+            // Prepare the statement
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, supplierName);
+
+            // Execute the query
+            rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                // Retrieve the address and contact if the supplier exists
+                String supplierAddress = rs.getString("supplier_address");
+                String supplierContact = rs.getString("supplier_contact");
+
+                // Set the text into the text fields
+                txtSupplierAddress.setText(supplierAddress);
+                txtsupplierContact.setText(supplierContact);
+            } else {
+                // If the supplier does not exist, show a message
+                JOptionPane.showMessageDialog(this, "Supplier not found.");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    private void searchSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchSupplierActionPerformed
+        String supplierName = txtSupplierName.getText().trim(); // Trim to remove leading and trailing spaces
+
+        // Check if supplierName is empty
+        if (supplierName.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please enter a supplier name.");
+            return; // Exit the method if the supplier name is empty
+        }
+
+        // Call searchSupplier only if supplierName is not empty
+        searchSupplier();
+    }//GEN-LAST:event_searchSupplierActionPerformed
 
     /**
      * @param args the command line arguments
@@ -745,6 +1021,7 @@ setVisible(false);
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel add;
     private javax.swing.JButton addBtn;
+    private javax.swing.JComboBox<String> cmbCategory;
     private javax.swing.JPanel edit;
     private javax.swing.JPanel help;
     private javax.swing.JPanel inventory;
@@ -759,6 +1036,9 @@ setVisible(false);
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -776,13 +1056,16 @@ setVisible(false);
     private javax.swing.JRadioButton rbtnPerishableNo;
     private javax.swing.JRadioButton rbtnPerishableYes;
     private javax.swing.JPanel reports;
+    private javax.swing.JButton searchSupplier;
     private javax.swing.JPanel settings;
     private javax.swing.JTextField txtBarcode;
     private javax.swing.JTextField txtCriticalLevel;
     private javax.swing.JTextField txtName;
     private javax.swing.JTextField txtPrice;
     private javax.swing.JTextField txtStocks;
+    private javax.swing.JTextField txtSupplierAddress;
     private javax.swing.JTextField txtSupplierName;
+    private javax.swing.JTextField txtsupplierContact;
     // End of variables declaration//GEN-END:variables
  class RoundedPanel extends JPanel {
 
@@ -832,6 +1115,4 @@ setVisible(false);
 
     }
 
-
 }
-
