@@ -5,7 +5,8 @@ package softeng;
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 
-
+import java.time.LocalDate;
+import java.time.Period;
 import softeng.VetPageEdit;
 import softeng.PatientCard;
 import java.awt.BorderLayout;
@@ -108,6 +109,8 @@ public class VetPageSearch extends javax.swing.JFrame {
         jLabel26 = new javax.swing.JLabel();
         patientIdTxtField = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        searchPatientButton = new javax.swing.JButton();
+        clearTextButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -370,7 +373,7 @@ public class VetPageSearch extends javax.swing.JFrame {
 
         patientTxtField.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
-        ageTxt.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        ageTxt.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
@@ -380,7 +383,7 @@ public class VetPageSearch extends javax.swing.JFrame {
 
         jLabel13.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel13.setText("Weight");
+        jLabel13.setText("Weight (kg)");
 
         jLabel14.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
@@ -496,6 +499,20 @@ public class VetPageSearch extends javax.swing.JFrame {
             }
         });
 
+        searchPatientButton.setText("Search");
+        searchPatientButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchPatientButtonActionPerformed(evt);
+            }
+        });
+
+        clearTextButton.setText("Clear");
+        clearTextButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearTextButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
@@ -503,11 +520,7 @@ public class VetPageSearch extends javax.swing.JFrame {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addGap(146, 146, 146)
                 .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 495, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(253, 253, 253))
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(50, 50, 50)
-                .addComponent(jLabel24)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(253, 321, Short.MAX_VALUE))
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel6Layout.createSequentialGroup()
@@ -529,8 +542,10 @@ public class VetPageSearch extends javax.swing.JFrame {
                                 .addGap(46, 46, 46)
                                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel15, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                    .addComponent(jLabel15, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel6Layout.createSequentialGroup()
+                                .addGap(116, 116, 116)
+                                .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
@@ -541,7 +556,7 @@ public class VetPageSearch extends javax.swing.JFrame {
                                 .addComponent(marksTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel6Layout.createSequentialGroup()
                                 .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 495, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
+                                .addGap(0, 94, Short.MAX_VALUE))
                             .addGroup(jPanel6Layout.createSequentialGroup()
                                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(jPanel6Layout.createSequentialGroup()
@@ -572,12 +587,23 @@ public class VetPageSearch extends javax.swing.JFrame {
                                 .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 731, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 731, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(83, 83, 83)
-                        .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(patientIdTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(83, 83, 83)
+                                .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18))
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addGap(50, 50, 50)
+                                .addComponent(jLabel24)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addComponent(searchPatientButton, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(clearTextButton, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(patientIdTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(96, 96, 96))
         );
         jPanel6Layout.setVerticalGroup(
@@ -592,8 +618,15 @@ public class VetPageSearch extends javax.swing.JFrame {
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGap(38, 38, 38)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(26, 26, 26)
-                .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(clearTextButton, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(searchPatientButton, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGap(2, 2, 2)
@@ -621,7 +654,7 @@ public class VetPageSearch extends javax.swing.JFrame {
                     .addComponent(breedTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(marksTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(73, 73, 73)
+                .addGap(57, 57, 57)
                 .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(22, 22, 22)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -643,7 +676,7 @@ public class VetPageSearch extends javax.swing.JFrame {
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(contactTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jScrollPane4.setViewportView(jPanel6);
@@ -758,7 +791,23 @@ public class VetPageSearch extends javax.swing.JFrame {
                 // Set the patient information to text fields
                 patientTxtField.setText(patientResultSet.getString("patient_name"));
                 strCodeText = patientResultSet.getString("barcode");
-                ageTxt.setText(String.valueOf(patientResultSet.getInt("age")));
+                LocalDate pDay = patientResultSet.getDate("bday").toLocalDate();
+                LocalDate currentDate = LocalDate.now();
+                Period ageCalc = Period.between(pDay, currentDate);
+                int years = ageCalc.getYears();
+                int months = ageCalc.getMonths();
+                String ageText;
+                if (years > 0) {
+                    ageText = years + " year(s)";
+                         if (months > 0) {
+                              ageText += " and " + months + " month(s)";
+                                   }}
+                else {
+                    ageText = months + " month(s)";
+                        }
+                  // Set the text
+                ageTxt.setText(ageText);
+             
                 weightTxt.setText(String.valueOf(patientResultSet.getFloat("weight")));
                 typeTxtField.setText(patientResultSet.getString("type"));
                 colorTxtField.setText(patientResultSet.getString("color"));
@@ -897,11 +946,22 @@ public class VetPageSearch extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
-
+    private void clearTables() {
+    DefaultTableModel dm = (DefaultTableModel)medicalHistoryTable.getModel();
+    while(dm.getRowCount() > 0)
+        {
+          dm.removeRow(0);
+        }
+    
+    DefaultTableModel dm1 = (DefaultTableModel)vaccineHistoryTable.getModel();
+    while(dm1.getRowCount() > 0)
+        {
+          dm1.removeRow(0);
+        }
+    }
     private void patientIdTxtFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_patientIdTxtFieldKeyReleased
-        searchPatient();
-        updateMedicalHistoryTable();
-        updateVaccineHistoryTable();
+      
+       
     }//GEN-LAST:event_patientIdTxtFieldKeyReleased
 
     private void logoutMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseReleased
@@ -926,6 +986,17 @@ public class VetPageSearch extends javax.swing.JFrame {
        card.setVisible(true);
        card.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void searchPatientButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchPatientButtonActionPerformed
+       searchPatient();
+       updateMedicalHistoryTable();
+       updateVaccineHistoryTable();
+    }//GEN-LAST:event_searchPatientButtonActionPerformed
+
+    private void clearTextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearTextButtonActionPerformed
+        clearTextFields();
+        clearTables();
+    }//GEN-LAST:event_clearTextButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -970,6 +1041,7 @@ public class VetPageSearch extends javax.swing.JFrame {
     private javax.swing.JTextArea addressTxtField;
     private javax.swing.JTextField ageTxt;
     private javax.swing.JTextField breedTxtField;
+    private javax.swing.JButton clearTextButton;
     private javax.swing.JTextField colorTxtField;
     private javax.swing.JTextField contactTxtField;
     private javax.swing.JPanel editPatient;
@@ -1012,6 +1084,7 @@ public class VetPageSearch extends javax.swing.JFrame {
     private javax.swing.JTextField patientIdTxtField;
     private javax.swing.JTextField patientTxtField;
     private javax.swing.JPanel searchPatient;
+    private javax.swing.JButton searchPatientButton;
     private javax.swing.JPanel send;
     private javax.swing.JPanel settings;
     private javax.swing.JComboBox<String> sexComboBox;
