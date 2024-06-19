@@ -61,7 +61,6 @@ public class VetPageAdd extends javax.swing.JFrame {
         jLabel17 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         patientTxtField = new javax.swing.JTextField();
-        ageTxt = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         weightTxt = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
@@ -84,6 +83,7 @@ public class VetPageAdd extends javax.swing.JFrame {
         jLabel23 = new javax.swing.JLabel();
         contactTxtField = new javax.swing.JTextField();
         addBtn = new javax.swing.JButton();
+        bDay = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -343,11 +343,9 @@ public class VetPageAdd extends javax.swing.JFrame {
 
         patientTxtField.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
-        ageTxt.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-
         jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel12.setText("Age");
+        jLabel12.setText("Birth Date");
 
         weightTxt.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
@@ -458,15 +456,18 @@ public class VetPageAdd extends javax.swing.JFrame {
                                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                             .addComponent(weightTxt, javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(patientTxtField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE))
-                                        .addGap(49, 49, 49)
-                                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                                .addGap(49, 49, 49)
+                                                .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(jLabel12)))))
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(ageTxt)
                                     .addComponent(colorTxtField)
-                                    .addComponent(sexComboBox, 0, 196, Short.MAX_VALUE))))
+                                    .addComponent(sexComboBox, 0, 196, Short.MAX_VALUE)
+                                    .addComponent(bDay, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addGap(94, 94, 94))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -492,15 +493,14 @@ public class VetPageAdd extends javax.swing.JFrame {
                 .addGap(64, 64, 64)
                 .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(ageTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(patientTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(patientTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addComponent(bDay, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(14, 14, 14)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(weightTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -603,27 +603,35 @@ public class VetPageAdd extends javax.swing.JFrame {
     private void settingsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsMouseClicked
         System.out.println("nigga");
     }//GEN-LAST:event_settingsMouseClicked
-
+    
     private void addPatient() {
+        
         String patientName = patientTxtField.getText();
-        int age = Integer.parseInt(ageTxt.getText());
-        float weight = Float.parseFloat(weightTxt.getText());
+        java.util.Date bDayVal = bDay.getDate();
+        
+        String weight = weightTxt.getText();
         String type = typeTxtField.getText();
         String color = colorTxtField.getText();
         String breed = breedTxtField.getText();
         String marks = marksTxtField.getText();
         String sex = sexComboBox.getSelectedItem().toString().equals("MALE") ? "M" : "F";
-
+        
         String clientName = nameTxtField.getText();
         String address = addressTxtField.getText();
         String contact = contactTxtField.getText();
           // Step-1 - Generate a random barcode text
         String strCodeText = UUID.randomUUID().toString().substring(0, 8).toUpperCase(); // Generate a random 8-character string
-    
+        if(patientTxtField.getText().isEmpty() || bDayVal == null || type.isEmpty() || 
+        color.isEmpty() || breed.isEmpty() || marks.isEmpty() || clientName.isEmpty() || 
+        address.isEmpty() || contact.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Error: Complete all text fields");
+        }
+        else{
+        java.sql.Date sqlbDay = new java.sql.Date(bDayVal.getTime());
         String url = "jdbc:mysql://127.0.0.1:3306/database";
         String dbUsername = "root";
         String dbPassword = "admin";
-
+        
         try {
             // Establish the database connection
             Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
@@ -645,23 +653,40 @@ public class VetPageAdd extends javax.swing.JFrame {
             }
 
             // Insert into patient_information table
-            String insertPatientQuery = "INSERT INTO patient_information (patient_name,barcode, age, weight, sex, type, color, breed, marks, client_name, registration_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String insertPatientQuery = "INSERT INTO patient_information (patient_name,barcode, weight, sex, type, color, breed, marks, client_name, registration_date, bday) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement insertPatientStmt = connection.prepareStatement(insertPatientQuery);
             insertPatientStmt.setString(1, patientName);
             insertPatientStmt.setString(2, strCodeText);
-            insertPatientStmt.setInt(3, age);
-            insertPatientStmt.setFloat(4, weight);
-            insertPatientStmt.setString(5, sex);
-            insertPatientStmt.setString(6, type);
-            insertPatientStmt.setString(7, color);
-            insertPatientStmt.setString(8, breed);
-            insertPatientStmt.setString(9, marks);
-            insertPatientStmt.setString(10, clientName);
-            insertPatientStmt.setDate(11, new java.sql.Date(System.currentTimeMillis())); // Set the current date
+            insertPatientStmt.setFloat(3,  Float.parseFloat(weight));
+            insertPatientStmt.setString(4,sex);
+            insertPatientStmt.setString(5, type);
+            insertPatientStmt.setString(6, color);
+            insertPatientStmt.setString(7, breed);
+            insertPatientStmt.setString(8,marks );
+            insertPatientStmt.setString(9, clientName);
+            insertPatientStmt.setDate(10,  new java.sql.Date(System.currentTimeMillis()));
+            insertPatientStmt.setDate(11,sqlbDay); // Set the current date
             insertPatientStmt.executeUpdate();
 
             // Show success message
-            JOptionPane.showMessageDialog(null, "Information added successfully!");
+             int input = JOptionPane.showOptionDialog(
+  null,
+       "Information Added Successfully",
+        "Add User",
+     JOptionPane.DEFAULT_OPTION,
+    JOptionPane.INFORMATION_MESSAGE,
+          null,
+              new Object[]{"Yes"},
+    "Yes"
+            );
+            if(input == JOptionPane.YES_OPTION)
+            {
+                PatientCard card =  new PatientCard(patientName,clientName,contact,strCodeText);
+                System.out.println(strCodeText);
+                card.setLocationRelativeTo(null);
+                card.setVisible(true);
+                card.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+            }
             clearTextFields();
 
             // Close the database connection
@@ -670,7 +695,7 @@ public class VetPageAdd extends javax.swing.JFrame {
             // Handle any SQL exceptions
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
-        }
+        }}
     }
     private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
         addPatient();
@@ -687,7 +712,7 @@ public class VetPageAdd extends javax.swing.JFrame {
     }//GEN-LAST:event_logoutMouseReleased
     private void clearTextFields() {
         patientTxtField.setText("");
-        ageTxt.setText("");
+        bDay.setDate(null);
         weightTxt.setText("");
         typeTxtField.setText("");
         colorTxtField.setText("");
@@ -739,7 +764,7 @@ public class VetPageAdd extends javax.swing.JFrame {
     private javax.swing.JButton addBtn;
     private javax.swing.JPanel addPatient;
     private javax.swing.JTextArea addressTxtField;
-    private javax.swing.JTextField ageTxt;
+    private com.toedter.calendar.JDateChooser bDay;
     private javax.swing.JTextField breedTxtField;
     private javax.swing.JTextField colorTxtField;
     private javax.swing.JTextField contactTxtField;
