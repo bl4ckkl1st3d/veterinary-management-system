@@ -705,6 +705,7 @@ public class StaffPageAdd extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSupplierNameActionPerformed
 
+
  private void addProdToDB() {
     // Get the necessary information from the text fields and other input controls
     String barcode = txtBarcode.getText().trim();
@@ -712,6 +713,7 @@ public class StaffPageAdd extends javax.swing.JFrame {
     String priceStr = txtPrice.getText().trim();
     String stocksStr = txtStocks.getText().trim();
     String criticalLevelStr = txtCriticalLevel.getText().trim();
+
     boolean perishable = rbtnPerishableYes.isSelected(); // Assuming you have two radio buttons for Yes and No
     java.util.Date expirationDate = jDateChooserExpirationDate.getDate();
     String supplierName = txtSupplierName.getText().trim();
@@ -864,6 +866,7 @@ public class StaffPageAdd extends javax.swing.JFrame {
 
         if (rowsAffected > 0) {
             JOptionPane.showMessageDialog(this, "Product information added successfully.");
+            clearTextFields();
         }
 
     } catch (SQLException e) {

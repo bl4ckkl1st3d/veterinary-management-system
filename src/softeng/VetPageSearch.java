@@ -1,9 +1,14 @@
+package softeng;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package softeng;
 
+
+import softeng.VetPageEdit;
+import softeng.PatientCard;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -12,8 +17,15 @@ import java.awt.LayoutManager;
 import java.awt.RenderingHints;
 import javax.swing.JPanel;
 import java.sql.*;
+import javax.swing.*;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import org.krysalis.barcode4j.impl.code39.Code39Bean;
+import org.krysalis.barcode4j.output.bitmap.BitmapCanvasProvider;
+import java.awt.image.BufferedImage;
+import java.io.File;
 
 /**
  *
@@ -25,7 +37,11 @@ public class VetPageSearch extends javax.swing.JFrame {
      * Creates new form VetPageSearch
      */
     private int realUserId;
-
+    private String pName;
+    private String oName;
+    private String contacts;
+    private String strCodeText;
+    private String barImgPath = "c:/temp/code39.jpg";
     public VetPageSearch(int realUserId) {
         initComponents();
         this.realUserId = realUserId;
@@ -91,6 +107,7 @@ public class VetPageSearch extends javax.swing.JFrame {
         vaccineHistoryTable = new javax.swing.JTable();
         jLabel26 = new javax.swing.JLabel();
         patientIdTxtField = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -461,9 +478,21 @@ public class VetPageSearch extends javax.swing.JFrame {
         jLabel26.setText("PATIENTID");
 
         patientIdTxtField.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        patientIdTxtField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                patientIdTxtFieldActionPerformed(evt);
+            }
+        });
         patientIdTxtField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 patientIdTxtFieldKeyReleased(evt);
+            }
+        });
+
+        jButton1.setText("Generate Patient Card");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -541,20 +570,28 @@ public class VetPageSearch extends javax.swing.JFrame {
                                     .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 495, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 731, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 731, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(patientIdTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 731, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(83, 83, 83)
+                        .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(patientIdTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(96, 96, 96))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(57, 57, 57)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(patientIdTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(57, 57, 57)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(patientIdTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(38, 38, 38)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(26, 26, 26)
                 .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -720,6 +757,7 @@ public class VetPageSearch extends javax.swing.JFrame {
             if (patientResultSet.next()) {
                 // Set the patient information to text fields
                 patientTxtField.setText(patientResultSet.getString("patient_name"));
+                strCodeText = patientResultSet.getString("barcode");
                 ageTxt.setText(String.valueOf(patientResultSet.getInt("age")));
                 weightTxt.setText(String.valueOf(patientResultSet.getFloat("weight")));
                 typeTxtField.setText(patientResultSet.getString("type"));
@@ -727,9 +765,10 @@ public class VetPageSearch extends javax.swing.JFrame {
                 breedTxtField.setText(patientResultSet.getString("breed"));
                 marksTxtField.setText(patientResultSet.getString("marks"));
                 sexComboBox.setSelectedItem(patientResultSet.getString("sex").equals("M") ? "MALE" : "FEMALE");
-
+                pName = patientResultSet.getString("patient_name");
+               
                 String clientName = patientResultSet.getString("client_name");
-
+               
                 // Retrieve client information
                 String clientQuery = "SELECT * FROM client_information WHERE client_name = ?";
                 PreparedStatement clientStmt = connection.prepareStatement(clientQuery);
@@ -741,8 +780,10 @@ public class VetPageSearch extends javax.swing.JFrame {
                     nameTxtField.setText(clientResultSet.getString("client_name"));
                     addressTxtField.setText(clientResultSet.getString("address"));
                     contactTxtField.setText(clientResultSet.getString("contact"));
+                      oName = (clientResultSet.getString("client_name"));
+                      contacts = (clientResultSet.getString("contact"));
                 }
-
+              
                 clientStmt.close();
                 clientResultSet.close();
             } else {
@@ -759,7 +800,7 @@ public class VetPageSearch extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
         }
     }
-
+   
     public void updateMedicalHistoryTable() {
         // Get the patient ID from the patientIdTxtField
         int patientId = Integer.parseInt(patientIdTxtField.getText());
@@ -873,6 +914,19 @@ public class VetPageSearch extends javax.swing.JFrame {
         }        // TODO add your handling code here:
     }//GEN-LAST:event_logoutMouseReleased
 
+    private void patientIdTxtFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_patientIdTxtFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_patientIdTxtFieldActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    
+       PatientCard card =  new PatientCard(pName,oName,contacts,strCodeText);
+        System.out.println(strCodeText);
+       card.setLocationRelativeTo(null);
+       card.setVisible(true);
+       card.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -920,6 +974,7 @@ public class VetPageSearch extends javax.swing.JFrame {
     private javax.swing.JTextField contactTxtField;
     private javax.swing.JPanel editPatient;
     private javax.swing.JPanel help;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
