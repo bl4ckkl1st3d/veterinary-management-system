@@ -704,7 +704,17 @@ public class StaffPageAdd extends javax.swing.JFrame {
     private void txtSupplierNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSupplierNameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSupplierNameActionPerformed
+private void clearTextFields() {
+        txtBarcode.setText("");
+        txtName.setText("");
+        txtPrice.setText("");
+        txtStocks.setText("");
+        txtCriticalLevel.setText("");
+        jDateChooserExpirationDate.setDate(null);
+        txtSupplierName.setText("");
 
+
+    }
 
  private void addProdToDB() {
     // Get the necessary information from the text fields and other input controls
