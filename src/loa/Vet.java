@@ -45,7 +45,7 @@ public class Vet extends javax.swing.JFrame {
                 } else if (index == 6){
                     int response = JOptionPane.showConfirmDialog(null, "Are you sure you want to log out?", "Confirm Logout", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                     if (response == JOptionPane.YES_OPTION) {
-                    panelBorder.setVisible(false);
+                    setVisible(false);
                     new login().setVisible(true);
                     }
                 }

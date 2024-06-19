@@ -474,7 +474,8 @@ public class StaffPage extends javax.swing.JFrame {
     }//GEN-LAST:event_editMouseClicked
 
     private void posMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_posMouseClicked
-        System.out.println("test");
+        new StaffPagePOS(realUserId).setVisible(true);
+        setVisible(false);
     }//GEN-LAST:event_posMouseClicked
 
     private void reportsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reportsMouseClicked
