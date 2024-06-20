@@ -68,7 +68,6 @@ public class AdminPageAdd extends javax.swing.JFrame {
         firstNameTxtField = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
-        ageTxtField = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         addressTxtField = new javax.swing.JTextArea();
@@ -90,6 +89,8 @@ public class AdminPageAdd extends javax.swing.JFrame {
         jLabel23 = new javax.swing.JLabel();
         secretQuestionBox = new javax.swing.JComboBox<>();
         editBtn = new javax.swing.JButton();
+        searchBtn = new javax.swing.JButton();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -394,9 +395,7 @@ public class AdminPageAdd extends javax.swing.JFrame {
 
         jLabel15.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel15.setText("Age:");
-
-        ageTxtField.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel15.setText("Birthdate:");
 
         jLabel16.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
@@ -421,6 +420,7 @@ public class AdminPageAdd extends javax.swing.JFrame {
 
         passwordTxtField.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
+        usernameTxtField.setEditable(false);
         usernameTxtField.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
         jLabel19.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -461,11 +461,6 @@ public class AdminPageAdd extends javax.swing.JFrame {
         jLabel21.setText("UserId:");
 
         useridTxtField.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        useridTxtField.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                useridTxtFieldKeyReleased(evt);
-            }
-        });
 
         jLabel23.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
@@ -479,10 +474,17 @@ public class AdminPageAdd extends javax.swing.JFrame {
             }
         });
 
-        editBtn.setText("EDIT USER");
+        editBtn.setText("SAVE");
         editBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 editBtnActionPerformed(evt);
+            }
+        });
+
+        searchBtn.setText("EDIT");
+        searchBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchBtnActionPerformed(evt);
             }
         });
 
@@ -492,40 +494,6 @@ public class AdminPageAdd extends javax.swing.JFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 495, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(useridTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jScrollPane1))
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(ageTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(45, 45, 45)
-                                .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(sexBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(firstNameTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(36, 36, 36)
-                                .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(lastNameTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(contactTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 495, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -547,8 +515,46 @@ public class AdminPageAdd extends javax.swing.JFrame {
                             .addComponent(usernameTxtField)
                             .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(editBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(67, Short.MAX_VALUE))
+                        .addComponent(editBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 495, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(useridTxtField, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
+                            .addComponent(searchBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                        .addContainerGap(7, Short.MAX_VALUE)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jScrollPane1))
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addGap(3, 3, 3)
+                                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(contactTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(sexBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(firstNameTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(36, 36, 36)
+                                .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(lastNameTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addGap(11, 11, 11)
+                                .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(68, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -558,7 +564,9 @@ public class AdminPageAdd extends javax.swing.JFrame {
                     .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(useridTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(searchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(firstNameTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -570,14 +578,17 @@ public class AdminPageAdd extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ageTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(sexBox, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(sexBox, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(contactTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(48, 48, 48)
                 .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -596,7 +607,7 @@ public class AdminPageAdd extends javax.swing.JFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(secretQuestionBox, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(answerTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -644,10 +655,6 @@ public class AdminPageAdd extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void loaBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loaBoxActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_loaBoxActionPerformed
 
     private boolean userIdEvent() {
         String url = "jdbc:mysql://127.0.0.1:3306/database";
@@ -736,7 +743,7 @@ public class AdminPageAdd extends javax.swing.JFrame {
                 firstNameTxtField.setText(firstName);
                 lastNameTxtField.setText(lastName);
                 addressTxtField.setText(address);
-                ageTxtField.setText(String.valueOf(age));
+//                ageTxtField.setText(String.valueOf(age));
                 contactTxtField.setText(contact);
                 if ("M".equals(sex)) {
                     sexBox.setSelectedItem("MALE");
@@ -796,25 +803,7 @@ public class AdminPageAdd extends javax.swing.JFrame {
     }
     
     
-    
-    private void useridTxtFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_useridTxtFieldKeyReleased
-        //done
-        System.out.println("bru");
-        
-        String userId = useridTxtField.getText();
-
-        Boolean isTrue = userIdEvent();
-        if (isTrue) {
-            editBtn.setVisible(true);
-            jButton1.setVisible(false);
-        } else {
-            editBtn.setVisible(false);
-            jButton1.setVisible(true);
-        }
-
-
-    }//GEN-LAST:event_useridTxtFieldKeyReleased
-    private void clearAllFields() {
+        private void clearAllFields() {
         // Clear all text fields and reset combo boxes
         usernameTxtField.setText("");
         passwordTxtField.setText("");
@@ -824,19 +813,10 @@ public class AdminPageAdd extends javax.swing.JFrame {
         firstNameTxtField.setText("");
         lastNameTxtField.setText("");
         addressTxtField.setText("");
-        ageTxtField.setText("");
+//        ageTxtField.setText("");
         contactTxtField.setText("");
         sexBox.setSelectedIndex(-1);
     }
-    private void secretQuestionBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_secretQuestionBoxActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_secretQuestionBoxActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        addUserToDatabase();
-
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void settingsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsMouseClicked
         System.out.println("test");
     }//GEN-LAST:event_settingsMouseClicked
@@ -867,13 +847,113 @@ public class AdminPageAdd extends javax.swing.JFrame {
     }//GEN-LAST:event_searchMouseReleased
 
 
+    private void logoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseClicked
+        int response = JOptionPane.showConfirmDialog(this, "Do you want to log out?", "Confirm Logout", JOptionPane.YES_NO_OPTION);
+        if (response == JOptionPane.YES_OPTION) {
+            login.login();
+            setVisible(false);
+        } else {
+            // User clicked 'No' or closed the dialog, do nothing
+        }
+    }//GEN-LAST:event_logoutMouseClicked
+
+    private void searchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBtnActionPerformed
+        String userIdText = useridTxtField.getText();
+
+        if (userIdText.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Please enter a User ID.");
+            return;
+        }
+
+        int userId;
+        try {
+            userId = Integer.parseInt(userIdText);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Invalid User ID format.");
+            return;
+        }
+
+        String url = "jdbc:mysql://127.0.0.1:3306/database";
+        String dbUsername = "root";
+        String dbPassword = "admin";
+
+        try (Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword)) {
+            // Query to check if the user exists and get user information
+            String queryUserInfo = "SELECT * FROM user_information WHERE userid = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(queryUserInfo)) {
+                preparedStatement.setInt(1, userId);
+                ResultSet resultSet = preparedStatement.executeQuery();
+
+                if (resultSet.next()) {
+                    String firstName = resultSet.getString("first_name");
+                    String lastName = resultSet.getString("last_name");
+                    String address = resultSet.getString("address");
+                    String sex = resultSet.getString("sex");
+                    String contact = resultSet.getString("contact");
+
+                    // Set the retrieved data into the respective text fields and combo box
+                    firstNameTxtField.setText(firstName);
+                    lastNameTxtField.setText(lastName);
+                    addressTxtField.setText(address);
+                    contactTxtField.setText(contact);
+                    if (sex.equals("M")) {
+                        sexBox.setSelectedItem("MALE");
+                    } else if (sex.equals("F")) {
+                        sexBox.setSelectedItem("FEMALE");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "User ID does not exist in the database.");
+                    return;
+                }
+            }
+
+            // Query to get additional user information from the 'users' table
+            String queryUserDetails = "SELECT * FROM users WHERE userid = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(queryUserDetails)) {
+                preparedStatement.setInt(1, userId);
+                ResultSet resultSet = preparedStatement.executeQuery();
+
+                if (resultSet.next()) {
+                    String username = resultSet.getString("username");
+                    String password = resultSet.getString("password");
+                    int loa = resultSet.getInt("loa");
+                    String secretQuestion = resultSet.getString("secret_question");
+                    String secretAnswer = resultSet.getString("secret_answer");
+
+                    // Set the retrieved data into the respective text fields and combo boxes
+                    usernameTxtField.setText(username);
+                    passwordTxtField.setText(password);
+                    secretQuestionBox.setSelectedItem(secretQuestion);
+                    answerTxtField.setText(secretAnswer);
+
+                    switch (loa) {
+                        case 0:
+                        loaBox.setSelectedItem("cashier");
+                        break;
+                        case 1:
+                        loaBox.setSelectedItem("veterinarian");
+                        break;
+                        case 2:
+                        loaBox.setSelectedItem("admin");
+                        break;
+                        default:
+                        break;
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            // Handle SQL exception
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_searchBtnActionPerformed
+
     private void editBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnActionPerformed
         // Get data from the text fields
         String user_Id = useridTxtField.getText();
         String firstName = firstNameTxtField.getText();
         String lastName = lastNameTxtField.getText();
         String address = addressTxtField.getText();
-        String age = ageTxtField.getText();
+   //     String age = ageTxtField.getText();
         String contact = contactTxtField.getText();
 
         // Get data from the combo box
@@ -895,14 +975,14 @@ public class AdminPageAdd extends javax.swing.JFrame {
         int loa = -1;  // default value if LOA is not recognized
         switch (loaString.toLowerCase()) {
             case "cashier":
-                loa = 0;
-                break;
+            loa = 0;
+            break;
             case "veterinarian":
-                loa = 1;
-                break;
+            loa = 1;
+            break;
             case "admin":
-                loa = 2;
-                break;
+            loa = 2;
+            break;
         }
 
         // Database connection information
@@ -931,7 +1011,7 @@ public class AdminPageAdd extends javax.swing.JFrame {
             userInformationPreparedStatement.setString(1, firstName);
             userInformationPreparedStatement.setString(2, lastName);
             userInformationPreparedStatement.setString(3, address);
-            userInformationPreparedStatement.setString(4, age);
+//            userInformationPreparedStatement.setString(4, age);
             userInformationPreparedStatement.setString(5, contact);
             userInformationPreparedStatement.setString(6, sex);
             userInformationPreparedStatement.setInt(7, Integer.parseInt(user_Id));
@@ -954,15 +1034,17 @@ public class AdminPageAdd extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_editBtnActionPerformed
 
-    private void logoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseClicked
-        int response = JOptionPane.showConfirmDialog(this, "Do you want to log out?", "Confirm Logout", JOptionPane.YES_NO_OPTION);
-        if (response == JOptionPane.YES_OPTION) {
-            login.login();
-            setVisible(false);
-        } else {
-            // User clicked 'No' or closed the dialog, do nothing
-        }
-    }//GEN-LAST:event_logoutMouseClicked
+    private void secretQuestionBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_secretQuestionBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_secretQuestionBoxActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        addUserToDatabase();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void loaBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loaBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_loaBoxActionPerformed
     public void updateUserAuditLog(int userId) {
         String url = "jdbc:mysql://127.0.0.1:3306/database";
         String dbUsername = "root";
@@ -1040,7 +1122,7 @@ public class AdminPageAdd extends javax.swing.JFrame {
         String firstName = firstNameTxtField.getText();
         String lastName = lastNameTxtField.getText();
         String address = addressTxtField.getText();
-        int age = Integer.parseInt(ageTxtField.getText());
+//        int age = Integer.parseInt(ageTxtField.getText());
         String contact = contactTxtField.getText();
         String sex = sexBox.getSelectedItem().toString().equals("MALE") ? "M" : "F";
 
@@ -1078,7 +1160,7 @@ public class AdminPageAdd extends javax.swing.JFrame {
                     infoStmt.setString(3, firstName);
                     infoStmt.setString(4, lastName);
                     infoStmt.setString(5, address);
-                    infoStmt.setInt(6, age);
+//                    infoStmt.setInt(6, age);
                     infoStmt.setString(7, sex);
                     infoStmt.setString(8, contact);
 
@@ -1180,7 +1262,6 @@ public class AdminPageAdd extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel add;
     private javax.swing.JTextArea addressTxtField;
-    private javax.swing.JTextField ageTxtField;
     private javax.swing.JTextField answerTxtField;
     private javax.swing.JPanel cashier;
     private javax.swing.JTextField contactTxtField;
@@ -1188,6 +1269,7 @@ public class AdminPageAdd extends javax.swing.JFrame {
     private javax.swing.JTextField firstNameTxtField;
     private javax.swing.JPanel help;
     private javax.swing.JButton jButton1;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1221,6 +1303,7 @@ public class AdminPageAdd extends javax.swing.JFrame {
     private javax.swing.JTextField passwordTxtField;
     private javax.swing.JPanel reports;
     private javax.swing.JPanel search;
+    private javax.swing.JButton searchBtn;
     private javax.swing.JComboBox<String> secretQuestionBox;
     private javax.swing.JPanel settings;
     private javax.swing.JComboBox<String> sexBox;
