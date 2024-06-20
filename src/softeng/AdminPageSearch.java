@@ -83,6 +83,8 @@ public class AdminPageSearch extends javax.swing.JFrame {
         userTable = new javax.swing.JTable();
         jLabel17 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
+        userIdTxtField = new javax.swing.JTextField();
+        jLabel18 = new javax.swing.JLabel();
 
         jPanel5.setBackground(new java.awt.Color(153, 255, 204));
 
@@ -544,16 +546,29 @@ public class AdminPageSearch extends javax.swing.JFrame {
             }
         });
 
+        userIdTxtField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                userIdTxtFieldKeyReleased(evt);
+            }
+        });
+
+        jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel18.setText("USERID");
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                 .addContainerGap(24, Short.MAX_VALUE)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 873, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel18)
+                        .addGap(18, 18, 18)
+                        .addComponent(userIdTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(29, 29, 29)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(21, 21, 21))
@@ -564,10 +579,12 @@ public class AdminPageSearch extends javax.swing.JFrame {
                 .addGap(60, 60, 60)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(userIdTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(37, 37, 37)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(223, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -827,6 +844,45 @@ userTable.setModel(model);
         e.printStackTrace();
     }
     }//GEN-LAST:event_jTextField1KeyReleased
+
+    private void userIdTxtFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_userIdTxtFieldKeyReleased
+ String searchText = userIdTxtField.getText();
+
+    String url = "jdbc:mysql://127.0.0.1:3306/database";
+    String dbUsername = "root";
+    String dbPassword = "admin";
+
+    try (Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword)) {
+        String query = "SELECT CONCAT(first_name, ' ', last_name) AS full_name, address, birthdate, age, sex, contact FROM user_information WHERE userid LIKE ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, "%" + searchText + "%");
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            DefaultTableModel tableModel = (DefaultTableModel) userTable.getModel();
+            tableModel.setRowCount(0); // Clear the table
+
+            while (resultSet.next()) {
+                String fullName = resultSet.getString("full_name");
+                String address = resultSet.getString("address");
+                Date birthdate = resultSet.getDate("birthdate");
+                int age = resultSet.getInt("age");
+                String sex = resultSet.getString("sex");
+                String contact = resultSet.getString("contact");
+
+                // Add the retrieved data to the table
+                tableModel.addRow(new Object[]{fullName, address, birthdate, age, sex, contact});
+            }
+
+            if (tableModel.getRowCount() == 0) {
+                // If no matches found, clear the table
+                tableModel.setRowCount(0);
+            }
+        }
+    } catch (SQLException e) {
+        // Handle SQL exception
+        e.printStackTrace();
+    }      
+    }//GEN-LAST:event_userIdTxtFieldKeyReleased
     private void searchUser() {
         String firstName = firstNameTxtField.getText();
         String lastName = lastNameTxtField.getText();
@@ -943,6 +999,7 @@ userTable.setModel(model);
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -964,6 +1021,7 @@ userTable.setModel(model);
     private javax.swing.JPanel search;
     private javax.swing.JPanel settings;
     private javax.swing.JTextField sexTxtField;
+    private javax.swing.JTextField userIdTxtField;
     private javax.swing.JTable userTable;
     private javax.swing.JTextField useridTxtField;
     private javax.swing.JTextField usernameTxtField;
