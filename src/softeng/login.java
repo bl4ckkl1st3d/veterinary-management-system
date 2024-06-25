@@ -5,6 +5,7 @@
 package softeng;
 
 import java.io.BufferedReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.*;
@@ -21,7 +22,7 @@ public class login extends javax.swing.JFrame {
      */
     public login() {
         initComponents();
-    
+
     }
 
     /**
@@ -225,91 +226,162 @@ public void addLoginAuditLog(int userId) {
         // TODO add your handling code here:
     }//GEN-LAST:event_showBtnActionPerformed
 
-private void saveSchema() {
-    String dbHost = "127.0.0.1";
-    String dbPort = "3306";
-    String dbName = "database";
-    String dbUsername = "root";
-    String dbPassword = "admin";
-    String savePath = "schema_dump.sql";
-    
-    // Use the full path to mysqldump
-    String mysqldumpPath = "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\\mysqldump.exe"; // Update this to the actual path
+    private void saveSchema() {
+        String dbHost = "127.0.0.1";
+        String dbPort = "3306";
+        String dbName = "database";
+        String dbUsername = "root";
+        String dbPassword = "admin";
+        String savePath = "schema_dump.sql";
 
-    String command = String.format(
-        "%s --host=%s --port=%s --user=%s --password=%s --no-data %s -r %s",
-        mysqldumpPath, dbHost, dbPort, dbUsername, dbPassword, dbName, savePath
-    );
+        // Use the full path to mysqldump
+        String mysqldumpPath = "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\\mysqldump.exe"; // Update this to the actual path
 
-    try {
-        // Execute the command
-        Process process = Runtime.getRuntime().exec(command);
+        String command = String.format(
+                "%s --host=%s --port=%s --user=%s --password=%s --no-data %s -r %s",
+                mysqldumpPath, dbHost, dbPort, dbUsername, dbPassword, dbName, savePath
+        );
 
-        // Wait for the command to complete
-        int processComplete = process.waitFor();
+        try {
+            // Execute the command
+            Process process = Runtime.getRuntime().exec(command);
 
-        // Check if the command was successful
-        if (processComplete == 0) {
-            JOptionPane.showMessageDialog(null, "Schema saved successfully to " + savePath);
-        } else {
-            JOptionPane.showMessageDialog(null, "Failed to save schema.");
+            // Wait for the command to complete
+            int processComplete = process.waitFor();
+
+            // Check if the command was successful
+            if (processComplete == 0) {
+                JOptionPane.showMessageDialog(null, "Schema saved successfully to " + savePath);
+            } else {
+                JOptionPane.showMessageDialog(null, "Failed to save schema.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "An error occurred while saving the schema.");
         }
-    } catch (Exception e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(null, "An error occurred while saving the schema.");
     }
-}
-private void restoreSchema() {
-    String dbHost = "127.0.0.1";
-    String dbPort = "3306";
-    String dbName = "database"; // The database to restore the schema into
-    String dbUsername = "root";
-    String dbPassword = "admin";
-    String dumpFilePath = "C:\\path\\to\\your\\schema_dump.sql"; // Update this to the actual path
 
-    // Print out the path being used
-    System.out.println("Using dump file path: " + dumpFilePath);
+    private void restoreSchema() {
+        String dbHost = "127.0.0.1";
+        String dbPort = "3306";
+        String dbName = "database"; // The database to restore the schema into
+        String dbUsername = "root";
+        String dbPassword = "admin";
+        String dumpFilePath = "C:\\path\\to\\your\\schema_dump.sql"; // Update this to the actual path
 
-    // Use the full path to mysql
-    String mysqlPath = "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\\mysql.exe"; // Update this to the actual path
+        // Print out the path being used
+        System.out.println("Using dump file path: " + dumpFilePath);
 
-    String command = String.format("%s --host=%s --port=%s --user=%s --password=%s %s -e source %s", 
-                                   mysqlPath, dbHost, dbPort, dbUsername, dbPassword, dbName, dumpFilePath);
+        // Use the full path to mysql
+        String mysqlPath = "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\\mysql.exe"; // Update this to the actual path
 
-    try {
-        // Execute the command
-        Process process = Runtime.getRuntime().exec(command);
+        String command = String.format("%s --host=%s --port=%s --user=%s --password=%s %s -e source %s",
+                mysqlPath, dbHost, dbPort, dbUsername, dbPassword, dbName, dumpFilePath);
 
-        // Handle the output of the process
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                System.out.println(line);
+        try {
+            // Execute the command
+            Process process = Runtime.getRuntime().exec(command);
+
+            // Handle the output of the process
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    System.out.println(line);
+                }
+            }
+
+            // Wait for the command to complete
+            int processComplete = process.waitFor();
+
+            // Check if the command was successful
+            if (processComplete == 0) {
+                JOptionPane.showMessageDialog(null, "Schema restored successfully from " + dumpFilePath);
+            } else {
+                JOptionPane.showMessageDialog(null, "Failed to restore schema.");
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "An error occurred while restoring the schema: " + e.getMessage());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "The restore process was interrupted: " + e.getMessage());
+        }
+    }
+
+    private void saveDatabase() {
+    }
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // JDBC connection URL, username, and password
+        String url = "jdbc:mysql://127.0.0.1:3306/database";
+        String user = "root";
+        String password = "admin";
+
+        Connection conn = null;
+        FileWriter fileWriter = null;
+
+        try {
+            // Establish a connection to the database
+            conn = DriverManager.getConnection(url, user, password);
+
+            // Get database metadata
+            DatabaseMetaData metaData = conn.getMetaData();
+            ResultSet tables = metaData.getTables(null, null, "%", new String[]{"TABLE"});
+
+            // Prepare a file writer
+            fileWriter = new FileWriter("database_schema_and_data.txt");
+
+            // Iterate through each table
+            while (tables.next()) {
+                String tableName = tables.getString("TABLE_NAME");
+                fileWriter.write("Table: " + tableName + "\n");
+
+                // Get table columns
+                ResultSet columns = metaData.getColumns(null, null, tableName, "%");
+                fileWriter.write("Columns:\n");
+                while (columns.next()) {
+                    String columnName = columns.getString("COLUMN_NAME");
+                    String columnType = columns.getString("TYPE_NAME");
+                    int columnSize = columns.getInt("COLUMN_SIZE");
+                    fileWriter.write("\t" + columnName + " " + columnType + "(" + columnSize + ")\n");
+                }
+
+                // Get table data
+                fileWriter.write("Data:\n");
+                Statement stmt = conn.createStatement();
+                ResultSet data = stmt.executeQuery("SELECT * FROM " + tableName);
+                ResultSetMetaData dataMetaData = data.getMetaData();
+                int columnCount = dataMetaData.getColumnCount();
+
+                while (data.next()) {
+                    for (int i = 1; i <= columnCount; i++) {
+                        fileWriter.write(data.getString(i) + "\t");
+                    }
+                    fileWriter.write("\n");
+                }
+                fileWriter.write("\n");
+            }
+
+            fileWriter.flush();
+            System.out.println("Schema and data saved successfully.");
+        //    System.out.println(fileWriter.getAbsolutePath());
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+                if (fileWriter != null) {
+                    fileWriter.close();
+                }
+            } catch (SQLException | IOException e) {
+                e.printStackTrace();
             }
         }
 
-        // Wait for the command to complete
-        int processComplete = process.waitFor();
 
-        // Check if the command was successful
-        if (processComplete == 0) {
-            JOptionPane.showMessageDialog(null, "Schema restored successfully from " + dumpFilePath);
-        } else {
-            JOptionPane.showMessageDialog(null, "Failed to restore schema.");
-        }
-
-    } catch (IOException e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(null, "An error occurred while restoring the schema: " + e.getMessage());
-    } catch (InterruptedException e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(null, "The restore process was interrupted: " + e.getMessage());
-    }
-}
-
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        saveSchema();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
