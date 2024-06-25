@@ -666,7 +666,8 @@ public class StaffPageEdit extends javax.swing.JFrame {
     }//GEN-LAST:event_inventoryMouseReleased
 
     private void addMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMouseReleased
-
+new StaffPageAdd(realUserId).setVisible(true);
+        setVisible(false);
     }//GEN-LAST:event_addMouseReleased
 
     private void editMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editMouseClicked
@@ -674,7 +675,8 @@ public class StaffPageEdit extends javax.swing.JFrame {
     }//GEN-LAST:event_editMouseClicked
 
     private void posMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_posMouseClicked
-        System.out.println("test");
+        new StaffPagePOS(realUserId).setVisible(true);
+        setVisible(false);
     }//GEN-LAST:event_posMouseClicked
 
     private void reportsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reportsMouseClicked

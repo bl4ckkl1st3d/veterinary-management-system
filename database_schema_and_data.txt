@@ -1,0 +1,238 @@
+Table: audit_logs
+Columns:
+	log_id INT(10)
+	userid INT(10)
+	event VARCHAR(255)
+	action_type VARCHAR(50)
+	datetime TIMESTAMP(19)
+Data:
+1	3	user logged in	login	2024-05-24 21:15:06	
+2	3	password changed	password_change	2024-05-26 03:13:41	
+3	3	forgot password	password_change	2024-05-27 18:21:05	
+4	3	user logged in	login	2024-05-29 23:26:55	
+5	3	user logged in	login	2024-05-29 23:30:57	
+6	3	change user information	update user	2024-05-29 23:31:04	
+7	3	user logged in	login	2024-05-29 23:31:44	
+8	3	user logged in	login	2024-05-29 23:33:21	
+9	3	forgot password	password_change	2024-06-14 09:01:57	
+10	2	user logged in	login	2024-06-14 09:03:10	
+11	3	user logged in	login	2024-06-14 09:05:05	
+12	3	user logged in	login	2024-06-14 09:10:19	
+13	3	add new user	add user	2024-06-14 09:11:36	
+14	3	change user information	update user	2024-06-14 09:15:36	
+15	2	user logged in	login	2024-06-14 09:16:26	
+16	3	user logged in	login	2024-06-14 09:36:27	
+17	1	user logged in	login	2024-06-14 09:38:06	
+18	3	user logged in	login	2024-06-14 12:07:17	
+19	3	user logged in	login	2024-06-14 12:29:51	
+20	3	user logged in	login	2024-06-17 18:02:39	
+21	3	user logged in	login	2024-06-17 18:03:20	
+22	3	user logged in	login	2024-06-19 09:43:19	
+23	2	user logged in	login	2024-06-19 09:43:40	
+24	3	user logged in	login	2024-06-19 10:05:17	
+25	3	user logged in	login	2024-06-19 10:06:32	
+26	6	add new user	add user	2024-06-20 16:36:36	
+27	2	change user information	update user	2024-06-20 17:05:34	
+
+Table: client_information
+Columns:
+	client_name VARCHAR(100)
+	address VARCHAR(255)
+	contact VARCHAR(20)
+Data:
+Juan Dela Cruz	Caloocan City	09115248625	
+Mark Kevin Baniqued	Kevin house			092658731115	
+Mark Kevin D. Baniqued	#23 TIP QC Philippines	09776720544	
+Station	Antipolo City	09526321542	
+
+Table: medical_history
+Columns:
+	history_id INT(10)
+	patient_id INT(10)
+	visit_date DATE(10)
+	diagnosis VARCHAR(255)
+	treatment VARCHAR(255)
+	medications VARCHAR(255)
+	doctor_name VARCHAR(255)
+Data:
+1	1	2024-06-02	test diagnosis	test treatment	test medication	Jane Smith	
+2	1	2024-06-02				Jane Smith	
+3	6	2024-06-14	Cough	Anti-Cough	Biogesic	Jane Smith	
+
+Table: patient_information
+Columns:
+	patient_id INT(10)
+	barcode VARCHAR(45)
+	patient_name VARCHAR(100)
+	weight FLOAT(12)
+	sex CHAR(1)
+	type VARCHAR(50)
+	color VARCHAR(50)
+	breed VARCHAR(50)
+	marks VARCHAR(255)
+	client_name VARCHAR(100)
+	registration_date DATE(10)
+	bday DATE(10)
+Data:
+1	null	kenneth	10.0	M	dog	black	GERMAN SHEPHERD	kalmot sa kanang paa	Mark Kevin D. Baniqued	2024-05-30	2021-11-14	
+2	null	Kevin	12.0	M	cat	yellow	CATULONG	may nunal sa mukha	Mark Kevin D. Baniqued	2024-05-30	2020-05-27	
+3	null	Kevin	12.0	M		yellow		may nunal sa mukha	Mark Kevin D. Baniqued	2024-05-30	2020-07-08	
+4	null		12.0	M	123	yellow	12	may nunal sa mukha	Mark Kevin D. Baniqued	2024-05-30	2020-03-06	
+5	1C3D2083	Brusco	50.0	F	Dog	Black	Askal	minor scratch	Mark Kevin Baniqued	2024-06-14	2018-06-03	
+6	25584232	Brutus	11.5	M	Dog	Black	Shih tzu	scar on eye	Juan Dela Cruz	2024-06-14	2019-03-04	
+7	DE3BD231	Kevin	12.0	M	Dog	Black	Aspin	neck spots	Station	2024-06-19	2021-06-03	
+
+Table: product_information
+Columns:
+	product_id INT(10)
+	barcode VARCHAR(50)
+	name VARCHAR(100)
+	price DECIMAL(10)
+	stocks INT(10)
+	critical_level INT(10)
+	perishable BIT(1)
+	expiration_date DATE(10)
+	supplier_name VARCHAR(100)
+	category VARCHAR(45)
+Data:
+1	101010	test product	12.00	10	5	1	2027-06-10	KEVIN'S COMPANY LTD		
+3	1010101	test product2	15.00	11	5	0	null	KEVIN'S COMPANY LTD		
+4	1010102	test product3	151124.00	23	20	1	2025-06-21	KEVIN'S COMPANY LTD		
+5	1051505	LCVIT	179.75	38	5	1	2026-06-14	KEVIN'S COMPANY LTD		
+6	123456789012	Apple	15.00	100	10	1	2024-12-31	Fruit Supplier Inc.		
+7	234567890123	Banana	30.00	148	15	1	2024-12-20	Fruit Supplier Inc.		
+8	345678901234	Carrot	20.00	182	20	1	2024-12-25	Veggie Supplier Ltd.		
+9	456789012345	Detergent	75.00	47	5	0	null	Cleaning Supplies Co.		
+10	567890123456	Eggs	32.00	78	8	1	2024-11-15	Farm Fresh Eggs		
+11	678901234567	Flour	10.00	55	6	0	null	Baking Supplies Inc.		
+12	789012345678	Grapes	50.00	78	9	1	2024-12-05	Fruit Supplier Inc.		
+13	890123456789	Honey	68.00	34	4	0	null	Honey Farms		
+14	901234567890	Ice Cream	312.00	28	3	1	2024-10-31	Dairy Products Co.		
+15	012345678901	Juice	125.00	65	7	1	2024-11-30	Beverage Co.		
+16	102142	KEVIN'S MEDICINE	1500.00	9	2	1	2024-06-26	KEVIN'S COMPANY LTD	MEDICINE	
+17	1055242	KEVIN FOODS	150.00	10	10	1	2029-06-08	KEVIN'S COMPANY LTD	VITAMIN	
+18	525251	Top Breed dog food	150.00	50	5	1	2025-06-19	KEVIN'S COMPANY LTD	FOOD	
+
+Table: sales_details
+Columns:
+	detail_id INT(10)
+	receipt_id INT(10)
+	product_id INT(10)
+	product_name VARCHAR(100)
+	quantity INT(10)
+	price DECIMAL(10)
+Data:
+1	1	9	Detergent	2	75.00	
+2	1	5	LCVIT	12	179.75	
+3	1	10	Eggs	2	32.00	
+4	3	8	Carrot	12	20.00	
+5	3	12	Grapes	10	50.00	
+6	3	13	Honey	5	68.00	
+7	3	1	test product	2	12.00	
+8	4	7	Banana	2	30.00	
+9	4	8	Carrot	3	20.00	
+10	4	9	Detergent	1	75.00	
+11	4	11	Flour	2	10.00	
+12	5	8	Carrot	1	20.00	
+13	6	8	Carrot	2	20.00	
+14	7	11	Flour	2	10.00	
+15	8	11	Flour	1	10.00	
+16	9	12	Grapes	2	50.00	
+17	10	15	Juice	1	125.00	
+18	11	15	Juice	2	125.00	
+19	11	14	Ice Cream	2	312.00	
+20	12	13	Honey	1	68.00	
+21	12	15	Juice	2	125.00	
+22	13	17	KEVIN FOODS	5	150.00	
+23	13	16	KEVIN'S MEDICINE	1	1500.00	
+
+Table: sales_receipts
+Columns:
+	receipt_id INT(10)
+	transaction_date DATETIME(19)
+	total_amount DECIMAL(10)
+	cashier_name VARCHAR(100)
+Data:
+1	2024-06-17 19:48:37	2371.00	John Doe	
+2	2024-06-17 20:37:51	2272.00	John Doe	
+3	2024-06-17 20:43:21	1104.00	John Doe	
+4	2024-06-17 20:52:31	215.00	John Doe	
+5	2024-06-17 21:32:29	20.00	John Doe	
+6	2024-06-17 21:34:32	40.00	John Doe	
+7	2024-06-17 21:37:32	20.00	John Doe	
+8	2024-06-17 21:38:23	10.00	John Doe	
+9	2024-06-17 21:41:21	100.00	John Doe	
+10	2024-06-17 21:48:58	125.00	John Doe	
+11	2024-06-17 21:49:15	874.00	John Doe	
+12	2024-06-17 22:10:32	318.00	John Doe	
+13	2024-06-20 10:52:38	2250.00	John Doe	
+
+Table: suppliers
+Columns:
+	supplier_id INT(10)
+	supplier_name VARCHAR(255)
+	supplier_address VARCHAR(255)
+	supplier_contact VARCHAR(50)
+Data:
+1	KEVIN'S COMPANY LTD	1234 Main St, City, Country	09123456789	
+11	Fruit Supplier Inc.	5678 Orchard Rd, Town, Country	09123456789	
+12	Veggie Supplier Ltd.	9101 Greenhouse Ln, Village, Country	09123456789	
+13	Cleaning Supplies Co.	1122 Clean St, Metropolis, Country	09123456789	
+14	Farm Fresh Eggs	3344 Farm Ln, Hamlet, Country	09123456789	
+15	Baking Supplies Inc.	5566 Bake Blvd, City, Country	09123456789	
+16	Honey Farms	7788 Honey Way, Countryside, Country	09123456789	
+17	Dairy Products Co.	9900 Dairy Dr, Township, Country	09123456789	
+18	Beverage Co.	1112 Drink Ave, Borough, Country	09123456789	
+
+Table: user_information
+Columns:
+	userid INT(10)
+	username VARCHAR(255)
+	first_name VARCHAR(255)
+	last_name VARCHAR(255)
+	address VARCHAR(255)
+	age INT(10)
+	sex CHAR(1)
+	contact VARCHAR(255)
+	birthdate DATE(10)
+Data:
+1	cashier_user	John	Doe	123 Main St	30	M	123-456-7890	null	
+2	vet_user	Jane	Smith	456 Elmo St	26	F	987-654-3210	1998-06-12	
+3	admiN	Kevin	Pogi	789 Oak St	40	M	555-555-5555	null	
+4	kevinxd	Mark 	kevin	123213	1	F	12312312	null	
+5	vet_chard	Richard Paulo	Guevarra	Caloocan City		23	M	09123456	null	
+6	ralph_dimagiba	Raphael	Dimagiba	#827 Aurora Blvd, Quezon City, Philippines	23	M	09416521525	2001-06-01	
+
+Table: users
+Columns:
+	userid INT(10)
+	LOA INT(10)
+	username VARCHAR(50)
+	password VARCHAR(255)
+	secret_question VARCHAR(45)
+	secret_answer VARCHAR(45)
+	USER CHAR(32)
+	CURRENT_CONNECTIONS BIGINT(19)
+	TOTAL_CONNECTIONS BIGINT(19)
+	MAX_SESSION_CONTROLLED_MEMORY BIGINT UNSIGNED(20)
+	MAX_SESSION_TOTAL_MEMORY BIGINT UNSIGNED(20)
+Data:
+1	0	cashier_user	password1	In what city were you born?	test	
+2	2	vet_user	123	What is your favorite movie?	testxx	
+3	2	admiN	kevin	What is your mother's maiden name?	test	
+4	1	kevinxd	123123	In what city were you born?	1312	
+5	0	vet_chard	passwordko	What is the name of your first pet?	Kevin	
+6	0	ralph_dimagiba	testPassword	What is your favorite movie?	The Smurfs	
+
+Table: vaccine_history
+Columns:
+	vaccine_id INT(10)
+	patient_id INT(10)
+	vaccine_name VARCHAR(255)
+	vaccination_date DATE(10)
+	next_due_date DATE(10)
+	administered_by VARCHAR(255)
+Data:
+1	1	Cetaphil TEST	2024-06-02	2024-06-09	Jane Smith	
+2	6	Anti Rabies	2024-06-14	2025-06-14	Jane Smith	
+

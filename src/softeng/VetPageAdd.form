@@ -505,18 +505,23 @@
                                                       <Component id="weightTxt" alignment="0" max="32767" attributes="0"/>
                                                       <Component id="patientTxtField" alignment="0" pref="259" max="32767" attributes="0"/>
                                                   </Group>
-                                                  <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
-                                                  <Group type="103" groupAlignment="1" attributes="0">
-                                                      <Component id="jLabel14" min="-2" pref="67" max="-2" attributes="0"/>
-                                                      <Component id="jLabel12" min="-2" pref="67" max="-2" attributes="0"/>
+                                                  <Group type="103" groupAlignment="0" attributes="0">
+                                                      <Group type="102" attributes="0">
+                                                          <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
+                                                          <Component id="jLabel14" min="-2" pref="67" max="-2" attributes="0"/>
+                                                      </Group>
+                                                      <Group type="102" alignment="0" attributes="0">
+                                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                                          <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
+                                                      </Group>
                                                   </Group>
                                               </Group>
                                           </Group>
                                           <EmptySpace type="separate" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="ageTxt" max="32767" attributes="0"/>
                                               <Component id="colorTxtField" max="32767" attributes="0"/>
                                               <Component id="sexComboBox" alignment="0" pref="196" max="32767" attributes="0"/>
+                                              <Component id="bDay" max="32767" attributes="0"/>
                                           </Group>
                                       </Group>
                                   </Group>
@@ -555,19 +560,17 @@
                           <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
                           <Component id="jLabel17" min="-2" pref="58" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="ageTxt" alignment="3" min="-2" pref="60" max="-2" attributes="0"/>
-                                      <Component id="jLabel12" alignment="3" min="-2" pref="111" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel11" alignment="3" min="-2" pref="111" max="-2" attributes="0"/>
                                   <Component id="patientTxtField" alignment="3" min="-2" pref="60" max="-2" attributes="0"/>
+                                  <Component id="jLabel12" alignment="3" min="-2" pref="111" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+                                  <Component id="bDay" min="-2" pref="59" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel13" alignment="3" min="-2" pref="55" max="-2" attributes="0"/>
                               <Component id="weightTxt" alignment="3" min="-2" pref="60" max="-2" attributes="0"/>
@@ -638,20 +641,13 @@
                     </Property>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="ageTxt">
-                  <Properties>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Segoe UI" size="18" style="0"/>
-                    </Property>
-                  </Properties>
-                </Component>
                 <Component class="javax.swing.JLabel" name="jLabel12">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Segoe UI" size="24" style="0"/>
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="11"/>
-                    <Property name="text" type="java.lang.String" value="Age"/>
+                    <Property name="text" type="java.lang.String" value="Birth Date"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="weightTxt">
@@ -831,6 +827,8 @@
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addBtnActionPerformed"/>
                   </Events>
+                </Component>
+                <Component class="com.toedter.calendar.JDateChooser" name="bDay">
                 </Component>
               </SubComponents>
             </Container>
