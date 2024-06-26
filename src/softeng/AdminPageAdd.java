@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import java.sql.*;
 import java.time.*;
 import java.time.temporal.ChronoUnit;
+import static softeng.login.sha256;
 
 /**
  *
@@ -941,7 +942,7 @@ public class AdminPageAdd extends javax.swing.JFrame {
 
                     // Set the retrieved data into the respective text fields and combo boxes
                     usernameTxtField.setText(username);
-                    passwordTxtField.setText(password);
+                    passwordTxtField.setText("");
                     secretQuestionBox.setSelectedItem(secretQuestion);
                     answerTxtField.setText(secretAnswer);
 
@@ -967,7 +968,7 @@ public class AdminPageAdd extends javax.swing.JFrame {
     }//GEN-LAST:event_searchBtnActionPerformed
 
     private void editBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnActionPerformed
-        // Get data from the text fields
+     // Get data from the text fields
     String user_Id = useridTxtField.getText();
     String firstName = firstNameTxtField.getText();
     String lastName = lastNameTxtField.getText();
@@ -1029,14 +1030,28 @@ public class AdminPageAdd extends javax.swing.JFrame {
         connection.setAutoCommit(false); // Start transaction
 
         // Update the 'users' table
-        String updateUsersQuery = "UPDATE users SET username = ?, password = ?, secret_question = ?, secret_answer = ?, LOA = ? WHERE userid = ?";
+        String updateUsersQuery;
+        if (password.isEmpty()) {
+            updateUsersQuery = "UPDATE users SET username = ?, secret_question = ?, secret_answer = ?, LOA = ? WHERE userid = ?";
+        } else {
+            updateUsersQuery = "UPDATE users SET username = ?, password = ?, secret_question = ?, secret_answer = ?, LOA = ? WHERE userid = ?";
+        }
+
         PreparedStatement usersPreparedStatement = connection.prepareStatement(updateUsersQuery);
         usersPreparedStatement.setString(1, username);
-        usersPreparedStatement.setString(2, password);
-        usersPreparedStatement.setString(3, secretQuestion);
-        usersPreparedStatement.setString(4, answer);
-        usersPreparedStatement.setInt(5, loa);
-        usersPreparedStatement.setInt(6, Integer.parseInt(user_Id));
+        if (!password.isEmpty()) {
+            String hashed = sha256(password);
+            usersPreparedStatement.setString(2, hashed);
+            usersPreparedStatement.setString(3, secretQuestion);
+            usersPreparedStatement.setString(4, answer);
+            usersPreparedStatement.setInt(5, loa);
+            usersPreparedStatement.setInt(6, Integer.parseInt(user_Id));
+        } else {
+            usersPreparedStatement.setString(2, secretQuestion);
+            usersPreparedStatement.setString(3, answer);
+            usersPreparedStatement.setInt(4, loa);
+            usersPreparedStatement.setInt(5, Integer.parseInt(user_Id));
+        }
         int rowsAffectedUsers = usersPreparedStatement.executeUpdate();
 
         // Update the 'user_information' table
@@ -1057,6 +1072,7 @@ public class AdminPageAdd extends javax.swing.JFrame {
             connection.commit(); // Commit transaction
             JOptionPane.showMessageDialog(null, "User information updated successfully.");
             updateUserAuditLog(Integer.parseInt(user_Id));
+            clearAllFields();
         } else {
             connection.rollback(); // Rollback transaction
             JOptionPane.showMessageDialog(null, "Failed to update user information.");

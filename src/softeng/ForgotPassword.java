@@ -3,10 +3,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package softeng;
+
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.security.MessageDigest;
 import java.sql.*;
 import javax.swing.JOptionPane;
+
 /**
  *
  * @author Kevin
@@ -17,15 +20,20 @@ public class ForgotPassword extends javax.swing.JFrame {
      * Creates new form ForgotPassword
      */
     public ForgotPassword() {
-      
+
         initComponents();
         System.out.println("kevinbranch");
         System.out.println("station di kilala ni richard ");
-    }
-    
-   
+        shuffle();
 
-    
+    }
+
+    public void shuffle() {
+        password1.setBounds(jLabel6.getX(), jLabel6.getY() + 2000, jLabel1.getWidth(), jLabel1.getHeight());
+        jPanel2.revalidate();
+        jPanel2.repaint();
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -49,6 +57,8 @@ public class ForgotPassword extends javax.swing.JFrame {
         invi1 = new javax.swing.JLabel();
         invi2 = new javax.swing.JLabel();
         confirmBtn2 = new javax.swing.JButton();
+        password1 = new javax.swing.JPasswordField();
+        password2 = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -125,6 +135,8 @@ public class ForgotPassword extends javax.swing.JFrame {
             }
         });
         jPanel2.add(confirmBtn2, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 420, 170, 60));
+        jPanel2.add(password1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 110, 350, 60));
+        jPanel2.add(password2, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 310, 350, 60));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -155,37 +167,35 @@ public class ForgotPassword extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    
-  
     private String user1 = "";
+
     public void verifySecretQuestion(String username, String answer, String secretQuestion1) {
-    String url = "jdbc:mysql://127.0.0.1:3306/database";
-    String dbUsername = "root";
-String dbPassword = "admin";
+        String url = "jdbc:mysql://127.0.0.1:3306/database";
+        String dbUsername = "root";
+        String dbPassword = "admin";
         try {
             // Establish the database connection
             Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
-            
+
             // Prepare the SQL query to retrieve the user's secret question and answer
             String query = "SELECT secret_question, secret_answer FROM users WHERE username = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, username);
-            
+
             // Execute the query
             ResultSet resultSet = preparedStatement.executeQuery();
-            
+
             if (resultSet.next()) {
                 // User found in the database, retrieve the secret question and answer
                 String realSecretQuestion = resultSet.getString("secret_question");
                 String realAnswer = resultSet.getString("secret_answer");
-                
+
                 // Compare the provided answer with the real answer
                 if (realSecretQuestion.equals(secretQuestion1) && realAnswer.equals(answer)) {
-           
-  
+
                     JOptionPane.showMessageDialog(null, "Secret question and answer are correct.");
                     user1 = username;
-          remix();
+                    remix();
                 } else {
                     JOptionPane.showMessageDialog(null, "Secret question or answer is wrong.");
                 }
@@ -193,188 +203,208 @@ String dbPassword = "admin";
                 // User not found in the database
                 JOptionPane.showMessageDialog(null, "User is not in the database.");
             }
-            
+
             // Close the database connection
             connection.close();
         } catch (SQLException e) {
             // Handle any SQL exceptions
             e.printStackTrace();
         }
-}
+    }
     private void confirmBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmBtnActionPerformed
         String username = userTxtfield.getText();
-    
-    // Get the value of answerTxtField
-    String answer = answerTxtField.getText();
-    
-    // Get the selected item from the secretQuestion combo box
-    String secretQuestion1 = (String) secretQuestion.getSelectedItem();
-    
-    // Now you can use these variables as needed, such as for further processing or validation
-    // For example:
-    System.out.println("Username: " + username);
-    System.out.println("Answer: " + answer);
-    System.out.println("Secret Question: " + secretQuestion1);
-    verifySecretQuestion(username, answer, secretQuestion1);
+
+        // Get the value of answerTxtField
+        String answer = answerTxtField.getText();
+
+        // Get the selected item from the secretQuestion combo box
+        String secretQuestion1 = (String) secretQuestion.getSelectedItem();
+
+        // Now you can use these variables as needed, such as for further processing or validation
+        // For example:
+        System.out.println("Username: " + username);
+        System.out.println("Answer: " + answer);
+        System.out.println("Secret Question: " + secretQuestion1);
+        verifySecretQuestion(username, answer, secretQuestion1);
     }//GEN-LAST:event_confirmBtnActionPerformed
 
-  
     public void remix() {
-    // Get the positions of jLabel1 and secretQuestion
-    int jLabel1X = jLabel1.getX();
-    int jLabel1Y = jLabel1.getY();
-    int secretQuestionX = secretQuestion.getX();
-    int secretQuestionY = secretQuestion.getY();
+        // Get the positions of jLabel1 and secretQuestion
+        int jLabel1X = jLabel1.getX();
+        int jLabel1Y = jLabel1.getY();
+        int secretQuestionX = secretQuestion.getX();
+        int secretQuestionY = secretQuestion.getY();
 
+        // Set the bounds of jLabel1 and secretQuestion to jLabel4 and answerTxtField, respectively
+        jLabel1.setBounds(jLabel6.getX(), jLabel6.getY() + 2000, jLabel1.getWidth(), jLabel1.getHeight());
+        secretQuestion.setBounds(answerTxtField.getX(), answerTxtField.getY() + 2000, secretQuestion.getWidth(), secretQuestion.getHeight());
 
-    // Set the bounds of jLabel1 and secretQuestion to jLabel4 and answerTxtField, respectively
-    jLabel1.setBounds(jLabel6.getX(), jLabel6.getY()+2000, jLabel1.getWidth(), jLabel1.getHeight());
-    secretQuestion.setBounds(answerTxtField.getX(), answerTxtField.getY()+2000, secretQuestion.getWidth(), secretQuestion.getHeight());
+        // Set the bounds of jLabel4 and answerTxtField to the original bounds of jLabel1 and secretQuestion
+        jLabel6.setBounds(jLabel1X, jLabel1Y, jLabel6.getWidth(), jLabel6.getHeight());
+        answerTxtField.setBounds(secretQuestionX, secretQuestionY + 1000, answerTxtField.getWidth(), answerTxtField.getHeight());
+        password1.setBounds(secretQuestionX, secretQuestionY, answerTxtField.getWidth(), answerTxtField.getHeight());
+        password2.setBounds(userTxtfield.getX(), userTxtfield.getY(), answerTxtField.getWidth(), answerTxtField.getHeight());
+        userTxtfield.setBounds(userTxtfield.getX(), userTxtfield.getY() + 2000, answerTxtField.getWidth(), answerTxtField.getHeight());
+        int jLabel3X = jLabel3.getX();
+        int jLabel3Y = jLabel3.getY();
+        int jLabel6X = jLabel6.getX();
+        int jLabel6Y = jLabel6.getY();
+        invi1.setBounds(jLabel3X, jLabel3Y, jLabel3.getWidth(), jLabel3.getHeight());
+        invi2.setBounds(jLabel6X, jLabel6Y, jLabel6.getWidth(), jLabel6.getHeight());
+        jLabel3.setBounds(invi2.getX() + 2000, invi2.getY(), invi2.getWidth(), invi2.getHeight());
+        jLabel6.setBounds(invi1.getX() + 2000, invi1.getY(), invi1.getWidth(), invi1.getHeight());
+        userTxtfield.setText("");
+        answerTxtField.setText("");
 
-    // Set the bounds of jLabel4 and answerTxtField to the original bounds of jLabel1 and secretQuestion
-    jLabel6.setBounds(jLabel1X, jLabel1Y, jLabel6.getWidth(), jLabel6.getHeight());
-    answerTxtField.setBounds(secretQuestionX, secretQuestionY, answerTxtField.getWidth(), answerTxtField.getHeight());
-    
-    int jLabel3X = jLabel3.getX();
-    int jLabel3Y = jLabel3.getY();
-    int jLabel6X = jLabel6.getX();
-    int jLabel6Y = jLabel6.getY();
-      invi1.setBounds(jLabel3X,jLabel3Y,jLabel3.getWidth(),jLabel3.getHeight());
-     invi2.setBounds(jLabel6X,jLabel6Y,jLabel6.getWidth(),jLabel6.getHeight());
-    jLabel3.setBounds(invi2.getX()+2000, invi2.getY(), invi2.getWidth(), invi2.getHeight());
-    jLabel6.setBounds(invi1.getX()+2000, invi1.getY(), invi1.getWidth(), invi1.getHeight());
-    userTxtfield.setText("");
-    answerTxtField.setText("");
-    
-    confirmBtn.setBounds(confirmBtn.getX(), confirmBtn.getY()+2000, confirmBtn.getWidth(), confirmBtn.getHeight());
-    backBtn.setBounds(backBtn.getX(), backBtn.getY()+2000, backBtn.getWidth(), backBtn.getHeight());
-  
-}
+        confirmBtn.setBounds(confirmBtn.getX(), confirmBtn.getY() + 2000, confirmBtn.getWidth(), confirmBtn.getHeight());
+        backBtn.setBounds(backBtn.getX(), backBtn.getY() + 2000, backBtn.getWidth(), backBtn.getHeight());
 
-public void addPasswordChangeAuditLog(int userId) {
-    String url = "jdbc:mysql://127.0.0.1:3306/database";
-    String dbUsername = "root";
-    String dbPassword = "admin";
-    
-    try {
-        // Establish the database connection
-        Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
-        
-        // Prepare the SQL query to add password change audit log
-        String query = "INSERT INTO audit_logs (userid, event, action_type) VALUES (?, 'forgot password', 'password_change')";
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setInt(1, userId);
-        
-        // Execute the query
-        int rowsAffected = preparedStatement.executeUpdate();
-        
-        if (rowsAffected > 0) {
-            System.out.println("Password change audit log added successfully.");
-        } else {
-            System.out.println("Failed to add password change audit log.");
-        }
-        
-        // Close the database connection
-        connection.close();
-    } catch (SQLException e) {
-        // Handle any SQL exceptions
-        e.printStackTrace();
     }
-}
 
-public int getUserIdByUsername(String username) {
-    int userId = -1; // Default value if user ID is not found
-    
-    String url = "jdbc:mysql://127.0.0.1:3306/database";
-    String dbUsername = "root";
-    String dbPassword = "admin";
-    
-    try {
-        // Establish the database connection
-        Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
-        
-        // Prepare the SQL query to retrieve user ID by username
-        String query = "SELECT userid FROM users WHERE username = ?";
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setString(1, username);
-        
-        // Execute the query
-        ResultSet resultSet = preparedStatement.executeQuery();
-        
-        // Check if the result set has any rows
-        if (resultSet.next()) {
-            // Retrieve the user ID from the result set
-            userId = resultSet.getInt("userid");
+    public void addPasswordChangeAuditLog(int userId) {
+        String url = "jdbc:mysql://127.0.0.1:3306/database";
+        String dbUsername = "root";
+        String dbPassword = "admin";
+
+        try {
+            // Establish the database connection
+            Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
+
+            // Prepare the SQL query to add password change audit log
+            String query = "INSERT INTO audit_logs (userid, event, action_type) VALUES (?, 'forgot password', 'password_change')";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, userId);
+
+            // Execute the query
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                System.out.println("Password change audit log added successfully.");
+            } else {
+                System.out.println("Failed to add password change audit log.");
+            }
+
+            // Close the database connection
+            connection.close();
+        } catch (SQLException e) {
+            // Handle any SQL exceptions
+            e.printStackTrace();
         }
-        
-        // Close the result set, statement, and connection
-        resultSet.close();
-        preparedStatement.close();
-        connection.close();
-    } catch (SQLException e) {
-        // Handle any SQL exceptions
-        e.printStackTrace();
     }
-    
-    return userId;
-}
+
+    public int getUserIdByUsername(String username) {
+        int userId = -1; // Default value if user ID is not found
+
+        String url = "jdbc:mysql://127.0.0.1:3306/database";
+        String dbUsername = "root";
+        String dbPassword = "admin";
+
+        try {
+            // Establish the database connection
+            Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
+
+            // Prepare the SQL query to retrieve user ID by username
+            String query = "SELECT userid FROM users WHERE username = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, username);
+
+            // Execute the query
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            // Check if the result set has any rows
+            if (resultSet.next()) {
+                // Retrieve the user ID from the result set
+                userId = resultSet.getInt("userid");
+            }
+
+            // Close the result set, statement, and connection
+            resultSet.close();
+            preparedStatement.close();
+            connection.close();
+        } catch (SQLException e) {
+            // Handle any SQL exceptions
+            e.printStackTrace();
+        }
+
+        return userId;
+    }
 
     private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
-     new login().setVisible(true);
-    setVisible(false);
+        new login().setVisible(true);
+        setVisible(false);
     }//GEN-LAST:event_backBtnActionPerformed
 
     private void secretQuestionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_secretQuestionActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_secretQuestionActionPerformed
+    public static String sha256(String input) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(input.getBytes("UTF-8"));
+            StringBuilder hexString = new StringBuilder();
 
-    private void confirmBtn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmBtn2ActionPerformed
-      String password1 = userTxtfield.getText();
-    String password2 = answerTxtField.getText();
+            for (byte b : hash) {
+                String hex = Integer.toHexString(0xff & b);
+                if (hex.length() == 1) {
+                    hexString.append('0');
+                }
+                hexString.append(hex);
+            }
 
-        if (password1.equals(password2)) {
-        // Passwords match, update the database
-        // Call a method to update the database with the new password
-        updatePasswordInDatabase(user1,password1);
-    } else {
-        // Passwords don't match, show a message dialog
-        JOptionPane.showMessageDialog(null, "Passwords do not match. Please try again.", "Password Mismatch", JOptionPane.ERROR_MESSAGE);
+            return hexString.toString();
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
     }
+    private void confirmBtn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmBtn2ActionPerformed
+        String password1Txt = new String(password1.getPassword());
+        String password2Txt = new String(password2.getPassword());
+
+        if (password1Txt.equals(password2Txt)) {
+            // Passwords match, update the database
+            //hashe the password first
+            String hashedString = sha256(password1Txt);
+            // Call a method to update the database with the new password
+            updatePasswordInDatabase(user1, hashedString);
+        } else {
+            // Passwords don't match, show a message dialog
+            JOptionPane.showMessageDialog(null, "Passwords do not match. Please try again.", "Password Mismatch", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_confirmBtn2ActionPerformed
 
     private void updatePasswordInDatabase(String username, String newPassword) {
-    String url = "jdbc:mysql://127.0.0.1:3306/database";
-    String dbUsername = "root";
-    String dbPassword = "admin";
-    
-    // SQL query to update the password for the given username
-    String query = "UPDATE users SET password = ? WHERE username = ?";
-    
-    try (Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
-         PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-        
-        // Set parameters for the query
-        preparedStatement.setString(1, newPassword);
-        preparedStatement.setString(2, username);
-        
-        // Execute the update statement
-        int rowsAffected = preparedStatement.executeUpdate();
-        
-if (rowsAffected > 0) {
-    int userid = getUserIdByUsername(user1);
-    addPasswordChangeAuditLog(userid);
-    JOptionPane.showMessageDialog(null, "Password updated successfully for user: " + username, "Success", JOptionPane.INFORMATION_MESSAGE);
-    new login().setVisible(true);
-    setVisible(false);
-} else {
-    JOptionPane.showMessageDialog(null, "User not found or password not updated.", "Error", JOptionPane.ERROR_MESSAGE);
-}
+        String url = "jdbc:mysql://127.0.0.1:3306/database";
+        String dbUsername = "root";
+        String dbPassword = "admin";
 
-    } catch (SQLException e) {
-        // Handle any SQL exceptions
-        e.printStackTrace();
+        // SQL query to update the password for the given username
+        String query = "UPDATE users SET password = ? WHERE username = ?";
+
+        try (Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            // Set parameters for the query
+            preparedStatement.setString(1, newPassword);
+            preparedStatement.setString(2, username);
+
+            // Execute the update statement
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                int userid = getUserIdByUsername(user1);
+                addPasswordChangeAuditLog(userid);
+                JOptionPane.showMessageDialog(null, "Password updated successfully for user: " + username, "Success", JOptionPane.INFORMATION_MESSAGE);
+                new login().setVisible(true);
+                setVisible(false);
+            } else {
+                JOptionPane.showMessageDialog(null, "User not found or password not updated.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+        } catch (SQLException e) {
+            // Handle any SQL exceptions
+            e.printStackTrace();
+        }
     }
-}
+
     /**
      * @param args the command line arguments
      */
@@ -423,6 +453,8 @@ if (rowsAffected > 0) {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPasswordField password1;
+    private javax.swing.JPasswordField password2;
     private javax.swing.JComboBox<String> secretQuestion;
     private javax.swing.JTextField userTxtfield;
     // End of variables declaration//GEN-END:variables
