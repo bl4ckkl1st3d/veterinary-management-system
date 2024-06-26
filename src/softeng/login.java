@@ -185,7 +185,7 @@ public void addLoginAuditLog(int userId) {
                 // If resultSet is empty, username and password do not exist in the database
                 errorCount++;
                 if (errorCount >= 3) {
-                    JOptionPane.showMessageDialog(null, "Too much Attempts, going to Forgot Password");
+                    JOptionPane.showMessageDialog(null, "Too much Attempts, redirecting to Forgot Password");
                     new ForgotPassword().setVisible(true);
                     setVisible(false);
                 } else {
