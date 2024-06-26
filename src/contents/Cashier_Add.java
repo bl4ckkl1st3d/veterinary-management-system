@@ -56,7 +56,7 @@ public class Cashier_Add extends javax.swing.JPanel {
 
         setPreferredSize(new java.awt.Dimension(1100, 685));
 
-        jPanel5.setBackground(new java.awt.Color(153, 255, 204));
+        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);

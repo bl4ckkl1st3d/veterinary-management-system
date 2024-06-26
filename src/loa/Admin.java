@@ -13,6 +13,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import softeng.login;
+import loa.Vet;
 
 /**
  *
@@ -20,33 +21,41 @@ import softeng.login;
  */
 public class Admin extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Admin
-     */
-    private Admin_Home home;
     private Admin_Search search;
     private Admin_Add add;
+    private Vet vet;
+    private Cashier cashier;
     private int userId;
     private Point initialClick;
     
-    public Admin(int sample) {
+    public Admin(int userId) {
         this.userId = userId;
         initComponents();
         setBackground(new Color(0,0,0,0));
-        home = new Admin_Home();
         search = new Admin_Search();
         add = new Admin_Add(0);
+        vet = new Vet(0);
+        cashier = new Cashier(0);
         
         admin_Menu.initMoving(Admin.this);
+        admin_Menu.changeWelcome(userId);
         
         admin_Menu.addEventMenuSelected(new EventMenuSelected() {
             @Override
             public void selected(int index) {
                 if(index == 0) {
                     setForm(search);
-                } else if (index == 1){
+                } else if (index == 2){
                     setForm(add);
-                } else if (index == 7){
+                } else if (index == 4){
+                    Vet vet = new Vet(0);
+                    vet.setVisible(true);
+                    System.out.println("bruh");
+                } else if (index == 6){
+                    Cashier cashier = new Cashier(0);
+                    cashier.setVisible(true);
+                    System.out.println("bruh");
+                } else if (index == 14){
                     int response = JOptionPane.showConfirmDialog(null, "Are you sure you want to log out?", "Confirm Logout", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                     if (response == JOptionPane.YES_OPTION) {
                     setVisible(false);
@@ -56,9 +65,9 @@ public class Admin extends javax.swing.JFrame {
             }
         });
         //set when system open start with home form
-        setForm(new Admin_Home());
+        setForm(new Admin_Search());
         
-        /*header2.addMouseListener(new MouseAdapter() {
+        header2.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
                 initialClick = e.getPoint();
@@ -83,7 +92,6 @@ public class Admin extends javax.swing.JFrame {
                 setLocation(X, Y);
             }
         }); 
-        */
     }
     
     private void setForm(JComponent com) {
@@ -170,7 +178,7 @@ public class Admin extends javax.swing.JFrame {
             .addGroup(panelBorderLayout.createSequentialGroup()
                 .addComponent(admin_Menu, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(2, 2, 2)
-                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 1088, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 1000, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addComponent(header2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         panelBorderLayout.setVerticalGroup(
@@ -179,25 +187,25 @@ public class Admin extends javax.swing.JFrame {
                 .addComponent(header2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(2, 2, 2)
                 .addGroup(panelBorderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(admin_Menu, javax.swing.GroupLayout.PREFERRED_SIZE, 691, Short.MAX_VALUE)
-                    .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(admin_Menu, javax.swing.GroupLayout.PREFERRED_SIZE, 685, Short.MAX_VALUE)
+                    .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 685, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelBorder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(panelBorder, javax.swing.GroupLayout.PREFERRED_SIZE, 1280, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelBorder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(panelBorder, javax.swing.GroupLayout.PREFERRED_SIZE, 720, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
+    
     private void minimize2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minimize2ActionPerformed
         // minimize
         this.setExtendedState(Cashier.ICONIFIED);
@@ -247,7 +255,7 @@ public class Admin extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                int sample = 3;
+                int sample = 3; 
                 new Admin(sample).setVisible(true);
             }
         });

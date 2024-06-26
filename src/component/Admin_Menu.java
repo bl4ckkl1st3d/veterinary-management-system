@@ -10,6 +10,11 @@ import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.JFrame;
 import model.Model_Menu;
 
@@ -26,7 +31,10 @@ public class Admin_Menu extends javax.swing.JPanel {
         listMenu1.addEventMenuSelected(event);
     }
     
+    private int userId;
+    
     public Admin_Menu() {
+        this.userId = userId;
         initComponents();
         setOpaque(false);
         listMenu1.setOpaque(false);
@@ -34,14 +42,21 @@ public class Admin_Menu extends javax.swing.JPanel {
     }
     private void init() {
         listMenu1.addItem(new Model_Menu("1", "Search User", Model_Menu.MenuType.MENU));
+        listMenu1.addItem(new Model_Menu(" ", " ", Model_Menu.MenuType.EMPTY));
         listMenu1.addItem(new Model_Menu("2", "Add/Edit User", Model_Menu.MenuType.MENU));
+        listMenu1.addItem(new Model_Menu(" ", " ", Model_Menu.MenuType.EMPTY));
         listMenu1.addItem(new Model_Menu("3", "Vet Mode", Model_Menu.MenuType.MENU));
+        listMenu1.addItem(new Model_Menu(" ", " ", Model_Menu.MenuType.EMPTY));
         listMenu1.addItem(new Model_Menu("4", "Cashier Mode", Model_Menu.MenuType.MENU));
+        listMenu1.addItem(new Model_Menu(" ", " ", Model_Menu.MenuType.EMPTY));
         listMenu1.addItem(new Model_Menu("5", "Reports", Model_Menu.MenuType.MENU));
+        listMenu1.addItem(new Model_Menu(" ", " ", Model_Menu.MenuType.EMPTY));
         listMenu1.addItem(new Model_Menu("6", "Help", Model_Menu.MenuType.MENU));
-
+        listMenu1.addItem(new Model_Menu(" ", " ", Model_Menu.MenuType.EMPTY));
         listMenu1.addItem(new Model_Menu("7", "Settings", Model_Menu.MenuType.MENU));
+        listMenu1.addItem(new Model_Menu(" ", " ", Model_Menu.MenuType.EMPTY));
         listMenu1.addItem(new Model_Menu("8", "Log Out", Model_Menu.MenuType.MENU));
+        listMenu1.addItem(new Model_Menu(" ", " ", Model_Menu.MenuType.EMPTY));
     }
 
     @SuppressWarnings("unchecked")
@@ -50,11 +65,12 @@ public class Admin_Menu extends javax.swing.JPanel {
 
         panelMoving = new javax.swing.JPanel();
         listMenu1 = new swing.ListMenu<>();
-        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         panelMoving.setOpaque(false);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/Sahagun's.png"))); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Welcome");
 
         javax.swing.GroupLayout panelMovingLayout = new javax.swing.GroupLayout(panelMoving);
         panelMoving.setLayout(panelMovingLayout);
@@ -64,16 +80,16 @@ public class Admin_Menu extends javax.swing.JPanel {
                 .addComponent(listMenu1, javax.swing.GroupLayout.DEFAULT_SIZE, 293, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(panelMovingLayout.createSequentialGroup()
-                .addGap(89, 89, 89)
-                .addComponent(jLabel1)
+                .addGap(93, 93, 93)
+                .addComponent(jLabel2)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelMovingLayout.setVerticalGroup(
             panelMovingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelMovingLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addGap(54, 54, 54)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
                 .addComponent(listMenu1, javax.swing.GroupLayout.PREFERRED_SIZE, 663, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -90,6 +106,50 @@ public class Admin_Menu extends javax.swing.JPanel {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+    
+    
+    public void changeWelcome(int userId) {
+        String name = getUsernameByUserId(userId);
+        jLabel2.setText("Welcome, " + name);
+
+    }
+
+    public String getUsernameByUserId(int userId) {
+        String username = null; // Default value if username is not found
+
+        String url = "jdbc:mysql://127.0.0.1:3306/database";
+        String dbUsername = "root";
+        String dbPassword = "admin";
+
+        try {
+            // Establish the database connection
+            Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
+
+            // Prepare the SQL query to retrieve username by user ID
+            String query = "SELECT username FROM users WHERE userid = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, userId);
+
+            // Execute the query
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            // Check if the result set has any rows
+            if (resultSet.next()) {
+                // Retrieve the username from the result set
+                username = resultSet.getString("username");
+            }
+
+            // Close the result set, statement, and connection
+            resultSet.close();
+            preparedStatement.close();
+            connection.close();
+        } catch (SQLException e) {
+            // Handle any SQL exceptions
+            e.printStackTrace();
+        }
+
+        return username;
+    }
     
     @Override
     protected void paintChildren(Graphics grphcs) {
@@ -129,7 +189,7 @@ public class Admin_Menu extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private swing.ListMenu<String> listMenu1;
     private javax.swing.JPanel panelMoving;
     // End of variables declaration//GEN-END:variables

@@ -10,6 +10,11 @@ import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.JFrame;
 import model.Model_Menu;
 
@@ -26,21 +31,30 @@ public class Vet_Menu extends javax.swing.JPanel {
         listMenu1.addEventMenuSelected(event);
     }
     
+    private int userId;
+    
     public Vet_Menu() {
+        this.userId = userId;
         initComponents();
         setOpaque(false);
         listMenu1.setOpaque(false);
         init();
     }
     private void init() {
-        //listMenu1.addItem(new Model_Menu("1","Welcome, Kevin", Model_Menu.MenuType.MENU));
         listMenu1.addItem(new Model_Menu("1", "Search Patient", Model_Menu.MenuType.MENU));
-        listMenu1.addItem(new Model_Menu("2", "Edit Patient Info", Model_Menu.MenuType.MENU));
-        listMenu1.addItem(new Model_Menu("3", "Add New Patient", Model_Menu.MenuType.MENU));
+        listMenu1.addItem(new Model_Menu(" ", " ", Model_Menu.MenuType.EMPTY));
+        listMenu1.addItem(new Model_Menu("2", "Add New Patient", Model_Menu.MenuType.MENU));
+        listMenu1.addItem(new Model_Menu(" ", " ", Model_Menu.MenuType.EMPTY));
+        listMenu1.addItem(new Model_Menu("3", "Edit Patient Info", Model_Menu.MenuType.MENU));
+        listMenu1.addItem(new Model_Menu(" ", " ", Model_Menu.MenuType.EMPTY));
         listMenu1.addItem(new Model_Menu("4", "Send SMS", Model_Menu.MenuType.MENU));
+        listMenu1.addItem(new Model_Menu(" ", " ", Model_Menu.MenuType.EMPTY));
         listMenu1.addItem(new Model_Menu("5", "Help", Model_Menu.MenuType.MENU));
+        listMenu1.addItem(new Model_Menu(" ", " ", Model_Menu.MenuType.EMPTY));
         listMenu1.addItem(new Model_Menu("6", "Settings", Model_Menu.MenuType.MENU));
+        listMenu1.addItem(new Model_Menu(" ", " ", Model_Menu.MenuType.EMPTY));
         listMenu1.addItem(new Model_Menu("7", "Log Out", Model_Menu.MenuType.MENU));
+        listMenu1.addItem(new Model_Menu(" ", " ", Model_Menu.MenuType.EMPTY));
     }
 
 
@@ -50,30 +64,30 @@ public class Vet_Menu extends javax.swing.JPanel {
 
         panelMoving = new javax.swing.JPanel();
         listMenu1 = new swing.ListMenu<>();
-        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         panelMoving.setOpaque(false);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/Sahagun's.png"))); // NOI18N
+        jLabel2.setText("Welcome");
 
         javax.swing.GroupLayout panelMovingLayout = new javax.swing.GroupLayout(panelMoving);
         panelMoving.setLayout(panelMovingLayout);
         panelMovingLayout.setHorizontalGroup(
             panelMovingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelMovingLayout.createSequentialGroup()
-                .addGap(90, 90, 90)
-                .addComponent(jLabel1)
-                .addContainerGap(104, Short.MAX_VALUE))
-            .addGroup(panelMovingLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(listMenu1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(listMenu1, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE))
+            .addGroup(panelMovingLayout.createSequentialGroup()
+                .addGap(99, 99, 99)
+                .addComponent(jLabel2)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         panelMovingLayout.setVerticalGroup(
             panelMovingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelMovingLayout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
+                .addGap(57, 57, 57)
+                .addComponent(jLabel2)
+                .addGap(60, 60, 60)
                 .addComponent(listMenu1, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -91,6 +105,50 @@ public class Vet_Menu extends javax.swing.JPanel {
                 .addContainerGap(8, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+    
+    public void changeWelcome(int userId) {
+        String name = getUsernameByUserId(userId);
+        jLabel2.setText("Welcome, " + name);
+
+    }
+
+    public String getUsernameByUserId(int userId) {
+        String username = null; // Default value if username is not found
+
+        String url = "jdbc:mysql://127.0.0.1:3306/database";
+        String dbUsername = "root";
+        String dbPassword = "admin";
+
+        try {
+            // Establish the database connection
+            Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
+
+            // Prepare the SQL query to retrieve username by user ID
+            String query = "SELECT username FROM users WHERE userid = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, userId);
+
+            // Execute the query
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            // Check if the result set has any rows
+            if (resultSet.next()) {
+                // Retrieve the username from the result set
+                username = resultSet.getString("username");
+            }
+
+            // Close the result set, statement, and connection
+            resultSet.close();
+            preparedStatement.close();
+            connection.close();
+        } catch (SQLException e) {
+            // Handle any SQL exceptions
+            e.printStackTrace();
+        }
+
+        return username;
+    }
+    
     @Override
     protected void paintChildren(Graphics grphcs) {
         Graphics2D g2 = (Graphics2D) grphcs;
@@ -129,7 +187,7 @@ public class Vet_Menu extends javax.swing.JPanel {
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private swing.ListMenu<String> listMenu1;
     private javax.swing.JPanel panelMoving;
     // End of variables declaration//GEN-END:variables

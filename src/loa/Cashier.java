@@ -29,6 +29,7 @@ public class Cashier extends javax.swing.JFrame {
     private Point initialClick;
     
     public Cashier(int userId) {
+        this.userId = userId;
         initComponents();
         setBackground(new Color(0,0,0,0));
         home = new Admin_Home();
@@ -36,6 +37,7 @@ public class Cashier extends javax.swing.JFrame {
         inv = new Cashier_Inventory();
         
         cashier_Menu.initMoving(Cashier.this);
+        cashier_Menu.changeWelcome(userId);
         
         cashier_Menu.addEventMenuSelected(new EventMenuSelected() {
             @Override

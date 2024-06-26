@@ -683,40 +683,69 @@ public class VetPageSearch extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-    
-    
-    
-    private void searchPatientMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchPatientMouseReleased
 
-    }//GEN-LAST:event_searchPatientMouseReleased
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
-    private void editPatientMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editPatientMouseReleased
-        new VetPageEdit(realUserId).setVisible(true);
+        PatientCard card =  new PatientCard(pName,oName,contacts,strCodeText);
+        System.out.println(strCodeText);
+        card.setLocationRelativeTo(null);
+        card.setVisible(true);
+        card.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void logoutMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseReleased
+        int response = JOptionPane.showConfirmDialog(this, "Do you want to log out?", "Confirm Logout", JOptionPane.YES_NO_OPTION);
+        if (response == JOptionPane.YES_OPTION) {
+            login.login();
+            setVisible(false);
+        } else {
+            // User clicked 'No' or closed the dialog, do nothing
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_logoutMouseReleased
+
+    private void settingsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsMouseClicked
+        System.out.println("test");
+    }//GEN-LAST:event_settingsMouseClicked
+
+    private void helpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_helpMouseClicked
+        System.out.println("test");
+    }//GEN-LAST:event_helpMouseClicked
+
+    private void sendMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sendMouseClicked
+        System.out.println("test");
+    }//GEN-LAST:event_sendMouseClicked
+
+    private void addPatientMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addPatientMouseReleased
+        new VetPageAdd(realUserId).setVisible(true);
         setVisible(false);
-    }//GEN-LAST:event_editPatientMouseReleased
+    }//GEN-LAST:event_addPatientMouseReleased
 
     private void addPatientMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addPatientMouseClicked
         new VetPageAdd(realUserId).setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_addPatientMouseClicked
 
-    private void sendMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sendMouseClicked
-        System.out.println("test");
-    }//GEN-LAST:event_sendMouseClicked
-
-    private void helpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_helpMouseClicked
-        System.out.println("test");
-    }//GEN-LAST:event_helpMouseClicked
-
-    private void settingsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsMouseClicked
-        System.out.println("test");
-    }//GEN-LAST:event_settingsMouseClicked
-
-    private void addPatientMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addPatientMouseReleased
-        new VetPageAdd(realUserId).setVisible(true);
+    private void editPatientMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editPatientMouseReleased
+        new VetPageEdit(realUserId).setVisible(true);
         setVisible(false);
-    }//GEN-LAST:event_addPatientMouseReleased
-    private void clearTextFields() {
+    }//GEN-LAST:event_editPatientMouseReleased
+
+    private void searchPatientMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchPatientMouseReleased
+
+    }//GEN-LAST:event_searchPatientMouseReleased
+
+    private void patientIdTxtFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_patientIdTxtFieldKeyReleased
+        searchPatient();
+        updateMedicalHistoryTable();
+        updateVaccineHistoryTable();
+    }//GEN-LAST:event_patientIdTxtFieldKeyReleased
+
+    private void patientIdTxtFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_patientIdTxtFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_patientIdTxtFieldActionPerformed
+    
+    
+        private void clearTextFields() {
         patientTxtField.setText("");
         ageTxt.setText("");
         weightTxt.setText("");
@@ -899,35 +928,6 @@ public class VetPageSearch extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
-
-    private void patientIdTxtFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_patientIdTxtFieldKeyReleased
-        searchPatient();
-        updateMedicalHistoryTable();
-        updateVaccineHistoryTable();
-    }//GEN-LAST:event_patientIdTxtFieldKeyReleased
-
-    private void logoutMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseReleased
-        int response = JOptionPane.showConfirmDialog(this, "Do you want to log out?", "Confirm Logout", JOptionPane.YES_NO_OPTION);
-        if (response == JOptionPane.YES_OPTION) {
-            login.login();
-            setVisible(false);
-        } else {
-            // User clicked 'No' or closed the dialog, do nothing
-        }        // TODO add your handling code here:
-    }//GEN-LAST:event_logoutMouseReleased
-
-    private void patientIdTxtFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_patientIdTxtFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_patientIdTxtFieldActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    
-       PatientCard card =  new PatientCard(pName,oName,contacts,strCodeText);
-        System.out.println(strCodeText);
-       card.setLocationRelativeTo(null);
-       card.setVisible(true);
-       card.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

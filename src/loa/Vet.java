@@ -3,6 +3,8 @@ package loa;
 
 import contents.Test1;
 import contents.Test2;
+import contents.Vet_Add;
+import contents.Vet_Edit;
 import contents.Vet_Search;
 import event.EventMenuSelected;
 import java.awt.Color;
@@ -24,25 +26,33 @@ public class Vet extends javax.swing.JFrame {
      */
     private Test1 home;
     private Vet_Search search;
+    private Vet_Edit edit;
+    private Vet_Add add;
     private int userId;
     private Point initialClick;
     
-    public Vet(int sample) {
+    public Vet(int userId) {
+        this.userId = userId;
         initComponents();
         setBackground(new Color(0,0,0,0));
         home = new Test1();
-        search = new Vet_Search();
+        search = new Vet_Search(0);
+        edit = new Vet_Edit(0);
+        add = new Vet_Add();
         
         vet_Menu.initMoving(Vet.this);
+        vet_Menu.changeWelcome(userId);
         
         vet_Menu.addEventMenuSelected(new EventMenuSelected() {
             @Override
             public void selected(int index) {
                 if(index == 0) {
                     setForm(search);
-                } else if (index == 1){
-                    setForm(home);
-                } else if (index == 6){
+                } else if (index == 2){
+                    setForm(add);
+                } else if (index == 4){
+                    setForm(edit);
+                } else if (index == 12){
                     int response = JOptionPane.showConfirmDialog(null, "Are you sure you want to log out?", "Confirm Logout", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                     if (response == JOptionPane.YES_OPTION) {
                     setVisible(false);
