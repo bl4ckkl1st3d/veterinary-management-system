@@ -4,7 +4,7 @@ package softeng;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-
+import softeng.PatientReports;
 import java.time.LocalDate;
 import java.time.Period;
 import softeng.VetPageEdit;
@@ -111,6 +111,7 @@ public class VetPageSearch extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         searchPatientButton = new javax.swing.JButton();
         clearTextButton = new javax.swing.JButton();
+        teleport = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -513,14 +514,17 @@ public class VetPageSearch extends javax.swing.JFrame {
             }
         });
 
+        teleport.setText("teleport");
+        teleport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                teleportActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(146, 146, 146)
-                .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 495, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(253, 321, Short.MAX_VALUE))
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel6Layout.createSequentialGroup()
@@ -605,6 +609,15 @@ public class VetPageSearch extends javax.swing.JFrame {
                                 .addComponent(clearTextButton, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(patientIdTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(96, 96, 96))
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(146, 146, 146)
+                        .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 495, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(196, 196, 196)
+                        .addComponent(teleport, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -654,7 +667,9 @@ public class VetPageSearch extends javax.swing.JFrame {
                     .addComponent(breedTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(marksTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(57, 57, 57)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(teleport)
+                .addGap(22, 22, 22)
                 .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(22, 22, 22)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -771,7 +786,7 @@ public class VetPageSearch extends javax.swing.JFrame {
             return;
         }
 
-        int patientId = Integer.parseInt(patientIdText);
+        String patientId = patientIdText;
 
         String url = "jdbc:mysql://127.0.0.1:3306/database";
         String dbUsername = "root";
@@ -782,9 +797,9 @@ public class VetPageSearch extends javax.swing.JFrame {
             Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
 
             // Retrieve patient information
-            String patientQuery = "SELECT * FROM patient_information WHERE patient_id = ?";
+            String patientQuery = "SELECT * FROM patient_information WHERE barcode = ?";
             PreparedStatement patientStmt = connection.prepareStatement(patientQuery);
-            patientStmt.setInt(1, patientId);
+            patientStmt.setString(1, patientId);
             ResultSet patientResultSet = patientStmt.executeQuery();
 
             if (patientResultSet.next()) {
@@ -852,7 +867,7 @@ public class VetPageSearch extends javax.swing.JFrame {
    
     public void updateMedicalHistoryTable() {
         // Get the patient ID from the patientIdTxtField
-        int patientId = Integer.parseInt(patientIdTxtField.getText());
+        String patientId = patientIdTxtField.getText();
 
         String url = "jdbc:mysql://127.0.0.1:3306/database";
         String dbUsername = "root";
@@ -863,9 +878,9 @@ public class VetPageSearch extends javax.swing.JFrame {
             Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
 
             // Query to fetch medical history information for the specified patient ID
-            String query = "SELECT diagnosis, treatment, medications, visit_date, doctor_name FROM medical_history WHERE patient_id = ?";
+            String query = "SELECT diagnosis, treatment, medications, visit_date, doctor_name FROM medical_history WHERE barcode = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1, patientId);
+            preparedStatement.setString(1, patientId);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             // Create a DefaultTableModel to hold the medical history data
@@ -901,7 +916,7 @@ public class VetPageSearch extends javax.swing.JFrame {
 
     public void updateVaccineHistoryTable() {
         // Get the patient ID from the patientIdTxtField
-        int patientId = Integer.parseInt(patientIdTxtField.getText());
+        String patientId = patientIdTxtField.getText();
 
         String url = "jdbc:mysql://127.0.0.1:3306/database";
         String dbUsername = "root";
@@ -912,9 +927,9 @@ public class VetPageSearch extends javax.swing.JFrame {
             Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
 
             // Query to fetch vaccine history information for the specified patient ID
-            String query = "SELECT vaccine_name, vaccination_date, next_due_date, administered_by FROM vaccine_history WHERE patient_id = ?";
+            String query = "SELECT vaccine_name, vaccination_date, next_due_date, administered_by FROM vaccine_history WHERE barcode = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1, patientId);
+            preparedStatement.setString(1, patientId);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             // Create a DefaultTableModel to hold the vaccine history data
@@ -997,6 +1012,11 @@ public class VetPageSearch extends javax.swing.JFrame {
         clearTextFields();
         clearTables();
     }//GEN-LAST:event_clearTextButtonActionPerformed
+
+    private void teleportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teleportActionPerformed
+        new PatientReports(realUserId).setVisible(true);
+        setVisible(false);        // TODO add your handling code here:
+    }//GEN-LAST:event_teleportActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1088,6 +1108,7 @@ public class VetPageSearch extends javax.swing.JFrame {
     private javax.swing.JPanel send;
     private javax.swing.JPanel settings;
     private javax.swing.JComboBox<String> sexComboBox;
+    private javax.swing.JButton teleport;
     private javax.swing.JTextField typeTxtField;
     private javax.swing.JTable vaccineHistoryTable;
     private javax.swing.JTextField weightTxt;

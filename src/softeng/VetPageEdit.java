@@ -928,9 +928,9 @@ public class VetPageEdit extends javax.swing.JFrame {
             Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
 
             // Retrieve patient information
-            String patientQuery = "SELECT * FROM patient_information WHERE patient_id = ?";
+            String patientQuery = "SELECT * FROM patient_information WHERE barcode = ?";
             PreparedStatement patientStmt = connection.prepareStatement(patientQuery);
-            patientStmt.setInt(1, Integer.parseInt(patientIdText));
+            patientStmt.setString(1, patientIdText);
             ResultSet patientResultSet = patientStmt.executeQuery();
 
             if (patientResultSet.next()) {
@@ -1021,9 +1021,9 @@ public class VetPageEdit extends javax.swing.JFrame {
             }
 
             // Query to insert the medical history information
-            String medicalHistoryQuery = "INSERT INTO medical_history (patient_id, visit_date, diagnosis, treatment, medications, doctor_name) VALUES (?, CURDATE(), ?, ?, ?, ?)";
+            String medicalHistoryQuery = "INSERT INTO medical_history (barcode, visit_date, diagnosis, treatment, medications, doctor_name) VALUES (?, CURDATE(), ?, ?, ?, ?)";
             PreparedStatement medicalStatement = connection.prepareStatement(medicalHistoryQuery);
-            medicalStatement.setInt(1, Integer.parseInt(patientId));
+            medicalStatement.setString(1, patientId);
             medicalStatement.setString(2, diagnosis);
             medicalStatement.setString(3, treatment);
             medicalStatement.setString(4, medications);
@@ -1085,9 +1085,9 @@ public class VetPageEdit extends javax.swing.JFrame {
             Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
 
             // Query to fetch medical history information for the specified patient ID
-            String query = "SELECT diagnosis, treatment, medications, visit_date, doctor_name FROM medical_history WHERE patient_id = ?";
+            String query = "SELECT diagnosis, treatment, medications, visit_date, doctor_name FROM medical_history WHERE barcode = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1, Integer.parseInt(patientId));
+            preparedStatement.setString(1, patientId);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             // Create a DefaultTableModel to hold the medical history data
@@ -1137,9 +1137,9 @@ public class VetPageEdit extends javax.swing.JFrame {
             Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
 
             // Query to fetch vaccine history information for the specified patient ID
-            String query = "SELECT vaccine_name, vaccination_date, next_due_date, administered_by FROM vaccine_history WHERE patient_id = ?";
+            String query = "SELECT vaccine_name, vaccination_date, next_due_date, administered_by FROM vaccine_history WHERE barcode = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1,Integer.parseInt( patientId));
+            preparedStatement.setString(1,patientId);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             // Create a DefaultTableModel to hold the vaccine history data
@@ -1173,7 +1173,7 @@ public class VetPageEdit extends javax.swing.JFrame {
     }
     private void updatePatient() {
         // Get the data from the text fields
-        int patientId = Integer.parseInt(patientIdTxtField.getText());
+        String patientId = patientIdTxtField.getText();
         String patientName = patientTxtField.getText();
         java.util.Date bDayVal = bDay.getDate();
         double weight = Double.parseDouble(weightTxt.getText());
@@ -1193,7 +1193,7 @@ public class VetPageEdit extends javax.swing.JFrame {
             Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
 
             // Prepare the SQL query to update patient information
-            String query = "UPDATE patient_information SET patient_name = ?, weight = ?, type = ?, color = ?, breed = ?, marks = ?, sex = ?, bday = ? WHERE patient_id = ?";
+            String query = "UPDATE patient_information SET patient_name = ?, weight = ?, type = ?, color = ?, breed = ?, marks = ?, sex = ?, bday = ? WHERE barcode = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, patientName);
             preparedStatement.setDouble(2, weight);
@@ -1203,7 +1203,7 @@ public class VetPageEdit extends javax.swing.JFrame {
             preparedStatement.setString(6, marks);
             preparedStatement.setString(7, sex);
             preparedStatement.setDate(8, sqlbDay);
-            preparedStatement.setInt(9, patientId);
+            preparedStatement.setString(9, patientId);
 
             // Execute the update query
             int rowsAffected = preparedStatement.executeUpdate();
@@ -1296,7 +1296,7 @@ public class VetPageEdit extends javax.swing.JFrame {
         String dbPassword = "admin";
 
         String administeredBy = "";
-         JOptionPane.showMessageDialog(null, "Must complete all fields.");
+
         try {
             // Establish the database connection
             Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
@@ -1318,9 +1318,9 @@ public class VetPageEdit extends javax.swing.JFrame {
             }
 
             // Query to insert the vaccine information
-            String vaccineQuery = "INSERT INTO vaccine_history (patient_id, vaccine_name, vaccination_date, next_due_date, administered_by) VALUES (?, ?, ?, ?, ?)";
+            String vaccineQuery = "INSERT INTO vaccine_history (barcode, vaccine_name, vaccination_date, next_due_date, administered_by) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement vaccineStatement = connection.prepareStatement(vaccineQuery);
-            vaccineStatement.setInt(1, Integer.parseInt(patientId));
+            vaccineStatement.setString(1, patientId);
             vaccineStatement.setString(2, vaccineName);
             vaccineStatement.setDate(3, sqlVaccinationDate);
             vaccineStatement.setDate(4, sqlDueDate);
