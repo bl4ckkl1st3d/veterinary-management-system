@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.security.MessageDigest;
 import java.sql.*;
 import javax.swing.JOptionPane;
 
@@ -142,6 +143,7 @@ public void addLoginAuditLog(int userId) {
         String url = "jdbc:mysql://127.0.0.1:3306/database";
         String dbUsername = "root";
         String dbPassword = "admin";
+        String hashedPass = sha256(password);
         try {
             // Establish the database connection
             Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
@@ -150,7 +152,7 @@ public void addLoginAuditLog(int userId) {
             String query = "SELECT * FROM users WHERE BINARY username = ? AND BINARY password = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, username);
-            preparedStatement.setString(2, password);
+            preparedStatement.setString(2, hashedPass);
 
             // Execute the query
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -365,7 +367,7 @@ public void addLoginAuditLog(int userId) {
 
             fileWriter.flush();
             System.out.println("Schema and data saved successfully.");
-        //    System.out.println(fileWriter.getAbsolutePath());
+            //    System.out.println(fileWriter.getAbsolutePath());
         } catch (SQLException | IOException e) {
             e.printStackTrace();
         } finally {
@@ -383,6 +385,25 @@ public void addLoginAuditLog(int userId) {
 
 
     }//GEN-LAST:event_jButton1ActionPerformed
+    public static String sha256(String input) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(input.getBytes("UTF-8"));
+            StringBuilder hexString = new StringBuilder();
+
+            for (byte b : hash) {
+                String hex = Integer.toHexString(0xff & b);
+                if (hex.length() == 1) {
+                    hexString.append('0');
+                }
+                hexString.append(hex);
+            }
+
+            return hexString.toString();
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -415,6 +436,10 @@ public void addLoginAuditLog(int userId) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new login().setVisible(true);
+                String originalString = "password1";
+                String hashedString = sha256(originalString);
+                System.out.println("Original String: " + originalString);
+                System.out.println("Hashed String: " + hashedString);
             }
         });
     }

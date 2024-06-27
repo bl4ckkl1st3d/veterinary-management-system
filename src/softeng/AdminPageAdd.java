@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import java.sql.*;
 import java.time.*;
 import java.time.temporal.ChronoUnit;
+import static softeng.login.sha256;
 
 /**
  *
@@ -371,7 +372,7 @@ public class AdminPageAdd extends javax.swing.JFrame {
                 .addComponent(settings, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(logout, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         jPanel5.setBackground(new java.awt.Color(153, 255, 204));
@@ -649,7 +650,7 @@ public class AdminPageAdd extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 805, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(15, 15, 15))
         );
@@ -662,7 +663,7 @@ public class AdminPageAdd extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -903,6 +904,7 @@ public class AdminPageAdd extends javax.swing.JFrame {
                     String address = resultSet.getString("address");
                     String sex = resultSet.getString("sex");
                     String contact = resultSet.getString("contact");
+                    
                     editBtn.setVisible(true);
                     addUserBtn.setVisible(false);
 
@@ -911,6 +913,7 @@ public class AdminPageAdd extends javax.swing.JFrame {
                     lastNameTxtField.setText(lastName);
                     addressTxtField.setText(address);
                     contactTxtField.setText(contact);
+                    birthDate.setDate(Date.valueOf(resultSet.getDate("birthDate").toLocalDate()));
                     if (sex.equals("M")) {
                         sexBox.setSelectedItem("MALE");
                     } else if (sex.equals("F")) {
@@ -941,7 +944,7 @@ public class AdminPageAdd extends javax.swing.JFrame {
 
                     // Set the retrieved data into the respective text fields and combo boxes
                     usernameTxtField.setText(username);
-                    passwordTxtField.setText(password);
+                    passwordTxtField.setText("");
                     secretQuestionBox.setSelectedItem(secretQuestion);
                     answerTxtField.setText(secretAnswer);
 
@@ -967,7 +970,7 @@ public class AdminPageAdd extends javax.swing.JFrame {
     }//GEN-LAST:event_searchBtnActionPerformed
 
     private void editBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnActionPerformed
-        // Get data from the text fields
+     // Get data from the text fields
     String user_Id = useridTxtField.getText();
     String firstName = firstNameTxtField.getText();
     String lastName = lastNameTxtField.getText();
@@ -1029,14 +1032,28 @@ public class AdminPageAdd extends javax.swing.JFrame {
         connection.setAutoCommit(false); // Start transaction
 
         // Update the 'users' table
-        String updateUsersQuery = "UPDATE users SET username = ?, password = ?, secret_question = ?, secret_answer = ?, LOA = ? WHERE userid = ?";
+        String updateUsersQuery;
+        if (password.isEmpty()) {
+            updateUsersQuery = "UPDATE users SET username = ?, secret_question = ?, secret_answer = ?, LOA = ? WHERE userid = ?";
+        } else {
+            updateUsersQuery = "UPDATE users SET username = ?, password = ?, secret_question = ?, secret_answer = ?, LOA = ? WHERE userid = ?";
+        }
+
         PreparedStatement usersPreparedStatement = connection.prepareStatement(updateUsersQuery);
         usersPreparedStatement.setString(1, username);
-        usersPreparedStatement.setString(2, password);
-        usersPreparedStatement.setString(3, secretQuestion);
-        usersPreparedStatement.setString(4, answer);
-        usersPreparedStatement.setInt(5, loa);
-        usersPreparedStatement.setInt(6, Integer.parseInt(user_Id));
+        if (!password.isEmpty()) {
+            String hashed = sha256(password);
+            usersPreparedStatement.setString(2, hashed);
+            usersPreparedStatement.setString(3, secretQuestion);
+            usersPreparedStatement.setString(4, answer);
+            usersPreparedStatement.setInt(5, loa);
+            usersPreparedStatement.setInt(6, Integer.parseInt(user_Id));
+        } else {
+            usersPreparedStatement.setString(2, secretQuestion);
+            usersPreparedStatement.setString(3, answer);
+            usersPreparedStatement.setInt(4, loa);
+            usersPreparedStatement.setInt(5, Integer.parseInt(user_Id));
+        }
         int rowsAffectedUsers = usersPreparedStatement.executeUpdate();
 
         // Update the 'user_information' table
@@ -1057,6 +1074,7 @@ public class AdminPageAdd extends javax.swing.JFrame {
             connection.commit(); // Commit transaction
             JOptionPane.showMessageDialog(null, "User information updated successfully.");
             updateUserAuditLog(Integer.parseInt(user_Id));
+            clearAllFields();
         } else {
             connection.rollback(); // Rollback transaction
             JOptionPane.showMessageDialog(null, "Failed to update user information.");
@@ -1087,6 +1105,7 @@ public class AdminPageAdd extends javax.swing.JFrame {
         clearAllFields();
         editBtn.setVisible(false);
         addUserBtn.setVisible(true);
+        birthDate.setDate(null);
     }//GEN-LAST:event_clearBtnActionPerformed
     public void updateUserAuditLog(int userId) {
         String url = "jdbc:mysql://127.0.0.1:3306/database";
