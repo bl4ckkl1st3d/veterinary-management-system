@@ -16,7 +16,31 @@ import javax.swing.JPanel;
 import java.sql.*;
 import java.util.Date;
 import java.util.UUID;
+import com.itextpdf.text.Image;
+import org.krysalis.barcode4j.impl.code39.Code39Bean;
+import org.krysalis.barcode4j.output.bitmap.BitmapCanvasProvider;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import javax.imageio.ImageIO;
+import javax.swing.*;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author Kevin
@@ -453,6 +477,12 @@ public class StaffPageAdd extends javax.swing.JFrame {
                 .addGap(22, 22, 22))
         );
 
+        txtName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNameActionPerformed(evt);
+            }
+        });
+
         txtPrice.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtPriceActionPerformed(evt);
@@ -731,6 +761,84 @@ private void clearTextFields() {
 
 
     }
+public InputStream generateCode39Barcode(String barcodeText) {
+        try {
+            Code39Bean bean = new Code39Bean();
+            final int dpi = 150;
+
+            // Configure the barcode generator
+            bean.setModuleWidth(0.2);
+            bean.setWideFactor(3);
+            bean.doQuietZone(false);
+
+            // Create a ByteArrayOutputStream to hold the generated barcode image
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
+            // Generate the barcode
+            BitmapCanvasProvider canvas = new BitmapCanvasProvider(
+                    outputStream, "image/x-png", dpi, BufferedImage.TYPE_BYTE_BINARY, false, 0);
+            bean.generateBarcode(canvas, barcodeText);
+            canvas.finish();
+
+            System.out.println(barcodeText);
+
+            // Convert the generated barcode image to InputStream
+            return new ByteArrayInputStream(outputStream.toByteArray());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public void convertToPDF(String barcodeText) {
+        // Open a file chooser to select the folder
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int option = fileChooser.showSaveDialog(null);
+        String prodName = txtName.getText();
+        if (option == JFileChooser.APPROVE_OPTION) {
+            File selectedFolder = fileChooser.getSelectedFile();
+
+            // Define the PDF file path with formatted date range
+            String pdfFileName = "barcode_"+prodName+".pdf";
+            String pdfFilePath = selectedFolder.getAbsolutePath() + "/" + pdfFileName;
+
+            // Create the PDF document
+            Document document = new Document();
+            try {
+                PdfWriter.getInstance(document, new FileOutputStream(pdfFilePath));
+                document.open();
+
+                Paragraph clinicTitle = new Paragraph("Product barcodes for: "+prodName+"", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16));
+                clinicTitle.setAlignment(Element.ALIGN_CENTER);
+                document.add(clinicTitle);
+                document.add(Chunk.NEWLINE); //
+
+                // Generate and add barcode to the PDF
+                InputStream barcodeInputStream = generateCode39Barcode(barcodeText);
+                if (barcodeInputStream != null) {
+                    BufferedImage bufferedBarcodeImage = ImageIO.read(barcodeInputStream);
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    ImageIO.write(bufferedBarcodeImage, "png", baos);
+                    Image barcodeImage = Image.getInstance(baos.toByteArray());
+                    barcodeImage.setAlignment(Element.ALIGN_CENTER);
+                    document.add(barcodeImage);
+                     document.add(barcodeImage);
+                      document.add(barcodeImage);
+                       document.add(barcodeImage);
+                        document.add(barcodeImage);
+                }
+
+                // Close the document
+                document.close();
+
+                JOptionPane.showMessageDialog(null, "PDF saved successfully as '" + pdfFileName + "'.");
+            } catch (Exception e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+            }
+        }
+    }
 
  private void addProdToDB() {
     // Get the necessary information from the text fields and other input controls
@@ -920,7 +1028,21 @@ private void clearTextFields() {
 
     
     private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
-        addProdToDB();
+        String barTxt = txtBarcode.getText();
+        int response = JOptionPane.showConfirmDialog(null, "Do you want to print the barcode for this product?", "Confirm",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (response == JOptionPane.YES_OPTION) {
+            System.out.println("User chose Yes.");
+             convertToPDF(barTxt);
+             addProdToDB();
+        } else if (response == JOptionPane.NO_OPTION) {
+            System.out.println("User chose No.");
+            addProdToDB();
+        } else if (response == JOptionPane.CLOSED_OPTION) {
+             JOptionPane.showMessageDialog(null, "User closed the dialog. No action performed.", "Closed", JOptionPane.INFORMATION_MESSAGE);
+            System.out.println("User closed the dialog. No action performed.");
+        }
+  
     }//GEN-LAST:event_addBtnActionPerformed
 
     private void rbtnPerishableYesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnPerishableYesActionPerformed
@@ -1016,6 +1138,10 @@ private void clearTextFields() {
          String strCodeText = UUID.randomUUID().toString().substring(0, 8).toUpperCase(); // Generate a random 8-character string
          txtBarcode.setText(strCodeText);
     }//GEN-LAST:event_generateBarActionPerformed
+
+    private void txtNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNameActionPerformed
 
     /**
      * @param args the command line arguments
