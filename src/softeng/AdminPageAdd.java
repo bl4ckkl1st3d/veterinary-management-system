@@ -904,6 +904,7 @@ public class AdminPageAdd extends javax.swing.JFrame {
                     String address = resultSet.getString("address");
                     String sex = resultSet.getString("sex");
                     String contact = resultSet.getString("contact");
+                    
                     editBtn.setVisible(true);
                     addUserBtn.setVisible(false);
 
@@ -912,6 +913,7 @@ public class AdminPageAdd extends javax.swing.JFrame {
                     lastNameTxtField.setText(lastName);
                     addressTxtField.setText(address);
                     contactTxtField.setText(contact);
+                    birthDate.setDate(Date.valueOf(resultSet.getDate("birthDate").toLocalDate()));
                     if (sex.equals("M")) {
                         sexBox.setSelectedItem("MALE");
                     } else if (sex.equals("F")) {
@@ -1103,6 +1105,7 @@ public class AdminPageAdd extends javax.swing.JFrame {
         clearAllFields();
         editBtn.setVisible(false);
         addUserBtn.setVisible(true);
+        birthDate.setDate(null);
     }//GEN-LAST:event_clearBtnActionPerformed
     public void updateUserAuditLog(int userId) {
         String url = "jdbc:mysql://127.0.0.1:3306/database";

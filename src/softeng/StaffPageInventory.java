@@ -495,7 +495,7 @@ new StaffPagePOS(realUserId).setVisible(true);
         conn = DriverManager.getConnection(url, dbUsername, dbPassword);
         
         // SQL query to fetch all data from the product_information table
-        String sql = "SELECT barcode, name, price, stocks, critical_level, perishable, expiration_date, supplier_name FROM product_information";
+        String sql = "SELECT barcode, name, price, stocks, critical_level, perishable, expiration_date, supplier_name FROM product_information ORDER BY (expiration_date IS NULL), expiration_date ASC";
         
         // Prepare the statement
         pstmt = conn.prepareStatement(sql);
