@@ -420,6 +420,7 @@ public class VetPageAdd extends javax.swing.JFrame {
             }
         });
 
+        barField.setEditable(false);
         barField.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jScrollPane3.setViewportView(barField);
 

@@ -16,6 +16,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.LayoutManager;
 import java.awt.RenderingHints;
+import java.awt.event.KeyEvent;
 import javax.swing.JPanel;
 import java.sql.*;
 import javax.swing.*;
@@ -43,9 +44,11 @@ public class VetPageSearch extends javax.swing.JFrame {
     private String contacts;
     private String strCodeText;
     private String barImgPath = "c:/temp/code39.jpg";
+
     public VetPageSearch(int realUserId) {
         initComponents();
         this.realUserId = realUserId;
+        patientIdTxtField.requestFocus();
     }
 
     /**
@@ -482,12 +485,12 @@ public class VetPageSearch extends javax.swing.JFrame {
         jLabel26.setText("PATIENTID");
 
         patientIdTxtField.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        patientIdTxtField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                patientIdTxtFieldActionPerformed(evt);
-            }
-        });
+        patientIdTxtField.setActionCommand("<Not Set>");
+        patientIdTxtField.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         patientIdTxtField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                patientIdTxtFieldKeyPressed(evt);
+            }
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 patientIdTxtFieldKeyReleased(evt);
             }
@@ -814,15 +817,15 @@ public class VetPageSearch extends javax.swing.JFrame {
                 String ageText;
                 if (years > 0) {
                     ageText = years + " year(s)";
-                         if (months > 0) {
-                              ageText += " and " + months + " month(s)";
-                                   }}
-                else {
+                    if (months > 0) {
+                        ageText += " and " + months + " month(s)";
+                    }
+                } else {
                     ageText = months + " month(s)";
-                        }
-                  // Set the text
+                }
+                // Set the text
                 ageTxt.setText(ageText);
-             
+
                 weightTxt.setText(String.valueOf(patientResultSet.getFloat("weight")));
                 typeTxtField.setText(patientResultSet.getString("type"));
                 colorTxtField.setText(patientResultSet.getString("color"));
@@ -830,9 +833,9 @@ public class VetPageSearch extends javax.swing.JFrame {
                 marksTxtField.setText(patientResultSet.getString("marks"));
                 sexComboBox.setSelectedItem(patientResultSet.getString("sex").equals("M") ? "MALE" : "FEMALE");
                 pName = patientResultSet.getString("patient_name");
-               
+
                 String clientName = patientResultSet.getString("client_name");
-               
+
                 // Retrieve client information
                 String clientQuery = "SELECT * FROM client_information WHERE client_name = ?";
                 PreparedStatement clientStmt = connection.prepareStatement(clientQuery);
@@ -844,14 +847,15 @@ public class VetPageSearch extends javax.swing.JFrame {
                     nameTxtField.setText(clientResultSet.getString("client_name"));
                     addressTxtField.setText(clientResultSet.getString("address"));
                     contactTxtField.setText(clientResultSet.getString("contact"));
-                      oName = (clientResultSet.getString("client_name"));
-                      contacts = (clientResultSet.getString("contact"));
+                    oName = (clientResultSet.getString("client_name"));
+                    contacts = (clientResultSet.getString("contact"));
                 }
-              
+
                 clientStmt.close();
                 clientResultSet.close();
             } else {
                 // If no patient found, clear all text fields
+                JOptionPane.showMessageDialog(null, "Patient not Found");
                 clearTextFields();
             }
 
@@ -864,7 +868,7 @@ public class VetPageSearch extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
         }
     }
-   
+
     public void updateMedicalHistoryTable() {
         // Get the patient ID from the patientIdTxtField
         String patientId = patientIdTxtField.getText();
@@ -961,24 +965,18 @@ public class VetPageSearch extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
+
     private void clearTables() {
-    DefaultTableModel dm = (DefaultTableModel)medicalHistoryTable.getModel();
-    while(dm.getRowCount() > 0)
-        {
-          dm.removeRow(0);
+        DefaultTableModel dm = (DefaultTableModel) medicalHistoryTable.getModel();
+        while (dm.getRowCount() > 0) {
+            dm.removeRow(0);
         }
-    
-    DefaultTableModel dm1 = (DefaultTableModel)vaccineHistoryTable.getModel();
-    while(dm1.getRowCount() > 0)
-        {
-          dm1.removeRow(0);
+
+        DefaultTableModel dm1 = (DefaultTableModel) vaccineHistoryTable.getModel();
+        while (dm1.getRowCount() > 0) {
+            dm1.removeRow(0);
         }
     }
-    private void patientIdTxtFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_patientIdTxtFieldKeyReleased
-      
-       
-    }//GEN-LAST:event_patientIdTxtFieldKeyReleased
-
     private void logoutMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseReleased
         int response = JOptionPane.showConfirmDialog(this, "Do you want to log out?", "Confirm Logout", JOptionPane.YES_NO_OPTION);
         if (response == JOptionPane.YES_OPTION) {
@@ -989,34 +987,47 @@ public class VetPageSearch extends javax.swing.JFrame {
         }        // TODO add your handling code here:
     }//GEN-LAST:event_logoutMouseReleased
 
-    private void patientIdTxtFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_patientIdTxtFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_patientIdTxtFieldActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    
-       PatientCard card =  new PatientCard(pName,oName,contacts,strCodeText);
+
+        PatientCard card = new PatientCard(pName, oName, contacts, strCodeText);
         System.out.println(strCodeText);
-       card.setLocationRelativeTo(null);
-       card.setVisible(true);
-       card.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        card.setLocationRelativeTo(null);
+        card.setVisible(true);
+        card.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void searchPatientButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchPatientButtonActionPerformed
-       searchPatient();
-       updateMedicalHistoryTable();
-       updateVaccineHistoryTable();
+        searchPatient();
+        updateMedicalHistoryTable();
+        updateVaccineHistoryTable();
     }//GEN-LAST:event_searchPatientButtonActionPerformed
 
     private void clearTextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearTextButtonActionPerformed
         clearTextFields();
         clearTables();
+        patientIdTxtField.setText("");
+        patientIdTxtField.requestFocus();
     }//GEN-LAST:event_clearTextButtonActionPerformed
 
     private void teleportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teleportActionPerformed
         new PatientReports(realUserId).setVisible(true);
         setVisible(false);        // TODO add your handling code here:
     }//GEN-LAST:event_teleportActionPerformed
+
+    private void patientIdTxtFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_patientIdTxtFieldKeyPressed
+        String barcode = patientIdTxtField.getText();
+
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            searchPatient();
+            updateMedicalHistoryTable();
+            updateVaccineHistoryTable();
+        }
+
+    }//GEN-LAST:event_patientIdTxtFieldKeyPressed
+
+    private void patientIdTxtFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_patientIdTxtFieldKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_patientIdTxtFieldKeyReleased
 
     /**
      * @param args the command line arguments
