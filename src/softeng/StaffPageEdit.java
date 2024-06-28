@@ -676,7 +676,7 @@ new StaffPageAdd(realUserId).setVisible(true);
     }//GEN-LAST:event_addMouseReleased
 
     private void editMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editMouseClicked
-        System.out.println("test");
+
     }//GEN-LAST:event_editMouseClicked
 
     private void posMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_posMouseClicked
@@ -685,7 +685,8 @@ new StaffPageAdd(realUserId).setVisible(true);
     }//GEN-LAST:event_posMouseClicked
 
     private void reportsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reportsMouseClicked
-        System.out.println("test");
+        new StaffPageReports(realUserId).setVisible(true);
+        setVisible(false);
     }//GEN-LAST:event_reportsMouseClicked
 
     private void helpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_helpMouseClicked

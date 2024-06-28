@@ -589,7 +589,8 @@ public class StaffPageReports extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void inventoryMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inventoryMouseReleased
-
+        new StaffPageInventory(realUserId).setVisible(true);
+        setVisible(false);
     }//GEN-LAST:event_inventoryMouseReleased
 
     private void addMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMouseReleased
@@ -603,7 +604,8 @@ public class StaffPageReports extends javax.swing.JFrame {
     }//GEN-LAST:event_editMouseClicked
 
     private void posMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_posMouseClicked
-
+        new StaffPagePOS(realUserId).setVisible(true);
+        setVisible(false);
     }//GEN-LAST:event_posMouseClicked
 
     private void reportsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reportsMouseClicked

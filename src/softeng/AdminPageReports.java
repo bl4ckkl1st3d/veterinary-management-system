@@ -873,15 +873,18 @@ private void addPanelToScrollPane() {
     }//GEN-LAST:event_searchMouseReleased
 
     private void addMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMouseClicked
-        System.out.println("test");
+        new AdminPageAdd(realUserId).setVisible(true);
+        setVisible(false);
     }//GEN-LAST:event_addMouseClicked
 
     private void vetMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_vetMouseClicked
-        System.out.println("test");
+        new VetPage(realUserId).setVisible(true);
+        setVisible(false);
     }//GEN-LAST:event_vetMouseClicked
 
     private void cashierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cashierMouseClicked
-        System.out.println("test");
+        new StaffPage(realUserId).setVisible(true);
+        setVisible(false);
     }//GEN-LAST:event_cashierMouseClicked
 
     private void reportsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reportsMouseClicked

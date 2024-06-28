@@ -626,7 +626,7 @@ public class VetPageAdd extends javax.swing.JFrame {
     }//GEN-LAST:event_editPatientMouseReleased
 
     private void addPatientMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addPatientMouseClicked
-
+        
     }//GEN-LAST:event_addPatientMouseClicked
 
     private void sendMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sendMouseClicked

@@ -685,15 +685,18 @@ public class AdminPageSearch extends javax.swing.JFrame {
     }//GEN-LAST:event_addMouseClicked
 
     private void vetMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_vetMouseClicked
-        System.out.println("nigga");
+        new VetPage(userId).setVisible(true);
+        setVisible(false);
     }//GEN-LAST:event_vetMouseClicked
 
     private void cashierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cashierMouseClicked
-        System.out.println("nigga");
+        new StaffPage(userId).setVisible(true);
+        setVisible(false);
     }//GEN-LAST:event_cashierMouseClicked
 
     private void reportsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reportsMouseClicked
-        System.out.println("nigga");
+        new AdminPageReports(userId).setVisible(true);
+        setVisible(false);
     }//GEN-LAST:event_reportsMouseClicked
 
     private void helpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_helpMouseClicked

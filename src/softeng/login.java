@@ -13,7 +13,7 @@ import java.sql.*;
 import javax.swing.JOptionPane;
 
 //wewewewe
-import com.fazecast.jSerialComm.SerialPort;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JButton;
@@ -234,7 +234,7 @@ private void performLogin(String username, String password) {
     }//GEN-LAST:event_showBtnActionPerformed
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-        sendSms();
+       // sendSms();
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void saveSchema() {
@@ -394,13 +394,13 @@ private void performLogin(String username, String password) {
 
     }
 
-    private static void sendSms() {
+    /*private static void sendSms() {
         String contactNumber = "+639776270544"; // Replace with actual contact number
         String vaccineName = "COVID-19";     // Replace with actual vaccine name
         String date = "2024-07-15";          // Replace with actual date
 
         // Open the serial port
-        SerialPort comPort = SerialPort.getCommPort("COM5");// Adjust the index if necessary
+//        SerialPort comPort = SerialPort.getCommPort("COM5");// Adjust the index if necessary
         comPort.setBaudRate(9600);
         if (comPort.openPort()) {
             System.out.println("Port is open.");
@@ -435,7 +435,7 @@ private void performLogin(String username, String password) {
         } else {
             System.out.println("Failed to open port.");
         }
-    }
+    }*/
 
     public static String sha256(String input) {
         try {

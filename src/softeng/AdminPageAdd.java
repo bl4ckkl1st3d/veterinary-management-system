@@ -844,19 +844,23 @@ public class AdminPageAdd extends javax.swing.JFrame {
     }//GEN-LAST:event_helpMouseClicked
 
     private void reportsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reportsMouseClicked
-        System.out.println("test");
+        new AdminPageReports(userIdx).setVisible(true);
+        setVisible(false);
     }//GEN-LAST:event_reportsMouseClicked
 
     private void cashierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cashierMouseClicked
-        System.out.println("test");
+        new StaffPage(userIdx).setVisible(true);
+        setVisible(false);
     }//GEN-LAST:event_cashierMouseClicked
 
     private void vetMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_vetMouseClicked
-        System.out.println("test");
+        new VetPage(userIdx).setVisible(true);
+        setVisible(false);
     }//GEN-LAST:event_vetMouseClicked
 
     private void addMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMouseClicked
-        System.out.println("test");
+        new AdminPageAdd(userIdx).setVisible(true);
+        setVisible(false);
     }//GEN-LAST:event_addMouseClicked
 
     private void searchMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchMouseReleased

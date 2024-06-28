@@ -482,7 +482,8 @@ public class PatientReports extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void searchPatientMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchPatientMouseReleased
-
+    new VetPageSearch(realUserId).setVisible(true);
+    setVisible(false);
     }//GEN-LAST:event_searchPatientMouseReleased
 
     private void editPatientMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editPatientMouseReleased

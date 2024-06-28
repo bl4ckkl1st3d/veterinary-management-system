@@ -514,7 +514,8 @@ new StaffPagePOS(realUserId).setVisible(true);
     }//GEN-LAST:event_posMouseClicked
 
     private void reportsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reportsMouseClicked
-
+        new StaffPageReports(realUserId).setVisible(true);
+        setVisible(false);
     }//GEN-LAST:event_reportsMouseClicked
 
     private void helpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_helpMouseClicked
