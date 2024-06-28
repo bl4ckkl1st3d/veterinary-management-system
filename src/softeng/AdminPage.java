@@ -59,6 +59,8 @@ public class AdminPage extends javax.swing.JFrame {
         jPanel5 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setAlwaysOnTop(true);
@@ -352,6 +354,10 @@ public class AdminPage extends javax.swing.JFrame {
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/logo1.png"))); // NOI18N
 
+        jButton1.setText("audit logs");
+
+        jButton2.setText("backup/restore");
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -364,6 +370,12 @@ public class AdminPage extends javax.swing.JFrame {
                         .addComponent(jLabel10)
                         .addGap(114, 114, 114)))
                 .addContainerGap(187, Short.MAX_VALUE))
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(63, 63, 63)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(78, 78, 78)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -372,6 +384,10 @@ public class AdminPage extends javax.swing.JFrame {
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel10)
+                .addGap(77, 77, 77)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -476,7 +492,8 @@ public class AdminPage extends javax.swing.JFrame {
     }//GEN-LAST:event_helpPanelMouseClicked
 
     private void settingsPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsPanelMouseClicked
-        System.out.println("test");
+       new SettingsPage(userId).setVisible(true);
+        setVisible(false);
     }//GEN-LAST:event_settingsPanelMouseClicked
 
     private void logoutPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutPanelMouseClicked
@@ -545,6 +562,8 @@ public class AdminPage extends javax.swing.JFrame {
     private javax.swing.JPanel addPanel;
     private javax.swing.JPanel cashierPanel;
     private javax.swing.JPanel helpPanel;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;

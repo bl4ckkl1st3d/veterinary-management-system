@@ -31,6 +31,7 @@ public class login extends javax.swing.JFrame {
      */
     public login() {
         initComponents();
+        passTxtField.setEchoChar('\u25cf');
 
     }
     private static final String DATABASE_NAME = "database";
@@ -396,11 +397,10 @@ public void addLoginAuditLog(int userId) {
 
     }
 
- 
-private static void sendSms() {
-        String contactNumber = "639776720544"; // Replace with actual contact number
-        String vaccineName = "ANTI-RABIES";     // Replace with actual vaccine name
-        String date = "2024-07-15";          // Replace with actual date
+    private static void sendSms() {
+        String contactNumber = "639776720544";
+        String vaccineName = "ANTI-SELOS VACCINE";     // Replace with actual vaccine name
+        String date = "2024-07-02";          // Replace with actual date
 
         // Adjust the port name based on the available ports list
         SerialPort comPort = SerialPort.getCommPort("COM5"); // Replace with your port name
@@ -486,7 +486,7 @@ private static void sendSms() {
         return false;
     }
 
-private static String readResponse(InputStream in) throws Exception {
+    private static String readResponse(InputStream in) throws Exception {
         StringBuilder response = new StringBuilder();
         long endTime = System.currentTimeMillis() + 5000;
         while (System.currentTimeMillis() < endTime) {

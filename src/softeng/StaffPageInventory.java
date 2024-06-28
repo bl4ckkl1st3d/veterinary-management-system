@@ -45,12 +45,13 @@ public class StaffPageInventory extends javax.swing.JFrame {
     private int realUserId;
     private String barcodeGlobal;
     private String nameGlobal;
+
     public StaffPageInventory(int realUserId) {
         initComponents();
         loadAllProductInformation();
         this.realUserId = realUserId;
     }
-     private static final String DATABASE_NAME = "database";
+    private static final String DATABASE_NAME = "database";
     private static final String dbUsername = "root";
     private static final String dbPassword = "admin";
     private static final String MYSQL_SERVER_HOSTNAME = "DESKTOP-MVBR3DH"; // Replace with your MySQL server's hostname
@@ -492,7 +493,7 @@ public class StaffPageInventory extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void inventoryMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inventoryMouseReleased
-new StaffPageInventory(realUserId).setVisible(true);
+        new StaffPageInventory(realUserId).setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_inventoryMouseReleased
 
@@ -503,13 +504,13 @@ new StaffPageInventory(realUserId).setVisible(true);
     }//GEN-LAST:event_addMouseReleased
 
     private void editMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editMouseClicked
- new StaffPageEdit(realUserId).setVisible(true);
+        new StaffPageEdit(realUserId).setVisible(true);
         setVisible(false);
 
     }//GEN-LAST:event_editMouseClicked
 
     private void posMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_posMouseClicked
-new StaffPagePOS(realUserId).setVisible(true);
+        new StaffPagePOS(realUserId).setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_posMouseClicked
 
@@ -537,74 +538,103 @@ new StaffPagePOS(realUserId).setVisible(true);
     }//GEN-LAST:event_logoutMouseReleased
 
     private void loadAllProductInformation() {
-    // Database connection details
-    String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
-    
-    Connection conn = null;
-    PreparedStatement pstmt = null;
-    ResultSet rs = null;
-    
-    try {
-        // Establish a connection to the database
-        conn = DriverManager.getConnection(url, dbUsername, dbPassword);
-        
-        // SQL query to fetch all data from the product_information table
-        String sql = "SELECT barcode, name, price, stocks, critical_level, perishable, expiration_date, supplier_name FROM product_information ORDER BY (expiration_date IS NULL), expiration_date ASC";
-        
-        // Prepare the statement
-        pstmt = conn.prepareStatement(sql);
-        
-        // Execute the query
-        rs = pstmt.executeQuery();
-        
-        // Get the result set metadata
-        ResultSetMetaData metaData = rs.getMetaData();
-        
-        // Get the column names
-        int columnCount = metaData.getColumnCount();
-        String[] columnNames = new String[columnCount];
-        
-        for (int i = 1; i <= columnCount; i++) {
-            columnNames[i - 1] = metaData.getColumnLabel(i);
-        }
-        
-        // Get the table model and set the column names
-        DefaultTableModel model = (DefaultTableModel) inventoryTable.getModel();
-        model.setColumnIdentifiers(columnNames);
-        
-        // Clear the existing rows in the table
-        model.setRowCount(0);
-        
-        // Process the result set and populate the table
-        while (rs.next()) {
-            Object[] rowData = new Object[columnCount];
-            
+        // Database connection details
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
+
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            // Establish a connection to the database
+            conn = DriverManager.getConnection(url, dbUsername, dbPassword);
+
+            // SQL query to fetch all data from the product_information table
+            String sql = "SELECT barcode, name, price, stocks, critical_level, perishable, expiration_date, supplier_name FROM product_information ORDER BY (expiration_date IS NULL), expiration_date ASC";
+
+            // Prepare the statement
+            pstmt = conn.prepareStatement(sql);
+
+            // Execute the query
+            rs = pstmt.executeQuery();
+
+            // Get the result set metadata
+            ResultSetMetaData metaData = rs.getMetaData();
+
+            // Get the column names
+            int columnCount = metaData.getColumnCount();
+            String[] columnNames = new String[columnCount];
+
             for (int i = 1; i <= columnCount; i++) {
-                if ("perishable".equals(metaData.getColumnLabel(i))) {
-                    rowData[i - 1] = rs.getBoolean(i) ? "Yes" : "No";
-                } else {
-                    rowData[i - 1] = rs.getObject(i);
+                columnNames[i - 1] = metaData.getColumnLabel(i);
+            }
+
+            // Get the table model and set the column names
+            DefaultTableModel model = (DefaultTableModel) inventoryTable.getModel();
+            model.setColumnIdentifiers(columnNames);
+
+            // Clear the existing rows in the table
+            model.setRowCount(0);
+
+            // Process the result set and populate the table
+            while (rs.next()) {
+                Object[] rowData = new Object[columnCount];
+
+                boolean isCritical = false;
+
+                for (int i = 1; i <= columnCount; i++) {
+                    if ("perishable".equals(metaData.getColumnLabel(i))) {
+                        rowData[i - 1] = rs.getBoolean(i) ? "Yes" : "No";
+                    } else {
+                        rowData[i - 1] = rs.getObject(i);
+                    }
+
+                    // Check if stocks are below critical level
+                    if ("stocks".equals(metaData.getColumnLabel(i)) && rs.getInt(i) < rs.getInt("critical_level")) {
+                        isCritical = true;
+                    }
+                }
+
+                // Add a row to the table model
+                model.addRow(rowData);
+            }
+
+            // Mark all rows that are on critical level in red
+            for (int i = 0; i < model.getRowCount(); i++) {
+                int stocks = (int) model.getValueAt(i, model.findColumn("stocks"));
+                int criticalLevel = (int) model.getValueAt(i, model.findColumn("critical_level"));
+
+                if (stocks < criticalLevel) {
+                    inventoryTable.addRowSelectionInterval(i, i);
+                    inventoryTable.setSelectionBackground(Color.RED);
                 }
             }
-            
-            // Add a row to the table model
-            model.addRow(rowData);
-        }
-        
-    } catch (SQLException e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
-    } finally {
-        try {
-            if (rs != null) rs.close();
-            if (pstmt != null) pstmt.close();
-            if (conn != null) conn.close();
+
+            // Show popup if any products are on critical level
+            if (model.getRowCount() > 0) {
+                JOptionPane.showMessageDialog(this, "Some products are on critical level: restock soon.");
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
-}
-    
+
     private void searchByBar() {
 // Get the barcode from the text field
         String barcode = barcodeTxtField.getText();
@@ -676,13 +706,13 @@ new StaffPagePOS(realUserId).setVisible(true);
         }
     }
     private void barcodeTxtFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_barcodeTxtFieldKeyReleased
-                String barcode = barcodeTxtField.getText();
-
+        String barcode = barcodeTxtField.getText();
+        searchByBar();
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             searchByBar();
         }
-        
-        
+
+
     }//GEN-LAST:event_barcodeTxtFieldKeyReleased
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -694,27 +724,27 @@ new StaffPagePOS(realUserId).setVisible(true);
     }//GEN-LAST:event_barcodeTxtFieldActionPerformed
 
     private void invBarPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_invBarPrintActionPerformed
-       DefaultTableModel model = (DefaultTableModel) inventoryTable.getModel();
-       int selectedRow = inventoryTable.getSelectedRow();
-       
-       barcodeGlobal = (String)model.getValueAt(selectedRow, 0);
-       nameGlobal = (String)model.getValueAt(selectedRow, 1);
-        
+        DefaultTableModel model = (DefaultTableModel) inventoryTable.getModel();
+        int selectedRow = inventoryTable.getSelectedRow();
+
+        barcodeGlobal = (String) model.getValueAt(selectedRow, 0);
+        nameGlobal = (String) model.getValueAt(selectedRow, 1);
+
         int response = JOptionPane.showConfirmDialog(null, "Do you want to print the barcode for this product?", "Confirm",
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (response == JOptionPane.YES_OPTION) {
             System.out.println("User chose Yes.");
-             pdfBarcode(barcodeGlobal, nameGlobal);
+            pdfBarcode(barcodeGlobal, nameGlobal);
         } else if (response == JOptionPane.NO_OPTION) {
             System.out.println("User chose No.");
-               JOptionPane.showMessageDialog(null, "User chose 'NO'. No action performed.", "Closed", JOptionPane.INFORMATION_MESSAGE);
-            
+            JOptionPane.showMessageDialog(null, "User chose 'NO'. No action performed.", "Closed", JOptionPane.INFORMATION_MESSAGE);
+
         } else if (response == JOptionPane.CLOSED_OPTION) {
-             JOptionPane.showMessageDialog(null, "User closed the dialog. No action performed.", "Closed", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "User closed the dialog. No action performed.", "Closed", JOptionPane.INFORMATION_MESSAGE);
             System.out.println("User closed the dialog. No action performed.");
         }
     }//GEN-LAST:event_invBarPrintActionPerformed
-public InputStream generateCode39Barcode(String barcodeText) {
+    public InputStream generateCode39Barcode(String barcodeText) {
         try {
             Code39Bean bean = new Code39Bean();
             final int dpi = 150;
@@ -742,17 +772,18 @@ public InputStream generateCode39Barcode(String barcodeText) {
             return null;
         }
     }
-    public void pdfBarcode(String barcode,String name) {
-       // Open a file chooser to select the folder
+
+    public void pdfBarcode(String barcode, String name) {
+        // Open a file chooser to select the folder
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         int option = fileChooser.showSaveDialog(null);
-        
+
         if (option == JFileChooser.APPROVE_OPTION) {
             File selectedFolder = fileChooser.getSelectedFile();
 
             // Define the PDF file path with formatted date range
-            String pdfFileName = "barcode_"+name+".pdf";
+            String pdfFileName = "barcode_" + name + ".pdf";
             String pdfFilePath = selectedFolder.getAbsolutePath() + "/" + pdfFileName;
 
             // Create the PDF document
@@ -761,7 +792,7 @@ public InputStream generateCode39Barcode(String barcodeText) {
                 PdfWriter.getInstance(document, new FileOutputStream(pdfFilePath));
                 document.open();
 
-                Paragraph clinicTitle = new Paragraph("Product barcodes for: "+name+"", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16));
+                Paragraph clinicTitle = new Paragraph("Product barcodes for: " + name + "", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16));
                 clinicTitle.setAlignment(Element.ALIGN_CENTER);
                 document.add(clinicTitle);
                 document.add(Chunk.NEWLINE); //
@@ -775,10 +806,10 @@ public InputStream generateCode39Barcode(String barcodeText) {
                     Image barcodeImage = Image.getInstance(baos.toByteArray());
                     barcodeImage.setAlignment(Element.ALIGN_CENTER);
                     document.add(barcodeImage);
-                     document.add(barcodeImage);
-                      document.add(barcodeImage);
-                       document.add(barcodeImage);
-                        document.add(barcodeImage);
+                    document.add(barcodeImage);
+                    document.add(barcodeImage);
+                    document.add(barcodeImage);
+                    document.add(barcodeImage);
                 }
 
                 // Close the document
@@ -790,7 +821,8 @@ public InputStream generateCode39Barcode(String barcodeText) {
                 JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
             }
         }
-}
+    }
+
     /**
      * @param args the command line arguments
      */
