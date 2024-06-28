@@ -1,10 +1,13 @@
 package contents;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.table.DefaultTableModel;
+import swing.ScrollBar;
 
 /**
  *
@@ -17,6 +20,10 @@ public class Admin_Search extends javax.swing.JPanel {
      */
     public Admin_Search() {
         initComponents();
+        setTable();
+        displayAllUsers();
+        sp.setVerticalScrollBar(new ScrollBar());
+        sp.setHorizontalScrollBar(new ScrollBar());
     }
 
     /**
@@ -28,301 +35,144 @@ public class Admin_Search extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        sp = new javax.swing.JScrollPane();
+        jPanel6 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jPanel7 = new javax.swing.JPanel();
-        useridTxtField = new swing.TextField();
-        usernameTxtField = new swing.TextField();
-        firstNameTxtField = new swing.TextField();
-        lastNameTxtField = new swing.TextField();
-        addressTxtField = new swing.TextField();
-        ageTxtField = new swing.TextField();
-        sexTxtField = new swing.TextField();
-        contactTxtField = new swing.TextField();
+        userTable = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
+        userIdTxtField = new swing.TextField();
+        nameTxtField = new swing.TextField();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
-        jPanel7.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel6.setBackground(new java.awt.Color(255, 255, 255));
 
-        useridTxtField.setLabelText("User ID");
-        useridTxtField.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                useridTxtFieldKeyReleased(evt);
+        userTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "id", "Name", "Address", "Birthdate", "Age", "Sex", "Contact Number"
             }
-        });
+        ));
+        jScrollPane2.setViewportView(userTable);
 
-        usernameTxtField.setLabelText("Username");
-        usernameTxtField.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                usernameTxtFieldKeyReleased(evt);
-            }
-        });
-
-        firstNameTxtField.setLabelText("First Name");
-        firstNameTxtField.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                firstNameTxtFieldKeyReleased(evt);
-            }
-        });
-
-        lastNameTxtField.setLabelText("Last Name");
-        lastNameTxtField.addActionListener(new java.awt.event.ActionListener() {
+        jButton1.setText("REFRESH");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                lastNameTxtFieldActionPerformed(evt);
-            }
-        });
-        lastNameTxtField.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                lastNameTxtFieldKeyReleased(evt);
+                jButton1ActionPerformed(evt);
             }
         });
 
-        addressTxtField.setLabelText("Address");
+        userIdTxtField.setLabelText("User ID");
 
-        ageTxtField.setLabelText("Age");
+        nameTxtField.setLabelText("Name");
+        nameTxtField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nameTxtFieldActionPerformed(evt);
+            }
+        });
 
-        sexTxtField.setLabelText("Sex");
-
-        contactTxtField.setLabelText("Contact Number");
-
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGap(178, 178, 178)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(firstNameTxtField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE)
-                            .addComponent(useridTxtField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(180, 180, 180)
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(usernameTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lastNameTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(addressTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 698, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel7Layout.createSequentialGroup()
-                            .addComponent(ageTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 873, Short.MAX_VALUE)
+                        .addGroup(jPanel6Layout.createSequentialGroup()
+                            .addComponent(userIdTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(sexTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(contactTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(212, Short.MAX_VALUE))
+                            .addComponent(nameTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(20, 20, 20))
         );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGap(100, 100, 100)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(useridTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(usernameTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(userIdTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nameTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20)
+                .addComponent(jScrollPane2)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(firstNameTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lastNameTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(addressTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(sexTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ageTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(contactTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(245, Short.MAX_VALUE))
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(89, 89, 89))
         );
 
-        jScrollPane2.setViewportView(jPanel7);
+        sp.setViewportView(jPanel6);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2)
+            .addComponent(sp)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 685, Short.MAX_VALUE)
+            .addComponent(sp)
         );
     }// </editor-fold>//GEN-END:initComponents
+    private void setTable() {
+        DefaultTableModel model = new DefaultTableModel(new String[]{"id", "Full Name", "Address", "Birthdate", "Age", "Sex", "Contact Number"}, 0);
+        userTable.setModel(model);
+    }
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        displayAllUsers();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void useridTxtFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_useridTxtFieldKeyReleased
-        getByUserId();        
-    }//GEN-LAST:event_useridTxtFieldKeyReleased
-
-    private void usernameTxtFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_usernameTxtFieldKeyReleased
-        getByUserId();        
-    }//GEN-LAST:event_usernameTxtFieldKeyReleased
-
-    private void firstNameTxtFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_firstNameTxtFieldKeyReleased
-        searchUser();        
-    }//GEN-LAST:event_firstNameTxtFieldKeyReleased
-
-    private void lastNameTxtFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_lastNameTxtFieldKeyReleased
-        searchUser();        
-    }//GEN-LAST:event_lastNameTxtFieldKeyReleased
-
-    private void lastNameTxtFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lastNameTxtFieldActionPerformed
+    private void nameTxtFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameTxtFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_lastNameTxtFieldActionPerformed
-    private void getByUserId() {
-        String userIdText = useridTxtField.getText();
-        int userId;
-        try {
-            userId = Integer.parseInt(userIdText);
-        } catch (NumberFormatException e) {
-            // Handle invalid input (non-numeric userId)
-            return;
-        }
-
+    }//GEN-LAST:event_nameTxtFieldActionPerformed
+    private void displayAllUsers() {
         String url = "jdbc:mysql://127.0.0.1:3306/database";
         String dbUsername = "root";
         String dbPassword = "admin";
 
         try (Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword)) {
-            String query = "SELECT * FROM user_information WHERE userid = ?";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                preparedStatement.setInt(1, userId);
-                ResultSet resultSet = preparedStatement.executeQuery();
-                if (resultSet.next()) {
-                    String username = resultSet.getString("username");
-                    String firstName = resultSet.getString("first_name");
-                    String lastName = resultSet.getString("last_name");
+            String query = "SELECT CONCAT(first_name, ' ', last_name) AS full_name,userid, address, birthdate, age, sex, contact FROM user_information";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query); ResultSet resultSet = preparedStatement.executeQuery()) {
+
+                DefaultTableModel tableModel = (DefaultTableModel) userTable.getModel();
+                tableModel.setRowCount(0); // Clear the table
+
+                while (resultSet.next()) {
+                    String fullName = resultSet.getString("full_name");
                     String address = resultSet.getString("address");
+                    String userid = resultSet.getString("userid");
+                    Date birthdate = resultSet.getDate("birthdate");
                     int age = resultSet.getInt("age");
                     String sex = resultSet.getString("sex");
                     String contact = resultSet.getString("contact");
 
-                    // Set the retrieved data into the respective text fields
-                    usernameTxtField.setText(username);
-                    firstNameTxtField.setText(firstName);
-                    lastNameTxtField.setText(lastName);
-                    addressTxtField.setText(address);
-                    ageTxtField.setText(String.valueOf(age));
-                    sexTxtField.setText(sex);
-                    contactTxtField.setText(contact);
-                } else {
-                    // Handle case where userId is not found
-                    clearTextFields();
-                    usernameTxtField.setText("");
+                    // Add the retrieved data to the table
+                    tableModel.addRow(new Object[]{userid, fullName, address, birthdate, age, sex, contact});
+                }
+
+                if (tableModel.getRowCount() == 0) {
+                    // If no matches found, clear the table
+                    tableModel.setRowCount(0);
                 }
             }
         } catch (SQLException e) {
             // Handle SQL exception
             e.printStackTrace();
         }
-    }
-
-    private void getInfoByUserName() {
-        String username = usernameTxtField.getText();
-
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
-
-        try (Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword)) {
-            String query = "SELECT * FROM user_information WHERE username = ?";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                preparedStatement.setString(1, username);
-                ResultSet resultSet = preparedStatement.executeQuery();
-                if (resultSet.next()) {
-                    int userId = resultSet.getInt("userid");
-                    String firstName = resultSet.getString("first_name");
-                    String lastName = resultSet.getString("last_name");
-                    String address = resultSet.getString("address");
-                    int age = resultSet.getInt("age");
-                    String sex = resultSet.getString("sex");
-                    String contact = resultSet.getString("contact");
-
-                    // Set the retrieved data into the respective text fields
-                    useridTxtField.setText(String.valueOf(userId));
-                    firstNameTxtField.setText(firstName);
-                    lastNameTxtField.setText(lastName);
-                    addressTxtField.setText(address);
-                    ageTxtField.setText(String.valueOf(age));
-                    sexTxtField.setText(sex);
-                    contactTxtField.setText(contact);
-                } else {
-                    // Handle case where username is not found
-                    clearTextFields();
-                    useridTxtField.setText("");
-                }
-            }
-        } catch (SQLException e) {
-            // Handle SQL exception
-            e.printStackTrace();
-        }
-    }    private void searchUser() {
-        String firstName = firstNameTxtField.getText();
-        String lastName = lastNameTxtField.getText();
-
-        if (firstName.isEmpty() && lastName.isEmpty()) {
-            return;
-        }
-
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
-
-        try (Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword)) {
-            String query = "SELECT * FROM user_information WHERE first_name = ? AND last_name = ? LIMIT 1";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                preparedStatement.setString(1, firstName);
-                preparedStatement.setString(2, lastName);
-                ResultSet resultSet = preparedStatement.executeQuery();
-                if (resultSet.next()) {
-                    int userId = resultSet.getInt("userid");
-                    String foundFirstName = resultSet.getString("first_name");
-                    String foundLastName = resultSet.getString("last_name");
-                    String address = resultSet.getString("address");
-                    int age = resultSet.getInt("age");
-                    String sex = resultSet.getString("sex");
-                    String contact = resultSet.getString("contact");
-                    String username = resultSet.getString("username");
-
-                    // Set the retrieved data into the respective text fields
-                    useridTxtField.setText(String.valueOf(userId));
-                    usernameTxtField.setText(username);
-                    firstNameTxtField.setText(foundFirstName);
-                    lastNameTxtField.setText(foundLastName);
-                    addressTxtField.setText(address);
-                    ageTxtField.setText(String.valueOf(age));
-                    sexTxtField.setText(sex);
-                    contactTxtField.setText(contact);
-                } else {
-                    // Handle case where user is not found
-                    addressTxtField.setText("");
-                    ageTxtField.setText("");
-                    sexTxtField.setText("");
-                    contactTxtField.setText("");
-                    useridTxtField.setText("");
-                    usernameTxtField.setText("");
-                }
-            }
-        } catch (SQLException e) {
-            // Handle SQL exception
-            e.printStackTrace();
-        }
-    }
-
-    private void clearTextFields() {
-        // Clear all text fields
-        firstNameTxtField.setText("");
-        lastNameTxtField.setText("");
-        addressTxtField.setText("");
-        ageTxtField.setText("");
-        sexTxtField.setText("");
-        contactTxtField.setText("");
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private swing.TextField addressTxtField;
-    private swing.TextField ageTxtField;
-    private swing.TextField contactTxtField;
-    private swing.TextField firstNameTxtField;
-    private javax.swing.JPanel jPanel7;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane2;
-    private swing.TextField lastNameTxtField;
-    private swing.TextField sexTxtField;
-    private swing.TextField useridTxtField;
-    private swing.TextField usernameTxtField;
+    private swing.TextField nameTxtField;
+    private javax.swing.JScrollPane sp;
+    private swing.TextField userIdTxtField;
+    private javax.swing.JTable userTable;
     // End of variables declaration//GEN-END:variables
 }

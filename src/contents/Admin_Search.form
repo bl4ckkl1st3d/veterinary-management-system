@@ -21,21 +21,21 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jScrollPane2" alignment="0" max="32767" attributes="0"/>
+          <Component id="sp" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jScrollPane2" alignment="0" pref="685" max="32767" attributes="0"/>
+          <Component id="sp" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Container class="javax.swing.JScrollPane" name="jScrollPane2">
+    <Container class="javax.swing.JScrollPane" name="sp">
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Container class="javax.swing.JPanel" name="jPanel7">
+        <Container class="javax.swing.JPanel" name="jPanel6">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -45,114 +45,85 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="178" pref="178" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="firstNameTxtField" alignment="0" pref="259" max="32767" attributes="0"/>
-                                  <Component id="useridTxtField" alignment="0" max="32767" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="180" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="usernameTxtField" min="-2" pref="259" max="-2" attributes="0"/>
-                                  <Component id="lastNameTxtField" min="-2" pref="259" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="addressTxtField" min="-2" pref="698" max="-2" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="jButton1" alignment="1" min="-2" pref="158" max="-2" attributes="0"/>
+                          <Group type="103" alignment="1" groupAlignment="1" attributes="0">
+                              <Component id="jScrollPane2" pref="873" max="32767" attributes="0"/>
                               <Group type="102" attributes="0">
-                                  <Component id="ageTxtField" min="-2" pref="259" max="-2" attributes="0"/>
+                                  <Component id="userIdTxtField" min="-2" pref="300" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
-                                  <Component id="sexTxtField" min="-2" pref="259" max="-2" attributes="0"/>
+                                  <Component id="nameTxtField" min="-2" pref="300" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="contactTxtField" alignment="0" min="-2" pref="253" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace pref="212" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="100" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="useridTxtField" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="usernameTxtField" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="userIdTxtField" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="nameTxtField" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="firstNameTxtField" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lastNameTxtField" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="addressTxtField" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="sexTxtField" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="ageTxtField" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="contactTxtField" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="245" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                      <Component id="jScrollPane2" max="32767" attributes="0"/>
+                      <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
+                      <Component id="jButton1" min="-2" pref="40" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="89" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="swing.TextField" name="useridTxtField">
+            <Container class="javax.swing.JScrollPane" name="jScrollPane2">
+              <AuxValues>
+                <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+              </AuxValues>
+
+              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+              <SubComponents>
+                <Component class="javax.swing.JTable" name="userTable">
+                  <Properties>
+                    <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+                      <Table columnCount="7" rowCount="4">
+                        <Column editable="true" title="id" type="java.lang.Object"/>
+                        <Column editable="true" title="Name" type="java.lang.Object"/>
+                        <Column editable="true" title="Address" type="java.lang.Object"/>
+                        <Column editable="true" title="Birthdate" type="java.lang.Object"/>
+                        <Column editable="true" title="Age" type="java.lang.Object"/>
+                        <Column editable="true" title="Sex" type="java.lang.Object"/>
+                        <Column editable="true" title="Contact Number" type="java.lang.Object"/>
+                      </Table>
+                    </Property>
+                  </Properties>
+                </Component>
+              </SubComponents>
+            </Container>
+            <Component class="javax.swing.JButton" name="jButton1">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="REFRESH"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="swing.TextField" name="userIdTxtField">
               <Properties>
                 <Property name="labelText" type="java.lang.String" value="User ID"/>
               </Properties>
-              <Events>
-                <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="useridTxtFieldKeyReleased"/>
-              </Events>
             </Component>
-            <Component class="swing.TextField" name="usernameTxtField">
+            <Component class="swing.TextField" name="nameTxtField">
               <Properties>
-                <Property name="labelText" type="java.lang.String" value="Username"/>
+                <Property name="labelText" type="java.lang.String" value="Name"/>
               </Properties>
               <Events>
-                <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="usernameTxtFieldKeyReleased"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="nameTxtFieldActionPerformed"/>
               </Events>
-            </Component>
-            <Component class="swing.TextField" name="firstNameTxtField">
-              <Properties>
-                <Property name="labelText" type="java.lang.String" value="First Name"/>
-              </Properties>
-              <Events>
-                <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="firstNameTxtFieldKeyReleased"/>
-              </Events>
-            </Component>
-            <Component class="swing.TextField" name="lastNameTxtField">
-              <Properties>
-                <Property name="labelText" type="java.lang.String" value="Last Name"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="lastNameTxtFieldActionPerformed"/>
-                <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="lastNameTxtFieldKeyReleased"/>
-              </Events>
-            </Component>
-            <Component class="swing.TextField" name="addressTxtField">
-              <Properties>
-                <Property name="labelText" type="java.lang.String" value="Address"/>
-              </Properties>
-            </Component>
-            <Component class="swing.TextField" name="ageTxtField">
-              <Properties>
-                <Property name="labelText" type="java.lang.String" value="Age"/>
-              </Properties>
-            </Component>
-            <Component class="swing.TextField" name="sexTxtField">
-              <Properties>
-                <Property name="labelText" type="java.lang.String" value="Sex"/>
-              </Properties>
-            </Component>
-            <Component class="swing.TextField" name="contactTxtField">
-              <Properties>
-                <Property name="labelText" type="java.lang.String" value="Contact Number"/>
-              </Properties>
             </Component>
           </SubComponents>
         </Container>

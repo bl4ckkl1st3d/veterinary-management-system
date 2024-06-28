@@ -68,6 +68,7 @@ public class Vet_Menu extends javax.swing.JPanel {
 
         panelMoving.setOpaque(false);
 
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Welcome");
 
         javax.swing.GroupLayout panelMovingLayout = new javax.swing.GroupLayout(panelMoving);
@@ -78,7 +79,7 @@ public class Vet_Menu extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(listMenu1, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE))
             .addGroup(panelMovingLayout.createSequentialGroup()
-                .addGap(99, 99, 99)
+                .addGap(90, 90, 90)
                 .addComponent(jLabel2)
                 .addGap(0, 0, Short.MAX_VALUE))
         );

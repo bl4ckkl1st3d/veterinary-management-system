@@ -44,38 +44,6 @@
                       <EmptySpace min="-2" pref="137" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <Component id="jLabel24" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="1" attributes="0">
-                                      <Component id="jScrollPane4" alignment="1" min="-2" pref="731" max="-2" attributes="0"/>
-                                      <Component id="jScrollPane3" alignment="1" min="-2" pref="731" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                              <Component id="breedTxtField" max="32767" attributes="0"/>
-                                              <Component id="weightTxtField" alignment="0" max="32767" attributes="0"/>
-                                              <Component id="patientTxtField" alignment="0" max="32767" attributes="0"/>
-                                              <Component id="typeTxtField" alignment="0" min="-2" pref="300" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Component id="jButton1" min="-2" pref="261" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace min="-2" pref="131" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="patientIdTxtField" max="32767" attributes="0"/>
-                                          <Component id="sexComboBox" alignment="1" max="32767" attributes="0"/>
-                                          <Component id="colorTxtField" alignment="1" max="32767" attributes="0"/>
-                                          <Component id="marksTxtField" alignment="1" max="32767" attributes="0"/>
-                                          <Component id="ageTxtField" min="-2" pref="300" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                              </Group>
-                              <EmptySpace min="-2" pref="96" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                       <Component id="nameTxtField" max="32767" attributes="0"/>
@@ -87,6 +55,37 @@
                                   <Component id="jLabel17" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jLabel24" min="-2" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="103" groupAlignment="1" attributes="0">
+                                          <Component id="jScrollPane4" alignment="1" min="-2" pref="731" max="-2" attributes="0"/>
+                                          <Component id="jScrollPane3" alignment="1" min="-2" pref="731" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="1" attributes="0">
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                                  <Component id="breedTxtField" max="32767" attributes="0"/>
+                                                  <Component id="weightTxtField" alignment="0" max="32767" attributes="0"/>
+                                                  <Component id="patientTxtField" alignment="0" max="32767" attributes="0"/>
+                                                  <Component id="typeTxtField" alignment="0" min="-2" pref="300" max="-2" attributes="0"/>
+                                              </Group>
+                                              <Component id="jButton1" min="-2" pref="261" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace min="-2" pref="131" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Component id="patientIdTxtField" max="32767" attributes="0"/>
+                                              <Component id="sexComboBox" alignment="1" max="32767" attributes="0"/>
+                                              <Component id="colorTxtField" alignment="1" max="32767" attributes="0"/>
+                                              <Component id="marksTxtField" alignment="1" max="32767" attributes="0"/>
+                                              <Component id="ageTxtField" min="-2" pref="300" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                  </Group>
+                              </Group>
+                              <EmptySpace pref="168" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>

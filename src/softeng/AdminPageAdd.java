@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package softeng;
 
 import java.awt.Color;
@@ -14,6 +11,9 @@ import java.io.BufferedReader;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import java.sql.*;
+import java.time.*;
+import java.time.temporal.ChronoUnit;
+import static softeng.login.sha256;
 
 /**
  *
@@ -68,7 +68,6 @@ public class AdminPageAdd extends javax.swing.JFrame {
         firstNameTxtField = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
-        ageTxtField = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         addressTxtField = new javax.swing.JTextArea();
@@ -84,12 +83,15 @@ public class AdminPageAdd extends javax.swing.JFrame {
         loaBox = new javax.swing.JComboBox<>();
         answerTxtField = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        addUserBtn = new javax.swing.JButton();
         jLabel21 = new javax.swing.JLabel();
         useridTxtField = new javax.swing.JTextField();
         jLabel23 = new javax.swing.JLabel();
         secretQuestionBox = new javax.swing.JComboBox<>();
         editBtn = new javax.swing.JButton();
+        searchBtn = new javax.swing.JButton();
+        birthDate = new com.toedter.calendar.JDateChooser();
+        clearBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -367,7 +369,7 @@ public class AdminPageAdd extends javax.swing.JFrame {
                 .addComponent(settings, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(logout, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         jPanel5.setBackground(new java.awt.Color(153, 255, 204));
@@ -387,11 +389,6 @@ public class AdminPageAdd extends javax.swing.JFrame {
         jLabel13.setText("Contact No:");
 
         firstNameTxtField.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        firstNameTxtField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                firstNameTxtFieldActionPerformed(evt);
-            }
-        });
 
         jLabel14.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
@@ -399,9 +396,7 @@ public class AdminPageAdd extends javax.swing.JFrame {
 
         jLabel15.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel15.setText("Age:");
-
-        ageTxtField.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel15.setText("Birthdate:");
 
         jLabel16.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
@@ -454,10 +449,10 @@ public class AdminPageAdd extends javax.swing.JFrame {
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel10.setText("ANSWER");
 
-        jButton1.setText("ADD USER");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        addUserBtn.setText("ADD USER");
+        addUserBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                addUserBtnActionPerformed(evt);
             }
         });
 
@@ -466,11 +461,6 @@ public class AdminPageAdd extends javax.swing.JFrame {
         jLabel21.setText("UserId:");
 
         useridTxtField.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        useridTxtField.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                useridTxtFieldKeyReleased(evt);
-            }
-        });
 
         jLabel23.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
@@ -484,10 +474,24 @@ public class AdminPageAdd extends javax.swing.JFrame {
             }
         });
 
-        editBtn.setText("EDIT USER");
+        editBtn.setText("SAVE");
         editBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 editBtnActionPerformed(evt);
+            }
+        });
+
+        searchBtn.setText("EDIT");
+        searchBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchBtnActionPerformed(evt);
+            }
+        });
+
+        clearBtn.setText("CLEAR");
+        clearBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearBtnActionPerformed(evt);
             }
         });
 
@@ -497,40 +501,6 @@ public class AdminPageAdd extends javax.swing.JFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 495, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(useridTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jScrollPane1))
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(ageTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(45, 45, 45)
-                                .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(sexBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(firstNameTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(36, 36, 36)
-                                .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(lastNameTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(contactTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 495, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -550,10 +520,51 @@ public class AdminPageAdd extends javax.swing.JFrame {
                             .addComponent(loaBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(answerTxtField)
                             .addComponent(usernameTxtField)
-                            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(addUserBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(editBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(67, Short.MAX_VALUE))
+                        .addComponent(editBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 495, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(useridTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addComponent(searchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(clearBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                        .addContainerGap(7, Short.MAX_VALUE)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jScrollPane1))
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addGap(3, 3, 3)
+                                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(contactTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(sexBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(firstNameTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(36, 36, 36)
+                                .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(lastNameTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addGap(11, 11, 11)
+                                .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(birthDate, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(68, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -563,7 +574,11 @@ public class AdminPageAdd extends javax.swing.JFrame {
                     .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(useridTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(searchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(clearBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(firstNameTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -575,14 +590,16 @@ public class AdminPageAdd extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ageTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(sexBox, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(sexBox, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(contactTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addComponent(birthDate, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(48, 48, 48)
                 .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -601,13 +618,13 @@ public class AdminPageAdd extends javax.swing.JFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(secretQuestionBox, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(answerTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(addUserBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(editBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(91, 91, 91))
         );
@@ -630,7 +647,7 @@ public class AdminPageAdd extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 805, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(15, 15, 15))
         );
@@ -643,16 +660,12 @@ public class AdminPageAdd extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void loaBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loaBoxActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_loaBoxActionPerformed
 
     private boolean userIdEvent() {
         String url = "jdbc:mysql://127.0.0.1:3306/database";
@@ -741,7 +754,7 @@ public class AdminPageAdd extends javax.swing.JFrame {
                 firstNameTxtField.setText(firstName);
                 lastNameTxtField.setText(lastName);
                 addressTxtField.setText(address);
-                ageTxtField.setText(String.valueOf(age));
+//                ageTxtField.setText(String.valueOf(age));
                 contactTxtField.setText(contact);
                 if ("M".equals(sex)) {
                     sexBox.setSelectedItem("MALE");
@@ -799,26 +812,7 @@ public class AdminPageAdd extends javax.swing.JFrame {
         }
         return false;
     }
-    
-    
-    
-    private void useridTxtFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_useridTxtFieldKeyReleased
-        //done
-        System.out.println("bru");
-        
-        String userId = useridTxtField.getText();
 
-        Boolean isTrue = userIdEvent();
-        if (isTrue) {
-            editBtn.setVisible(true);
-            jButton1.setVisible(false);
-        } else {
-            editBtn.setVisible(false);
-            jButton1.setVisible(true);
-        }
-
-
-    }//GEN-LAST:event_useridTxtFieldKeyReleased
     private void clearAllFields() {
         // Clear all text fields and reset combo boxes
         usernameTxtField.setText("");
@@ -829,19 +823,11 @@ public class AdminPageAdd extends javax.swing.JFrame {
         firstNameTxtField.setText("");
         lastNameTxtField.setText("");
         addressTxtField.setText("");
-        ageTxtField.setText("");
+//        ageTxtField.setText("");
         contactTxtField.setText("");
+        useridTxtField.setText("");
         sexBox.setSelectedIndex(-1);
     }
-    private void secretQuestionBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_secretQuestionBoxActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_secretQuestionBoxActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        addUserToDatabase();
-
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void settingsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsMouseClicked
         System.out.println("test");
     }//GEN-LAST:event_settingsMouseClicked
@@ -872,93 +858,6 @@ public class AdminPageAdd extends javax.swing.JFrame {
     }//GEN-LAST:event_searchMouseReleased
 
 
-    private void editBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnActionPerformed
-        // Get data from the text fields
-        String user_Id = useridTxtField.getText();
-        String firstName = firstNameTxtField.getText();
-        String lastName = lastNameTxtField.getText();
-        String address = addressTxtField.getText();
-        String age = ageTxtField.getText();
-        String contact = contactTxtField.getText();
-
-        // Get data from the combo box
-        String sex = sexBox.getSelectedItem().toString();
-        if (sex.equalsIgnoreCase("MALE")) {
-            sex = "M";
-        } else if (sex.equalsIgnoreCase("FEMALE")) {
-            sex = "F";
-        }
-
-        // Get data from the remaining text fields
-        String username = usernameTxtField.getText();
-        String password = passwordTxtField.getText();
-        String answer = answerTxtField.getText();
-        String secretQuestion = secretQuestionBox.getSelectedItem().toString();
-
-        // Get the LOA and convert it to an integer
-        String loaString = loaBox.getSelectedItem().toString();
-        int loa = -1;  // default value if LOA is not recognized
-        switch (loaString.toLowerCase()) {
-            case "cashier":
-                loa = 0;
-                break;
-            case "veterinarian":
-                loa = 1;
-                break;
-            case "admin":
-                loa = 2;
-                break;
-        }
-
-        // Database connection information
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
-
-        try {
-            // Establish the database connection
-            Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
-
-            // Update the 'users' table
-            String updateUsersQuery = "UPDATE users SET username = ?, password = ?, secret_question = ?, secret_answer = ?, LOA = ? WHERE userid = ?";
-            PreparedStatement usersPreparedStatement = connection.prepareStatement(updateUsersQuery);
-            usersPreparedStatement.setString(1, username);
-            usersPreparedStatement.setString(2, password);
-            usersPreparedStatement.setString(3, secretQuestion);
-            usersPreparedStatement.setString(4, answer);
-            usersPreparedStatement.setInt(5, loa);
-            usersPreparedStatement.setInt(6, Integer.parseInt(user_Id));
-            int rowsAffectedUsers = usersPreparedStatement.executeUpdate();
-
-            // Update the 'user_information' table
-            String updateUserInformationQuery = "UPDATE user_information SET first_name = ?, last_name = ?, address = ?, age = ?, contact = ?, sex = ? WHERE userid = ?";
-            PreparedStatement userInformationPreparedStatement = connection.prepareStatement(updateUserInformationQuery);
-            userInformationPreparedStatement.setString(1, firstName);
-            userInformationPreparedStatement.setString(2, lastName);
-            userInformationPreparedStatement.setString(3, address);
-            userInformationPreparedStatement.setString(4, age);
-            userInformationPreparedStatement.setString(5, contact);
-            userInformationPreparedStatement.setString(6, sex);
-            userInformationPreparedStatement.setInt(7, Integer.parseInt(user_Id));
-            int rowsAffectedUserInformation = userInformationPreparedStatement.executeUpdate();
-
-            // Check if updates were successful
-            if (rowsAffectedUsers > 0 && rowsAffectedUserInformation > 0) {
-                JOptionPane.showMessageDialog(null, "User information updated successfully.");
-                updateUserAuditLog(userIdx);
-            } else {
-                JOptionPane.showMessageDialog(null, "Failed to update user information.");
-            }
-
-            // Close the database connection
-            connection.close();
-        } catch (SQLException e) {
-            // Handle any SQL exceptions
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
-        }
-    }//GEN-LAST:event_editBtnActionPerformed
-
     private void logoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseClicked
         int response = JOptionPane.showConfirmDialog(this, "Do you want to log out?", "Confirm Logout", JOptionPane.YES_NO_OPTION);
         if (response == JOptionPane.YES_OPTION) {
@@ -969,9 +868,242 @@ public class AdminPageAdd extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_logoutMouseClicked
 
-    private void firstNameTxtFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_firstNameTxtFieldActionPerformed
+    private void searchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBtnActionPerformed
+        String userIdText = useridTxtField.getText();
+
+        if (userIdText.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Please enter a User ID.");
+            return;
+        }
+
+        int userId;
+        try {
+            userId = Integer.parseInt(userIdText);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Invalid User ID format.");
+            return;
+        }
+
+        String url = "jdbc:mysql://127.0.0.1:3306/database";
+        String dbUsername = "root";
+        String dbPassword = "admin";
+
+        try (Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword)) {
+            // Query to check if the user exists and get user information
+            String queryUserInfo = "SELECT * FROM user_information WHERE userid = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(queryUserInfo)) {
+                preparedStatement.setInt(1, userId);
+                ResultSet resultSet = preparedStatement.executeQuery();
+
+                if (resultSet.next()) {
+                    String firstName = resultSet.getString("first_name");
+                    String lastName = resultSet.getString("last_name");
+                    String address = resultSet.getString("address");
+                    String sex = resultSet.getString("sex");
+                    String contact = resultSet.getString("contact");
+                    
+                    editBtn.setVisible(true);
+                    addUserBtn.setVisible(false);
+
+                    // Set the retrieved data into the respective text fields and combo box
+                    firstNameTxtField.setText(firstName);
+                    lastNameTxtField.setText(lastName);
+                    addressTxtField.setText(address);
+                    contactTxtField.setText(contact);
+                    birthDate.setDate(Date.valueOf(resultSet.getDate("birthDate").toLocalDate()));
+                    if (sex.equals("M")) {
+                        sexBox.setSelectedItem("MALE");
+                    } else if (sex.equals("F")) {
+                        sexBox.setSelectedItem("FEMALE");
+                    }
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "User ID does not exist in the database.");
+                    editBtn.setVisible(false);
+                    addUserBtn.setVisible(true);
+
+                    return;
+                }
+            }
+
+            // Query to get additional user information from the 'users' table
+            String queryUserDetails = "SELECT * FROM users WHERE userid = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(queryUserDetails)) {
+                preparedStatement.setInt(1, userId);
+                ResultSet resultSet = preparedStatement.executeQuery();
+
+                if (resultSet.next()) {
+                    String username = resultSet.getString("username");
+                    String password = resultSet.getString("password");
+                    int loa = resultSet.getInt("loa");
+                    String secretQuestion = resultSet.getString("secret_question");
+                    String secretAnswer = resultSet.getString("secret_answer");
+
+                    // Set the retrieved data into the respective text fields and combo boxes
+                    usernameTxtField.setText(username);
+                    passwordTxtField.setText("");
+                    secretQuestionBox.setSelectedItem(secretQuestion);
+                    answerTxtField.setText(secretAnswer);
+
+                    switch (loa) {
+                        case 0:
+                            loaBox.setSelectedItem("cashier");
+                            break;
+                        case 1:
+                            loaBox.setSelectedItem("veterinarian");
+                            break;
+                        case 2:
+                            loaBox.setSelectedItem("admin");
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            // Handle SQL exception
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_searchBtnActionPerformed
+
+    private void editBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnActionPerformed
+     // Get data from the text fields
+    String user_Id = useridTxtField.getText();
+    String firstName = firstNameTxtField.getText();
+    String lastName = lastNameTxtField.getText();
+    String address = addressTxtField.getText();
+    String contact = contactTxtField.getText();
+
+    // Get data from the combo box
+    String sex = sexBox.getSelectedItem().toString();
+    if (sex.equalsIgnoreCase("MALE")) {
+        sex = "M";
+    } else if (sex.equalsIgnoreCase("FEMALE")) {
+        sex = "F";
+    }
+
+    // Get data from the remaining text fields
+    String username = usernameTxtField.getText();
+    String password = passwordTxtField.getText();
+    String answer = answerTxtField.getText();
+    String secretQuestion = secretQuestionBox.getSelectedItem().toString();
+
+    // Get the LOA and convert it to an integer
+    String loaString = loaBox.getSelectedItem().toString();
+    int loa = -1;  // default value if LOA is not recognized
+    switch (loaString.toLowerCase()) {
+        case "cashier":
+            loa = 0;
+            break;
+        case "veterinarian":
+            loa = 1;
+            break;
+        case "admin":
+            loa = 2;
+            break;
+    }
+
+    // Get the birthdate from JDateChooser
+    java.util.Date birthDateValue = birthDate.getDate();
+    if (birthDateValue == null) {
+        JOptionPane.showMessageDialog(null, "Please enter a valid birthdate.");
+        return;
+    }
+
+    LocalDate birthDateLocal = birthDateValue.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+    // Calculate age
+    long age = ChronoUnit.YEARS.between(birthDateLocal, LocalDate.now());
+
+    // Convert the birthdate to java.sql.Date
+    java.sql.Date sqlBirthDate = java.sql.Date.valueOf(birthDateLocal);
+
+    // Database connection information
+    String url = "jdbc:mysql://127.0.0.1:3306/database";
+    String dbUsername = "root";
+    String dbPassword = "admin";
+
+    try {
+        // Establish the database connection
+        Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
+        connection.setAutoCommit(false); // Start transaction
+
+        // Update the 'users' table
+        String updateUsersQuery;
+        if (password.isEmpty()) {
+            updateUsersQuery = "UPDATE users SET username = ?, secret_question = ?, secret_answer = ?, LOA = ? WHERE userid = ?";
+        } else {
+            updateUsersQuery = "UPDATE users SET username = ?, password = ?, secret_question = ?, secret_answer = ?, LOA = ? WHERE userid = ?";
+        }
+
+        PreparedStatement usersPreparedStatement = connection.prepareStatement(updateUsersQuery);
+        usersPreparedStatement.setString(1, username);
+        if (!password.isEmpty()) {
+            String hashed = sha256(password);
+            usersPreparedStatement.setString(2, hashed);
+            usersPreparedStatement.setString(3, secretQuestion);
+            usersPreparedStatement.setString(4, answer);
+            usersPreparedStatement.setInt(5, loa);
+            usersPreparedStatement.setInt(6, Integer.parseInt(user_Id));
+        } else {
+            usersPreparedStatement.setString(2, secretQuestion);
+            usersPreparedStatement.setString(3, answer);
+            usersPreparedStatement.setInt(4, loa);
+            usersPreparedStatement.setInt(5, Integer.parseInt(user_Id));
+        }
+        int rowsAffectedUsers = usersPreparedStatement.executeUpdate();
+
+        // Update the 'user_information' table
+        String updateUserInformationQuery = "UPDATE user_information SET first_name = ?, last_name = ?, address = ?, birthdate = ?, age = ?, contact = ?, sex = ? WHERE userid = ?";
+        PreparedStatement userInformationPreparedStatement = connection.prepareStatement(updateUserInformationQuery);
+        userInformationPreparedStatement.setString(1, firstName);
+        userInformationPreparedStatement.setString(2, lastName);
+        userInformationPreparedStatement.setString(3, address);
+        userInformationPreparedStatement.setDate(4, sqlBirthDate);
+        userInformationPreparedStatement.setLong(5, age);
+        userInformationPreparedStatement.setString(6, contact);
+        userInformationPreparedStatement.setString(7, sex);
+        userInformationPreparedStatement.setInt(8, Integer.parseInt(user_Id));
+        int rowsAffectedUserInformation = userInformationPreparedStatement.executeUpdate();
+
+        // Check if updates were successful
+        if (rowsAffectedUsers > 0 && rowsAffectedUserInformation > 0) {
+            connection.commit(); // Commit transaction
+            JOptionPane.showMessageDialog(null, "User information updated successfully.");
+            updateUserAuditLog(Integer.parseInt(user_Id));
+            clearAllFields();
+        } else {
+            connection.rollback(); // Rollback transaction
+            JOptionPane.showMessageDialog(null, "Failed to update user information.");
+        }
+
+        // Close the database connection
+        connection.close();
+    } catch (SQLException e) {
+        // Handle any SQL exceptions
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+    }
+    }//GEN-LAST:event_editBtnActionPerformed
+
+    private void secretQuestionBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_secretQuestionBoxActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_firstNameTxtFieldActionPerformed
+    }//GEN-LAST:event_secretQuestionBoxActionPerformed
+
+    private void addUserBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addUserBtnActionPerformed
+        addUserToDatabase();
+    }//GEN-LAST:event_addUserBtnActionPerformed
+
+    private void loaBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loaBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_loaBoxActionPerformed
+
+    private void clearBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearBtnActionPerformed
+        clearAllFields();
+        editBtn.setVisible(false);
+        addUserBtn.setVisible(true);
+        birthDate.setDate(null);
+    }//GEN-LAST:event_clearBtnActionPerformed
     public void updateUserAuditLog(int userId) {
         String url = "jdbc:mysql://127.0.0.1:3306/database";
         String dbUsername = "root";
@@ -1032,7 +1164,6 @@ public class AdminPageAdd extends javax.swing.JFrame {
         String loaString = (String) loaBox.getSelectedItem();
 
         int loa;
-
         switch (loaString.toLowerCase()) {
             case "cashier":
                 loa = 0;
@@ -1050,9 +1181,23 @@ public class AdminPageAdd extends javax.swing.JFrame {
         String firstName = firstNameTxtField.getText();
         String lastName = lastNameTxtField.getText();
         String address = addressTxtField.getText();
-        int age = Integer.parseInt(ageTxtField.getText());
         String contact = contactTxtField.getText();
         String sex = sexBox.getSelectedItem().toString().equals("MALE") ? "M" : "F";
+
+        // Get the birthdate from JDateChooser
+        java.util.Date birthDateValue = birthDate.getDate();
+        if (birthDateValue == null) {
+            JOptionPane.showMessageDialog(null, "Please enter a valid birthdate.");
+            return;
+        }
+
+        LocalDate birthDateLocal = birthDateValue.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+        // Calculate age
+        long age = ChronoUnit.YEARS.between(birthDateLocal, LocalDate.now());
+
+        // Convert the birthdate to java.sql.Date
+        java.sql.Date sqlBirthDate = java.sql.Date.valueOf(birthDateLocal);
 
         Connection connection = null;
         PreparedStatement userStmt = null;
@@ -1081,25 +1226,25 @@ public class AdminPageAdd extends javax.swing.JFrame {
                     int userId = generatedKeys.getInt(1);
 
                     // Insert into user_information table
-                    String infoQuery = "INSERT INTO user_information (userid, username, first_name, last_name, address, age, sex, contact) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                    String infoQuery = "INSERT INTO user_information (userid, username, first_name, last_name, address, birthdate, age, sex, contact) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
                     infoStmt = connection.prepareStatement(infoQuery);
                     infoStmt.setInt(1, userId);
                     infoStmt.setString(2, username);
                     infoStmt.setString(3, firstName);
                     infoStmt.setString(4, lastName);
                     infoStmt.setString(5, address);
-                    infoStmt.setInt(6, age);
-                    infoStmt.setString(7, sex);
-                    infoStmt.setString(8, contact);
+                    infoStmt.setDate(6, sqlBirthDate);
+                    infoStmt.setLong(7, age);
+                    infoStmt.setString(8, sex);
+                    infoStmt.setString(9, contact);
 
                     rowsAffected = infoStmt.executeUpdate();
 
                     if (rowsAffected > 0) {
-                        System.out.println("Second try na xsend");
                         connection.commit(); // Commit transaction
                         JOptionPane.showMessageDialog(null, "User added successfully");
                         clearAllFields();
-                        addUserAuditLog(userIdx);
+                        addUserAuditLog(userId);
                     } else {
                         connection.rollback(); // Rollback transaction
                         JOptionPane.showMessageDialog(null, "Failed to add user information");
@@ -1189,15 +1334,16 @@ public class AdminPageAdd extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel add;
+    private javax.swing.JButton addUserBtn;
     private javax.swing.JTextArea addressTxtField;
-    private javax.swing.JTextField ageTxtField;
     private javax.swing.JTextField answerTxtField;
+    private com.toedter.calendar.JDateChooser birthDate;
     private javax.swing.JPanel cashier;
+    private javax.swing.JButton clearBtn;
     private javax.swing.JTextField contactTxtField;
     private javax.swing.JButton editBtn;
     private javax.swing.JTextField firstNameTxtField;
     private javax.swing.JPanel help;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1231,6 +1377,7 @@ public class AdminPageAdd extends javax.swing.JFrame {
     private javax.swing.JTextField passwordTxtField;
     private javax.swing.JPanel reports;
     private javax.swing.JPanel search;
+    private javax.swing.JButton searchBtn;
     private javax.swing.JComboBox<String> secretQuestionBox;
     private javax.swing.JPanel settings;
     private javax.swing.JComboBox<String> sexBox;

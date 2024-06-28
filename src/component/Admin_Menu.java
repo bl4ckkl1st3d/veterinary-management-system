@@ -80,7 +80,7 @@ public class Admin_Menu extends javax.swing.JPanel {
                 .addComponent(listMenu1, javax.swing.GroupLayout.DEFAULT_SIZE, 293, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(panelMovingLayout.createSequentialGroup()
-                .addGap(93, 93, 93)
+                .addGap(90, 90, 90)
                 .addComponent(jLabel2)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );

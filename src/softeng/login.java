@@ -5,13 +5,18 @@
 package softeng;
 
 import java.io.BufferedReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.security.MessageDigest;
 import java.sql.*;
 import javax.swing.JOptionPane;
-import loa.Admin;
-import loa.Cashier;
-import loa.Vet;
+
+//wewewewe
+//import com.fazecast.jSerialComm.SerialPort;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.JButton;
 
 /**
  *
@@ -24,7 +29,7 @@ public class login extends javax.swing.JFrame {
      */
     public login() {
         initComponents();
-    
+
     }
 
     /**
@@ -36,7 +41,7 @@ public class login extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        loginPanel = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -50,13 +55,13 @@ public class login extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        loginPanel.setBackground(new java.awt.Color(255, 153, 153));
-        loginPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel1.setBackground(new java.awt.Color(255, 153, 153));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setFont(new java.awt.Font("Segoe UI Black", 0, 48)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("LOGIN ");
-        loginPanel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 90, 240, 100));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 90, 240, 100));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 204));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -95,16 +100,16 @@ public class login extends javax.swing.JFrame {
         jPanel2.add(showBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 220, 80, 60));
 
         jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
             }
         });
         jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 340, 120, 40));
 
-        loginPanel.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 210, 870, 430));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 210, 870, 430));
 
-        getContentPane().add(loginPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1300, 790));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1300, 790));
 
         setSize(new java.awt.Dimension(1311, 797));
         setLocationRelativeTo(null);
@@ -144,6 +149,7 @@ public void addLoginAuditLog(int userId) {
         String url = "jdbc:mysql://127.0.0.1:3306/database";
         String dbUsername = "root";
         String dbPassword = "admin";
+        String hashedPass = sha256(password);
         try {
             // Establish the database connection
             Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
@@ -152,7 +158,7 @@ public void addLoginAuditLog(int userId) {
             String query = "SELECT * FROM users WHERE BINARY username = ? AND BINARY password = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, username);
-            preparedStatement.setString(2, password);
+            preparedStatement.setString(2, hashedPass);
 
             // Execute the query
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -163,19 +169,19 @@ public void addLoginAuditLog(int userId) {
                 int userId = resultSet.getInt("userid"); // Retrieve userid from resultSet
 
                 JOptionPane.showMessageDialog(null, "Login successful");
-                addLoginAuditLog(userId);
+                //addLoginAuditLog(userId);
                 switch (LOA) {
                     case "0":
-                        new Cashier(userId).setVisible(true);
+                        new StaffPage(userId).setVisible(true);
                         setVisible(false);
                         break;
                     case "1":
-                        new Vet(userId).setVisible(true);
+                        new VetPage(userId).setVisible(true);
                         setVisible(false);
                         break;
 
                     case "2":
-                        new Admin(userId).setVisible(true);
+                        new AdminPage(userId).setVisible(true);
                         setVisible(false);
                         break;
                     default:
@@ -187,7 +193,7 @@ public void addLoginAuditLog(int userId) {
                 // If resultSet is empty, username and password do not exist in the database
                 errorCount++;
                 if (errorCount >= 3) {
-                    JOptionPane.showMessageDialog(null, "Too much Attempts, going to Forgot Password");
+                    JOptionPane.showMessageDialog(null, "Too much Attempts, redirecting to Forgot Password");
                     new ForgotPassword().setVisible(true);
                     setVisible(false);
                 } else {
@@ -228,92 +234,231 @@ public void addLoginAuditLog(int userId) {
         // TODO add your handling code here:
     }//GEN-LAST:event_showBtnActionPerformed
 
-private void saveSchema() {
-    String dbHost = "127.0.0.1";
-    String dbPort = "3306";
-    String dbName = "database";
-    String dbUsername = "root";
-    String dbPassword = "admin";
-    String savePath = "schema_dump.sql";
-    
-    // Use the full path to mysqldump
-    String mysqldumpPath = "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\\mysqldump.exe"; // Update this to the actual path
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        sendSms();
+    }//GEN-LAST:event_jButton1MouseClicked
 
-    String command = String.format(
-        "%s --host=%s --port=%s --user=%s --password=%s --no-data %s -r %s",
-        mysqldumpPath, dbHost, dbPort, dbUsername, dbPassword, dbName, savePath
-    );
+    private void saveSchema() {
+        String dbHost = "127.0.0.1";
+        String dbPort = "3306";
+        String dbName = "database";
+        String dbUsername = "root";
+        String dbPassword = "admin";
+        String savePath = "schema_dump.sql";
 
-    try {
-        // Execute the command
-        Process process = Runtime.getRuntime().exec(command);
+        // Use the full path to mysqldump
+        String mysqldumpPath = "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\\mysqldump.exe"; // Update this to the actual path
 
-        // Wait for the command to complete
-        int processComplete = process.waitFor();
+        String command = String.format(
+                "%s --host=%s --port=%s --user=%s --password=%s --no-data %s -r %s",
+                mysqldumpPath, dbHost, dbPort, dbUsername, dbPassword, dbName, savePath
+        );
 
-        // Check if the command was successful
-        if (processComplete == 0) {
-            JOptionPane.showMessageDialog(null, "Schema saved successfully to " + savePath);
-        } else {
-            JOptionPane.showMessageDialog(null, "Failed to save schema.");
+        try {
+            // Execute the command
+            Process process = Runtime.getRuntime().exec(command);
+
+            // Wait for the command to complete
+            int processComplete = process.waitFor();
+
+            // Check if the command was successful
+            if (processComplete == 0) {
+                JOptionPane.showMessageDialog(null, "Schema saved successfully to " + savePath);
+            } else {
+                JOptionPane.showMessageDialog(null, "Failed to save schema.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "An error occurred while saving the schema.");
         }
-    } catch (Exception e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(null, "An error occurred while saving the schema.");
     }
-}
-private void restoreSchema() {
-    String dbHost = "127.0.0.1";
-    String dbPort = "3306";
-    String dbName = "database"; // The database to restore the schema into
-    String dbUsername = "root";
-    String dbPassword = "admin";
-    String dumpFilePath = "C:\\path\\to\\your\\schema_dump.sql"; // Update this to the actual path
 
-    // Print out the path being used
-    System.out.println("Using dump file path: " + dumpFilePath);
+    private void restoreSchema() {
+        String dbHost = "127.0.0.1";
+        String dbPort = "3306";
+        String dbName = "database"; // The database to restore the schema into
+        String dbUsername = "root";
+        String dbPassword = "admin";
+        String dumpFilePath = "C:\\path\\to\\your\\schema_dump.sql"; // Update this to the actual path
 
-    // Use the full path to mysql
-    String mysqlPath = "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\\mysql.exe"; // Update this to the actual path
+        // Print out the path being used
+        System.out.println("Using dump file path: " + dumpFilePath);
 
-    String command = String.format("%s --host=%s --port=%s --user=%s --password=%s %s -e source %s", 
-                                   mysqlPath, dbHost, dbPort, dbUsername, dbPassword, dbName, dumpFilePath);
+        // Use the full path to mysql
+        String mysqlPath = "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\\mysql.exe"; // Update this to the actual path
 
-    try {
-        // Execute the command
-        Process process = Runtime.getRuntime().exec(command);
+        String command = String.format("%s --host=%s --port=%s --user=%s --password=%s %s -e source %s",
+                mysqlPath, dbHost, dbPort, dbUsername, dbPassword, dbName, dumpFilePath);
 
-        // Handle the output of the process
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                System.out.println(line);
+        try {
+            // Execute the command
+            Process process = Runtime.getRuntime().exec(command);
+
+            // Handle the output of the process
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    System.out.println(line);
+                }
+            }
+
+            // Wait for the command to complete
+            int processComplete = process.waitFor();
+
+            // Check if the command was successful
+            if (processComplete == 0) {
+                JOptionPane.showMessageDialog(null, "Schema restored successfully from " + dumpFilePath);
+            } else {
+                JOptionPane.showMessageDialog(null, "Failed to restore schema.");
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "An error occurred while restoring the schema: " + e.getMessage());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "The restore process was interrupted: " + e.getMessage());
+        }
+    }
+
+    private void saveDatabase() {
+    }
+
+    private void backup() {
+        // JDBC connection URL, username, and password
+        String url = "jdbc:mysql://127.0.0.1:3306/database";
+        String user = "root";
+        String password = "admin";
+
+        Connection conn = null;
+        FileWriter fileWriter = null;
+
+        try {
+            // Establish a connection to the database
+            conn = DriverManager.getConnection(url, user, password);
+
+            // Get database metadata
+            DatabaseMetaData metaData = conn.getMetaData();
+            ResultSet tables = metaData.getTables(null, null, "%", new String[]{"TABLE"});
+
+            // Prepare a file writer
+            fileWriter = new FileWriter("database_schema_and_data.txt");
+
+            // Iterate through each table
+            while (tables.next()) {
+                String tableName = tables.getString("TABLE_NAME");
+                fileWriter.write("Table: " + tableName + "\n");
+
+                // Get table columns
+                ResultSet columns = metaData.getColumns(null, null, tableName, "%");
+                fileWriter.write("Columns:\n");
+                while (columns.next()) {
+                    String columnName = columns.getString("COLUMN_NAME");
+                    String columnType = columns.getString("TYPE_NAME");
+                    int columnSize = columns.getInt("COLUMN_SIZE");
+                    fileWriter.write("\t" + columnName + " " + columnType + "(" + columnSize + ")\n");
+                }
+
+                // Get table data
+                fileWriter.write("Data:\n");
+                Statement stmt = conn.createStatement();
+                ResultSet data = stmt.executeQuery("SELECT * FROM " + tableName);
+                ResultSetMetaData dataMetaData = data.getMetaData();
+                int columnCount = dataMetaData.getColumnCount();
+
+                while (data.next()) {
+                    for (int i = 1; i <= columnCount; i++) {
+                        fileWriter.write(data.getString(i) + "\t");
+                    }
+                    fileWriter.write("\n");
+                }
+                fileWriter.write("\n");
+            }
+
+            fileWriter.flush();
+            System.out.println("Schema and data saved successfully.");
+            //    System.out.println(fileWriter.getAbsolutePath());
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+                if (fileWriter != null) {
+                    fileWriter.close();
+                }
+            } catch (SQLException | IOException e) {
+                e.printStackTrace();
             }
         }
 
-        // Wait for the command to complete
-        int processComplete = process.waitFor();
-
-        // Check if the command was successful
-        if (processComplete == 0) {
-            JOptionPane.showMessageDialog(null, "Schema restored successfully from " + dumpFilePath);
-        } else {
-            JOptionPane.showMessageDialog(null, "Failed to restore schema.");
-        }
-
-    } catch (IOException e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(null, "An error occurred while restoring the schema: " + e.getMessage());
-    } catch (InterruptedException e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(null, "The restore process was interrupted: " + e.getMessage());
     }
-}
 
+     private static void sendSms() {
+        String contactNumber = "+639776270544"; // Replace with actual contact number
+        String vaccineName = "COVID-19";     // Replace with actual vaccine name
+        String date = "2024-07-15";          // Replace with actual date
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        saveSchema();
-    }//GEN-LAST:event_jButton1ActionPerformed
+        /*// Open the serial port
+        SerialPort comPort = SerialPort.getCommPort("COM5");// Adjust the index if necessary
+        comPort.setBaudRate(9600);
+        if (comPort.openPort()) {
+            System.out.println("Port is open.");
+
+            try {
+               comPort.getOutputStream().write((contactNumber + "\n").getBytes());
+                Thread.sleep(100); // Add delay
+                System.out.println("Sent contact number."+contactNumber);
+
+                comPort.getOutputStream().write((vaccineName + "\n").getBytes());
+                Thread.sleep(100); // Add delay
+                System.out.println("Sent vaccine name.");
+
+                comPort.getOutputStream().write((date + "\n").getBytes());
+                Thread.sleep(100); // Add delay
+                System.out.println("Sent date.");
+
+                comPort.getOutputStream().flush();
+                System.out.println("Flushed output stream.");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            finally {
+                try {
+                    comPort.getOutputStream().close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                comPort.closePort();
+                System.out.println("Port is closed.");
+            }
+
+       
+        } else {
+            System.out.println("Failed to open port.");
+        }
+        */
+    }
+    public static String sha256(String input) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(input.getBytes("UTF-8"));
+            StringBuilder hexString = new StringBuilder();
+
+            for (byte b : hash) {
+                String hex = Integer.toHexString(0xff & b);
+                if (hex.length() == 1) {
+                    hexString.append('0');
+                }
+                hexString.append(hex);
+            }
+
+            return hexString.toString();
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -346,6 +491,10 @@ private void restoreSchema() {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new login().setVisible(true);
+                String originalString = "password1";
+                String hashedString = sha256(originalString);
+                System.out.println("Original String: " + originalString);
+                System.out.println("Hashed String: " + hashedString);
             }
         });
     }
@@ -355,9 +504,9 @@ private void restoreSchema() {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JButton loginBtn;
-    private javax.swing.JPanel loginPanel;
     private javax.swing.JPasswordField passTxtField;
     private javax.swing.JToggleButton showBtn;
     private javax.swing.JTextField userTxtfield;

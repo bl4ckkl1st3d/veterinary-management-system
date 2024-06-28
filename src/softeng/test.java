@@ -50,7 +50,7 @@ public final class test extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(250, 140, 233));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI Black", 0, 48)); // NOI18N
-        jLabel1.setText("test");
+        jLabel1.setText("nigga test");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);

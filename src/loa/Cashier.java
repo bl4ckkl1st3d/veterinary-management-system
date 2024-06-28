@@ -2,8 +2,10 @@
 package loa;
 
 import contents.Admin_Home;
-import contents.Cashier_Add;
 import contents.Cashier_Inventory;
+import contents.Cashier_Add;
+import contents.Cashier_Edit;
+import contents.Cashier_PointOfSale;
 import event.EventMenuSelected;
 import java.awt.Color;
 import java.awt.Point;
@@ -23,8 +25,10 @@ public class Cashier extends javax.swing.JFrame {
      * Creates new form Admin
      */
     private Admin_Home home;
-    private Cashier_Add add;
     private Cashier_Inventory inv;
+    private Cashier_Add add;
+    private Cashier_Edit edit;
+    private Cashier_PointOfSale pos;
     private int userId;
     private Point initialClick;
     
@@ -33,8 +37,11 @@ public class Cashier extends javax.swing.JFrame {
         initComponents();
         setBackground(new Color(0,0,0,0));
         home = new Admin_Home();
-        add = new Cashier_Add();
         inv = new Cashier_Inventory();
+        add = new Cashier_Add();
+        edit = new Cashier_Edit();
+        pos = new Cashier_PointOfSale(0);
+        
         
         cashier_Menu.initMoving(Cashier.this);
         cashier_Menu.changeWelcome(userId);
@@ -44,9 +51,13 @@ public class Cashier extends javax.swing.JFrame {
             public void selected(int index) {
                 if(index == 0) {
                     setForm(inv);
-                } else if (index == 1){
+                } else if (index == 2){
                     setForm(add);
-                } else if (index == 7){
+                } else if (index == 4){
+                    setForm(edit);
+                } else if (index == 6){
+                    setForm(pos);  
+                } else if (index == 14){
                     int response = JOptionPane.showConfirmDialog(null, "Are you sure you want to log out?", "Confirm Logout", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                     if (response == JOptionPane.YES_OPTION) {
                     setVisible(false);
@@ -56,7 +67,7 @@ public class Cashier extends javax.swing.JFrame {
             }
         });
         //set when system open start with home form
-        setForm(new Admin_Home());
+        setForm(new Cashier_Inventory());
         
         header2.addMouseListener(new MouseAdapter() {
             @Override
@@ -111,7 +122,7 @@ public class Cashier extends javax.swing.JFrame {
         panelBorder.setPreferredSize(new java.awt.Dimension(1380, 710));
 
         mainPanel.setOpaque(false);
-        mainPanel.setLayout(new java.awt.BorderLayout());
+        mainPanel.setLayout(new javax.swing.BoxLayout(mainPanel, javax.swing.BoxLayout.LINE_AXIS));
 
         close2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/close.png"))); // NOI18N
         close2.addActionListener(new java.awt.event.ActionListener() {
@@ -173,24 +184,13 @@ public class Cashier extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBorderLayout.createSequentialGroup()
                 .addComponent(header2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(2, 2, 2)
-                .addGroup(panelBorderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cashier_Menu, javax.swing.GroupLayout.PREFERRED_SIZE, 673, Short.MAX_VALUE))
+                .addGroup(panelBorderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 673, Short.MAX_VALUE)
+                    .addComponent(cashier_Menu, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(0, 0, 0))
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(panelBorder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelBorder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
+        getContentPane().add(panelBorder, java.awt.BorderLayout.CENTER);
 
         pack();
         setLocationRelativeTo(null);

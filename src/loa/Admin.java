@@ -3,6 +3,7 @@ package loa;
 
 import contents.Admin_Add;
 import contents.Admin_Home;
+import contents.Admin_PatientReports;
 import contents.Admin_Search;
 import event.EventMenuSelected;
 import java.awt.BorderLayout;
@@ -10,10 +11,14 @@ import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import softeng.login;
-import loa.Vet;
 
 /**
  *
@@ -25,6 +30,7 @@ public class Admin extends javax.swing.JFrame {
     private Admin_Add add;
     private Vet vet;
     private Cashier cashier;
+    private Admin_PatientReports report;
     private int userId;
     private Point initialClick;
     
@@ -36,6 +42,7 @@ public class Admin extends javax.swing.JFrame {
         add = new Admin_Add(0);
         vet = new Vet(0);
         cashier = new Cashier(0);
+        report = new Admin_PatientReports(0);
         
         admin_Menu.initMoving(Admin.this);
         admin_Menu.changeWelcome(userId);
@@ -48,13 +55,15 @@ public class Admin extends javax.swing.JFrame {
                 } else if (index == 2){
                     setForm(add);
                 } else if (index == 4){
-                    Vet vet = new Vet(0);
+                    Vet vet = new Vet(userId);
                     vet.setVisible(true);
                     System.out.println("bruh");
                 } else if (index == 6){
-                    Cashier cashier = new Cashier(0);
+                    Cashier cashier = new Cashier(userId);
                     cashier.setVisible(true);
                     System.out.println("bruh");
+                } else if (index == 8){
+                    setForm(report);
                 } else if (index == 14){
                     int response = JOptionPane.showConfirmDialog(null, "Are you sure you want to log out?", "Confirm Logout", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                     if (response == JOptionPane.YES_OPTION) {
@@ -169,7 +178,7 @@ public class Admin extends javax.swing.JFrame {
         );
 
         mainPanel.setOpaque(false);
-        mainPanel.setLayout(new java.awt.BorderLayout());
+        mainPanel.setLayout(new javax.swing.BoxLayout(mainPanel, javax.swing.BoxLayout.LINE_AXIS));
 
         javax.swing.GroupLayout panelBorderLayout = new javax.swing.GroupLayout(panelBorder);
         panelBorder.setLayout(panelBorderLayout);
@@ -177,35 +186,62 @@ public class Admin extends javax.swing.JFrame {
             panelBorderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(panelBorderLayout.createSequentialGroup()
                 .addComponent(admin_Menu, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(2, 2, 2)
-                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 1000, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 992, Short.MAX_VALUE))
             .addComponent(header2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         panelBorderLayout.setVerticalGroup(
             panelBorderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelBorderLayout.createSequentialGroup()
                 .addComponent(header2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(2, 2, 2)
                 .addGroup(panelBorderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(admin_Menu, javax.swing.GroupLayout.PREFERRED_SIZE, 685, Short.MAX_VALUE)
-                    .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 685, Short.MAX_VALUE)))
+                    .addGroup(panelBorderLayout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(admin_Menu, javax.swing.GroupLayout.PREFERRED_SIZE, 684, Short.MAX_VALUE)))
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelBorder, javax.swing.GroupLayout.PREFERRED_SIZE, 1280, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelBorder, javax.swing.GroupLayout.PREFERRED_SIZE, 720, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
+        getContentPane().add(panelBorder, java.awt.BorderLayout.CENTER);
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-    
+    public String getUsernameByUserId(int userId) {
+        String username = null; // Default value if username is not found
+
+        String url = "jdbc:mysql://127.0.0.1:3306/database";
+        String dbUsername = "root";
+        String dbPassword = "admin";
+
+        try {
+            // Establish the database connection
+            Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
+
+            // Prepare the SQL query to retrieve username by user ID
+            String query = "SELECT username FROM users WHERE userid = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, userId);
+
+            // Execute the query
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            // Check if the result set has any rows
+            if (resultSet.next()) {
+                // Retrieve the username from the result set
+                username = resultSet.getString("username");
+            }
+
+            // Close the result set, statement, and connection
+            resultSet.close();
+            preparedStatement.close();
+            connection.close();
+        } catch (SQLException e) {
+            // Handle any SQL exceptions
+            e.printStackTrace();
+        }
+
+        return username;
+    }
     private void minimize2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minimize2ActionPerformed
         // minimize
         this.setExtendedState(Cashier.ICONIFIED);
