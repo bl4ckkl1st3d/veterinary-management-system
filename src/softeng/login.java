@@ -12,6 +12,12 @@ import java.security.MessageDigest;
 import java.sql.*;
 import javax.swing.JOptionPane;
 
+//wewewewe
+import com.fazecast.jSerialComm.SerialPort;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.JButton;
+
 /**
  *
  * @author Kevin NAKA COMMENT PARIN YUNG AUDIT LOG
@@ -94,9 +100,9 @@ public class login extends javax.swing.JFrame {
         jPanel2.add(showBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 220, 80, 60));
 
         jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
             }
         });
         jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 340, 120, 40));
@@ -228,6 +234,10 @@ public void addLoginAuditLog(int userId) {
         // TODO add your handling code here:
     }//GEN-LAST:event_showBtnActionPerformed
 
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        sendSms();
+    }//GEN-LAST:event_jButton1MouseClicked
+
     private void saveSchema() {
         String dbHost = "127.0.0.1";
         String dbPort = "3306";
@@ -314,7 +324,7 @@ public void addLoginAuditLog(int userId) {
     private void saveDatabase() {
     }
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void backup() {
         // JDBC connection URL, username, and password
         String url = "jdbc:mysql://127.0.0.1:3306/database";
         String user = "root";
@@ -383,8 +393,52 @@ public void addLoginAuditLog(int userId) {
             }
         }
 
+    }
 
-    }//GEN-LAST:event_jButton1ActionPerformed
+     private static void sendSms() {
+        String contactNumber = "+639776270544"; // Replace with actual contact number
+        String vaccineName = "COVID-19";     // Replace with actual vaccine name
+        String date = "2024-07-15";          // Replace with actual date
+
+        // Open the serial port
+        SerialPort comPort = SerialPort.getCommPort("COM5");// Adjust the index if necessary
+        comPort.setBaudRate(9600);
+        if (comPort.openPort()) {
+            System.out.println("Port is open.");
+
+            try {
+               comPort.getOutputStream().write((contactNumber + "\n").getBytes());
+                Thread.sleep(100); // Add delay
+                System.out.println("Sent contact number."+contactNumber);
+
+                comPort.getOutputStream().write((vaccineName + "\n").getBytes());
+                Thread.sleep(100); // Add delay
+                System.out.println("Sent vaccine name.");
+
+                comPort.getOutputStream().write((date + "\n").getBytes());
+                Thread.sleep(100); // Add delay
+                System.out.println("Sent date.");
+
+                comPort.getOutputStream().flush();
+                System.out.println("Flushed output stream.");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            finally {
+                try {
+                    comPort.getOutputStream().close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                comPort.closePort();
+                System.out.println("Port is closed.");
+            }
+
+       
+        } else {
+            System.out.println("Failed to open port.");
+        }
+    }
     public static String sha256(String input) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
