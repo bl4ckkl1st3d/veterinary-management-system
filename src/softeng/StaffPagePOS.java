@@ -414,6 +414,8 @@ public class StaffPagePOS extends javax.swing.JFrame {
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel11.setText("QUANTITY");
 
+        txtQuantity.setText("1");
+
         checkoutBtn.setText("CHECKOUT");
         checkoutBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -790,9 +792,14 @@ private void addToCart(){
        String barcode = txtBarcode.getText();
 
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            String bad = txtQuantity.getText();
+            if(bad != "1"){
+                addToCart();
+            }else{
+            
             txtQuantity.setText("1");
             System.out.println(barcode);
-            addToCart();
+            addToCart();}
         }
     }//GEN-LAST:event_txtBarcodeKeyPressed
 public void generateReceipt(int receiptId, double total, double pay, String cashierName, JTable table, JTextArea txtbill) {
