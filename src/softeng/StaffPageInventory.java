@@ -17,6 +17,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.LayoutManager;
 import java.awt.RenderingHints;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -674,7 +675,13 @@ new StaffPagePOS(realUserId).setVisible(true);
         }
     }
     private void barcodeTxtFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_barcodeTxtFieldKeyReleased
-        searchByBar();
+                String barcode = barcodeTxtField.getText();
+
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            searchByBar();
+        }
+        
+        
     }//GEN-LAST:event_barcodeTxtFieldKeyReleased
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

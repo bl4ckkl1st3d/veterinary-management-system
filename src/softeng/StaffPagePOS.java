@@ -11,6 +11,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.LayoutManager;
 import java.awt.RenderingHints;
+import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
@@ -403,6 +404,12 @@ public class StaffPagePOS extends javax.swing.JFrame {
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel3.setText("BARCODE");
 
+        txtBarcode.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtBarcodeKeyPressed(evt);
+            }
+        });
+
         jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel11.setText("QUANTITY");
@@ -565,9 +572,8 @@ public class StaffPagePOS extends javax.swing.JFrame {
             // User clicked 'No' or closed the dialog, do nothing
         }        // TODO add your handling code here:
     }//GEN-LAST:event_logoutMouseReleased
-
-    private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
-        // Get the barcode from the barcode text field
+private void addToCart(){
+ // Get the barcode from the barcode text field
         String barcode = txtBarcode.getText().trim();
 
         // Database connection details
@@ -687,6 +693,9 @@ public class StaffPagePOS extends javax.swing.JFrame {
                 e.printStackTrace();
             }
         }
+}
+    private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
+       addToCart();
     }//GEN-LAST:event_addBtnActionPerformed
 
     private void removeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeBtnActionPerformed
@@ -775,6 +784,16 @@ public class StaffPagePOS extends javax.swing.JFrame {
         model.setRowCount(0);
         totalPriceTextField.setText("0.00");
     }//GEN-LAST:event_checkoutBtnActionPerformed
+
+    private void txtBarcodeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBarcodeKeyPressed
+       String barcode = txtBarcode.getText();
+
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            txtQuantity.setText("1");
+            System.out.println(barcode);
+            addToCart();
+        }
+    }//GEN-LAST:event_txtBarcodeKeyPressed
 public void generateReceipt(int receiptId, double total, double pay, String cashierName, JTable table, JTextArea txtbill) {
     DefaultTableModel model = (DefaultTableModel) table.getModel();
     
