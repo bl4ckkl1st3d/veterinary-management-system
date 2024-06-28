@@ -452,6 +452,11 @@ public class AdminPageAdd extends javax.swing.JFrame {
         });
 
         answerTxtField.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        answerTxtField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                answerTxtFieldActionPerformed(evt);
+            }
+        });
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -954,19 +959,12 @@ public class AdminPageAdd extends javax.swing.JFrame {
                     passwordTxtField.setText("");
                     secretQuestionBox.setSelectedItem(secretQuestion);
                     answerTxtField.setText(secretAnswer);
-
                     switch (loa) {
-                        case 0:
-                            loaBox.setSelectedItem("cashier");
-                            break;
-                        case 1:
-                            loaBox.setSelectedItem("veterinarian");
-                            break;
-                        case 2:
-                            loaBox.setSelectedItem("admin");
-                            break;
-                        default:
-                            break;
+                        case 0 -> loaBox.setSelectedItem("CASHIER");
+                        case 1 -> loaBox.setSelectedItem("VETERINARIAN");
+                        case 2 -> loaBox.setSelectedItem("ADMIN");
+                        default -> {
+                        }
                     }
                 }
             }
@@ -1113,6 +1111,10 @@ public class AdminPageAdd extends javax.swing.JFrame {
         addUserBtn.setVisible(true);
         birthDate.setDate(null);
     }//GEN-LAST:event_clearBtnActionPerformed
+
+    private void answerTxtFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_answerTxtFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_answerTxtFieldActionPerformed
     public void updateUserAuditLog(int userId) {
         String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
      
