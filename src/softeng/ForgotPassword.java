@@ -24,15 +24,15 @@ public class ForgotPassword extends javax.swing.JFrame {
         initComponents();
         System.out.println("kevinbranch");
         System.out.println("station di kilala ni richard ");
-        shuffle();
+
 
     }
+    private static final String DATABASE_NAME = "database";
+    private static final String dbUsername = "root";
+    private static final String dbPassword = "admin";
+    private static final String MYSQL_SERVER_HOSTNAME = "DESKTOP-MVBR3DH"; // Replace with your MySQL server's hostname
+    private static final int MYSQL_SERVER_PORT = 3306;
 
-    public void shuffle() {
-        password1.setBounds(jLabel6.getX(), jLabel6.getY() + 2000, jLabel1.getWidth(), jLabel1.getHeight());
-        jPanel2.revalidate();
-        jPanel2.repaint();
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -170,9 +170,7 @@ public class ForgotPassword extends javax.swing.JFrame {
     private String user1 = "";
 
     public void verifySecretQuestion(String username, String answer, String secretQuestion1) {
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
         try {
             // Establish the database connection
             Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
@@ -262,9 +260,7 @@ public class ForgotPassword extends javax.swing.JFrame {
     }
 
     public void addPasswordChangeAuditLog(int userId) {
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
 
         try {
             // Establish the database connection
@@ -295,9 +291,7 @@ public class ForgotPassword extends javax.swing.JFrame {
     public int getUserIdByUsername(String username) {
         int userId = -1; // Default value if user ID is not found
 
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
 
         try {
             // Establish the database connection
@@ -373,9 +367,7 @@ public class ForgotPassword extends javax.swing.JFrame {
     }//GEN-LAST:event_confirmBtn2ActionPerformed
 
     private void updatePasswordInDatabase(String username, String newPassword) {
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
+       String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
 
         // SQL query to update the password for the given username
         String query = "UPDATE users SET password = ? WHERE username = ?";

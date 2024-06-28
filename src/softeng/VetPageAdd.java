@@ -32,6 +32,11 @@ public class VetPageAdd extends javax.swing.JFrame {
         barField.setText(strCodeText);
         this.realUserId = realUserId;
     }
+     private static final String DATABASE_NAME = "database";
+    private static final String dbUsername = "root";
+    private static final String dbPassword = "admin";
+    private static final String MYSQL_SERVER_HOSTNAME = "DESKTOP-MVBR3DH"; // Replace with your MySQL server's hostname
+    private static final int MYSQL_SERVER_PORT = 3306;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -660,9 +665,7 @@ public class VetPageAdd extends javax.swing.JFrame {
         }
         else{
         java.sql.Date sqlbDay = new java.sql.Date(bDayVal.getTime());
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
         
         try {
             // Establish the database connection

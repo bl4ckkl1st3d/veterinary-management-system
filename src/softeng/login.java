@@ -31,6 +31,11 @@ public class login extends javax.swing.JFrame {
         initComponents();
 
     }
+    private static final String DATABASE_NAME = "database";
+    private static final String DB_USERNAME = "root";
+    private static final String DB_PASSWORD = "admin";
+    private static final String MYSQL_SERVER_HOSTNAME = "DESKTOP-MVBR3DH"; // Replace with your MySQL server's hostname
+    private static final int MYSQL_SERVER_PORT = 3306;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -115,12 +120,11 @@ public class login extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 public void addLoginAuditLog(int userId) {
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
+
         try {
             // Establish the database connection
-            Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
+            Connection connection = DriverManager.getConnection(url, DB_USERNAME, DB_PASSWORD);
 
             // Prepare the SQL query to add login audit log
             String query = "INSERT INTO audit_logs (userid, event, action_type) VALUES (?, 'user logged in', 'login')";
@@ -145,14 +149,12 @@ public void addLoginAuditLog(int userId) {
     }
     private int errorCount = 0;
 
-    private void performLogin(String username, String password) {
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
+private void performLogin(String username, String password) {
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
         String hashedPass = sha256(password);
         try {
             // Establish the database connection
-            Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
+            Connection connection = DriverManager.getConnection(url, DB_USERNAME, DB_PASSWORD);
 
             // Prepare the SQL query to select the user with the provided credentials
             String query = "SELECT * FROM users WHERE BINARY username = ? AND BINARY password = ?";
@@ -169,7 +171,7 @@ public void addLoginAuditLog(int userId) {
                 int userId = resultSet.getInt("userid"); // Retrieve userid from resultSet
 
                 JOptionPane.showMessageDialog(null, "Login successful");
-                //addLoginAuditLog(userId);
+                addLoginAuditLog(userId);
                 switch (LOA) {
                     case "0":
                         new StaffPage(userId).setVisible(true);
@@ -179,7 +181,6 @@ public void addLoginAuditLog(int userId) {
                         new VetPage(userId).setVisible(true);
                         setVisible(false);
                         break;
-
                     case "2":
                         new AdminPage(userId).setVisible(true);
                         setVisible(false);
@@ -188,12 +189,11 @@ public void addLoginAuditLog(int userId) {
                         JOptionPane.showMessageDialog(null, "Unknown Role, Contact your Administrator");
                         break;
                 }
-
             } else {
                 // If resultSet is empty, username and password do not exist in the database
                 errorCount++;
                 if (errorCount >= 3) {
-                    JOptionPane.showMessageDialog(null, "Too much Attempts, redirecting to Forgot Password");
+                    JOptionPane.showMessageDialog(null, "Too many attempts, redirecting to Forgot Password");
                     new ForgotPassword().setVisible(true);
                     setVisible(false);
                 } else {
@@ -209,7 +209,6 @@ public void addLoginAuditLog(int userId) {
             System.out.println("Login failed: " + e.getMessage());
         }
     }
-
 
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
         String username = userTxtfield.getText();
@@ -395,7 +394,7 @@ public void addLoginAuditLog(int userId) {
 
     }
 
-     private static void sendSms() {
+    private static void sendSms() {
         String contactNumber = "+639776270544"; // Replace with actual contact number
         String vaccineName = "COVID-19";     // Replace with actual vaccine name
         String date = "2024-07-15";          // Replace with actual date
@@ -407,9 +406,9 @@ public void addLoginAuditLog(int userId) {
             System.out.println("Port is open.");
 
             try {
-               comPort.getOutputStream().write((contactNumber + "\n").getBytes());
+                comPort.getOutputStream().write((contactNumber + "\n").getBytes());
                 Thread.sleep(100); // Add delay
-                System.out.println("Sent contact number."+contactNumber);
+                System.out.println("Sent contact number." + contactNumber);
 
                 comPort.getOutputStream().write((vaccineName + "\n").getBytes());
                 Thread.sleep(100); // Add delay
@@ -423,8 +422,7 @@ public void addLoginAuditLog(int userId) {
                 System.out.println("Flushed output stream.");
             } catch (Exception e) {
                 e.printStackTrace();
-            }
-            finally {
+            } finally {
                 try {
                     comPort.getOutputStream().close();
                 } catch (Exception e) {
@@ -434,11 +432,11 @@ public void addLoginAuditLog(int userId) {
                 System.out.println("Port is closed.");
             }
 
-       
         } else {
             System.out.println("Failed to open port.");
         }
     }
+
     public static String sha256(String input) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");

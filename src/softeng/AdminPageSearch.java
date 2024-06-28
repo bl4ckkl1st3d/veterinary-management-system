@@ -32,6 +32,11 @@ public class AdminPageSearch extends javax.swing.JFrame {
         setTable();
         displayAllUsers();
     }
+    private static final String DATABASE_NAME = "database";
+    private static final String dbUsername = "root";
+    private static final String dbPassword = "admin";
+    private static final String MYSQL_SERVER_HOSTNAME = "DESKTOP-MVBR3DH"; // Replace with your MySQL server's hostname
+    private static final int MYSQL_SERVER_PORT = 3306;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -641,9 +646,7 @@ public class AdminPageSearch extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void displayAllUsers() {
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
 
         try (Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword)) {
             String query = "SELECT CONCAT(first_name, ' ', last_name) AS full_name,userid, address, birthdate, age, sex, contact FROM user_information";
@@ -711,9 +714,7 @@ public class AdminPageSearch extends javax.swing.JFrame {
             return;
         }
 
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
 
         try (Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword)) {
             String query = "SELECT * FROM user_information WHERE userid = ?";
@@ -752,9 +753,7 @@ public class AdminPageSearch extends javax.swing.JFrame {
     private void getInfoByUserName() {
         String username = usernameTxtField.getText();
 
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
 
         try (Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword)) {
             String query = "SELECT * FROM user_information WHERE username = ?";
@@ -825,9 +824,7 @@ public class AdminPageSearch extends javax.swing.JFrame {
     private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
         String searchText = jTextField1.getText();
         userIdTxtField.setText("");
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
 
         try (Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword)) {
             String query = "SELECT CONCAT(first_name, ' ', last_name) AS full_name, userid,address, birthdate, age, sex, contact FROM user_information WHERE CONCAT(first_name, ' ', last_name) LIKE ?";
@@ -866,9 +863,7 @@ public class AdminPageSearch extends javax.swing.JFrame {
         String searchText = userIdTxtField.getText();
         jTextField1.setText("");
 
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
 
         try (Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword)) {
             String query = "SELECT CONCAT(first_name, ' ', last_name) AS full_name,userid, address, birthdate, age, sex, contact FROM user_information WHERE userid LIKE ?";
@@ -918,9 +913,7 @@ public class AdminPageSearch extends javax.swing.JFrame {
             return;
         }
 
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
 
         try (Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword)) {
             String query = "SELECT * FROM user_information WHERE first_name = ? AND last_name = ? LIMIT 1";

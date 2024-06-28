@@ -49,6 +49,11 @@ public class StaffPageInventory extends javax.swing.JFrame {
         loadAllProductInformation();
         this.realUserId = realUserId;
     }
+     private static final String DATABASE_NAME = "database";
+    private static final String dbUsername = "root";
+    private static final String dbPassword = "admin";
+    private static final String MYSQL_SERVER_HOSTNAME = "DESKTOP-MVBR3DH"; // Replace with your MySQL server's hostname
+    private static final int MYSQL_SERVER_PORT = 3306;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -531,9 +536,7 @@ new StaffPagePOS(realUserId).setVisible(true);
 
     private void loadAllProductInformation() {
     // Database connection details
-    String url = "jdbc:mysql://127.0.0.1:3306/database";
-    String dbUsername = "root";
-    String dbPassword = "admin";
+    String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
     
     Connection conn = null;
     PreparedStatement pstmt = null;
@@ -605,9 +608,7 @@ new StaffPagePOS(realUserId).setVisible(true);
         String barcode = barcodeTxtField.getText();
 
         // Database connection details
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
 
         Connection conn = null;
         PreparedStatement pstmt = null;

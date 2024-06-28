@@ -34,6 +34,11 @@ public class AdminPageAdd extends javax.swing.JFrame {
         this.userIdx = userIdx;
         editBtn.setVisible(false);
     }
+    private static final String DATABASE_NAME = "database";
+    private static final String dbUsername = "root";
+    private static final String dbPassword = "admin";
+    private static final String MYSQL_SERVER_HOSTNAME = "DESKTOP-MVBR3DH"; // Replace with your MySQL server's hostname
+    private static final int MYSQL_SERVER_PORT = 3306;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -671,9 +676,8 @@ public class AdminPageAdd extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private boolean userIdEvent() {
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
+     
 
         String userIdText = useridTxtField.getText();
         if (userIdText.isEmpty()) {
@@ -887,9 +891,8 @@ public class AdminPageAdd extends javax.swing.JFrame {
             return;
         }
 
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
+     
 
         try (Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword)) {
             // Query to check if the user exists and get user information
@@ -1022,9 +1025,8 @@ public class AdminPageAdd extends javax.swing.JFrame {
     java.sql.Date sqlBirthDate = java.sql.Date.valueOf(birthDateLocal);
 
     // Database connection information
-    String url = "jdbc:mysql://127.0.0.1:3306/database";
-    String dbUsername = "root";
-    String dbPassword = "admin";
+    String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
+     
 
     try {
         // Establish the database connection
@@ -1108,9 +1110,8 @@ public class AdminPageAdd extends javax.swing.JFrame {
         birthDate.setDate(null);
     }//GEN-LAST:event_clearBtnActionPerformed
     public void updateUserAuditLog(int userId) {
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
+     
         try {
             // Establish the database connection
             Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
@@ -1132,9 +1133,8 @@ public class AdminPageAdd extends javax.swing.JFrame {
     }
 
     public void addUserAuditLog(int userId) {
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
+     
         try {
             // Establish the database connection
             Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
@@ -1156,9 +1156,8 @@ public class AdminPageAdd extends javax.swing.JFrame {
     }
 
     private void addUserToDatabase() {
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
+     
 
         String username = usernameTxtField.getText();
         String password = new String(passwordTxtField.getText());

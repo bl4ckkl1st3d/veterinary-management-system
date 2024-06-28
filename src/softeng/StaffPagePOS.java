@@ -36,6 +36,11 @@ public class StaffPagePOS extends javax.swing.JFrame {
         this.realUserId = realUserId;
 
     }
+    private static final String DATABASE_NAME = "database";
+    private static final String dbUsername = "root";
+    private static final String dbPassword = "admin";
+    private static final String MYSQL_SERVER_HOSTNAME = "DESKTOP-MVBR3DH"; // Replace with your MySQL server's hostname
+    private static final int MYSQL_SERVER_PORT = 3306;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -566,9 +571,7 @@ public class StaffPagePOS extends javax.swing.JFrame {
         String barcode = txtBarcode.getText().trim();
 
         // Database connection details
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
 
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -814,9 +817,7 @@ public void generateReceipt(int receiptId, double total, double pay, String cash
 
     private String getCashierName(int userId) {
         String cashierName = null;
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -855,9 +856,7 @@ public void generateReceipt(int receiptId, double total, double pay, String cash
     }
 
     private int insertSalesReceipt(double totalPrice, String cashierName) {
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -898,9 +897,7 @@ public void generateReceipt(int receiptId, double total, double pay, String cash
 
     private boolean insertSalesDetails(int receiptId) {
         DefaultTableModel model = (DefaultTableModel) productTable.getModel();
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
         Connection conn = null;
         PreparedStatement pstmt = null;
         PreparedStatement updateStmt = null; // Separate PreparedStatement for stock update
