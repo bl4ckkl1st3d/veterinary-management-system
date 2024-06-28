@@ -10,6 +10,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.LayoutManager;
 import java.awt.RenderingHints;
+import java.awt.event.KeyEvent;
 import java.math.BigDecimal;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -92,6 +93,7 @@ public class StaffPageEdit extends javax.swing.JFrame {
         txtSupplierAddress = new javax.swing.JTextField();
         txtsupplierContact = new javax.swing.JTextField();
         searchProduct = new javax.swing.JButton();
+        clearBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -462,6 +464,12 @@ public class StaffPageEdit extends javax.swing.JFrame {
                 .addGap(22, 22, 22))
         );
 
+        txtBarcode.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtBarcodeKeyPressed(evt);
+            }
+        });
+
         txtPrice.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtPriceActionPerformed(evt);
@@ -599,6 +607,13 @@ public class StaffPageEdit extends javax.swing.JFrame {
                 .addGap(16, 16, 16))
         );
 
+        clearBtn.setText("CLEAR");
+        clearBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -612,7 +627,9 @@ public class StaffPageEdit extends javax.swing.JFrame {
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(143, 143, 143)
-                        .addComponent(editBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 472, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(editBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 472, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(100, 100, 100)
+                        .addComponent(clearBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(38, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
@@ -623,7 +640,9 @@ public class StaffPageEdit extends javax.swing.JFrame {
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(editBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(editBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
+                    .addComponent(clearBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(86, Short.MAX_VALUE))
         );
 
@@ -983,6 +1002,7 @@ editProdToDB();
             
             // Inform user that product information is retrieved
             JOptionPane.showMessageDialog(this, "Product found.");
+            searchSupplierDetails(supplierName);
         } else {
             // Product does not exist
             JOptionPane.showMessageDialog(this, "Product not found.");
@@ -1000,33 +1020,129 @@ editProdToDB();
             e.printStackTrace();
         }
     }
+    
     }//GEN-LAST:event_searchProductActionPerformed
+private Boolean isExisting = false;
 
-    private void searchByBarcode(){
-    // Get the barcode from the text field
-    String barcode = txtBarcode.getText();
-    
+private void searchSupplierDetails(String supplierName) {
     // Database connection details
-   String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
-    
+    String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
+
     Connection conn = null;
     PreparedStatement pstmt = null;
     ResultSet rs = null;
-    
+
     try {
         // Establish a connection to the database
         conn = DriverManager.getConnection(url, dbUsername, dbPassword);
-        
+
+        // SQL query to retrieve supplier information
+        String sql = "SELECT supplier_address, supplier_contact FROM suppliers WHERE supplier_name = ?";
+
+        // Prepare the statement
+        pstmt = conn.prepareStatement(sql);
+        pstmt.setString(1, supplierName);
+
+        // Execute the query
+        rs = pstmt.executeQuery();
+
+        // Check if supplier exists
+        if (rs.next()) {
+            // Supplier details found, retrieve values
+            String supplierAddress = rs.getString("supplier_address");
+            String supplierContact = rs.getString("supplier_contact");
+
+            // Display values in corresponding text fields or other components
+            txtSupplierAddress.setText(supplierAddress);
+            txtsupplierContact.setText(supplierContact);
+        } else {
+            // Supplier does not exist
+            txtSupplierAddress.setText("");
+            txtsupplierContact.setText("");
+            JOptionPane.showMessageDialog(this, "Supplier details not found.");
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+    } finally {
+        try {
+            if (rs != null) rs.close();
+            if (pstmt != null) pstmt.close();
+            if (conn != null) conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}
+    private void txtBarcodeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBarcodeKeyPressed
+       if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+        boolean found = searchByBarcode();
+        if (found) {
+            // Ask for new quantity input
+            String newQuantityStr = JOptionPane.showInputDialog(this, "Enter the new quantity:");
+            if (newQuantityStr != null && !newQuantityStr.trim().isEmpty()) {
+                try {
+                    int newQuantity = Integer.parseInt(newQuantityStr);
+                    if (newQuantity > 0) {
+                        // Update the stock field
+                        int currentStocks = Integer.parseInt(txtStocks.getText());
+                        int updatedStocks = currentStocks + newQuantity;
+                        txtStocks.setText(String.valueOf(updatedStocks));
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Please enter a positive number.");
+                    }
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(this, "Invalid input. Please enter a valid number.");
+                }
+            }
+        }
+    }
+    }//GEN-LAST:event_txtBarcodeKeyPressed
+
+    private void clearBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearBtnActionPerformed
+        txtBarcode.setText("");
+    txtName.setText("");
+    txtPrice.setText("");
+    txtStocks.setText("");
+    txtCriticalLevel.setText("");
+    rbtnPerishableYes.setSelected(false);
+    rbtnPerishableNo.setSelected(false);
+    jDateChooserExpirationDate.setDate(null);
+    txtSupplierName.setText("");
+    txtSupplierAddress.setText("");
+    txtsupplierContact.setText("");
+    cmbCategory.setSelectedIndex(0); // Assuming the first index is the default value
+
+    // Optionally, you can also reset focus to a specific component, e.g., txtBarcode
+    txtBarcode.requestFocus();
+    }//GEN-LAST:event_clearBtnActionPerformed
+
+private boolean searchByBarcode() {
+    // Get the barcode from the text field
+    String barcode = txtBarcode.getText();
+
+    // Database connection details
+    String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
+
+    Connection conn = null;
+    PreparedStatement pstmt = null;
+    ResultSet rs = null;
+
+    try {
+        // Establish a connection to the database
+        conn = DriverManager.getConnection(url, dbUsername, dbPassword);
+
         // SQL query to fetch data based on the exact barcode
         String sql = "SELECT barcode, name, price, stocks, critical_level, perishable, expiration_date, supplier_name FROM product_information WHERE barcode = ?";
-        
+
         // Prepare the statement
         pstmt = conn.prepareStatement(sql);
         pstmt.setString(1, barcode); // Exact match
-        
+
         // Execute the query
         rs = pstmt.executeQuery();
-        
+
         // Check if a match is found
         if (rs.next()) {
             // Get the attributes from the result set
@@ -1037,7 +1153,7 @@ editProdToDB();
             boolean perishable = rs.getBoolean("perishable");
             java.sql.Date expirationDate = rs.getDate("expiration_date");
             String supplierName = rs.getString("supplier_name");
-            
+
             // Set the text fields with the retrieved data
             txtName.setText(name);
             txtPrice.setText(price);
@@ -1052,6 +1168,9 @@ editProdToDB();
             }
             jDateChooserExpirationDate.setDate(expirationDate);
             txtSupplierName.setText(supplierName);
+            searchSupplierDetails(supplierName);
+
+            return true;
         } else {
             // Clear the fields if no match is found
             txtName.setText("");
@@ -1062,83 +1181,14 @@ editProdToDB();
             rbtnPerishableNo.setSelected(false);
             jDateChooserExpirationDate.setDate(null);
             txtSupplierName.setText("");
+
+            return false;
         }
-        
+
     } catch (SQLException e) {
         e.printStackTrace();
         JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
-    } finally {
-        try {
-            if (rs != null) rs.close();
-            if (pstmt != null) pstmt.close();
-            if (conn != null) conn.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-    }private void searchByName(){
- // Get the name from the text field
-    String name = txtName.getText();
-    
-    // Database connection details
-    String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
-    
-    Connection conn = null;
-    PreparedStatement pstmt = null;
-    ResultSet rs = null;
-    
-    try {
-        // Establish a connection to the database
-        conn = DriverManager.getConnection(url, dbUsername, dbPassword);
-        
-        // SQL query to fetch data based on the exact name
-        String sql = "SELECT barcode, name, price, stocks, critical_level, perishable, expiration_date, supplier_name FROM product_information WHERE name = ?";
-        
-        // Prepare the statement
-        pstmt = conn.prepareStatement(sql);
-        pstmt.setString(1, name); // Exact match
-        
-        // Execute the query
-        rs = pstmt.executeQuery();
-        
-        // Check if a match is found
-        if (rs.next()) {
-            // Get the attributes from the result set
-            String barcode = rs.getString("barcode");
-            String price = rs.getString("price");
-            int stocks = rs.getInt("stocks");
-            int criticalLevel = rs.getInt("critical_level");
-            boolean perishable = rs.getBoolean("perishable");
-            java.sql.Date expirationDate = rs.getDate("expiration_date");
-            String supplierName = rs.getString("supplier_name");
-            
-            // Set the text fields with the retrieved data
-            txtBarcode.setText(barcode);
-            txtPrice.setText(price);
-            txtStocks.setText(String.valueOf(stocks));
-            txtCriticalLevel.setText(String.valueOf(criticalLevel));
-            if (perishable) {
-                rbtnPerishableYes.setSelected(true);
-            } else {
-                rbtnPerishableNo.setSelected(true);
-            }
-            jDateChooserExpirationDate.setDate(expirationDate);
-            txtSupplierName.setText(supplierName);
-        } else {
-            // Clear the fields if no match is found
-            txtBarcode.setText("");
-            txtPrice.setText("");
-            txtStocks.setText("");
-            txtCriticalLevel.setText("");
-            rbtnPerishableYes.setSelected(false);
-            rbtnPerishableNo.setSelected(false);
-            jDateChooserExpirationDate.setDate(null);
-            txtSupplierName.setText("");
-        }
-        
-    } catch (SQLException e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        return false;
     } finally {
         try {
             if (rs != null) rs.close();
@@ -1149,6 +1199,7 @@ editProdToDB();
         }
     }
 }
+    
     /**
      * @param args the command line arguments
      */
@@ -1187,6 +1238,7 @@ editProdToDB();
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel add;
+    private javax.swing.JButton clearBtn;
     private javax.swing.JComboBox<String> cmbCategory;
     private javax.swing.JPanel edit;
     private javax.swing.JButton editBtn;
