@@ -685,7 +685,13 @@ new StaffPagePOS(realUserId).setVisible(true);
     }//GEN-LAST:event_barcodeTxtFieldActionPerformed
 
     private void invBarPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_invBarPrintActionPerformed
-       int response = JOptionPane.showConfirmDialog(null, "Do you want to print the barcode for this product?", "Confirm",
+       DefaultTableModel model = (DefaultTableModel) inventoryTable.getModel();
+       int selectedRow = inventoryTable.getSelectedRow();
+       
+       barcodeGlobal = (String)model.getValueAt(selectedRow, 0);
+       nameGlobal = (String)model.getValueAt(selectedRow, 1);
+        
+        int response = JOptionPane.showConfirmDialog(null, "Do you want to print the barcode for this product?", "Confirm",
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (response == JOptionPane.YES_OPTION) {
             System.out.println("User chose Yes.");
