@@ -11,11 +11,13 @@ import java.io.InputStreamReader;
 import java.security.MessageDigest;
 import java.sql.*;
 import javax.swing.JOptionPane;
+import com.fazecast.jSerialComm.SerialPort;
 
 //wewewewe
-
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.InputStream;
+import java.io.OutputStream;
 import javax.swing.JButton;
 
 /**
@@ -149,7 +151,7 @@ public void addLoginAuditLog(int userId) {
     }
     private int errorCount = 0;
 
-private void performLogin(String username, String password) {
+    private void performLogin(String username, String password) {
         String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
         String hashedPass = sha256(password);
         try {
@@ -234,7 +236,7 @@ private void performLogin(String username, String password) {
     }//GEN-LAST:event_showBtnActionPerformed
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-       // sendSms();
+        sendSms();
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void saveSchema() {
@@ -394,48 +396,62 @@ private void performLogin(String username, String password) {
 
     }
 
-    /*private static void sendSms() {
-        String contactNumber = "+639776270544"; // Replace with actual contact number
-        String vaccineName = "COVID-19";     // Replace with actual vaccine name
+ 
+private static void sendSms() {
+        String contactNumber = "639776720544"; // Replace with actual contact number
+        String vaccineName = "ANTI-RABIES";     // Replace with actual vaccine name
         String date = "2024-07-15";          // Replace with actual date
 
-        // Open the serial port
-//        SerialPort comPort = SerialPort.getCommPort("COM5");// Adjust the index if necessary
+        // Adjust the port name based on the available ports list
+        SerialPort comPort = SerialPort.getCommPort("COM5"); // Replace with your port name
         comPort.setBaudRate(9600);
         if (comPort.openPort()) {
             System.out.println("Port is open.");
 
             try {
-                comPort.getOutputStream().write((contactNumber + "\n").getBytes());
-                Thread.sleep(100); // Add delay
-                System.out.println("Sent contact number." + contactNumber);
+                OutputStream out = comPort.getOutputStream();
+                InputStream in = comPort.getInputStream();
 
-                comPort.getOutputStream().write((vaccineName + "\n").getBytes());
-                Thread.sleep(100); // Add delay
-                System.out.println("Sent vaccine name.");
+                if (checkArduinoReady(in, out)) {
+                    out.write((contactNumber + "\n").getBytes());
+                    Thread.sleep(100); // Add delay
+                    System.out.println("Sent contact number.");
 
-                comPort.getOutputStream().write((date + "\n").getBytes());
-                Thread.sleep(100); // Add delay
-                System.out.println("Sent date.");
+                    out.write((vaccineName + "\n").getBytes());
+                    Thread.sleep(100); // Add delay
+                    System.out.println("Sent vaccine name.");
 
-                comPort.getOutputStream().flush();
-                System.out.println("Flushed output stream.");
+                    out.write((date + "\n").getBytes());
+                    Thread.sleep(100); // Add delay
+                    System.out.println("Sent date.");
+
+                    String status = readResponse(in);
+                    System.out.println("Response from Arduino: " + status);
+
+                    if (status.contains("SMS SENT")) {
+                        System.out.println("SMS was sent successfully.");
+                    } else {
+                        System.out.println("Failed to send SMS.");
+                    }
+                } else {
+                    System.out.println("Arduino is not ready.");
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
                 try {
                     comPort.getOutputStream().close();
+                    comPort.getInputStream().close();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
                 comPort.closePort();
                 System.out.println("Port is closed.");
             }
-
         } else {
             System.out.println("Failed to open port.");
         }
-    }*/
+    }
 
     public static String sha256(String input) {
         try {
@@ -455,6 +471,34 @@ private void performLogin(String username, String password) {
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
+    }
+
+    private static boolean checkArduinoReady(InputStream in, OutputStream out) throws Exception {
+        Thread.sleep(2000); // Wait for Arduino initialization
+        String response = readResponse(in);
+        System.out.println("Arduino readiness response: " + response);
+        if (response.contains("READY")) {
+            out.write("CHECK STATUS\n".getBytes()); // Request status from Arduino
+            String statusResponse = readResponse(in);
+            System.out.println("SIM and Signal Status: " + statusResponse);
+            return true;
+        }
+        return false;
+    }
+
+private static String readResponse(InputStream in) throws Exception {
+        StringBuilder response = new StringBuilder();
+        long endTime = System.currentTimeMillis() + 5000;
+        while (System.currentTimeMillis() < endTime) {
+            while (in.available() > 0) {
+                char c = (char) in.read();
+                response.append(c);
+            }
+            if (response.toString().contains("\n")) {
+                break;
+            }
+        }
+        return response.toString();
     }
 
     /**
