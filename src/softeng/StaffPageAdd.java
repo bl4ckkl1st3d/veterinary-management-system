@@ -827,6 +827,7 @@ public InputStream generateCode39Barcode(String barcodeText) {
                       document.add(barcodeImage);
                        document.add(barcodeImage);
                         document.add(barcodeImage);
+                           document.add(barcodeImage);
                 }
 
                 // Close the document
