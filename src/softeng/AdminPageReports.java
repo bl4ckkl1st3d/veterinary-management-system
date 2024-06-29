@@ -21,6 +21,8 @@ import com.itextpdf.text.Element;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -28,6 +30,7 @@ import java.io.FileNotFoundException;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -1064,19 +1067,32 @@ private void addPanelToScrollPane() {
             String pdfFileName = "sales report (" + dateRange + ").pdf";
             String pdfFilePath = selectedFolder.getAbsolutePath() + "/" + pdfFileName;
 
+            // Replace with the actual userid
+            String username = getUsername(realUserId);
+
             // Create the PDF document
             Document document = new Document();
             try {
-                PdfWriter.getInstance(document, new FileOutputStream(pdfFilePath));
+                PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(pdfFilePath));
                 document.open();
-                
+
+                // Clinic information
                 Paragraph clinicTitle = new Paragraph("Sahagun's Veterinary Clinic", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16));
                 clinicTitle.setAlignment(Element.ALIGN_CENTER);
                 document.add(clinicTitle);
-                document.add(Chunk.NEWLINE); //
+
+                Paragraph clinicAddress = new Paragraph("123 Pet Street, Animal City, Country", FontFactory.getFont(FontFactory.HELVETICA, 12));
+                clinicAddress.setAlignment(Element.ALIGN_CENTER);
+                document.add(clinicAddress);
+
+                Paragraph clinicContact = new Paragraph("Contact: (123) 456-7890", FontFactory.getFont(FontFactory.HELVETICA, 12));
+                clinicContact.setAlignment(Element.ALIGN_CENTER);
+                document.add(clinicContact);
+
+                document.add(Chunk.NEWLINE); // Add a blank line after the contact information
 
                 // Add sales report date range to the document header
-                Paragraph reportHeader = new Paragraph("Sales Report from " + dateFormat.format(startDate) + " to " + dateFormat.format(endDate),FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14));
+                Paragraph reportHeader = new Paragraph("Sales Report from " + dateFormat.format(startDate) + " to " + dateFormat.format(endDate), FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14));
                 reportHeader.setAlignment(Element.ALIGN_CENTER);
                 document.add(reportHeader);
                 document.add(Chunk.NEWLINE); // Add a blank line after the header
@@ -1099,21 +1115,106 @@ private void addPanelToScrollPane() {
                 // Add the table to the document
                 document.add(table);
 
-                // Add the total amount
+                // Add the total amount aligned to the 'Total Amount' column (3rd column)
                 String totalAmount = txtTotalSum.getText();
-                document.add(new Paragraph("Total Amount: ₱" + totalAmount));
+                PdfPTable totalTable = new PdfPTable(columnCount);
+
+                // Add empty cells without borders
+                PdfPCell emptyCell1 = new PdfPCell(new Phrase(""));
+                emptyCell1.setBorder(PdfPCell.NO_BORDER);
+                totalTable.addCell(emptyCell1);
+
+                PdfPCell totalTextCell = new PdfPCell(new Phrase("Total Amount:"));
+                totalTextCell.setBorder(PdfPCell.NO_BORDER);
+                totalTextCell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+                totalTable.addCell(totalTextCell);
+
+                PdfPCell totalAmountCell = new PdfPCell(new Phrase("₱" + totalAmount));
+                totalAmountCell.setBorder(PdfPCell.NO_BORDER);
+                totalAmountCell.setHorizontalAlignment(Element.ALIGN_LEFT);
+                totalTable.addCell(totalAmountCell);
+
+                PdfPCell emptyCell4 = new PdfPCell(new Phrase(""));
+                emptyCell4.setBorder(PdfPCell.NO_BORDER);
+                totalTable.addCell(emptyCell4);
+
+                // Add remaining empty cells without borders
+                for (int i = 4; i < columnCount; i++) {
+                    PdfPCell emptyCell = new PdfPCell(new Phrase(""));
+                    emptyCell.setBorder(PdfPCell.NO_BORDER);
+                    totalTable.addCell(emptyCell);
+                }
+
+                document.add(totalTable);
+
+                // Add footer with generation date and username
+                String generationDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date());
+                PdfContentByte cb = writer.getDirectContent();
+                cb.beginText();
+                cb.setFontAndSize(BaseFont.createFont(), 10);
+                cb.showTextAligned(Element.ALIGN_LEFT, "Generated on: " + generationDate, 30, 30, 0);
+                cb.showTextAligned(Element.ALIGN_RIGHT, "Generated by: " + username, document.right() - 30, 30, 0);
+                cb.endText();
 
                 // Close the document
                 document.close();
 
                 JOptionPane.showMessageDialog(this, "PDF saved successfully as '" + pdfFileName + "'.");
-            } catch (FileNotFoundException | DocumentException e) {
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+            } catch (DocumentException | IOException e) {
                 e.printStackTrace();
                 JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
             }
         }
     }//GEN-LAST:event_savePdfActionPerformed
+    private String getUsername(int userid) {
+        String username = null;
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
 
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
+
+        try {
+            // Establish the database connection
+            connection = DriverManager.getConnection(url, dbUsername, dbPassword);
+
+            // Prepare the SQL query to find the username by userid
+            String query = "SELECT username FROM users WHERE userid = ?";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, userid);
+
+            // Execute the query and retrieve the result
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                username = resultSet.getString("username");
+            } else {
+                JOptionPane.showMessageDialog(this, "User not found for userid: " + userid);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Database error: " + e.getMessage());
+        } finally {
+            // Close the resources
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return username != null ? username : "UnknownUser";
+    }
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // Remove any existing component in the scroll pane
         jScrollPane3.setViewportView(null);
@@ -1258,15 +1359,30 @@ private void addPanelToScrollPane() {
             String pdfFileName = "best products (" + dateRange + ").pdf";
             String pdfFilePath = selectedFolder.getAbsolutePath() + "/" + pdfFileName;
 
+            // Retrieve the username of the generator from the 'users' table
+             // Implement this method to get the current user's ID
+            String username = getUsername(realUserId);
+
             // Create the PDF document
             Document document = new Document();
             try {
-                PdfWriter.getInstance(document, new FileOutputStream(pdfFilePath));
+                PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(pdfFilePath));
                 document.open();
+
+                // Clinic information
                 Paragraph clinicTitle = new Paragraph("Sahagun's Veterinary Clinic", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16));
                 clinicTitle.setAlignment(Element.ALIGN_CENTER);
                 document.add(clinicTitle);
-                document.add(Chunk.NEWLINE); //
+
+                Paragraph clinicAddress = new Paragraph("123 Pet Street, Animal City, Country", FontFactory.getFont(FontFactory.HELVETICA, 12));
+                clinicAddress.setAlignment(Element.ALIGN_CENTER);
+                document.add(clinicAddress);
+
+                Paragraph clinicContact = new Paragraph("Contact: (123) 456-7890", FontFactory.getFont(FontFactory.HELVETICA, 12));
+                clinicContact.setAlignment(Element.ALIGN_CENTER);
+                document.add(clinicContact);
+
+                document.add(Chunk.NEWLINE); // Add a blank line after the contact information
 
                 // Add sales report date range to the document header
                 Paragraph reportHeader = new Paragraph("Top 3 Best Selling Products from " + dateFormat.format(startDate) + " to " + dateFormat.format(endDate), FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16));
@@ -1297,11 +1413,23 @@ private void addPanelToScrollPane() {
                 // Add the table to the document
                 document.add(table);
 
+                // Add footer with generation date and username
+                String generationDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date());
+                PdfContentByte cb = writer.getDirectContent();
+                cb.beginText();
+                cb.setFontAndSize(BaseFont.createFont(), 10);
+                cb.showTextAligned(Element.ALIGN_LEFT, "Generated on: " + generationDate, 30, 30, 0);
+                cb.showTextAligned(Element.ALIGN_RIGHT, "Generated by: " + username, document.right() - 30, 30, 0);
+                cb.endText();
+
                 // Close the document
                 document.close();
 
                 JOptionPane.showMessageDialog(this, "PDF saved successfully as '" + pdfFileName + "'.");
-            } catch (FileNotFoundException | DocumentException e) {
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+            } catch (DocumentException | IOException e) {
                 e.printStackTrace();
                 JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
             }
@@ -1453,93 +1581,123 @@ private void addPanelToScrollPane() {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        // Get the dates for the report header
-        java.util.Date startDate = fromDate.getDate();
-        java.util.Date endDate = toDate.getDate();
+    // Get the dates for the report header
+    java.util.Date startDate = fromDate.getDate();
+    java.util.Date endDate = toDate.getDate();
 
-        // Validate dates
-        if (startDate == null || endDate == null) {
-            JOptionPane.showMessageDialog(this, "Please select both start and end dates.");
-            return;
-        }
-        if (startDate.after(endDate)) {
-            JOptionPane.showMessageDialog(this, "The start date must not be after the end date.");
-            return;
-        }
+    // Validate dates
+    if (startDate == null || endDate == null) {
+        JOptionPane.showMessageDialog(this, "Please select both start and end dates.");
+        return;
+    }
+    if (startDate.after(endDate)) {
+        JOptionPane.showMessageDialog(this, "The start date must not be after the end date.");
+        return;
+    }
 
-        // Format the dates for the report header and file name
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String dateRange = dateFormat.format(startDate) + " to " + dateFormat.format(endDate);
+    // Format the dates for the report header and file name
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    String dateRange = dateFormat.format(startDate) + " to " + dateFormat.format(endDate);
 
-        // Open a file chooser to select the folder
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        int option = fileChooser.showSaveDialog(this);
+    // Open a file chooser to select the folder
+    JFileChooser fileChooser = new JFileChooser();
+    fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+    int option = fileChooser.showSaveDialog(this);
 
-        if (option == JFileChooser.APPROVE_OPTION) {
-            File selectedFolder = fileChooser.getSelectedFile();
+    if (option == JFileChooser.APPROVE_OPTION) {
+        File selectedFolder = fileChooser.getSelectedFile();
 
-            // Define the PDF file path with formatted date range
-            String pdfFileName = "patient reports (" + dateRange + ").pdf";
-            String pdfFilePath = selectedFolder.getAbsolutePath() + "/" + pdfFileName;
+        // Define the PDF file path with formatted date range
+        String pdfFileName = "patient reports (" + dateRange + ").pdf";
+        String pdfFilePath = selectedFolder.getAbsolutePath() + "/" + pdfFileName;
 
-            // Create the PDF document
-            Document document = new Document();
-            try {
-                PdfWriter.getInstance(document, new FileOutputStream(pdfFilePath));
-                document.open();
+        // Retrieve the username of the generator from the 'users' table
+  // Implement this method to get the current user's ID
+        String username = getUsername(realUserId);
 
-                // Add clinic title to the document
-                Paragraph clinicTitle = new Paragraph("Sahagun's Veterinary Clinic", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16));
-                clinicTitle.setAlignment(Element.ALIGN_CENTER);
-                document.add(clinicTitle);
-                document.add(Chunk.NEWLINE); // Add a blank line after the title
+        // Create the PDF document
+        Document document = new Document();
+        try {
+            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(pdfFilePath));
+            document.open();
 
-                // Add report date range to the document header
-                Paragraph reportHeader = new Paragraph("Patient Reports from " + dateFormat.format(startDate) + " to " + dateFormat.format(endDate), FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14));
-                reportHeader.setAlignment(Element.ALIGN_CENTER);
-                document.add(reportHeader);
-                document.add(Chunk.NEWLINE); // Add a blank line after the header
+            // Clinic information
+            Paragraph clinicTitle = new Paragraph("Sahagun's Veterinary Clinic", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16));
+            clinicTitle.setAlignment(Element.ALIGN_CENTER);
+            document.add(clinicTitle);
 
-                // Prepare the data to be written to the PDF from patientReportsTable
-                DefaultTableModel model = (DefaultTableModel) patientReportsTable.getModel();
-                int columnCount = model.getColumnCount();
-                int rowCount = model.getRowCount();
+            Paragraph clinicAddress = new Paragraph("123 Pet Street, Animal City, Country", FontFactory.getFont(FontFactory.HELVETICA, 12));
+            clinicAddress.setAlignment(Element.ALIGN_CENTER);
+            document.add(clinicAddress);
 
-                // Add the total count of registered patients
-                Paragraph totalPatients = new Paragraph("Total Registered Patients: " + rowCount, FontFactory.getFont(FontFactory.HELVETICA, 12));
-                totalPatients.setAlignment(Element.ALIGN_LEFT);
-                document.add(totalPatients);
-                document.add(Chunk.NEWLINE); // Add a blank line after the total count
+            Paragraph clinicContact = new Paragraph("Contact: (123) 456-7890", FontFactory.getFont(FontFactory.HELVETICA, 12));
+            clinicContact.setAlignment(Element.ALIGN_CENTER);
+            document.add(clinicContact);
 
-                // Add the table header
-                PdfPTable table = new PdfPTable(columnCount);
-                for (int i = 0; i < columnCount; i++) {
-                    PdfPCell headerCell = new PdfPCell(new Phrase(model.getColumnName(i)));
-                    table.addCell(headerCell);
-                }
+            document.add(Chunk.NEWLINE); // Add a blank line after the contact information
 
-                // Add the table rows
-                for (int i = 0; i < rowCount; i++) {
-                    for (int j = 0; j < columnCount; j++) {
-                        PdfPCell cell = new PdfPCell(new Phrase(model.getValueAt(i, j).toString()));
-                        table.addCell(cell);
-                    }
-                }
+            // Add report date range to the document header
+            Paragraph reportHeader = new Paragraph("Patient Reports from " + dateFormat.format(startDate) + " to " + dateFormat.format(endDate), FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14));
+            reportHeader.setAlignment(Element.ALIGN_CENTER);
+            document.add(reportHeader);
+            document.add(Chunk.NEWLINE); // Add a blank line after the header
 
-                // Add the table to the document
-                document.add(table);
+            // Prepare the data to be written to the PDF from patientReportsTable
+            DefaultTableModel model = (DefaultTableModel) patientReportsTable.getModel();
+            int columnCount = model.getColumnCount();
+            int rowCount = model.getRowCount();
 
-                // Close the document
-                document.close();
+            // Add the total count of registered patients
+            Paragraph totalPatients = new Paragraph("Total Registered Patients: " + rowCount, FontFactory.getFont(FontFactory.HELVETICA, 12));
+            totalPatients.setAlignment(Element.ALIGN_LEFT);
+            document.add(totalPatients);
+            document.add(Chunk.NEWLINE); // Add a blank line after the total count
 
-                JOptionPane.showMessageDialog(this, "PDF saved successfully as '" + pdfFileName + "'.");
-            } catch (FileNotFoundException | DocumentException e) {
-                e.printStackTrace();
-                JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+            // Add the table header
+            PdfPTable table = new PdfPTable(columnCount);
+            for (int i = 0; i < columnCount; i++) {
+                PdfPCell headerCell = new PdfPCell(new Phrase(model.getColumnName(i)));
+                table.addCell(headerCell);
             }
+
+            // Add the table rows
+            for (int i = 0; i < rowCount; i++) {
+                for (int j = 0; j < columnCount; j++) {
+                    PdfPCell cell = new PdfPCell(new Phrase(model.getValueAt(i, j).toString()));
+                    table.addCell(cell);
+                }
+            }
+
+            // Add the table to the document
+            document.add(table);
+
+            // Add footer with generation date and username
+            String generationDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date());
+            PdfContentByte cb = writer.getDirectContent();
+            cb.beginText();
+            cb.setFontAndSize(BaseFont.createFont(), 10);
+            cb.showTextAligned(Element.ALIGN_LEFT, "Generated on: " + generationDate, 30, 30, 0);
+            cb.showTextAligned(Element.ALIGN_RIGHT, "Generated by: " + username, document.right() - 30, 30, 0);
+            cb.endText();
+
+            // Close the document
+            document.close();
+
+            JOptionPane.showMessageDialog(this, "PDF saved successfully as '" + pdfFileName + "'.");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        } catch (DocumentException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
         }
+    }
     }//GEN-LAST:event_jButton7ActionPerformed
+   
+    
     private String getProductInfo(Connection conn, int productId) throws SQLException {
         String productName = "";
         // Example query, replace with your actual query to retrieve product information
