@@ -441,7 +441,8 @@ public class VetPage extends javax.swing.JFrame {
     }//GEN-LAST:event_addPatientMouseClicked
 
     private void sendMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sendMouseClicked
-        System.out.println("test");
+        new VetPageSMS(realUserId).setVisible(true);
+        setVisible(false);
     }//GEN-LAST:event_sendMouseClicked
 
     private void helpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_helpMouseClicked

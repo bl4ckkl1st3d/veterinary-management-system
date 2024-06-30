@@ -7,6 +7,7 @@ package softeng;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.LayoutManager;
@@ -35,6 +36,7 @@ public class StaffPagePOS extends javax.swing.JFrame {
     public StaffPagePOS(int realUserId) {
         initComponents();
         this.realUserId = realUserId;
+       
 
     }
     private static final String DATABASE_NAME = "database";
@@ -662,6 +664,7 @@ private void addToCart(){
 
                 // Product not found, add a new row
                 double totalPrice = price * quantity;
+                totalPrice = Double.parseDouble(String.format("%.2f", totalPrice));
                 model.addRow(new Object[]{name, price, quantity, totalPrice});
             }
 
@@ -676,7 +679,7 @@ private void addToCart(){
 
             // Clear the barcode and quantity fields
             txtBarcode.setText("");
-            txtQuantity.setText("");
+            txtQuantity.setText("1");
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -760,8 +763,11 @@ private void addToCart(){
             JOptionPane.showMessageDialog(this, "Cashier not found.");
             return;
         }
+        // Display change to user
+        double change = paymentAmount - totalPrice;
+        JOptionPane.showMessageDialog(this, "Checkout successful! Change: " + String.format("%.2f", change));
 
-        int receiptId = insertSalesReceipt(totalPrice, cashierName);
+        int receiptId = insertSalesReceipt(totalPrice, cashierName,paymentAmount,change);
         if (receiptId == -1) {
             JOptionPane.showMessageDialog(this, "Error creating sales receipt.");
             return;
@@ -772,12 +778,10 @@ private void addToCart(){
             return;
         }
 
-        // Display change to user
-        double change = paymentAmount - totalPrice;
-        JOptionPane.showMessageDialog(this, "Checkout successful! Change: " + String.format("%.2f", change));
+        
 
         // Update receiptTextArea
-        updateReceiptTextArea(receiptId, cashierName);
+        updateReceiptTextArea(receiptId, cashierName, paymentAmount,change);
 
         // Generate receipt for printing or display
       //generateReceipt(receiptId, totalPrice, paymentAmount, cashierName, productTable, receiptTextArea);
@@ -882,7 +886,7 @@ public void generateReceipt(int receiptId, double total, double pay, String cash
         return cashierName;
     }
 
-    private int insertSalesReceipt(double totalPrice, String cashierName) {
+    private int insertSalesReceipt(double totalPrice, String cashierName,double amount,double change) {
         String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -891,10 +895,12 @@ public void generateReceipt(int receiptId, double total, double pay, String cash
 
         try {
             conn = DriverManager.getConnection(url, dbUsername, dbPassword);
-            String receiptSql = "INSERT INTO sales_receipts (transaction_date, total_amount, cashier_name) VALUES (NOW(), ?, ?)";
+            String receiptSql = "INSERT INTO sales_receipts (transaction_date, total_amount, cashier_name, amount_tendered, `change`) VALUES (NOW(), ?, ?, ?, ?)";
             pstmt = conn.prepareStatement(receiptSql, PreparedStatement.RETURN_GENERATED_KEYS);
             pstmt.setDouble(1, totalPrice);
             pstmt.setString(2, cashierName);
+            pstmt.setDouble(3, amount);
+            pstmt.setDouble(4, change);
             pstmt.executeUpdate();
 
             rs = pstmt.getGeneratedKeys();
@@ -941,7 +947,7 @@ public void generateReceipt(int receiptId, double total, double pay, String cash
             for (int i = 0; i < model.getRowCount(); i++) {
                 String productName = (String) model.getValueAt(i, 0);
                 int quantity = (int) model.getValueAt(i, 2);
-                double price = (double) model.getValueAt(i, 1);
+                double price = ((double) model.getValueAt(i, 1))*quantity;
 
                 // Get product_id from product_information table
                 String productIdSql = "SELECT product_id FROM product_information WHERE name = ?";
@@ -996,38 +1002,65 @@ public void generateReceipt(int receiptId, double total, double pay, String cash
         return success;
     }
 
-    private void updateReceiptTextArea(int receiptId, String cashierName) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date currentDate = new Date();
+private void updateReceiptTextArea(int receiptId, String cashierName, double amountTendered, double change) {
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    Date currentDate = new Date();
 
-        StringBuilder receiptText = new StringBuilder();
-        receiptText.append("===== Receipt =====\n");
-        receiptText.append("Cashier: ").append(cashierName).append("\n");
-        receiptText.append("Date: ").append(dateFormat.format(currentDate)).append("\n\n");
+    StringBuilder receiptText = new StringBuilder();
+    receiptText.append("===== Sahagun's Veterinary Clinic =====\n");
+    receiptText.append("Cashier: ").append(cashierName).append("\n");
+    receiptText.append("Date: ").append(dateFormat.format(currentDate)).append("\n\n");
 
-        DefaultTableModel model = (DefaultTableModel) productTable.getModel();
-        receiptText.append(String.format("%-20s%-10s%-10s\n", "Product", "Quantity", "Total"));
-        receiptText.append("------------------------------------------\n");
+    DefaultTableModel model = (DefaultTableModel) productTable.getModel();
 
-        double totalPrice = 0.0;
-        for (int i = 0; i < model.getRowCount(); i++) {
-            String productName = (String) model.getValueAt(i, 0);
-            int quantity = (int) model.getValueAt(i, 2);
-            double price = (double) model.getValueAt(i, 1);
-            double total = quantity * price;
+    // Get the width of the receiptTextArea in characters
+    FontMetrics fontMetrics = receiptTextArea.getFontMetrics(receiptTextArea.getFont());
+    int textAreaWidth = receiptTextArea.getWidth() / fontMetrics.charWidth('A');
 
-            receiptText.append(String.format("%-20s%-10d%-10.2f\n", productName, quantity, total));
-            totalPrice += total;
+    // Calculate the maximum length of the product names
+    int maxProductNameLength = 0;
+    for (int i = 0; i < model.getRowCount(); i++) {
+        String productName = (String) model.getValueAt(i, 0);
+        if (productName.length() > maxProductNameLength) {
+            maxProductNameLength = productName.length();
         }
-
-        receiptText.append("\n------------------------------------------\n");
-        receiptText.append(String.format("%-30s%.2f\n", "Total:", totalPrice));
-        receiptText.append("\nThank you for shopping with us!\n");
-
-        receiptTextArea.setText(receiptText.toString());
     }
 
-    /**
+    // Calculate available space for each column
+    int quantityColumnWidth = 10;  // fixed width for quantity
+    int totalColumnWidth = 10;     // fixed width for total
+    int productColumnWidth = Math.max(maxProductNameLength, textAreaWidth - quantityColumnWidth - totalColumnWidth - 4);  // calculate based on text area width
+
+    // Create the format strings dynamically
+    String formatHeader = "%-" + productColumnWidth + "s\t%-" + quantityColumnWidth + "s\t%-" + totalColumnWidth + "s\n";
+    String formatBody = "%-" + productColumnWidth + "s\t%-" + quantityColumnWidth + "d\t%-" + totalColumnWidth + ".2f\n";
+
+    receiptText.append(String.format(formatHeader, "Product", "Quantity", "Total"));
+    receiptText.append("-------------------------------------------------------\n");
+
+    double totalPrice = 0.0;
+    for (int i = 0; i < model.getRowCount(); i++) {
+        String productName = (String) model.getValueAt(i, 0);
+        int quantity = (int) model.getValueAt(i, 2);
+        double price = (double) model.getValueAt(i, 1);
+        double total = quantity * price;
+
+        receiptText.append(String.format(formatBody, productName, quantity, total));
+        totalPrice += total;
+    }
+
+    receiptText.append("\n-----------------------------------------------------\n");
+    receiptText.append(String.format("%-30s%.2f\n", "Total Amount:", totalPrice));
+    receiptText.append(String.format("%-30s%.2f\n", "Amount Tendered:", amountTendered));
+    receiptText.append(String.format("%-30s%.2f\n", "Change:", change));
+    receiptText.append("\nThank you for shopping with us!\n");
+
+    receiptTextArea.setText(receiptText.toString());
+}
+    
+
+
+/**
      * @param args the command line arguments
      */
     public static void main(String args[]) {

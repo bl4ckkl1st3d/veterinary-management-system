@@ -537,6 +537,7 @@ public class VetPageEdit extends javax.swing.JFrame {
         });
 
         updateOwnerBtn.setText("UPDATE OWNER INFORMATION");
+        updateOwnerBtn.setFocusable(false);
         updateOwnerBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 updateOwnerBtnActionPerformed(evt);
@@ -544,6 +545,7 @@ public class VetPageEdit extends javax.swing.JFrame {
         });
 
         updateVaccineBtn.setText("UPDATE VACCINE HISTORY");
+        updateVaccineBtn.setFocusable(false);
         updateVaccineBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 updateVaccineBtnActionPerformed(evt);
@@ -1248,13 +1250,7 @@ public class VetPageEdit extends javax.swing.JFrame {
 
             if (rowsAffected > 0) {
                 JOptionPane.showMessageDialog(null, "Client information updated successfully.");           
-                clearTextFields();
-                diagnosisTxtField.setText("");
-                treatmentTxtField.setText("");
-                medicationTxtField.setText("");
-                vaccineNameTxtField.setText("");
-                vaccinationDate.setDate(null);
-                dueDate.setDate(null);
+                searchPatient();
             } else {
                 JOptionPane.showMessageDialog(null, "Failed to update client information.");
             }
@@ -1319,7 +1315,6 @@ public class VetPageEdit extends javax.swing.JFrame {
 
             if (rowsAffected > 0) {
                 JOptionPane.showMessageDialog(null, "Vaccine information updated successfully.");
-                clearTextFields();
                 vaccineNameTxtField.setText("");
                 vaccinationDate.setDate(null);
                 dueDate.setDate(null);
