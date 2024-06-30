@@ -3,15 +3,19 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package softeng;
-
+import java.io.File;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.LayoutManager;
 import java.awt.RenderingHints;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import javax.swing.JPanel;
 import java.sql.*;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -86,6 +90,8 @@ public class AdminPageSearch extends javax.swing.JFrame {
         userIdTxtField = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        backupDB = new javax.swing.JButton();
+        restoreDb = new javax.swing.JButton();
 
         jPanel5.setBackground(new java.awt.Color(153, 255, 204));
 
@@ -568,15 +574,32 @@ public class AdminPageSearch extends javax.swing.JFrame {
             }
         });
 
+        backupDB.setText("Backup");
+        backupDB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backupDBActionPerformed(evt);
+            }
+        });
+
+        restoreDb.setText("Restore");
+        restoreDb.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                restoreDbActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                 .addContainerGap(24, Short.MAX_VALUE)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(jPanel6Layout.createSequentialGroup()
+                            .addComponent(backupDB, javax.swing.GroupLayout.PREFERRED_SIZE, 635, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 873, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jPanel6Layout.createSequentialGroup()
                             .addComponent(jLabel18)
@@ -585,7 +608,8 @@ public class AdminPageSearch extends javax.swing.JFrame {
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(29, 29, 29)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(restoreDb, javax.swing.GroupLayout.PREFERRED_SIZE, 635, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(21, 21, 21))
         );
         jPanel6Layout.setVerticalGroup(
@@ -600,7 +624,11 @@ public class AdminPageSearch extends javax.swing.JFrame {
                 .addGap(37, 37, 37)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(backupDB))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(restoreDb)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -910,6 +938,143 @@ public class AdminPageSearch extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         displayAllUsers();
     }//GEN-LAST:event_jButton1ActionPerformed
+// Helper method to print error stream
+    private void printErrorStream(Process process) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getErrorStream()))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    private void backupDBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backupDBActionPerformed
+        String url = "database"; // Replace with your database name
+        String dbUsername = "root";
+        String dbPassword = "admin";
+        
+      // Create a file chooser dialog
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Choose Backup Location");
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+
+        // Show the file chooser dialog
+        int userSelection = fileChooser.showSaveDialog(null);
+
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            String exportPath = selectedFile.getAbsolutePath();
+
+            try {
+                String mysqlDumpPath = "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\\mysqldump"; // Adjust with your actual path
+
+                // Construct the command and arguments
+                String[] command = new String[]{
+                        mysqlDumpPath,
+                        "--single-transaction",
+                        "-u" + dbUsername,
+                        "-p" + dbPassword,
+                        url
+                };
+
+                // Redirect output to selected file
+                ProcessBuilder processBuilder = new ProcessBuilder(command);
+                processBuilder.redirectOutput(ProcessBuilder.Redirect.to(new File(exportPath)));
+
+                // Start the process
+                Process process = processBuilder.start();
+                int exitCode = process.waitFor();
+
+                // Check command execution success
+                if (exitCode == 0) {
+                    JOptionPane.showMessageDialog(null, "Backup created successfully at:\n" + exportPath);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error creating backup. Exit code: " + exitCode);
+                    printErrorStream(process);
+                }
+
+            } catch (IOException | InterruptedException e) {
+                e.printStackTrace();
+            }
+        } else if (userSelection == JFileChooser.CANCEL_OPTION) {
+            System.out.println("Backup operation canceled.");
+        } else if (userSelection == JFileChooser.ERROR_OPTION) {
+            System.out.println("Error selecting backup location.");
+        }
+    }//GEN-LAST:event_backupDBActionPerformed
+   private boolean restoreDatabase(String databaseName, String dbUsername, String dbPassword, String importPath) {
+        try {
+            String mysqlPath = "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\\mysql"; // Adjust with your actual path
+
+            // Construct the command and arguments
+            String[] command = new String[]{
+                    mysqlPath,
+                    "-u" + dbUsername,
+                    "-p" + dbPassword,
+                    databaseName,
+                    "-e",
+                    "source " + importPath
+            };
+
+            // Create a File object for importPath
+            File inputFile = new File(importPath);
+
+            // Check if the input file exists before restoring
+            if (!inputFile.exists()) {
+                System.out.println("Restore file " + importPath + " does not exist.");
+                return false;
+            }
+
+            // Start the process
+            ProcessBuilder processBuilder = new ProcessBuilder(command);
+            Process process = processBuilder.start();
+            int exitCode = process.waitFor();
+
+            // Check command execution success
+            if (exitCode == 0) {
+                System.out.println("Restore completed successfully from " + importPath);
+                return true;
+            } else {
+                System.out.println("Error restoring database. Exit code: " + exitCode);
+                printErrorStream(process);
+            }
+
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    private void restoreDbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_restoreDbActionPerformed
+        String databaseName = "database"; // Replace with your database name
+        String dbUsername = "root";
+        String dbPassword = "admin";
+      
+          // Create a file chooser dialog
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Choose Restore File");
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+
+        // Show the file chooser dialog
+        int userSelection = fileChooser.showOpenDialog(null);
+
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            String importPath = selectedFile.getAbsolutePath();
+        // Call restoreDatabase method
+            boolean restoreSuccess = restoreDatabase(databaseName, dbUsername, dbPassword, importPath);
+
+            if (restoreSuccess) {
+                JOptionPane.showMessageDialog(null, "Database restored successfully from:\n" + importPath);
+            } else {
+                JOptionPane.showMessageDialog(null, "Error restoring database.");
+            }
+        } else if (userSelection == JFileChooser.CANCEL_OPTION) {
+            System.out.println("Restore operation canceled.");
+        } else if (userSelection == JFileChooser.ERROR_OPTION) {
+            System.out.println("Error selecting restore file.");
+        }
+    }//GEN-LAST:event_restoreDbActionPerformed
     private void searchUser() {
         String firstName = firstNameTxtField.getText();
         String lastName = lastNameTxtField.getText();
@@ -1013,6 +1178,7 @@ public class AdminPageSearch extends javax.swing.JFrame {
     private javax.swing.JPanel add;
     private javax.swing.JTextArea addressTxtField;
     private javax.swing.JTextField ageTxtField;
+    private javax.swing.JButton backupDB;
     private javax.swing.JPanel cashier;
     private javax.swing.JTextField contactTxtField;
     private javax.swing.JTextField firstNameTxtField;
@@ -1046,6 +1212,7 @@ public class AdminPageSearch extends javax.swing.JFrame {
     private javax.swing.JTextField lastNameTxtField;
     private javax.swing.JPanel logout;
     private javax.swing.JPanel reports;
+    private javax.swing.JButton restoreDb;
     private javax.swing.JPanel search;
     private javax.swing.JPanel settings;
     private javax.swing.JTextField sexTxtField;
