@@ -473,10 +473,10 @@
                                       <Component id="jLabel23" alignment="1" max="32767" attributes="0"/>
                                   </Group>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                      <Component id="jScrollPane1" pref="476" max="32767" attributes="0"/>
+                                  <Group type="103" groupAlignment="1" attributes="0">
+                                      <Component id="jScrollPane1" pref="535" max="32767" attributes="0"/>
                                       <Component id="nameTxtField" max="32767" attributes="0"/>
-                                      <Component id="contactTxtField" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="numberField" alignment="0" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -623,7 +623,7 @@
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel22" alignment="3" min="-2" pref="111" max="-2" attributes="0"/>
-                              <Component id="contactTxtField" alignment="3" min="-2" pref="60" max="-2" attributes="0"/>
+                              <Component id="numberField" alignment="3" min="-2" pref="46" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="addBtn" min="-2" pref="55" max="-2" attributes="0"/>
@@ -837,13 +837,6 @@
                     <Property name="text" type="java.lang.String" value="Address"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="contactTxtField">
-                  <Properties>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Segoe UI" size="18" style="0"/>
-                    </Property>
-                  </Properties>
-                </Component>
                 <Component class="javax.swing.JButton" name="addBtn">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Register"/>
@@ -878,6 +871,14 @@
                     <Property name="horizontalAlignment" type="int" value="11"/>
                     <Property name="text" type="java.lang.String" value="Patient Name"/>
                   </Properties>
+                </Component>
+                <Component class="javax.swing.JFormattedTextField" name="numberField">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="+63-9"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="numberFieldActionPerformed"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
