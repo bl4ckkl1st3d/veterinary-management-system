@@ -8,6 +8,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
@@ -116,58 +118,59 @@ public class BackupRestore extends javax.swing.JFrame {
     }//GEN-LAST:event_backButtonActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       
-      // Create a file chooser dialog
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setDialogTitle("Choose Backup Location");
-        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+     // Create a file chooser dialog
+    JFileChooser fileChooser = new JFileChooser();
+    fileChooser.setDialogTitle("Choose Backup Location");
+    fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY); // Only directories
 
-        // Show the file chooser dialog
-        int userSelection = fileChooser.showSaveDialog(null);
+    // Show the file chooser dialog
+    int userSelection = fileChooser.showSaveDialog(null);
 
-        if (userSelection == JFileChooser.APPROVE_OPTION) {
-            File selectedFile = fileChooser.getSelectedFile();
-            String exportPath = selectedFile.getAbsolutePath();
+    if (userSelection == JFileChooser.APPROVE_OPTION) {
+        File selectedDirectory = fileChooser.getSelectedFile();
 
-            try {
-                String mysqlDumpPath = "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\\mysqldump"; // Adjust with your actual path
+        // Generate file name with date
+        String date = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String exportPath = selectedDirectory.getAbsolutePath() + File.separator + "backup_" + date + ".sql";
 
-                // Construct the command and arguments
-                String[] command = new String[]{
-                        mysqlDumpPath,
-                        "--single-transaction",
-                        "-h" + MYSQL_SERVER_HOSTNAME,
-                        "-P" + MYSQL_SERVER_PORT,
-                        "-u" + dbUsername,
-                        "-p" + dbPassword,
-                        DATABASE_NAME
-                };
+        try {
+            String mysqlDumpPath = "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\\mysqldump"; // Adjust with your actual path
 
-                // Redirect output to selected file
-                ProcessBuilder processBuilder = new ProcessBuilder(command);
-                processBuilder.redirectOutput(ProcessBuilder.Redirect.to(new File(exportPath)));
+            // Construct the command and arguments
+            String[] command = new String[]{
+                    mysqlDumpPath,
+                    "--single-transaction",
+                    "-h" + MYSQL_SERVER_HOSTNAME,
+                    "-P" + MYSQL_SERVER_PORT,
+                    "-u" + dbUsername,
+                    "-p" + dbPassword,
+                    DATABASE_NAME
+            };
 
-                // Start the process
-                Process process = processBuilder.start();
-                int exitCode = process.waitFor();
+            // Redirect output to selected file
+            ProcessBuilder processBuilder = new ProcessBuilder(command);
+            processBuilder.redirectOutput(ProcessBuilder.Redirect.to(new File(exportPath)));
 
-                // Check command execution success
-                if (exitCode == 0) {
-                    JOptionPane.showMessageDialog(null, "Backup created successfully at:\n" + exportPath);
-                } else {
-                    JOptionPane.showMessageDialog(null, "Error creating backup. Exit code: " + exitCode);
-                    printErrorStream(process);
-                }
+            // Start the process
+            Process process = processBuilder.start();
+            int exitCode = process.waitFor();
 
-            } catch (IOException | InterruptedException e) {
-                e.printStackTrace();
+            // Check command execution success
+            if (exitCode == 0) {
+                JOptionPane.showMessageDialog(null, "Backup created successfully at:\n" + exportPath);
+            } else {
+                JOptionPane.showMessageDialog(null, "Error creating backup. Exit code: " + exitCode);
+                printErrorStream(process);
             }
-        } else if (userSelection == JFileChooser.CANCEL_OPTION) {
-            System.out.println("Backup operation canceled.");
-        } else if (userSelection == JFileChooser.ERROR_OPTION) {
-            System.out.println("Error selecting backup location.");
+
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
         }
-                                            
+    } else if (userSelection == JFileChooser.CANCEL_OPTION) {
+        System.out.println("Backup operation canceled.");
+    } else if (userSelection == JFileChooser.ERROR_OPTION) {
+        System.out.println("Error selecting backup location.");
+    }                    
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
