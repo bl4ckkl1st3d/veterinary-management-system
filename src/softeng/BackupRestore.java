@@ -23,6 +23,11 @@ public class BackupRestore extends javax.swing.JFrame {
     public BackupRestore() {
         initComponents();
     }
+ private static final String DATABASE_NAME = "database";
+    private static final String dbUsername = "root";
+    private static final String dbPassword = "admin";
+    private static final String MYSQL_SERVER_HOSTNAME = "DESKTOP-MVBR3DH"; // Replace with your MySQL server's hostname
+    private static final int MYSQL_SERVER_PORT = 3306;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -111,10 +116,7 @@ public class BackupRestore extends javax.swing.JFrame {
     }//GEN-LAST:event_backButtonActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String url = "database"; // Replace with your database name
-        String dbUsername = "root";
-        String dbPassword = "admin";
-        
+       
       // Create a file chooser dialog
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Choose Backup Location");
@@ -134,9 +136,11 @@ public class BackupRestore extends javax.swing.JFrame {
                 String[] command = new String[]{
                         mysqlDumpPath,
                         "--single-transaction",
+                        "-h" + MYSQL_SERVER_HOSTNAME,
+                        "-P" + MYSQL_SERVER_PORT,
                         "-u" + dbUsername,
                         "-p" + dbPassword,
-                        url
+                        DATABASE_NAME
                 };
 
                 // Redirect output to selected file
@@ -197,48 +201,35 @@ public class BackupRestore extends javax.swing.JFrame {
             System.out.println("Error selecting restore file.");
         }
     }//GEN-LAST:event_jButton2ActionPerformed
- private boolean restoreDatabase(String databaseName, String dbUsername, String dbPassword, String importPath) {
+  private boolean restoreDatabase(String databaseName, String dbUsername, String dbPassword, String importPath) {
         try {
             String mysqlPath = "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\\mysql"; // Adjust with your actual path
 
             // Construct the command and arguments
             String[] command = new String[]{
                     mysqlPath,
+                    "-h" + MYSQL_SERVER_HOSTNAME,
+                    "-P" + MYSQL_SERVER_PORT,
                     "-u" + dbUsername,
                     "-p" + dbPassword,
-                    databaseName,
-                    "-e",
-                    "source " + importPath
+                    databaseName
             };
-
-            // Create a File object for importPath
-            File inputFile = new File(importPath);
-
-            // Check if the input file exists before restoring
-            if (!inputFile.exists()) {
-                System.out.println("Restore file " + importPath + " does not exist.");
-                return false;
-            }
 
             // Start the process
             ProcessBuilder processBuilder = new ProcessBuilder(command);
+            processBuilder.redirectInput(ProcessBuilder.Redirect.from(new File(importPath)));
+
             Process process = processBuilder.start();
             int exitCode = process.waitFor();
 
-            // Check command execution success
-            if (exitCode == 0) {
-                System.out.println("Restore completed successfully from " + importPath);
-                return true;
-            } else {
-                System.out.println("Error restoring database. Exit code: " + exitCode);
-                printErrorStream(process);
-            }
+            return exitCode == 0;
 
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
+            return false;
         }
-        return false;
     }
+
 
 // Helper method to print error stream
     private void printErrorStream(Process process) {
