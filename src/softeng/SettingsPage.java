@@ -917,7 +917,7 @@ public class SettingsPage extends javax.swing.JFrame {
 
                     if (secretQuestion.equals(dbSecretQuestion) && secretAnswer.equals(dbSecretAnswer)) {
                         nextScreen();
-                        JOptionPane.showMessageDialog(null, "Incorrect Question or Answer");
+                        JOptionPane.showMessageDialog(null, "CORRECT");
                     } else {
                         JOptionPane.showMessageDialog(null, "Incorrect Question or Answer");
                         secretAnswerTextField.setText("");

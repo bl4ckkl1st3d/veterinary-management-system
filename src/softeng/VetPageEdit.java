@@ -1303,13 +1303,14 @@ public class VetPageEdit extends javax.swing.JFrame {
             }
 
             // Query to insert the vaccine information
-            String vaccineQuery = "INSERT INTO vaccine_history (barcode, vaccine_name, vaccination_date, next_due_date, administered_by) VALUES (?, ?, ?, ?, ?)";
+            String vaccineQuery = "INSERT INTO vaccine_history (barcode, vaccine_name, vaccination_date, next_due_date, administered_by,reminded) VALUES (?, ?, ?, ?, ?,?)";
             PreparedStatement vaccineStatement = connection.prepareStatement(vaccineQuery);
             vaccineStatement.setString(1, patientId);
             vaccineStatement.setString(2, vaccineName);
             vaccineStatement.setDate(3, sqlVaccinationDate);
             vaccineStatement.setDate(4, sqlDueDate);
             vaccineStatement.setString(5, docVacc);
+            vaccineStatement.setString(6,"NO");
 
             int rowsAffected = vaccineStatement.executeUpdate();
 
