@@ -5,8 +5,9 @@
     <Property name="defaultCloseOperation" type="int" value="3"/>
   </Properties>
   <SyntheticProperties>
-    <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
-    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
+    <SyntheticProperty name="formSizePolicy" type="int" value="0"/>
+    <SyntheticProperty name="generateSize" type="boolean" value="false"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="true"/>
   </SyntheticProperties>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
@@ -52,10 +53,7 @@
                               <Component id="passTxtField" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace min="18" pref="18" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="adminButton3" min="-2" max="-2" attributes="0"/>
-                              <Component id="showBtn" min="-2" pref="85" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="showBtn" min="-2" pref="85" max="-2" attributes="0"/>
                       </Group>
                       <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
                           <Component id="jLabel2" alignment="0" max="32767" attributes="0"/>
@@ -79,10 +77,7 @@
                       <Component id="passTxtField" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="adminButton3" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
-                      <Component id="adminButton1" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="adminButton1" min="-2" pref="50" max="-2" attributes="0"/>
                   <EmptySpace pref="372" max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -120,15 +115,6 @@
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="showBtnMouseClicked"/>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="showBtnActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="swing.AdminButton" name="adminButton3">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="SEND SMS"/>
-            <Property name="radius" type="int" value="25"/>
-          </Properties>
-          <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="adminButton3MouseClicked"/>
           </Events>
         </Component>
         <Component class="swing.PasswordField" name="passTxtField">
