@@ -43,21 +43,21 @@ public class Cashier_Menu extends javax.swing.JPanel {
         init();
     }
     private void init() {
-        listMenu1.addItem(new Model_Menu("1", "Inventory", Model_Menu.MenuType.MENU));
+        listMenu1.addItem(new Model_Menu("inventory", "Inventory", Model_Menu.MenuType.MENU));
         listMenu1.addItem(new Model_Menu(" ", " ", Model_Menu.MenuType.EMPTY));
-        listMenu1.addItem(new Model_Menu("2", "Add New Product", Model_Menu.MenuType.MENU));
+        listMenu1.addItem(new Model_Menu("add product", "Add New Product", Model_Menu.MenuType.MENU));
         listMenu1.addItem(new Model_Menu(" ", " ", Model_Menu.MenuType.EMPTY));
-        listMenu1.addItem(new Model_Menu("3", "Edit Product Info", Model_Menu.MenuType.MENU));
+        listMenu1.addItem(new Model_Menu("edit", "Edit Product Info", Model_Menu.MenuType.MENU));
         listMenu1.addItem(new Model_Menu(" ", " ", Model_Menu.MenuType.EMPTY));
-        listMenu1.addItem(new Model_Menu("4", "Point of Sale", Model_Menu.MenuType.MENU));
+        listMenu1.addItem(new Model_Menu("pos", "Point of Sale", Model_Menu.MenuType.MENU));
         listMenu1.addItem(new Model_Menu(" ", " ", Model_Menu.MenuType.EMPTY));
-        listMenu1.addItem(new Model_Menu("5", "Reports", Model_Menu.MenuType.MENU));
+        listMenu1.addItem(new Model_Menu("settings", "Settings", Model_Menu.MenuType.MENU));
+        listMenu1.addItem(new Model_Menu(" ", " ", Model_Menu.MenuType.EMPTY));        
+        listMenu1.addItem(new Model_Menu("help", "Help", Model_Menu.MenuType.MENU));
+        listMenu1.addItem(new Model_Menu(" ", " ", Model_Menu.MenuType.EMPTY));        
+        listMenu1.addItem(new Model_Menu("about", "About", Model_Menu.MenuType.MENU));
         listMenu1.addItem(new Model_Menu(" ", " ", Model_Menu.MenuType.EMPTY));
-        listMenu1.addItem(new Model_Menu("6", "Help", Model_Menu.MenuType.MENU));
-        listMenu1.addItem(new Model_Menu(" ", " ", Model_Menu.MenuType.EMPTY));
-        listMenu1.addItem(new Model_Menu("7", "Settings", Model_Menu.MenuType.MENU));
-        listMenu1.addItem(new Model_Menu(" ", " ", Model_Menu.MenuType.EMPTY));
-        listMenu1.addItem(new Model_Menu("7", "Log Out", Model_Menu.MenuType.MENU));
+        listMenu1.addItem(new Model_Menu("logout", "Log Out", Model_Menu.MenuType.MENU));
         listMenu1.addItem(new Model_Menu(" ", " ", Model_Menu.MenuType.EMPTY));
     }
 

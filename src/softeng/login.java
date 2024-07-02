@@ -11,11 +11,13 @@ import java.io.InputStreamReader;
 import java.security.MessageDigest;
 import java.sql.*;
 import javax.swing.JOptionPane;
+import com.fazecast.jSerialComm.SerialPort;
 
 //wewewewe
-//import com.fazecast.jSerialComm.SerialPort;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.InputStream;
+import java.io.OutputStream;
 import javax.swing.JButton;
 
 /**
@@ -29,8 +31,14 @@ public class login extends javax.swing.JFrame {
      */
     public login() {
         initComponents();
+        passTxtField.setEchoChar('\u25cf');
 
     }
+    private static final String DATABASE_NAME = "database";
+    private static final String DB_USERNAME = "root";
+    private static final String DB_PASSWORD = "admin";
+    private static final String MYSQL_SERVER_HOSTNAME = "DESKTOP-MVBR3DH"; // Replace with your MySQL server's hostname
+    private static final int MYSQL_SERVER_PORT = 3306;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -105,6 +113,11 @@ public class login extends javax.swing.JFrame {
                 jButton1MouseClicked(evt);
             }
         });
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 340, 120, 40));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 210, 870, 430));
@@ -115,12 +128,11 @@ public class login extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 public void addLoginAuditLog(int userId) {
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
+
         try {
             // Establish the database connection
-            Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
+            Connection connection = DriverManager.getConnection(url, DB_USERNAME, DB_PASSWORD);
 
             // Prepare the SQL query to add login audit log
             String query = "INSERT INTO audit_logs (userid, event, action_type) VALUES (?, 'user logged in', 'login')";
@@ -146,13 +158,11 @@ public void addLoginAuditLog(int userId) {
     private int errorCount = 0;
 
     private void performLogin(String username, String password) {
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
         String hashedPass = sha256(password);
         try {
             // Establish the database connection
-            Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
+            Connection connection = DriverManager.getConnection(url, DB_USERNAME, DB_PASSWORD);
 
             // Prepare the SQL query to select the user with the provided credentials
             String query = "SELECT * FROM users WHERE BINARY username = ? AND BINARY password = ?";
@@ -169,7 +179,7 @@ public void addLoginAuditLog(int userId) {
                 int userId = resultSet.getInt("userid"); // Retrieve userid from resultSet
 
                 JOptionPane.showMessageDialog(null, "Login successful");
-                //addLoginAuditLog(userId);
+                addLoginAuditLog(userId);
                 switch (LOA) {
                     case "0":
                         new StaffPage(userId).setVisible(true);
@@ -179,7 +189,6 @@ public void addLoginAuditLog(int userId) {
                         new VetPage(userId).setVisible(true);
                         setVisible(false);
                         break;
-
                     case "2":
                         new AdminPage(userId).setVisible(true);
                         setVisible(false);
@@ -188,12 +197,11 @@ public void addLoginAuditLog(int userId) {
                         JOptionPane.showMessageDialog(null, "Unknown Role, Contact your Administrator");
                         break;
                 }
-
             } else {
                 // If resultSet is empty, username and password do not exist in the database
                 errorCount++;
                 if (errorCount >= 3) {
-                    JOptionPane.showMessageDialog(null, "Too much Attempts, redirecting to Forgot Password");
+                    JOptionPane.showMessageDialog(null, "Too many attempts, redirecting to Forgot Password");
                     new ForgotPassword().setVisible(true);
                     setVisible(false);
                 } else {
@@ -209,7 +217,6 @@ public void addLoginAuditLog(int userId) {
             System.out.println("Login failed: " + e.getMessage());
         }
     }
-
 
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
         String username = userTxtfield.getText();
@@ -237,6 +244,10 @@ public void addLoginAuditLog(int userId) {
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         sendSms();
     }//GEN-LAST:event_jButton1MouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void saveSchema() {
         String dbHost = "127.0.0.1";
@@ -395,52 +406,94 @@ public void addLoginAuditLog(int userId) {
 
     }
 
-     private static void sendSms() {
-        String contactNumber = "+639776270544"; // Replace with actual contact number
-        String vaccineName = "COVID-19";     // Replace with actual vaccine name
-        String date = "2024-07-15";          // Replace with actual date
+    private static void sendSms() {
+        String contactNumber = "639776720544";
+        String vaccineName = "ANTI-SELOS VACCINE";     // Replace with actual vaccine name
+        String date = "2024-07-02";          // Replace with actual date
 
-        /*// Open the serial port
-        SerialPort comPort = SerialPort.getCommPort("COM5");// Adjust the index if necessary
+        // Adjust the port name based on the available ports list
+        SerialPort comPort = SerialPort.getCommPort("COM5"); // Replace with your port name
         comPort.setBaudRate(9600);
         if (comPort.openPort()) {
             System.out.println("Port is open.");
 
             try {
-               comPort.getOutputStream().write((contactNumber + "\n").getBytes());
-                Thread.sleep(100); // Add delay
-                System.out.println("Sent contact number."+contactNumber);
+                OutputStream out = comPort.getOutputStream();
+                InputStream in = comPort.getInputStream();
 
-                comPort.getOutputStream().write((vaccineName + "\n").getBytes());
-                Thread.sleep(100); // Add delay
-                System.out.println("Sent vaccine name.");
+                if (checkArduinoReady(in, out)) {
+                    out.write((contactNumber + "\n").getBytes());
+                    Thread.sleep(100); // Add delay
+                    System.out.println("Sent contact number.");
 
-                comPort.getOutputStream().write((date + "\n").getBytes());
-                Thread.sleep(100); // Add delay
-                System.out.println("Sent date.");
+                    out.write((vaccineName + "\n").getBytes());
+                    Thread.sleep(100); // Add delay
+                    System.out.println("Sent vaccine name.");
 
-                comPort.getOutputStream().flush();
-                System.out.println("Flushed output stream.");
+                    out.write((date + "\n").getBytes());
+                    Thread.sleep(100); // Add delay
+                    System.out.println("Sent date.");
+
+                    String status = readResponse(in);
+                    System.out.println("Response from Arduino: " + status);
+
+                    if (status.contains("SMS SENT")) {
+                        System.out.println("SMS was sent successfully.");
+                    } else {
+                        System.out.println("Failed to send SMS.");
+                    }
+                } else {
+                    System.out.println("Arduino is not ready.");
+                }
             } catch (Exception e) {
                 e.printStackTrace();
-            }
-            finally {
+            } finally {
                 try {
                     comPort.getOutputStream().close();
+                    comPort.getInputStream().close();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
                 comPort.closePort();
                 System.out.println("Port is closed.");
             }
-
-       
         } else {
             System.out.println("Failed to open port.");
         }
-        */
     }
-    public static String sha256(String input) {
+
+
+
+    private static boolean checkArduinoReady(InputStream in, OutputStream out) throws Exception {
+        Thread.sleep(2000); // Wait for Arduino initialization
+        String response = readResponse(in);
+        System.out.println("Arduino readiness response: " + response);
+        if (response.contains("READY")) {
+            out.write("CHECK STATUS\n".getBytes()); // Request status from Arduino
+            String statusResponse = readResponse(in);
+            System.out.println("SIM and Signal Status: " + statusResponse);
+            return true;
+        }
+        return false;
+    }
+
+    private static String readResponse(InputStream in) throws Exception {
+        StringBuilder response = new StringBuilder();
+        long endTime = System.currentTimeMillis() + 5000;
+        while (System.currentTimeMillis() < endTime) {
+            while (in.available() > 0) {
+                char c = (char) in.read();
+                response.append(c);
+            }
+            if (response.toString().contains("\n")) {
+                break;
+            }
+        }
+        return response.toString();
+    }
+
+    
+        public static String sha256(String input) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             byte[] hash = digest.digest(input.getBytes("UTF-8"));
@@ -459,7 +512,7 @@ public void addLoginAuditLog(int userId) {
             throw new RuntimeException(ex);
         }
     }
-
+    
     /**
      * @param args the command line arguments
      */

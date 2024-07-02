@@ -1,16 +1,21 @@
 
 package loa;
 
+import contents.About;
 import contents.Admin_Add;
 import contents.Admin_Home;
 import contents.Admin_PatientReports;
 import contents.Admin_Search;
+import contents.Help;
+import contents.Settings;
 import event.EventMenuSelected;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -25,12 +30,16 @@ import softeng.login;
  * @author Richard Reynald
  */
 public class Admin extends javax.swing.JFrame {
-
+    
+    private Admin admin;
     private Admin_Search search;
     private Admin_Add add;
     private Vet vet;
     private Cashier cashier;
     private Admin_PatientReports report;
+    private Settings settings;
+    private Help help;
+    private About about;
     private int userId;
     private Point initialClick;
     
@@ -43,6 +52,9 @@ public class Admin extends javax.swing.JFrame {
         vet = new Vet(0);
         cashier = new Cashier(0);
         report = new Admin_PatientReports(0);
+        settings = new Settings(0);
+        help = new Help();
+        about = new About();
         
         admin_Menu.initMoving(Admin.this);
         admin_Menu.changeWelcome(userId);
@@ -56,15 +68,21 @@ public class Admin extends javax.swing.JFrame {
                     setForm(add);
                 } else if (index == 4){
                     Vet vet = new Vet(userId);
-                    vet.setVisible(true);
-                    System.out.println("bruh");
+                        vet.setVisible(true);
+                        System.out.println("bruh");               
                 } else if (index == 6){
                     Cashier cashier = new Cashier(userId);
                     cashier.setVisible(true);
                     System.out.println("bruh");
                 } else if (index == 8){
                     setForm(report);
+                } else if (index ==10){
+                    setForm(settings);
+                } else if (index == 12){
+                    setForm(help);
                 } else if (index == 14){
+                    setForm(about);
+                }else if (index == 16){
                     int response = JOptionPane.showConfirmDialog(null, "Are you sure you want to log out?", "Confirm Logout", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                     if (response == JOptionPane.YES_OPTION) {
                     setVisible(false);
@@ -120,36 +138,41 @@ public class Admin extends javax.swing.JFrame {
     private void initComponents() {
 
         panelBorder = new swing.PanelBorder();
-        header2 = new javax.swing.JPanel();
-        close2 = new javax.swing.JButton();
-        maximize2 = new javax.swing.JButton();
-        minimize2 = new javax.swing.JButton();
         mainPanel = new javax.swing.JPanel();
         admin_Menu = new component.Admin_Menu();
+        header2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
 
         panelBorder.setBackground(new java.awt.Color(255, 255, 255));
 
-        close2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/close.png"))); // NOI18N
-        close2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                close2ActionPerformed(evt);
+        mainPanel.setOpaque(false);
+        mainPanel.setLayout(new javax.swing.BoxLayout(mainPanel, javax.swing.BoxLayout.LINE_AXIS));
+
+        header2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/close.png"))); // NOI18N
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1MouseClicked(evt);
             }
         });
 
-        maximize2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/maximize.png"))); // NOI18N
-        maximize2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                maximize2ActionPerformed(evt);
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/maximize.png"))); // NOI18N
+        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
             }
         });
 
-        minimize2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/minimize.png"))); // NOI18N
-        minimize2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                minimize2ActionPerformed(evt);
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/minimize.png"))); // NOI18N
+        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel3MouseClicked(evt);
             }
         });
 
@@ -159,26 +182,28 @@ public class Admin extends javax.swing.JFrame {
             header2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, header2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(minimize2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(maximize2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(close2)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel1)
                 .addGap(10, 10, 10))
         );
         header2Layout.setVerticalGroup(
             header2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(header2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(header2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(close2)
-                    .addComponent(maximize2)
-                    .addComponent(minimize2))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(header2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(header2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel1)
+                        .addGap(7, 7, 7))
+                    .addGroup(header2Layout.createSequentialGroup()
+                        .addGroup(header2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
-
-        mainPanel.setOpaque(false);
-        mainPanel.setLayout(new javax.swing.BoxLayout(mainPanel, javax.swing.BoxLayout.LINE_AXIS));
 
         javax.swing.GroupLayout panelBorderLayout = new javax.swing.GroupLayout(panelBorder);
         panelBorder.setLayout(panelBorderLayout);
@@ -186,19 +211,18 @@ public class Admin extends javax.swing.JFrame {
             panelBorderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(panelBorderLayout.createSequentialGroup()
                 .addComponent(admin_Menu, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 992, Short.MAX_VALUE))
+                .addGap(0, 0, 0)
+                .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 1007, Short.MAX_VALUE))
             .addComponent(header2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         panelBorderLayout.setVerticalGroup(
             panelBorderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelBorderLayout.createSequentialGroup()
                 .addComponent(header2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
                 .addGroup(panelBorderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelBorderLayout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(admin_Menu, javax.swing.GroupLayout.PREFERRED_SIZE, 684, Short.MAX_VALUE)))
+                    .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 756, Short.MAX_VALUE)
+                    .addComponent(admin_Menu, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
         );
 
         getContentPane().add(panelBorder, java.awt.BorderLayout.CENTER);
@@ -206,6 +230,24 @@ public class Admin extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+        dispose();
+    }//GEN-LAST:event_jLabel1MouseClicked
+
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+        // maximize
+        if(this.getExtendedState() != Cashier.MAXIMIZED_BOTH) {
+            this.setExtendedState(Cashier.MAXIMIZED_BOTH);
+        } else {
+            this.setExtendedState(Cashier.NORMAL);
+        }
+    }//GEN-LAST:event_jLabel2MouseClicked
+
+    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+        // minimize
+        this.setExtendedState(Cashier.ICONIFIED);
+    }//GEN-LAST:event_jLabel3MouseClicked
     public String getUsernameByUserId(int userId) {
         String username = null; // Default value if username is not found
 
@@ -242,25 +284,6 @@ public class Admin extends javax.swing.JFrame {
 
         return username;
     }
-    private void minimize2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minimize2ActionPerformed
-        // minimize
-        this.setExtendedState(Cashier.ICONIFIED);
-    }//GEN-LAST:event_minimize2ActionPerformed
-
-    private void maximize2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_maximize2ActionPerformed
-        // maximize
-        if(this.getExtendedState() != Cashier.MAXIMIZED_BOTH) {
-            this.setExtendedState(Cashier.MAXIMIZED_BOTH);
-        } else {
-            this.setExtendedState(Cashier.NORMAL);
-        }
-    }//GEN-LAST:event_maximize2ActionPerformed
-
-    private void close2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_close2ActionPerformed
-        // close
-        dispose();
-    }//GEN-LAST:event_close2ActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -299,11 +322,11 @@ public class Admin extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private component.Admin_Menu admin_Menu;
-    private javax.swing.JButton close2;
     private javax.swing.JPanel header2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel mainPanel;
-    private javax.swing.JButton maximize2;
-    private javax.swing.JButton minimize2;
     private swing.PanelBorder panelBorder;
     // End of variables declaration//GEN-END:variables
 }

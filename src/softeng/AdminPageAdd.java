@@ -1,4 +1,7 @@
-
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
 package softeng;
 
 import java.awt.Color;
@@ -31,6 +34,11 @@ public class AdminPageAdd extends javax.swing.JFrame {
         this.userIdx = userIdx;
         editBtn.setVisible(false);
     }
+    private static final String DATABASE_NAME = "database";
+    private static final String dbUsername = "root";
+    private static final String dbPassword = "admin";
+    private static final String MYSQL_SERVER_HOSTNAME = "DESKTOP-MVBR3DH"; // Replace with your MySQL server's hostname
+    private static final int MYSQL_SERVER_PORT = 3306;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -444,6 +452,11 @@ public class AdminPageAdd extends javax.swing.JFrame {
         });
 
         answerTxtField.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        answerTxtField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                answerTxtFieldActionPerformed(evt);
+            }
+        });
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -668,9 +681,8 @@ public class AdminPageAdd extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private boolean userIdEvent() {
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
+     
 
         String userIdText = useridTxtField.getText();
         if (userIdText.isEmpty()) {
@@ -837,19 +849,23 @@ public class AdminPageAdd extends javax.swing.JFrame {
     }//GEN-LAST:event_helpMouseClicked
 
     private void reportsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reportsMouseClicked
-        System.out.println("test");
+        new AdminPageReports(userIdx).setVisible(true);
+        setVisible(false);
     }//GEN-LAST:event_reportsMouseClicked
 
     private void cashierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cashierMouseClicked
-        System.out.println("test");
+        new StaffPage(userIdx).setVisible(true);
+        setVisible(false);
     }//GEN-LAST:event_cashierMouseClicked
 
     private void vetMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_vetMouseClicked
-        System.out.println("test");
+        new VetPage(userIdx).setVisible(true);
+        setVisible(false);
     }//GEN-LAST:event_vetMouseClicked
 
     private void addMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMouseClicked
-        System.out.println("test");
+        new AdminPageAdd(userIdx).setVisible(true);
+        setVisible(false);
     }//GEN-LAST:event_addMouseClicked
 
     private void searchMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchMouseReleased
@@ -884,9 +900,8 @@ public class AdminPageAdd extends javax.swing.JFrame {
             return;
         }
 
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
+     
 
         try (Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword)) {
             // Query to check if the user exists and get user information
@@ -944,19 +959,12 @@ public class AdminPageAdd extends javax.swing.JFrame {
                     passwordTxtField.setText("");
                     secretQuestionBox.setSelectedItem(secretQuestion);
                     answerTxtField.setText(secretAnswer);
-
                     switch (loa) {
-                        case 0:
-                            loaBox.setSelectedItem("cashier");
-                            break;
-                        case 1:
-                            loaBox.setSelectedItem("veterinarian");
-                            break;
-                        case 2:
-                            loaBox.setSelectedItem("admin");
-                            break;
-                        default:
-                            break;
+                        case 0 -> loaBox.setSelectedItem("CASHIER");
+                        case 1 -> loaBox.setSelectedItem("VETERINARIAN");
+                        case 2 -> loaBox.setSelectedItem("ADMIN");
+                        default -> {
+                        }
                     }
                 }
             }
@@ -1019,9 +1027,8 @@ public class AdminPageAdd extends javax.swing.JFrame {
     java.sql.Date sqlBirthDate = java.sql.Date.valueOf(birthDateLocal);
 
     // Database connection information
-    String url = "jdbc:mysql://127.0.0.1:3306/database";
-    String dbUsername = "root";
-    String dbPassword = "admin";
+    String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
+     
 
     try {
         // Establish the database connection
@@ -1104,10 +1111,13 @@ public class AdminPageAdd extends javax.swing.JFrame {
         addUserBtn.setVisible(true);
         birthDate.setDate(null);
     }//GEN-LAST:event_clearBtnActionPerformed
+
+    private void answerTxtFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_answerTxtFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_answerTxtFieldActionPerformed
     public void updateUserAuditLog(int userId) {
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
+     
         try {
             // Establish the database connection
             Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
@@ -1129,9 +1139,8 @@ public class AdminPageAdd extends javax.swing.JFrame {
     }
 
     public void addUserAuditLog(int userId) {
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
+     
         try {
             // Establish the database connection
             Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
@@ -1153,9 +1162,8 @@ public class AdminPageAdd extends javax.swing.JFrame {
     }
 
     private void addUserToDatabase() {
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
+     
 
         String username = usernameTxtField.getText();
         String password = new String(passwordTxtField.getText());

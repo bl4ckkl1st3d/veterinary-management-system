@@ -39,9 +39,9 @@ public class Admin_Search extends javax.swing.JPanel {
         jPanel6 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         userTable = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
         userIdTxtField = new swing.TextField();
         nameTxtField = new swing.TextField();
+        adminButton1 = new swing.AdminButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -60,13 +60,6 @@ public class Admin_Search extends javax.swing.JPanel {
         ));
         jScrollPane2.setViewportView(userTable);
 
-        jButton1.setText("REFRESH");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
         userIdTxtField.setLabelText("User ID");
 
         nameTxtField.setLabelText("Name");
@@ -76,20 +69,31 @@ public class Admin_Search extends javax.swing.JPanel {
             }
         });
 
+        adminButton1.setText("Refresh");
+        adminButton1.setRadius(25);
+        adminButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                adminButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 873, Short.MAX_VALUE)
-                        .addGroup(jPanel6Layout.createSequentialGroup()
-                            .addComponent(userIdTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(nameTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(adminButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 873, Short.MAX_VALUE)
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addComponent(userIdTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(nameTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(20, 20, 20))
         );
         jPanel6Layout.setVerticalGroup(
@@ -102,7 +106,7 @@ public class Admin_Search extends javax.swing.JPanel {
                 .addGap(20, 20, 20)
                 .addComponent(jScrollPane2)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(adminButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(89, 89, 89))
         );
 
@@ -123,13 +127,13 @@ public class Admin_Search extends javax.swing.JPanel {
         DefaultTableModel model = new DefaultTableModel(new String[]{"id", "Full Name", "Address", "Birthdate", "Age", "Sex", "Contact Number"}, 0);
         userTable.setModel(model);
     }
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        displayAllUsers();
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void nameTxtFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameTxtFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_nameTxtFieldActionPerformed
+
+    private void adminButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminButton1ActionPerformed
+        displayAllUsers();
+    }//GEN-LAST:event_adminButton1ActionPerformed
     private void displayAllUsers() {
         String url = "jdbc:mysql://127.0.0.1:3306/database";
         String dbUsername = "root";
@@ -167,7 +171,7 @@ public class Admin_Search extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private swing.AdminButton adminButton1;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane2;
     private swing.TextField nameTxtField;

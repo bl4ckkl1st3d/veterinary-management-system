@@ -4,16 +4,34 @@
  */
 package softeng;
 
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.LayoutManager;
 import java.awt.RenderingHints;
+import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import javax.swing.JOptionPane;
 import java.sql.*;
+import javax.imageio.ImageIO;
+import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
+import org.krysalis.barcode4j.impl.code39.Code39Bean;
+import org.krysalis.barcode4j.output.bitmap.BitmapCanvasProvider;
 
 /**
  *
@@ -25,12 +43,19 @@ public class StaffPageInventory extends javax.swing.JFrame {
      * Creates new form StaffPageInventory
      */
     private int realUserId;
+    private String barcodeGlobal;
+    private String nameGlobal;
 
     public StaffPageInventory(int realUserId) {
         initComponents();
         loadAllProductInformation();
         this.realUserId = realUserId;
     }
+    private static final String DATABASE_NAME = "database";
+    private static final String dbUsername = "root";
+    private static final String dbPassword = "admin";
+    private static final String MYSQL_SERVER_HOSTNAME = "DESKTOP-MVBR3DH"; // Replace with your MySQL server's hostname
+    private static final int MYSQL_SERVER_PORT = 3306;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -66,6 +91,7 @@ public class StaffPageInventory extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         inventoryTable = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
+        invBarPrint = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -351,6 +377,11 @@ public class StaffPageInventory extends javax.swing.JFrame {
 
         jPanel5.setBackground(new java.awt.Color(153, 255, 204));
 
+        barcodeTxtField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                barcodeTxtFieldActionPerformed(evt);
+            }
+        });
         barcodeTxtField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 barcodeTxtFieldKeyReleased(evt);
@@ -379,6 +410,13 @@ public class StaffPageInventory extends javax.swing.JFrame {
             }
         });
 
+        invBarPrint.setText("Save as PDF");
+        invBarPrint.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                invBarPrintActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -389,23 +427,29 @@ public class StaffPageInventory extends javax.swing.JFrame {
                 .addContainerGap(49, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(barcodeTxtField, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE))
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(invBarPrint, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(barcodeTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(22, 22, 22))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(22, 22, 22)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(barcodeTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(barcodeTxtField, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
+                    .addComponent(invBarPrint, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(26, 26, 26)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(248, Short.MAX_VALUE))
         );
@@ -449,7 +493,7 @@ public class StaffPageInventory extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void inventoryMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inventoryMouseReleased
-new StaffPageInventory(realUserId).setVisible(true);
+        new StaffPageInventory(realUserId).setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_inventoryMouseReleased
 
@@ -460,18 +504,19 @@ new StaffPageInventory(realUserId).setVisible(true);
     }//GEN-LAST:event_addMouseReleased
 
     private void editMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editMouseClicked
- new StaffPageEdit(realUserId).setVisible(true);
+        new StaffPageEdit(realUserId).setVisible(true);
         setVisible(false);
 
     }//GEN-LAST:event_editMouseClicked
 
     private void posMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_posMouseClicked
-new StaffPagePOS(realUserId).setVisible(true);
+        new StaffPagePOS(realUserId).setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_posMouseClicked
 
     private void reportsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reportsMouseClicked
-
+        new StaffPageReports(realUserId).setVisible(true);
+        setVisible(false);
     }//GEN-LAST:event_reportsMouseClicked
 
     private void helpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_helpMouseClicked
@@ -493,84 +538,109 @@ new StaffPagePOS(realUserId).setVisible(true);
     }//GEN-LAST:event_logoutMouseReleased
 
     private void loadAllProductInformation() {
-    // Database connection details
-    String url = "jdbc:mysql://127.0.0.1:3306/database";
-    String dbUsername = "root";
-    String dbPassword = "admin";
-    
-    Connection conn = null;
-    PreparedStatement pstmt = null;
-    ResultSet rs = null;
-    
-    try {
-        // Establish a connection to the database
-        conn = DriverManager.getConnection(url, dbUsername, dbPassword);
-        
-        // SQL query to fetch all data from the product_information table
-        String sql = "SELECT barcode, name, price, stocks, critical_level, perishable, expiration_date, supplier_name FROM product_information ORDER BY (expiration_date IS NULL), expiration_date ASC";
-        
-        // Prepare the statement
-        pstmt = conn.prepareStatement(sql);
-        
-        // Execute the query
-        rs = pstmt.executeQuery();
-        
-        // Get the result set metadata
-        ResultSetMetaData metaData = rs.getMetaData();
-        
-        // Get the column names
-        int columnCount = metaData.getColumnCount();
-        String[] columnNames = new String[columnCount];
-        
-        for (int i = 1; i <= columnCount; i++) {
-            columnNames[i - 1] = metaData.getColumnLabel(i);
-        }
-        
-        // Get the table model and set the column names
-        DefaultTableModel model = (DefaultTableModel) inventoryTable.getModel();
-        model.setColumnIdentifiers(columnNames);
-        
-        // Clear the existing rows in the table
-        model.setRowCount(0);
-        
-        // Process the result set and populate the table
-        while (rs.next()) {
-            Object[] rowData = new Object[columnCount];
-            
+        // Database connection details
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
+
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            // Establish a connection to the database
+            conn = DriverManager.getConnection(url, dbUsername, dbPassword);
+
+            // SQL query to fetch all data from the product_information table
+            String sql = "SELECT barcode, name, price, stocks, critical_level, perishable, expiration_date, supplier_name FROM product_information ORDER BY (expiration_date IS NULL), expiration_date ASC";
+
+            // Prepare the statement
+            pstmt = conn.prepareStatement(sql);
+
+            // Execute the query
+            rs = pstmt.executeQuery();
+
+            // Get the result set metadata
+            ResultSetMetaData metaData = rs.getMetaData();
+
+            // Get the column names
+            int columnCount = metaData.getColumnCount();
+            String[] columnNames = new String[columnCount];
+
             for (int i = 1; i <= columnCount; i++) {
-                if ("perishable".equals(metaData.getColumnLabel(i))) {
-                    rowData[i - 1] = rs.getBoolean(i) ? "Yes" : "No";
-                } else {
-                    rowData[i - 1] = rs.getObject(i);
+                columnNames[i - 1] = metaData.getColumnLabel(i);
+            }
+
+            // Get the table model and set the column names
+            DefaultTableModel model = (DefaultTableModel) inventoryTable.getModel();
+            model.setColumnIdentifiers(columnNames);
+
+            // Clear the existing rows in the table
+            model.setRowCount(0);
+
+            // Process the result set and populate the table
+            while (rs.next()) {
+                Object[] rowData = new Object[columnCount];
+
+                boolean isCritical = false;
+
+                for (int i = 1; i <= columnCount; i++) {
+                    if ("perishable".equals(metaData.getColumnLabel(i))) {
+                        rowData[i - 1] = rs.getBoolean(i) ? "Yes" : "No";
+                    } else {
+                        rowData[i - 1] = rs.getObject(i);
+                    }
+
+                    // Check if stocks are below critical level
+                    if ("stocks".equals(metaData.getColumnLabel(i)) && rs.getInt(i) < rs.getInt("critical_level")) {
+                        isCritical = true;
+                    }
+                }
+
+                // Add a row to the table model
+                model.addRow(rowData);
+            }
+
+            // Mark all rows that are on critical level in red
+            for (int i = 0; i < model.getRowCount(); i++) {
+                int stocks = (int) model.getValueAt(i, model.findColumn("stocks"));
+                int criticalLevel = (int) model.getValueAt(i, model.findColumn("critical_level"));
+
+                if (stocks < criticalLevel) {
+                    inventoryTable.addRowSelectionInterval(i, i);
+                    inventoryTable.setSelectionBackground(Color.RED);
                 }
             }
-            
-            // Add a row to the table model
-            model.addRow(rowData);
-        }
-        
-    } catch (SQLException e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
-    } finally {
-        try {
-            if (rs != null) rs.close();
-            if (pstmt != null) pstmt.close();
-            if (conn != null) conn.close();
+
+            // Show popup if any products are on critical level
+            if (model.getRowCount() > 0) {
+                JOptionPane.showMessageDialog(this, "Some products are on critical level: restock soon.");
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
-}
-    
+
     private void searchByBar() {
 // Get the barcode from the text field
         String barcode = barcodeTxtField.getText();
 
         // Database connection details
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
 
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -600,6 +670,8 @@ new StaffPagePOS(realUserId).setVisible(true);
             while (rs.next()) {
                 String resultBarcode = rs.getString("barcode");
                 String name = rs.getString("name");
+                barcodeGlobal = resultBarcode;
+                nameGlobal = name;
                 String price = rs.getString("price");
                 int stocks = rs.getInt("stocks");
                 int criticalLevel = rs.getInt("critical_level");
@@ -634,12 +706,122 @@ new StaffPagePOS(realUserId).setVisible(true);
         }
     }
     private void barcodeTxtFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_barcodeTxtFieldKeyReleased
+        String barcode = barcodeTxtField.getText();
         searchByBar();
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            searchByBar();
+        }
+
+
     }//GEN-LAST:event_barcodeTxtFieldKeyReleased
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         loadAllProductInformation();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void barcodeTxtFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_barcodeTxtFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_barcodeTxtFieldActionPerformed
+
+    private void invBarPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_invBarPrintActionPerformed
+        DefaultTableModel model = (DefaultTableModel) inventoryTable.getModel();
+        int selectedRow = inventoryTable.getSelectedRow();
+
+        barcodeGlobal = (String) model.getValueAt(selectedRow, 0);
+        nameGlobal = (String) model.getValueAt(selectedRow, 1);
+
+        int response = JOptionPane.showConfirmDialog(null, "Do you want to print the barcode for this product?", "Confirm",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (response == JOptionPane.YES_OPTION) {
+            System.out.println("User chose Yes.");
+            pdfBarcode(barcodeGlobal, nameGlobal);
+        } else if (response == JOptionPane.NO_OPTION) {
+            System.out.println("User chose No.");
+            JOptionPane.showMessageDialog(null, "User chose 'NO'. No action performed.", "Closed", JOptionPane.INFORMATION_MESSAGE);
+
+        } else if (response == JOptionPane.CLOSED_OPTION) {
+            JOptionPane.showMessageDialog(null, "User closed the dialog. No action performed.", "Closed", JOptionPane.INFORMATION_MESSAGE);
+            System.out.println("User closed the dialog. No action performed.");
+        }
+    }//GEN-LAST:event_invBarPrintActionPerformed
+    public InputStream generateCode39Barcode(String barcodeText) {
+        try {
+            Code39Bean bean = new Code39Bean();
+            final int dpi = 150;
+
+            // Configure the barcode generator
+            bean.setModuleWidth(0.2);
+            bean.setWideFactor(3);
+            bean.doQuietZone(false);
+
+            // Create a ByteArrayOutputStream to hold the generated barcode image
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
+            // Generate the barcode
+            BitmapCanvasProvider canvas = new BitmapCanvasProvider(
+                    outputStream, "image/x-png", dpi, BufferedImage.TYPE_BYTE_BINARY, false, 0);
+            bean.generateBarcode(canvas, barcodeText);
+            canvas.finish();
+
+            System.out.println(barcodeText);
+
+            // Convert the generated barcode image to InputStream
+            return new ByteArrayInputStream(outputStream.toByteArray());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public void pdfBarcode(String barcode, String name) {
+        // Open a file chooser to select the folder
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int option = fileChooser.showSaveDialog(null);
+
+        if (option == JFileChooser.APPROVE_OPTION) {
+            File selectedFolder = fileChooser.getSelectedFile();
+
+            // Define the PDF file path with formatted date range
+            String pdfFileName = "barcode_" + name + ".pdf";
+            String pdfFilePath = selectedFolder.getAbsolutePath() + "/" + pdfFileName;
+
+            // Create the PDF document
+            Document document = new Document();
+            try {
+                PdfWriter.getInstance(document, new FileOutputStream(pdfFilePath));
+                document.open();
+
+                Paragraph clinicTitle = new Paragraph("Product barcodes for: " + name + "", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16));
+                clinicTitle.setAlignment(Element.ALIGN_CENTER);
+                document.add(clinicTitle);
+                document.add(Chunk.NEWLINE); //
+
+                // Generate and add barcode to the PDF
+                InputStream barcodeInputStream = generateCode39Barcode(barcode);
+                if (barcodeInputStream != null) {
+                    BufferedImage bufferedBarcodeImage = ImageIO.read(barcodeInputStream);
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    ImageIO.write(bufferedBarcodeImage, "png", baos);
+                    Image barcodeImage = Image.getInstance(baos.toByteArray());
+                    barcodeImage.setAlignment(Element.ALIGN_CENTER);
+                    document.add(barcodeImage);
+                    document.add(barcodeImage);
+                    document.add(barcodeImage);
+                    document.add(barcodeImage);
+                    document.add(barcodeImage);
+                }
+
+                // Close the document
+                document.close();
+
+                JOptionPane.showMessageDialog(null, "PDF saved successfully as '" + pdfFileName + "'.");
+            } catch (Exception e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+            }
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -682,6 +864,7 @@ new StaffPagePOS(realUserId).setVisible(true);
     private javax.swing.JTextField barcodeTxtField;
     private javax.swing.JPanel edit;
     private javax.swing.JPanel help;
+    private javax.swing.JButton invBarPrint;
     private javax.swing.JPanel inventory;
     private javax.swing.JTable inventoryTable;
     private javax.swing.JButton jButton1;

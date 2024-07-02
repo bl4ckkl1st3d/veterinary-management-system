@@ -41,21 +41,23 @@ public class Admin_Menu extends javax.swing.JPanel {
         init();
     }
     private void init() {
-        listMenu1.addItem(new Model_Menu("1", "Search User", Model_Menu.MenuType.MENU));
+        listMenu1.addItem(new Model_Menu("search", "Search User", Model_Menu.MenuType.MENU));
         listMenu1.addItem(new Model_Menu(" ", " ", Model_Menu.MenuType.EMPTY));
-        listMenu1.addItem(new Model_Menu("2", "Add/Edit User", Model_Menu.MenuType.MENU));
+        listMenu1.addItem(new Model_Menu("edit", "Add/Edit User", Model_Menu.MenuType.MENU));
         listMenu1.addItem(new Model_Menu(" ", " ", Model_Menu.MenuType.EMPTY));
-        listMenu1.addItem(new Model_Menu("3", "Vet Mode", Model_Menu.MenuType.MENU));
+        listMenu1.addItem(new Model_Menu("veterinarian", "Vet Mode", Model_Menu.MenuType.MENU));
         listMenu1.addItem(new Model_Menu(" ", " ", Model_Menu.MenuType.EMPTY));
-        listMenu1.addItem(new Model_Menu("4", "Cashier Mode", Model_Menu.MenuType.MENU));
+        listMenu1.addItem(new Model_Menu("cashier", "Cashier Mode", Model_Menu.MenuType.MENU));
         listMenu1.addItem(new Model_Menu(" ", " ", Model_Menu.MenuType.EMPTY));
-        listMenu1.addItem(new Model_Menu("5", "Reports", Model_Menu.MenuType.MENU));
+        listMenu1.addItem(new Model_Menu("report", "Reports", Model_Menu.MenuType.MENU));
         listMenu1.addItem(new Model_Menu(" ", " ", Model_Menu.MenuType.EMPTY));
-        listMenu1.addItem(new Model_Menu("6", "Help", Model_Menu.MenuType.MENU));
+        listMenu1.addItem(new Model_Menu("settings", "Settings", Model_Menu.MenuType.MENU));
         listMenu1.addItem(new Model_Menu(" ", " ", Model_Menu.MenuType.EMPTY));
-        listMenu1.addItem(new Model_Menu("7", "Settings", Model_Menu.MenuType.MENU));
+        listMenu1.addItem(new Model_Menu("help", "Help", Model_Menu.MenuType.MENU));
+        listMenu1.addItem(new Model_Menu(" ", " ", Model_Menu.MenuType.EMPTY));        
+        listMenu1.addItem(new Model_Menu("about", "About", Model_Menu.MenuType.MENU));
         listMenu1.addItem(new Model_Menu(" ", " ", Model_Menu.MenuType.EMPTY));
-        listMenu1.addItem(new Model_Menu("8", "Log Out", Model_Menu.MenuType.MENU));
+        listMenu1.addItem(new Model_Menu("logout", "Log Out", Model_Menu.MenuType.MENU));
         listMenu1.addItem(new Model_Menu(" ", " ", Model_Menu.MenuType.EMPTY));
     }
 
@@ -69,6 +71,7 @@ public class Admin_Menu extends javax.swing.JPanel {
 
         panelMoving.setOpaque(false);
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Welcome");
 
@@ -80,17 +83,18 @@ public class Admin_Menu extends javax.swing.JPanel {
                 .addComponent(listMenu1, javax.swing.GroupLayout.DEFAULT_SIZE, 293, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(panelMovingLayout.createSequentialGroup()
-                .addGap(90, 90, 90)
+                .addGap(55, 55, 55)
                 .addComponent(jLabel2)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelMovingLayout.setVerticalGroup(
             panelMovingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelMovingLayout.createSequentialGroup()
-                .addGap(54, 54, 54)
+                .addGap(25, 25, 25)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
-                .addComponent(listMenu1, javax.swing.GroupLayout.PREFERRED_SIZE, 663, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30)
+                .addComponent(listMenu1, javax.swing.GroupLayout.PREFERRED_SIZE, 700, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(25, 25, 25))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);

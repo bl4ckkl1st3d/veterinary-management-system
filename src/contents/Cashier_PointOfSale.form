@@ -51,9 +51,8 @@
                           <Component id="checkoutBtn" min="-2" pref="212" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="sp1" max="32767" attributes="0"/>
-                              <Group type="102" attributes="0">
-                                  <Component id="customerNameTxtField" min="-2" pref="300" max="-2" attributes="0"/>
-                                  <EmptySpace max="32767" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                   <Component id="totalPriceTextField" min="-2" pref="300" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
@@ -84,10 +83,7 @@
                       <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                       <Component id="sp1" pref="376" max="32767" attributes="0"/>
                       <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="customerNameTxtField" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="totalPriceTextField" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="totalPriceTextField" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
                       <Component id="checkoutBtn" min="-2" pref="44" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="205" max="-2" attributes="0"/>
@@ -167,11 +163,6 @@
             <Component class="swing.TextField" name="txtQuantity">
               <Properties>
                 <Property name="labelText" type="java.lang.String" value="Quantity"/>
-              </Properties>
-            </Component>
-            <Component class="swing.TextField" name="customerNameTxtField">
-              <Properties>
-                <Property name="labelText" type="java.lang.String" value="Customer Name"/>
               </Properties>
             </Component>
             <Component class="swing.TextField" name="totalPriceTextField">

@@ -55,7 +55,6 @@ public class Cashier_PointOfSale extends javax.swing.JPanel {
         receiptTextArea = new javax.swing.JTextArea();
         txtBarcode = new swing.TextField();
         txtQuantity = new swing.TextField();
-        customerNameTxtField = new swing.TextField();
         totalPriceTextField = new swing.TextField();
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
@@ -108,8 +107,6 @@ public class Cashier_PointOfSale extends javax.swing.JPanel {
 
         txtQuantity.setLabelText("Quantity");
 
-        customerNameTxtField.setLabelText("Customer Name");
-
         totalPriceTextField.setLabelText("Total Price");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
@@ -127,8 +124,7 @@ public class Cashier_PointOfSale extends javax.swing.JPanel {
                     .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(sp1)
                         .addGroup(jPanel5Layout.createSequentialGroup()
-                            .addComponent(customerNameTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGap(0, 0, Short.MAX_VALUE)
                             .addComponent(totalPriceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel5Layout.createSequentialGroup()
                             .addComponent(txtBarcode, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -152,9 +148,7 @@ public class Cashier_PointOfSale extends javax.swing.JPanel {
                 .addGap(15, 15, 15)
                 .addComponent(sp1, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(customerNameTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(totalPriceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(totalPriceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(checkoutBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(205, 205, 205)
@@ -621,7 +615,6 @@ public class Cashier_PointOfSale extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addBtn;
     private javax.swing.JButton checkoutBtn;
-    private swing.TextField customerNameTxtField;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable productTable;

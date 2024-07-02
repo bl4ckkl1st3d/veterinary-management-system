@@ -994,7 +994,7 @@ public class VetPageSearch extends javax.swing.JFrame {
     }//GEN-LAST:event_patientIdTxtFieldActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    
+
        PatientCard card =  new PatientCard(pName,oName,contacts,strCodeText);
         System.out.println(strCodeText);
        card.setLocationRelativeTo(null);

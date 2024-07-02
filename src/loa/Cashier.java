@@ -37,7 +37,7 @@ public class Cashier extends javax.swing.JFrame {
         initComponents();
         setBackground(new Color(0,0,0,0));
         home = new Admin_Home();
-        inv = new Cashier_Inventory();
+        inv = new Cashier_Inventory(0);
         add = new Cashier_Add();
         edit = new Cashier_Edit();
         pos = new Cashier_PointOfSale(0);
@@ -67,7 +67,7 @@ public class Cashier extends javax.swing.JFrame {
             }
         });
         //set when system open start with home form
-        setForm(new Cashier_Inventory());
+        setForm(new Cashier_Inventory(0));
         
         header2.addMouseListener(new MouseAdapter() {
             @Override
@@ -111,9 +111,9 @@ public class Cashier extends javax.swing.JFrame {
         cashier_Menu = new component.Cashier_Menu();
         mainPanel = new javax.swing.JPanel();
         header2 = new javax.swing.JPanel();
-        close2 = new javax.swing.JButton();
-        maximize2 = new javax.swing.JButton();
-        minimize2 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -124,24 +124,26 @@ public class Cashier extends javax.swing.JFrame {
         mainPanel.setOpaque(false);
         mainPanel.setLayout(new javax.swing.BoxLayout(mainPanel, javax.swing.BoxLayout.LINE_AXIS));
 
-        close2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/close.png"))); // NOI18N
-        close2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                close2ActionPerformed(evt);
+        header2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/close.png"))); // NOI18N
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1MouseClicked(evt);
             }
         });
 
-        maximize2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/maximize.png"))); // NOI18N
-        maximize2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                maximize2ActionPerformed(evt);
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/maximize.png"))); // NOI18N
+        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
             }
         });
 
-        minimize2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/minimize.png"))); // NOI18N
-        minimize2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                minimize2ActionPerformed(evt);
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/minimize.png"))); // NOI18N
+        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel3MouseClicked(evt);
             }
         });
 
@@ -151,22 +153,27 @@ public class Cashier extends javax.swing.JFrame {
             header2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, header2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(minimize2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(maximize2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(close2)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel1)
                 .addGap(10, 10, 10))
         );
         header2Layout.setVerticalGroup(
             header2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(header2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(header2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(close2)
-                    .addComponent(maximize2)
-                    .addComponent(minimize2))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(header2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(header2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel1)
+                        .addGap(7, 7, 7))
+                    .addGroup(header2Layout.createSequentialGroup()
+                        .addGroup(header2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
 
         javax.swing.GroupLayout panelBorderLayout = new javax.swing.GroupLayout(panelBorder);
@@ -183,10 +190,12 @@ public class Cashier extends javax.swing.JFrame {
             panelBorderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBorderLayout.createSequentialGroup()
                 .addComponent(header2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(2, 2, 2)
+                .addGap(0, 0, 0)
                 .addGroup(panelBorderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 673, Short.MAX_VALUE)
-                    .addComponent(cashier_Menu, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(cashier_Menu, javax.swing.GroupLayout.PREFERRED_SIZE, 681, Short.MAX_VALUE)
+                    .addGroup(panelBorderLayout.createSequentialGroup()
+                        .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(2, 2, 2)))
                 .addGap(0, 0, 0))
         );
 
@@ -196,24 +205,23 @@ public class Cashier extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void close2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_close2ActionPerformed
-        // close
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
         dispose();
-    }//GEN-LAST:event_close2ActionPerformed
+    }//GEN-LAST:event_jLabel1MouseClicked
 
-    private void maximize2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_maximize2ActionPerformed
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
         // maximize
         if(this.getExtendedState() != Cashier.MAXIMIZED_BOTH) {
             this.setExtendedState(Cashier.MAXIMIZED_BOTH);
         } else {
             this.setExtendedState(Cashier.NORMAL);
         }
-    }//GEN-LAST:event_maximize2ActionPerformed
+    }//GEN-LAST:event_jLabel2MouseClicked
 
-    private void minimize2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minimize2ActionPerformed
+    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
         // minimize
         this.setExtendedState(Cashier.ICONIFIED);
-    }//GEN-LAST:event_minimize2ActionPerformed
+    }//GEN-LAST:event_jLabel3MouseClicked
 
 
     public static void main(String args[]) {
@@ -251,11 +259,11 @@ public class Cashier extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private component.Cashier_Menu cashier_Menu;
-    private javax.swing.JButton close2;
     private javax.swing.JPanel header2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel mainPanel;
-    private javax.swing.JButton maximize2;
-    private javax.swing.JButton minimize2;
     private swing.PanelBorder panelBorder;
     // End of variables declaration//GEN-END:variables
 }
