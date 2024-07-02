@@ -2,7 +2,7 @@
 package loa;
 
 import contents.About;
-import contents.Admin_Home;
+
 import contents.Cashier_Inventory;
 import contents.Cashier_Add;
 import contents.Cashier_Edit;
@@ -27,7 +27,7 @@ public class Cashier extends javax.swing.JFrame {
     /**
      * Creates new form Admin
      */
-    private Admin_Home home;
+
     private Cashier_Inventory inv;
     private Cashier_Add add;
     private Cashier_Edit edit;
@@ -42,12 +42,12 @@ public class Cashier extends javax.swing.JFrame {
         this.userId = userId;
         initComponents();
         setBackground(new Color(0,0,0,0));
-        home = new Admin_Home();
-        inv = new Cashier_Inventory(0);
+
+        inv = new Cashier_Inventory(userId);
         add = new Cashier_Add();
         edit = new Cashier_Edit();
-        pos = new Cashier_PointOfSale(0);
-        settings = new Settings(0);
+        pos = new Cashier_PointOfSale(userId);
+        settings = new Settings(userId);
         help = new Help();
         about = new About();
         

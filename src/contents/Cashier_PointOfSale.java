@@ -5,6 +5,8 @@
 package contents;
 
 import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -25,7 +27,7 @@ import swing.ScrollBar;
 public class Cashier_PointOfSale extends javax.swing.JPanel {
 
     private int realUserId;
-    
+
     public Cashier_PointOfSale(int realUserId) {
         initComponents();
         this.realUserId = realUserId;
@@ -34,6 +36,11 @@ public class Cashier_PointOfSale extends javax.swing.JPanel {
         sp1.setHorizontalScrollBar(new ScrollBar());
         sp1.setVerticalScrollBar(new ScrollBar());
     }
+    private static final String DATABASE_NAME = "database";
+    private static final String dbUsername = "root";
+    private static final String dbPassword = "admin";
+    private static final String MYSQL_SERVER_HOSTNAME = "DESKTOP-MVBR3DH"; // Replace with your MySQL server's hostname
+    private static final int MYSQL_SERVER_PORT = 3306;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -79,11 +86,19 @@ public class Cashier_PointOfSale extends javax.swing.JPanel {
 
         receiptTextArea.setColumns(20);
         receiptTextArea.setRows(5);
-        receiptTextArea.setText("qwr");
         jScrollPane3.setViewportView(receiptTextArea);
 
         txtBarcode.setLabelText("Barcode");
+        txtBarcode.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtBarcodeKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtBarcodeKeyReleased(evt);
+            }
+        });
 
+        txtQuantity.setText("1");
         txtQuantity.setLabelText("Quantity");
 
         totalPriceTextField.setLabelText("Total Price");
@@ -117,52 +132,48 @@ public class Cashier_PointOfSale extends javax.swing.JPanel {
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addGap(300, 300, 300)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE)
-                .addGap(255, 255, 255))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(sp1, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel5Layout.createSequentialGroup()
+                        .addComponent(txtBarcode, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtQuantity, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
+                        .addGap(12, 12, 12)
+                        .addComponent(cashierButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cashierButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(cashierButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(totalPriceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(sp1, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel5Layout.createSequentialGroup()
-                                .addComponent(txtBarcode, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtQuantity, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(12, 12, 12)
-                                .addComponent(cashierButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(cashierButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(totalPriceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE)
+                        .addGap(340, 340, 340)
+                        .addComponent(cashierButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(20, 20, 20))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(25, 25, 25)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtBarcode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(2, 2, 2)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(cashierButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cashierButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(cashierButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtBarcode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(15, 15, 15)
                 .addComponent(sp1, javax.swing.GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(totalPriceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(cashierButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(216, 216, 216)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(175, 175, 175))
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cashierButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(399, 399, 399))
         );
 
         sp.setViewportView(jPanel5);
@@ -178,15 +189,12 @@ public class Cashier_PointOfSale extends javax.swing.JPanel {
             .addComponent(sp, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void cashierButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cashierButton1ActionPerformed
+private void addToCart() {
         // Get the barcode from the barcode text field
         String barcode = txtBarcode.getText().trim();
 
         // Database connection details
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
 
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -268,6 +276,7 @@ public class Cashier_PointOfSale extends javax.swing.JPanel {
 
                 // Product not found, add a new row
                 double totalPrice = price * quantity;
+                totalPrice = Double.parseDouble(String.format("%.2f", totalPrice));
                 model.addRow(new Object[]{name, price, quantity, totalPrice});
             }
 
@@ -282,7 +291,7 @@ public class Cashier_PointOfSale extends javax.swing.JPanel {
 
             // Clear the barcode and quantity fields
             txtBarcode.setText("");
-            txtQuantity.setText("");
+            txtQuantity.setText("1");
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -302,6 +311,11 @@ public class Cashier_PointOfSale extends javax.swing.JPanel {
                 e.printStackTrace();
             }
         }
+    }
+
+
+    private void cashierButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cashierButton1ActionPerformed
+        addToCart();
     }//GEN-LAST:event_cashierButton1ActionPerformed
 
     private void cashierButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cashierButton2ActionPerformed
@@ -331,6 +345,62 @@ public class Cashier_PointOfSale extends javax.swing.JPanel {
             }
             totalPriceTextField.setText(String.format("%.2f", sumTotalPrice));
         }
+    }//GEN-LAST:event_removeBtnActionPerformed
+
+    private void checkoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkoutBtnActionPerformed
+        // Prompt user for payment amount
+        String paymentStr = JOptionPane.showInputDialog(this, "Enter payment amount:");
+        double paymentAmount;
+        try {
+            paymentAmount = Double.parseDouble(paymentStr);
+            if (paymentAmount <= 0) {
+                JOptionPane.showMessageDialog(this, "Invalid payment amount.");
+                return;
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Invalid payment amount.");
+            return;
+        }
+
+        // Get total price from totalPriceTextField
+        double totalPrice = Double.parseDouble(totalPriceTextField.getText());
+
+        // Validate payment amount
+        if (paymentAmount < totalPrice) {
+            JOptionPane.showMessageDialog(this, "Payment amount is less than the total price.");
+            return;
+        }
+
+        // Proceed with checkout process
+        String cashierName = getCashierName(realUserId);
+        if (cashierName == null) {
+            JOptionPane.showMessageDialog(this, "Cashier not found.");
+            return;
+        }
+        // Display change to user
+        double change = paymentAmount - totalPrice;
+        JOptionPane.showMessageDialog(this, "Checkout successful! Change: " + String.format("%.2f", change));
+
+        int receiptId = insertSalesReceipt(totalPrice, cashierName, paymentAmount, change);
+        if (receiptId == -1) {
+            JOptionPane.showMessageDialog(this, "Error creating sales receipt.");
+            return;
+        }
+
+        if (!insertSalesDetails(receiptId)) {
+            JOptionPane.showMessageDialog(this, "Error adding sales details.");
+            return;
+        }
+
+        // Update receiptTextArea
+        updateReceiptTextArea(receiptId, cashierName, paymentAmount, change);
+
+        // Generate receipt for printing or display
+        //generateReceipt(receiptId, totalPrice, paymentAmount, cashierName, productTable, receiptTextArea);
+        // Clear product table and reset total price
+        DefaultTableModel model = (DefaultTableModel) productTable.getModel();
+        model.setRowCount(0);
+        totalPriceTextField.setText("0.00");
     }//GEN-LAST:event_cashierButton2ActionPerformed
 
     private void cashierButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cashierButton3ActionPerformed
@@ -363,8 +433,11 @@ public class Cashier_PointOfSale extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Cashier not found.");
             return;
         }
+        // Display change to user
+        double change = paymentAmount - totalPrice;
+        JOptionPane.showMessageDialog(this, "Checkout successful! Change: " + String.format("%.2f", change));
 
-        int receiptId = insertSalesReceipt(totalPrice, cashierName);
+        int receiptId = insertSalesReceipt(totalPrice, cashierName, paymentAmount, change);
         if (receiptId == -1) {
             JOptionPane.showMessageDialog(this, "Error creating sales receipt.");
             return;
@@ -375,66 +448,39 @@ public class Cashier_PointOfSale extends javax.swing.JPanel {
             return;
         }
 
-        // Display change to user
-        double change = paymentAmount - totalPrice;
-        JOptionPane.showMessageDialog(this, "Checkout successful! Change: " + String.format("%.2f", change));
-
         // Update receiptTextArea
-        updateReceiptTextArea(receiptId, cashierName);
+        updateReceiptTextArea(receiptId, cashierName, paymentAmount, change);
 
         // Generate receipt for printing or display
         //generateReceipt(receiptId, totalPrice, paymentAmount, cashierName, productTable, receiptTextArea);
-
         // Clear product table and reset total price
         DefaultTableModel model = (DefaultTableModel) productTable.getModel();
         model.setRowCount(0);
         totalPriceTextField.setText("0.00");
     }//GEN-LAST:event_cashierButton3ActionPerformed
-    public void generateReceipt(int receiptId, double total, double pay, String cashierName, JTable table, JTextArea txtbill) {
-    DefaultTableModel model = (DefaultTableModel) table.getModel();
-    
-    // Clear existing text in txtbill
-    txtbill.setText("");
-    
-    // Header
-    txtbill.append("******************************************************\n");
-    txtbill.append("                Feetish Foot Store                   \n");
-    txtbill.append("                 OFFICIAL RECEIPT                     \n");
-    txtbill.setFont(txtbill.getFont().deriveFont(Font.BOLD, 13f));
-    txtbill.append("******************************************************\n");
 
-    // Cashier Name and Receipt ID
-    txtbill.append(String.format("Cashier: %s\n", cashierName));
-    txtbill.append(String.format("Receipt ID: %d\n", receiptId));
-    txtbill.append("Product\t\tPrice\t\tQty\t\tAmount\n");
+    private void txtBarcodeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBarcodeKeyPressed
+        String barcode = txtBarcode.getText();
+        System.out.println(evt.getKeyCode() == KeyEvent.VK_ENTER);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            String bad = txtQuantity.getText();
+            if (bad != "1") {
+                addToCart();
+            } else {
 
-    // Iterate through each row in the table model to append product details
-    for (int i = 0; i < model.getRowCount(); i++) {
-        String productName = (String) model.getValueAt(i, 1);
-        double price = (double) model.getValueAt(i, 2);
-        int quantity = (int) model.getValueAt(i, 3);
-        double amount = (double) model.getValueAt(i, 4);
-        
-        txtbill.append(String.format("%s\t\t%.2f\t\t%d x\t\t%.2f\n", productName, price, quantity, amount));
-    }
+                txtQuantity.setText("1");
+                System.out.println(barcode);
+                addToCart();
+            }
+        }
+    }//GEN-LAST:event_txtBarcodeKeyPressed
 
-    txtbill.append("******************************************************\n");
+    private void txtBarcodeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBarcodeKeyReleased
 
-    // Total, Payment, and Change
-    txtbill.append(String.format("\nSubtotal: %.2f\n", total));
-    txtbill.append(String.format("Amount Paid: %.2f\n", pay));
-    txtbill.append(String.format("Change: %.2f\n", (pay - total)));
-
-    txtbill.append("******************************************************\n");
-    txtbill.append("           THANK YOU, COME AGAIN             \n");
-}
-
-
+    }//GEN-LAST:event_txtBarcodeKeyReleased
     private String getCashierName(int userId) {
         String cashierName = null;
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -472,10 +518,8 @@ public class Cashier_PointOfSale extends javax.swing.JPanel {
         return cashierName;
     }
 
-    private int insertSalesReceipt(double totalPrice, String cashierName) {
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
+    private int insertSalesReceipt(double totalPrice, String cashierName, double amount, double change) {
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -483,10 +527,12 @@ public class Cashier_PointOfSale extends javax.swing.JPanel {
 
         try {
             conn = DriverManager.getConnection(url, dbUsername, dbPassword);
-            String receiptSql = "INSERT INTO sales_receipts (transaction_date, total_amount, cashier_name) VALUES (NOW(), ?, ?)";
+            String receiptSql = "INSERT INTO sales_receipts (transaction_date, total_amount, cashier_name, amount_tendered, `change`) VALUES (NOW(), ?, ?, ?, ?)";
             pstmt = conn.prepareStatement(receiptSql, PreparedStatement.RETURN_GENERATED_KEYS);
             pstmt.setDouble(1, totalPrice);
             pstmt.setString(2, cashierName);
+            pstmt.setDouble(3, amount);
+            pstmt.setDouble(4, change);
             pstmt.executeUpdate();
 
             rs = pstmt.getGeneratedKeys();
@@ -516,9 +562,7 @@ public class Cashier_PointOfSale extends javax.swing.JPanel {
 
     private boolean insertSalesDetails(int receiptId) {
         DefaultTableModel model = (DefaultTableModel) productTable.getModel();
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
         Connection conn = null;
         PreparedStatement pstmt = null;
         PreparedStatement updateStmt = null; // Separate PreparedStatement for stock update
@@ -535,7 +579,7 @@ public class Cashier_PointOfSale extends javax.swing.JPanel {
             for (int i = 0; i < model.getRowCount(); i++) {
                 String productName = (String) model.getValueAt(i, 0);
                 int quantity = (int) model.getValueAt(i, 2);
-                double price = (double) model.getValueAt(i, 1);
+                double price = ((double) model.getValueAt(i, 1)) * quantity;
 
                 // Get product_id from product_information table
                 String productIdSql = "SELECT product_id FROM product_information WHERE name = ?";
@@ -590,18 +634,41 @@ public class Cashier_PointOfSale extends javax.swing.JPanel {
         return success;
     }
 
-    private void updateReceiptTextArea(int receiptId, String cashierName) {
+    private void updateReceiptTextArea(int receiptId, String cashierName, double amountTendered, double change) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date currentDate = new Date();
 
         StringBuilder receiptText = new StringBuilder();
-        receiptText.append("===== Receipt =====\n");
+        receiptText.append("===== Sahagun's Veterinary Clinic =====\n");
         receiptText.append("Cashier: ").append(cashierName).append("\n");
         receiptText.append("Date: ").append(dateFormat.format(currentDate)).append("\n\n");
 
         DefaultTableModel model = (DefaultTableModel) productTable.getModel();
-        receiptText.append(String.format("%-20s%-10s%-10s\n", "Product", "Quantity", "Total"));
-        receiptText.append("------------------------------------------\n");
+
+        // Get the width of the receiptTextArea in characters
+        FontMetrics fontMetrics = receiptTextArea.getFontMetrics(receiptTextArea.getFont());
+        int textAreaWidth = receiptTextArea.getWidth() / fontMetrics.charWidth('A');
+
+        // Calculate the maximum length of the product names
+        int maxProductNameLength = 0;
+        for (int i = 0; i < model.getRowCount(); i++) {
+            String productName = (String) model.getValueAt(i, 0);
+            if (productName.length() > maxProductNameLength) {
+                maxProductNameLength = productName.length();
+            }
+        }
+
+        // Calculate available space for each column
+        int quantityColumnWidth = 10;  // fixed width for quantity
+        int totalColumnWidth = 10;     // fixed width for total
+        int productColumnWidth = Math.max(maxProductNameLength, textAreaWidth - quantityColumnWidth - totalColumnWidth - 4);  // calculate based on text area width
+
+        // Create the format strings dynamically
+        String formatHeader = "%-" + productColumnWidth + "s\t%-" + quantityColumnWidth + "s\t%-" + totalColumnWidth + "s\n";
+        String formatBody = "%-" + productColumnWidth + "s\t%-" + quantityColumnWidth + "d\t%-" + totalColumnWidth + ".2f\n";
+
+        receiptText.append(String.format(formatHeader, "Product", "Quantity", "Total"));
+        receiptText.append("-------------------------------------------------------\n");
 
         double totalPrice = 0.0;
         for (int i = 0; i < model.getRowCount(); i++) {
@@ -610,13 +677,16 @@ public class Cashier_PointOfSale extends javax.swing.JPanel {
             double price = (double) model.getValueAt(i, 1);
             double total = quantity * price;
 
-            receiptText.append(String.format("%-20s%-10d%-10.2f\n", productName, quantity, total));
+            receiptText.append(String.format(formatBody, productName, quantity, total));
             totalPrice += total;
         }
 
-        receiptText.append("\n------------------------------------------\n");
-        receiptText.append(String.format("%-30s%.2f\n", "Total:", totalPrice));
+        receiptText.append("\n-----------------------------------------------------\n");
+        receiptText.append(String.format("%-40s%.2f\n", "Total Amount:", totalPrice));
+        receiptText.append(String.format("%-40s%.2f\n", "Amount Tendered:", amountTendered));
+        receiptText.append(String.format("%-40s%.2f\n", "Change:", change));
         receiptText.append("\nThank you for shopping with us!\n");
+        receiptText.append("\nThis is not a valid reciept !\n");
 
         receiptTextArea.setText(receiptText.toString());
     }

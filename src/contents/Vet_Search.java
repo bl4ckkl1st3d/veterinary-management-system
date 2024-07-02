@@ -142,7 +142,7 @@ public class Vet_Search extends javax.swing.JPanel {
 
         marksTxtField.setLabelText("Marks");
 
-        sexComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Male", "Female" }));
+        sexComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "MALE", "FEMALE", " " }));
         sexComboBox.setSelectedIndex(-1);
         sexComboBox.setLabelText("Sex");
 

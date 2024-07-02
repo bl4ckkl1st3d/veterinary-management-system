@@ -190,6 +190,9 @@
                   <Properties>
                     <Property name="labelText" type="java.lang.String" value="Barcode"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtBarcodeKeyPressed"/>
+                  </Events>
                 </Component>
                 <Component class="swing.TextField" name="txtName">
                   <Properties>

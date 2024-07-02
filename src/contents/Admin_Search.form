@@ -113,6 +113,10 @@
               <Properties>
                 <Property name="labelText" type="java.lang.String" value="User ID"/>
               </Properties>
+              <Events>
+                <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="userIdTxtFieldKeyPressed"/>
+                <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="userIdTxtFieldKeyReleased"/>
+              </Events>
             </Component>
             <Component class="swing.TextField" name="nameTxtField">
               <Properties>
@@ -120,6 +124,7 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="nameTxtFieldActionPerformed"/>
+                <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="nameTxtFieldKeyReleased"/>
               </Events>
             </Component>
             <Component class="swing.AdminButton" name="adminButton1">

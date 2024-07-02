@@ -41,7 +41,7 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <EmptySpace pref="150" max="32767" attributes="0"/>
+                      <EmptySpace pref="211" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="1" max="-2" attributes="0">
@@ -50,6 +50,7 @@
                                   <Component id="loaBox" max="32767" attributes="0"/>
                                   <Component id="secretQuestionBox" pref="350" max="32767" attributes="0"/>
                                   <Component id="answerTxtField" max="32767" attributes="0"/>
+                                  <Component id="addUserBtn" alignment="0" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace max="32767" attributes="0"/>
                           </Group>
@@ -74,16 +75,13 @@
                                       </Group>
                                   </Group>
                                   <Group type="102" attributes="0">
-                                      <EmptySpace min="0" pref="2" max="32767" attributes="0"/>
+                                      <EmptySpace min="0" pref="33" max="32767" attributes="0"/>
                                       <Group type="103" groupAlignment="1" attributes="0">
                                           <Group type="102" alignment="1" attributes="0">
                                               <Component id="contactTxtField" min="-2" pref="300" max="-2" attributes="0"/>
                                               <EmptySpace min="-2" pref="458" max="-2" attributes="0"/>
                                           </Group>
-                                          <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="saveBtn" alignment="1" max="32767" attributes="0"/>
-                                              <Component id="addUserBtn" alignment="1" pref="300" max="32767" attributes="0"/>
-                                          </Group>
+                                          <Component id="saveBtn" alignment="1" min="-2" pref="300" max="-2" attributes="0"/>
                                           <Group type="103" alignment="1" groupAlignment="0" attributes="0">
                                               <Group type="102" attributes="0">
                                                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
@@ -102,7 +100,7 @@
                                       </Group>
                                   </Group>
                               </Group>
-                              <EmptySpace pref="148" max="32767" attributes="0"/>
+                              <EmptySpace pref="178" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -210,9 +208,10 @@
             <Component class="swing.Combobox" name="sexBox">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="2">
-                    <StringItem index="0" value="Male"/>
-                    <StringItem index="1" value="Female"/>
+                  <StringArray count="3">
+                    <StringItem index="0" value="MALE"/>
+                    <StringItem index="1" value="FEMALE"/>
+                    <StringItem index="2" value=" "/>
                   </StringArray>
                 </Property>
                 <Property name="selectedIndex" type="int" value="-1"/>

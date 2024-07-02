@@ -3,7 +3,7 @@ package loa;
 
 import contents.About;
 import contents.Admin_Add;
-import contents.Admin_Home;
+
 import contents.Admin_PatientReports;
 import contents.Admin_Search;
 import contents.Admin_Settings;
@@ -48,11 +48,10 @@ public class Admin extends javax.swing.JFrame {
         initComponents();
         setBackground(new Color(0,0,0,0));
         search = new Admin_Search();
-        add = new Admin_Add(0);
-        vet = new Vet(0);
-        cashier = new Cashier(0);
-        report = new Admin_PatientReports(0);
-        settings = new Admin_Settings(0);
+        add = new Admin_Add(userId);
+
+        report = new Admin_PatientReports(userId);
+        settings = new Admin_Settings(userId);
         help = new Help();
         about = new About();
         

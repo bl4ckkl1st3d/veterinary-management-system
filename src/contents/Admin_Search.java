@@ -25,6 +25,11 @@ public class Admin_Search extends javax.swing.JPanel {
         sp.setVerticalScrollBar(new ScrollBar());
         sp.setHorizontalScrollBar(new ScrollBar());
     }
+    private static final String DATABASE_NAME = "database";
+    private static final String dbUsername = "root";
+    private static final String dbPassword = "admin";
+    private static final String MYSQL_SERVER_HOSTNAME = "DESKTOP-MVBR3DH"; // Replace with your MySQL server's hostname
+    private static final int MYSQL_SERVER_PORT = 3306;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -61,11 +66,24 @@ public class Admin_Search extends javax.swing.JPanel {
         jScrollPane2.setViewportView(userTable);
 
         userIdTxtField.setLabelText("User ID");
+        userIdTxtField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                userIdTxtFieldKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                userIdTxtFieldKeyReleased(evt);
+            }
+        });
 
         nameTxtField.setLabelText("Name");
         nameTxtField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 nameTxtFieldActionPerformed(evt);
+            }
+        });
+        nameTxtField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                nameTxtFieldKeyReleased(evt);
             }
         });
 
@@ -134,10 +152,94 @@ public class Admin_Search extends javax.swing.JPanel {
     private void adminButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminButton1ActionPerformed
         displayAllUsers();
     }//GEN-LAST:event_adminButton1ActionPerformed
+
+    private void userIdTxtFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_userIdTxtFieldKeyPressed
+
+
+    }//GEN-LAST:event_userIdTxtFieldKeyPressed
+
+    private void nameTxtFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nameTxtFieldKeyReleased
+        String searchText = nameTxtField.getText();
+        userIdTxtField.setText("");
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
+
+        try (Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword)) {
+            String query = "SELECT CONCAT(first_name, ' ', last_name) AS full_name, userid,address, birthdate, age, sex, contact FROM user_information WHERE CONCAT(first_name, ' ', last_name) LIKE ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setString(1, "%" + searchText + "%");
+                ResultSet resultSet = preparedStatement.executeQuery();
+
+                DefaultTableModel tableModel = (DefaultTableModel) userTable.getModel();
+                tableModel.setRowCount(0); // Clear the table
+
+                while (resultSet.next()) {
+                    String fullName = resultSet.getString("full_name");
+                    String address = resultSet.getString("address");
+                    String userid = resultSet.getString("userid");
+                    Date birthdate = resultSet.getDate("birthdate");
+                    int age = resultSet.getInt("age");
+                    String sex = resultSet.getString("sex");
+                    String contact = resultSet.getString("contact");
+
+                    // Add the retrieved data to the table
+                    tableModel.addRow(new Object[]{userid, fullName, address, birthdate, age, sex, contact});
+                }
+
+                if (tableModel.getRowCount() == 0) {
+                    // If no matches found, clear the table
+                    tableModel.setRowCount(0);
+                }
+            }
+        } catch (SQLException e) {
+            // Handle SQL exception
+            e.printStackTrace();
+        }
+
+
+    }//GEN-LAST:event_nameTxtFieldKeyReleased
+
+    private void userIdTxtFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_userIdTxtFieldKeyReleased
+        String searchText = userIdTxtField.getText();
+        nameTxtField.setText("");
+
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
+
+        try (Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword)) {
+            String query = "SELECT CONCAT(first_name, ' ', last_name) AS full_name,userid, address, birthdate, age, sex, contact FROM user_information WHERE userid LIKE ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setString(1, "%" + searchText + "%");
+                ResultSet resultSet = preparedStatement.executeQuery();
+
+                DefaultTableModel tableModel = (DefaultTableModel) userTable.getModel();
+                tableModel.setRowCount(0); // Clear the table
+
+                while (resultSet.next()) {
+                    String fullName = resultSet.getString("full_name");
+                    String address = resultSet.getString("address");
+                    String userid = resultSet.getString("userid");
+                    Date birthdate = resultSet.getDate("birthdate");
+                    int age = resultSet.getInt("age");
+                    String sex = resultSet.getString("sex");
+                    String contact = resultSet.getString("contact");
+
+                    // Add the retrieved data to the table
+                    tableModel.addRow(new Object[]{userid, fullName, address, birthdate, age, sex, contact});
+                }
+
+                if (tableModel.getRowCount() == 0) {
+                    // If no matches found, clear the table
+                    tableModel.setRowCount(0);
+                }
+            }
+        } catch (SQLException e) {
+            // Handle SQL exception
+            e.printStackTrace();
+        }
+
+    }//GEN-LAST:event_userIdTxtFieldKeyReleased
+
     private void displayAllUsers() {
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
 
         try (Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword)) {
             String query = "SELECT CONCAT(first_name, ' ', last_name) AS full_name,userid, address, birthdate, age, sex, contact FROM user_information";

@@ -1,4 +1,3 @@
-
 package contents;
 
 import java.sql.Connection;
@@ -9,6 +8,19 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import swing.ScrollBar;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.LayoutManager;
+import java.awt.RenderingHints;
+import javax.swing.JPanel;
+import java.sql.*;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import softeng.VetPageAdd;
+import softeng.VetPageSearch;
+import softeng.login;
 
 /**
  *
@@ -17,13 +29,19 @@ import swing.ScrollBar;
 public class Vet_Edit extends javax.swing.JPanel {
 
     private int realUserId;
-    
+
     public Vet_Edit(int realUserId) {
         initComponents();
         this.realUserId = realUserId;
+        searchDoctor();
         sp.setVerticalScrollBar(new ScrollBar());
         sp.setHorizontalScrollBar(new ScrollBar());
     }
+    private static final String DATABASE_NAME = "database";
+    private static final String dbUsername = "root";
+    private static final String dbPassword = "admin";
+    private static final String MYSQL_SERVER_HOSTNAME = "DESKTOP-MVBR3DH"; // Replace with your MySQL server's hostname
+    private static final int MYSQL_SERVER_PORT = 3306;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -53,7 +71,6 @@ public class Vet_Edit extends javax.swing.JPanel {
         weightTxt = new swing.TextField();
         typeTxtField = new swing.TextField();
         breedTxtField = new swing.TextField();
-        ageTxt = new swing.TextField();
         colorTxtField = new swing.TextField();
         marksTxtField = new swing.TextField();
         sexComboBox = new swing.Combobox();
@@ -68,12 +85,14 @@ public class Vet_Edit extends javax.swing.JPanel {
         vetButton2 = new swing.VetButton();
         vetButton3 = new swing.VetButton();
         vetButton4 = new swing.VetButton();
-        textField1 = new swing.TextField();
-        textField2 = new swing.TextField();
-        textField3 = new swing.TextField();
-        textField4 = new swing.TextField();
         searchBtn = new swing.VetButton();
         clearBtn = new swing.VetButton();
+        docVac = new javax.swing.JComboBox<>();
+        jLabel31 = new javax.swing.JLabel();
+        doctorList = new javax.swing.JComboBox<>();
+        jLabel32 = new javax.swing.JLabel();
+        bDay = new com.toedter.calendar.JDateChooser();
+        jLabel33 = new javax.swing.JLabel();
 
         jPanel6.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -123,7 +142,7 @@ public class Vet_Edit extends javax.swing.JPanel {
         jLabel28.setText("Vaccination Date");
 
         jLabel30.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel30.setText("Next Due");
+        jLabel30.setText("Administered by");
 
         patientIdTxtField.setLabelText("Patient ID");
         patientIdTxtField.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -140,13 +159,11 @@ public class Vet_Edit extends javax.swing.JPanel {
 
         breedTxtField.setLabelText("Breed");
 
-        ageTxt.setLabelText("Age");
-
         colorTxtField.setLabelText("Color");
 
         marksTxtField.setLabelText("Marks");
 
-        sexComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Male", "Female" }));
+        sexComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "MALE", "FEMALE", "" }));
         sexComboBox.setSelectedIndex(-1);
         sexComboBox.setLabelText("Sex");
 
@@ -196,14 +213,6 @@ public class Vet_Edit extends javax.swing.JPanel {
             }
         });
 
-        textField1.setLabelText("Administered By:");
-
-        textField2.setLabelText("Administered By:");
-
-        textField3.setLabelText("Administered By:");
-
-        textField4.setLabelText("Administered By:");
-
         searchBtn.setText("Search");
         searchBtn.setRadius(25);
         searchBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -220,6 +229,19 @@ public class Vet_Edit extends javax.swing.JPanel {
             }
         });
 
+        docVac.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jLabel31.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel31.setText("Next Due");
+
+        doctorList.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jLabel32.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel32.setText("Administered by");
+
+        jLabel33.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel33.setText("Birthdate");
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
@@ -232,30 +254,30 @@ public class Vet_Edit extends javax.swing.JPanel {
                             .addComponent(jLabel17)
                             .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(vaccineNameTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(dueDate, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE)
-                                    .addComponent(vaccinationDate, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(docVac, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(dueDate, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE)
+                                        .addComponent(vaccinationDate, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                             .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(contactTxtField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
                                 .addComponent(addressTxtField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(nameTxtField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 493, Short.MAX_VALUE))
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(vetButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(jPanel6Layout.createSequentialGroup()
-                                    .addComponent(textField4, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(vetButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel6Layout.createSequentialGroup()
-                                    .addComponent(textField3, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel30)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(vetButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel6Layout.createSequentialGroup()
-                                    .addComponent(textField2, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel6Layout.createSequentialGroup()
+                                    .addComponent(jLabel32)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(doctorList, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(vetButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(jLabel30, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel28, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel25, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel20, javax.swing.GroupLayout.Alignment.LEADING)
@@ -264,33 +286,38 @@ public class Vet_Edit extends javax.swing.JPanel {
                                 .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 744, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(diagnosisTxtField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 806, Short.MAX_VALUE)
                                 .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 744, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(breedTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                .addComponent(patientTxtField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(weightTxt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(typeTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                        .addGap(131, 131, 131))
-                                    .addGroup(jPanel6Layout.createSequentialGroup()
-                                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel24)
-                                            .addComponent(textField1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(19, 19, 19)))
-                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addGroup(jPanel6Layout.createSequentialGroup()
-                                        .addComponent(clearBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(searchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(patientIdTxtField, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
-                                    .addComponent(marksTxtField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(colorTxtField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(sexComboBox, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
-                                    .addComponent(ageTxt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(vetButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                        .addGap(13, 181, Short.MAX_VALUE))))
+                            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel6Layout.createSequentialGroup()
+                                    .addComponent(jLabel24)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(searchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                                    .addComponent(clearBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel6Layout.createSequentialGroup()
+                                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(breedTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(patientTxtField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(weightTxt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(typeTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGap(131, 131, 131)
+                                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(patientIdTxtField, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+                                        .addComponent(marksTxtField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(colorTxtField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(sexComboBox, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+                                        .addComponent(vetButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel6Layout.createSequentialGroup()
+                                            .addGap(6, 6, 6)
+                                            .addComponent(jLabel33)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                            .addComponent(bDay, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                        .addGap(13, 187, Short.MAX_VALUE))))
+            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel6Layout.createSequentialGroup()
+                    .addGap(129, 129, 129)
+                    .addComponent(jLabel31)
+                    .addContainerGap(933, Short.MAX_VALUE)))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -300,13 +327,15 @@ public class Vet_Edit extends javax.swing.JPanel {
                     .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(patientIdTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(searchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(clearBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ageTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(patientTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(clearBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(searchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(25, 25, 25)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(patientTxtField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel33, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(bDay, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(25, 25, 25)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(weightTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -320,10 +349,8 @@ public class Vet_Edit extends javax.swing.JPanel {
                     .addComponent(breedTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(marksTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(vetButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(vetButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                 .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(38, 38, 38)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -334,42 +361,43 @@ public class Vet_Edit extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addComponent(medicationTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addComponent(vetButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(146, 146, 146)
-                        .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(103, 103, 103)
-                        .addComponent(vaccineNameTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel28, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(vaccinationDate, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel30, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(dueDate, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(textField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(vetButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(doctorList, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel32, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(146, 146, 146)
+                .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addComponent(vetButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(108, 108, 108)
-                        .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(nameTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(addressTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(contactTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(vetButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(textField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(textField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(103, 103, 103)
+                .addComponent(vaccineNameTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel28, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(vaccinationDate, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(dueDate, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(vetButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(docVac, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel30, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(98, 98, 98)
+                .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(nameTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(addressTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(contactTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(vetButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(13, Short.MAX_VALUE))
+            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel6Layout.createSequentialGroup()
+                    .addGap(2250, 2250, 2250)
+                    .addComponent(jLabel31, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGap(526, 526, 526)))
         );
 
         sp.setViewportView(jPanel6);
@@ -385,19 +413,341 @@ public class Vet_Edit extends javax.swing.JPanel {
             .addComponent(sp, javax.swing.GroupLayout.DEFAULT_SIZE, 685, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
-    private void clearTables() {
-    DefaultTableModel dm = (DefaultTableModel)medicalHistoryTable.getModel();
-    while(dm.getRowCount() > 0)
-        {
-          dm.removeRow(0);
-        }
-    
-    DefaultTableModel dm1 = (DefaultTableModel)vaccinationHistoryTable.getModel();
-    while(dm1.getRowCount() > 0)
-        {
-          dm1.removeRow(0);
+    private void searchDoctor() {
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
+
+        try (Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword)) {
+            String query = "SELECT ui.first_name, ui.last_name "
+                    + "FROM user_information ui "
+                    + "JOIN users u ON ui.username = u.username "
+                    + "WHERE u.loa = 1";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                ResultSet resultSet = preparedStatement.executeQuery();
+                doctorList.removeAllItems();
+                docVac.removeAllItems(); /// Clear the current items in the dropdown
+                while (resultSet.next()) {
+                    String firstName = resultSet.getString("first_name");
+                    String lastName = resultSet.getString("last_name");
+                    String doctorName = firstName + " " + lastName;
+                    doctorList.addItem(doctorName);
+                    docVac.addItem(doctorName);// Add each doctor name to the dropdown
+                }
+            }
+        } catch (SQLException e) {
+            // Handle SQL exception
+            e.printStackTrace();
         }
     }
+
+    private void clearTextFields() {
+        patientTxtField.setText("");
+        bDay.setDate(null);
+        weightTxt.setText("");
+        typeTxtField.setText("");
+        colorTxtField.setText("");
+        breedTxtField.setText("");
+        marksTxtField.setText("");
+        sexComboBox.setSelectedIndex(-1);
+
+        nameTxtField.setText("");
+        addressTxtField.setText("");
+        contactTxtField.setText("");
+    }
+
+    private void searchPatient() {
+        String patientIdText = patientIdTxtField.getText();
+
+        if (patientIdText.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Please enter Patient ID");
+        } else {
+            String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
+
+            try {
+                // Establish the database connection
+                Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
+
+                // Retrieve patient information
+                String patientQuery = "SELECT * FROM patient_information WHERE barcode = ?";
+                PreparedStatement patientStmt = connection.prepareStatement(patientQuery);
+                patientStmt.setString(1, patientIdText);
+                ResultSet patientResultSet = patientStmt.executeQuery();
+
+                if (patientResultSet.next()) {
+                    // Set the patient information to text fields
+                    patientTxtField.setText(patientResultSet.getString("patient_name"));
+                    bDay.setDate(Date.valueOf(patientResultSet.getDate("bday").toLocalDate()));
+                    weightTxt.setText(String.valueOf(patientResultSet.getFloat("weight")));
+                    typeTxtField.setText(patientResultSet.getString("type"));
+                    colorTxtField.setText(patientResultSet.getString("color"));
+                    breedTxtField.setText(patientResultSet.getString("breed"));
+                    marksTxtField.setText(patientResultSet.getString("marks"));
+                    sexComboBox.setSelectedItem(patientResultSet.getString("sex").equals("M") ? "MALE" : "FEMALE");
+
+                    String clientName = patientResultSet.getString("client_name");
+
+                    // Retrieve client information
+                    String clientQuery = "SELECT * FROM client_information WHERE client_name = ?";
+                    PreparedStatement clientStmt = connection.prepareStatement(clientQuery);
+                    clientStmt.setString(1, clientName);
+                    ResultSet clientResultSet = clientStmt.executeQuery();
+
+                    if (clientResultSet.next()) {
+                        // Set the client information to text fields
+                        nameTxtField.setText(clientResultSet.getString("client_name"));
+                        addressTxtField.setText(clientResultSet.getString("address"));
+                        contactTxtField.setText(clientResultSet.getString("contact"));
+                    }
+
+                    clientStmt.close();
+                    clientResultSet.close();
+                } else {
+                    // If no patient found, clear all text fields
+                    clearTextFields();
+                }
+
+                patientStmt.close();
+                patientResultSet.close();
+                connection.close();
+            } catch (SQLException e) {
+                // Handle any SQL exceptions
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+            }
+        }
+    }
+
+    private void updateMedical() {
+        // Get the necessary information from text fields
+        String diagnosis = diagnosisTxtField.getText();
+        String treatment = treatmentTxtField.getText();
+        String medications = medicationTxtField.getText();
+        String docList = doctorList.getSelectedItem().toString();
+        String patientId = patientIdTxtField.getText();
+        if (patientId.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Please enter Patient ID");
+        } else {
+            String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
+
+            String doctorName = "";
+            if (diagnosis.isEmpty() || treatment.isEmpty() || medications.isEmpty() || docList.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Must complete all fields.");
+            } else {
+                try {
+                    // Establish the database connection
+                    Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
+
+                    // Query to get the doctor's name from user_information table
+                    String userQuery = "SELECT first_name, last_name FROM user_information WHERE userid = ?";
+                    PreparedStatement userStatement = connection.prepareStatement(userQuery);
+                    userStatement.setInt(1, realUserId);
+
+                    ResultSet userResultSet = userStatement.executeQuery();
+
+                    if (userResultSet.next()) {
+                        String firstName = userResultSet.getString("first_name");
+                        String lastName = userResultSet.getString("last_name");
+                        doctorName = firstName + " " + lastName;
+                    } else {
+                        JOptionPane.showMessageDialog(null, "User information not found.");
+                        return;
+                    }
+
+                    // Query to insert the medical history information
+                    String medicalHistoryQuery = "INSERT INTO medical_history (barcode, visit_date, diagnosis, treatment, medications, doctor_name) VALUES (?, CURDATE(), ?, ?, ?, ?)";
+                    PreparedStatement medicalStatement = connection.prepareStatement(medicalHistoryQuery);
+                    medicalStatement.setString(1, patientId);
+                    medicalStatement.setString(2, diagnosis);
+                    medicalStatement.setString(3, treatment);
+                    medicalStatement.setString(4, medications);
+                    medicalStatement.setString(5, docList);
+
+                    int rowsAffected = medicalStatement.executeUpdate();
+
+                    if (rowsAffected > 0) {
+                        JOptionPane.showMessageDialog(null, "Medical history updated successfully.");
+
+                        diagnosisTxtField.setText("");
+                        treatmentTxtField.setText("");
+                        medicationTxtField.setText("");
+
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Failed to update medical history.");
+                    }
+
+                    // Close the statements and the connection
+                    userStatement.close();
+                    medicalStatement.close();
+                    connection.close();
+                } catch (SQLException e) {
+                    // Handle any SQL exceptions
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private void clearTables() {
+        DefaultTableModel dm = (DefaultTableModel) medicalHistoryTable.getModel();
+        while (dm.getRowCount() > 0) {
+            dm.removeRow(0);
+        }
+
+        DefaultTableModel dm1 = (DefaultTableModel) vaccinationHistoryTable.getModel();
+        while (dm1.getRowCount() > 0) {
+            dm1.removeRow(0);
+        }
+    }
+
+    public void updateMedicalHistoryTable() {
+        // Get the patient ID from the patientIdTxtField
+        String patientId = patientIdTxtField.getText();
+        if (patientId.isEmpty()) {
+            System.out.println("Invalid");
+        } else {
+            String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
+
+            try {
+                // Establish the database connection
+                Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
+
+                // Query to fetch medical history information for the specified patient ID
+                String query = "SELECT diagnosis, treatment, medications, visit_date, doctor_name FROM medical_history WHERE barcode = ?";
+                PreparedStatement preparedStatement = connection.prepareStatement(query);
+                preparedStatement.setString(1, patientId);
+                ResultSet resultSet = preparedStatement.executeQuery();
+
+                // Create a DefaultTableModel to hold the medical history data
+                DefaultTableModel model = new DefaultTableModel();
+                model.addColumn("Diagnosis");
+                model.addColumn("Treatment");
+                model.addColumn("Medication");
+                model.addColumn("Visit Date");
+                model.addColumn("Attending Doctor");
+                // Populate the model with the retrieved data
+                while (resultSet.next()) {
+                    String diagnosis = resultSet.getString("diagnosis");
+                    String treatment = resultSet.getString("treatment");
+                    String medications = resultSet.getString("medications");
+                    String visitDate = resultSet.getString("visit_date");
+                    String attendingDoctor = resultSet.getString("doctor_name");
+
+                    model.addRow(new Object[]{diagnosis, treatment, medications, visitDate, attendingDoctor});
+                }
+
+                // Set the model for the medicalHistoryTable
+                medicalHistoryTable.setModel(model);
+
+                // Close the result set, statement, and connection
+                resultSet.close();
+                preparedStatement.close();
+                connection.close();
+            } catch (SQLException e) {
+                // Handle any SQL exceptions
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void updateVaccineHistoryTable() {
+        // Get the patient ID from the patientIdTxtField
+        String patientId = patientIdTxtField.getText();
+        if (patientId.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Please enter Patient ID");
+        } else {
+            String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
+
+            try {
+                // Establish the database connection
+                Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
+
+                // Query to fetch vaccine history information for the specified patient ID
+                String query = "SELECT vaccine_name, vaccination_date, next_due_date, administered_by FROM vaccine_history WHERE barcode = ?";
+                PreparedStatement preparedStatement = connection.prepareStatement(query);
+                preparedStatement.setString(1, patientId);
+                ResultSet resultSet = preparedStatement.executeQuery();
+
+                // Create a DefaultTableModel to hold the vaccine history data
+                DefaultTableModel model = new DefaultTableModel();
+                model.addColumn("Vaccine Name");
+                model.addColumn("Vaccination Date");
+                model.addColumn("Next Due Date");
+                model.addColumn("Administered By");
+
+                // Populate the model with the retrieved data
+                while (resultSet.next()) {
+                    String vaccineName = resultSet.getString("vaccine_name");
+                    String vaccinationDate = resultSet.getString("vaccination_date");
+                    String dueDate = resultSet.getString("next_due_date");
+                    String administeredBy = resultSet.getString("administered_by");
+
+                    model.addRow(new Object[]{vaccineName, vaccinationDate, dueDate, administeredBy});
+                }
+
+                // Set the model for the vaccineHistoryTable
+                vaccinationHistoryTable.setModel(model);
+
+                // Close the result set, statement, and connection
+                resultSet.close();
+                preparedStatement.close();
+                connection.close();
+            } catch (SQLException e) {
+                // Handle any SQL exceptions
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void updatePatient() {
+        // Get the data from the text fields
+        String patientId = patientIdTxtField.getText();
+        String patientName = patientTxtField.getText();
+        java.util.Date bDayVal = bDay.getDate();
+        double weight = Double.parseDouble(weightTxt.getText());
+        String type = typeTxtField.getText();
+        String color = colorTxtField.getText();
+        String breed = breedTxtField.getText();
+        String marks = marksTxtField.getText();
+        String sex = sexComboBox.getSelectedItem().toString().equalsIgnoreCase("MALE") ? "M" : "F";
+        java.sql.Date sqlbDay = new java.sql.Date(bDayVal.getTime());
+        // Database connection details
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
+
+        try {
+            // Establish the database connection
+            Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
+
+            // Prepare the SQL query to update patient information
+            String query = "UPDATE patient_information SET patient_name = ?, weight = ?, type = ?, color = ?, breed = ?, marks = ?, sex = ?, bday = ? WHERE barcode = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, patientName);
+            preparedStatement.setDouble(2, weight);
+            preparedStatement.setString(3, type);
+            preparedStatement.setString(4, color);
+            preparedStatement.setString(5, breed);
+            preparedStatement.setString(6, marks);
+            preparedStatement.setString(7, sex);
+            preparedStatement.setDate(8, sqlbDay);
+            preparedStatement.setString(9, patientId);
+
+            // Execute the update query
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                JOptionPane.showMessageDialog(null, "Patient information updated successfully.");
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Failed to update patient information.");
+            }
+
+            // Close the database connection
+            connection.close();
+        } catch (SQLException e) {
+            // Handle any SQL exceptions
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+        }
+    }
+
     private void patientIdTxtFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_patientIdTxtFieldKeyReleased
         searchPatient();
         updateMedicalHistoryTable();
@@ -417,9 +767,26 @@ public class Vet_Edit extends javax.swing.JPanel {
         updateVaccine();
         updateVaccineHistoryTable();
     }//GEN-LAST:event_vetButton3ActionPerformed
+    private boolean isValidNumber(String text) {
+        // Check if the text matches the pattern "63#########"
+        return text.matches("639\\d{9}");
 
+    }
     private void vetButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vetButton4ActionPerformed
-        updateOwner();
+
+        String text = contactTxtField.getText();
+        System.out.println(text);
+        String realNo = text.replace("+", "").replace("-", "");
+        System.out.println(realNo);
+
+        // Validate the text
+        if (isValidNumber(realNo)) {
+            updateOwner();
+            contactTxtField.setText("639");
+        } else {
+            JOptionPane.showMessageDialog(null, "Invalid number: Must be in the format '639#########'");
+        }
+
     }//GEN-LAST:event_vetButton4ActionPerformed
 
     private void clearBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearBtnActionPerformed
@@ -432,309 +799,6 @@ public class Vet_Edit extends javax.swing.JPanel {
         updateMedicalHistoryTable();
         updateVaccineHistoryTable();
     }//GEN-LAST:event_searchBtnActionPerformed
-    private void clearTextFields() {
-        patientTxtField.setText("");
-        ageTxt.setText("");
-        weightTxt.setText("");
-        typeTxtField.setText("");
-        colorTxtField.setText("");
-        breedTxtField.setText("");
-        marksTxtField.setText("");
-        sexComboBox.setSelectedIndex(-1);
-
-        nameTxtField.setText("");
-        addressTxtField.setText("");
-        contactTxtField.setText("");
-    }
-
-    private void searchPatient() {
-        String patientIdText = patientIdTxtField.getText();
-
-        if (patientIdText.isEmpty()) {
-            // Clear all text fields if the patient ID is empty
-            clearTextFields();
-            return;
-        }
-
-        int patientId = Integer.parseInt(patientIdText);
-
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
-
-        try {
-            // Establish the database connection
-            Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
-
-            // Retrieve patient information
-            String patientQuery = "SELECT * FROM patient_information WHERE patient_id = ?";
-            PreparedStatement patientStmt = connection.prepareStatement(patientQuery);
-            patientStmt.setInt(1, patientId);
-            ResultSet patientResultSet = patientStmt.executeQuery();
-
-            if (patientResultSet.next()) {
-                // Set the patient information to text fields
-                patientTxtField.setText(patientResultSet.getString("patient_name"));
-                ageTxt.setText(String.valueOf(patientResultSet.getInt("age")));
-                weightTxt.setText(String.valueOf(patientResultSet.getFloat("weight")));
-                typeTxtField.setText(patientResultSet.getString("type"));
-                colorTxtField.setText(patientResultSet.getString("color"));
-                breedTxtField.setText(patientResultSet.getString("breed"));
-                marksTxtField.setText(patientResultSet.getString("marks"));
-                sexComboBox.setSelectedItem(patientResultSet.getString("sex").equals("M") ? "MALE" : "FEMALE");
-
-                String clientName = patientResultSet.getString("client_name");
-
-                // Retrieve client information
-                String clientQuery = "SELECT * FROM client_information WHERE client_name = ?";
-                PreparedStatement clientStmt = connection.prepareStatement(clientQuery);
-                clientStmt.setString(1, clientName);
-                ResultSet clientResultSet = clientStmt.executeQuery();
-
-                if (clientResultSet.next()) {
-                    // Set the client information to text fields
-                    nameTxtField.setText(clientResultSet.getString("client_name"));
-                    addressTxtField.setText(clientResultSet.getString("address"));
-                    contactTxtField.setText(clientResultSet.getString("contact"));
-                }
-
-                clientStmt.close();
-                clientResultSet.close();
-            } else {
-                // If no patient found, clear all text fields
-                clearTextFields();
-            }
-
-            patientStmt.close();
-            patientResultSet.close();
-            connection.close();
-        } catch (SQLException e) {
-            // Handle any SQL exceptions
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
-        }
-    }
-
-    
-        private void updateMedical() {
-        // Get the necessary information from text fields
-        String diagnosis = diagnosisTxtField.getText();
-        String treatment = treatmentTxtField.getText();
-        String medications = medicationTxtField.getText();
-        int patientId = Integer.parseInt(patientIdTxtField.getText());
-       
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
-
-        String doctorName = "";
-         if(diagnosis.isEmpty()|| treatment.isEmpty() || medications.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Must complete all fields.");
-        }
-         else{
-        try {
-            // Establish the database connection
-            Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
-
-            // Query to get the doctor's name from user_information table
-            String userQuery = "SELECT first_name, last_name FROM user_information WHERE userid = ?";
-            PreparedStatement userStatement = connection.prepareStatement(userQuery);
-            userStatement.setInt(1, realUserId);
-
-            ResultSet userResultSet = userStatement.executeQuery();
-
-            if (userResultSet.next()) {
-                String firstName = userResultSet.getString("first_name");
-                String lastName = userResultSet.getString("last_name");
-                doctorName = firstName + " " + lastName;
-            } else {
-                JOptionPane.showMessageDialog(null, "User information not found.");
-                return;
-            }
-
-            // Query to insert the medical history information
-            String medicalHistoryQuery = "INSERT INTO medical_history (patient_id, visit_date, diagnosis, treatment, medications, doctor_name) VALUES (?, CURDATE(), ?, ?, ?, ?)";
-            PreparedStatement medicalStatement = connection.prepareStatement(medicalHistoryQuery);
-            medicalStatement.setInt(1, patientId);
-            medicalStatement.setString(2, diagnosis);
-            medicalStatement.setString(3, treatment);
-            medicalStatement.setString(4, medications);
-            medicalStatement.setString(5, doctorName);
-
-            int rowsAffected = medicalStatement.executeUpdate();
-
-            if (rowsAffected > 0) {
-                JOptionPane.showMessageDialog(null, "Medical history updated successfully.");
-                
-                diagnosisTxtField.setText("");
-                treatmentTxtField.setText("");
-                medicationTxtField.setText("");
-            } else {
-                JOptionPane.showMessageDialog(null, "Failed to update medical history.");
-            }
-
-            // Close the statements and the connection
-            userStatement.close();
-            medicalStatement.close();
-            connection.close();
-        } catch (SQLException e) {
-            // Handle any SQL exceptions
-            e.printStackTrace();
-        }
-    }}
-    
-    public void updateMedicalHistoryTable() {
-        // Get the patient ID from the patientIdTxtField
-        int patientId = Integer.parseInt(patientIdTxtField.getText());
-
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
-
-        try {
-            // Establish the database connection
-            Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
-
-            // Query to fetch medical history information for the specified patient ID
-            String query = "SELECT diagnosis, treatment, medications, visit_date, doctor_name FROM medical_history WHERE patient_id = ?";
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1, patientId);
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            // Create a DefaultTableModel to hold the medical history data
-            DefaultTableModel model = new DefaultTableModel();
-            model.addColumn("Diagnosis");
-            model.addColumn("Treatment");
-            model.addColumn("Medication");
-            model.addColumn("Visit Date");
-            model.addColumn("Attending Doctor");
-            // Populate the model with the retrieved data
-            while (resultSet.next()) {
-                String diagnosis = resultSet.getString("diagnosis");
-                String treatment = resultSet.getString("treatment");
-                String medications = resultSet.getString("medications");
-                String visitDate = resultSet.getString("visit_date");
-                String attendingDoctor = resultSet.getString("doctor_name");
-
-                model.addRow(new Object[]{diagnosis, treatment, medications, visitDate, attendingDoctor});
-            }
-
-            // Set the model for the medicalHistoryTable
-            medicalHistoryTable.setModel(model);
-
-            // Close the result set, statement, and connection
-            resultSet.close();
-            preparedStatement.close();
-            connection.close();
-        } catch (SQLException e) {
-            // Handle any SQL exceptions
-            e.printStackTrace();
-        }
-    }
-
-    public void updateVaccineHistoryTable() {
-        // Get the patient ID from the patientIdTxtField
-        int patientId = Integer.parseInt(patientIdTxtField.getText());
-
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
-
-        try {
-            // Establish the database connection
-            Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
-
-            // Query to fetch vaccine history information for the specified patient ID
-            String query = "SELECT vaccine_name, vaccination_date, next_due_date, administered_by FROM vaccine_history WHERE patient_id = ?";
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1, patientId);
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            // Create a DefaultTableModel to hold the vaccine history data
-            DefaultTableModel model = new DefaultTableModel();
-            model.addColumn("Vaccine Name");
-            model.addColumn("Vaccination Date");
-            model.addColumn("Next Due Date");
-            model.addColumn("Administered By");
-
-            // Populate the model with the retrieved data
-            while (resultSet.next()) {
-                String vaccineName = resultSet.getString("vaccine_name");
-                String vaccinationDate = resultSet.getString("vaccination_date");
-                String dueDate = resultSet.getString("next_due_date");
-                String administeredBy = resultSet.getString("administered_by");
-
-                model.addRow(new Object[]{vaccineName, vaccinationDate, dueDate, administeredBy});
-            }
-
-            // Set the model for the vaccineHistoryTable
-            vaccinationHistoryTable.setModel(model);
-
-            // Close the result set, statement, and connection
-            resultSet.close();
-            preparedStatement.close();
-            connection.close();
-        } catch (SQLException e) {
-            // Handle any SQL exceptions
-            e.printStackTrace();
-        }
-    }
-    private void updatePatient() {
-        // Get the data from the text fields
-        int patientId = Integer.parseInt(patientIdTxtField.getText());
-        String patientName = patientTxtField.getText();
-        int age = Integer.parseInt(ageTxt.getText());
-        double weight = Double.parseDouble(weightTxt.getText());
-        String type = typeTxtField.getText();
-        String color = colorTxtField.getText();
-        String breed = breedTxtField.getText();
-        String marks = marksTxtField.getText();
-        String sex = sexComboBox.getSelectedItem().toString().equalsIgnoreCase("MALE") ? "M" : "F";
-
-        // Database connection details
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
-
-        try {
-            // Establish the database connection
-            Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
-
-            // Prepare the SQL query to update patient information
-            String query = "UPDATE patient_information SET patient_name = ?, age = ?, weight = ?, type = ?, color = ?, breed = ?, marks = ?, sex = ? WHERE patient_id = ?";
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, patientName);
-            preparedStatement.setInt(2, age);
-            preparedStatement.setDouble(3, weight);
-            preparedStatement.setString(4, type);
-            preparedStatement.setString(5, color);
-            preparedStatement.setString(6, breed);
-            preparedStatement.setString(7, marks);
-            preparedStatement.setString(8, sex);
-            preparedStatement.setInt(9, patientId);
-
-            // Execute the update query
-            int rowsAffected = preparedStatement.executeUpdate();
-
-            if (rowsAffected > 0) {
-                JOptionPane.showMessageDialog(null, "Patient information updated successfully.");
-                clearTextFields();
-                diagnosisTxtField.setText("");
-                treatmentTxtField.setText("");
-                medicationTxtField.setText("");
-            } else {
-                JOptionPane.showMessageDialog(null, "Failed to update patient information.");
-            }
-
-            // Close the database connection
-            connection.close();
-        } catch (SQLException e) {
-            // Handle any SQL exceptions
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
-        }
-    }
-    
     private void updateOwner() {
         String clientName = nameTxtField.getText();
         String address = addressTxtField.getText();
@@ -744,7 +808,7 @@ public class Vet_Edit extends javax.swing.JPanel {
         String url = "jdbc:mysql://127.0.0.1:3306/database";
         String dbUsername = "root";
         String dbPassword = "admin";
-       
+
         try {
             // Establish the database connection
             Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
@@ -760,14 +824,9 @@ public class Vet_Edit extends javax.swing.JPanel {
             int rowsAffected = preparedStatement.executeUpdate();
 
             if (rowsAffected > 0) {
-                JOptionPane.showMessageDialog(null, "Client information updated successfully.");           
-                clearTextFields();
-                diagnosisTxtField.setText("");
-                treatmentTxtField.setText("");
-                medicationTxtField.setText("");
-                vaccineNameTxtField.setText("");
-                vaccinationDate.setDate(null);
-                dueDate.setDate(null);
+                JOptionPane.showMessageDialog(null, "Client information updated successfully.");
+                searchPatient();
+
             } else {
                 JOptionPane.showMessageDialog(null, "Failed to update client information.");
             }
@@ -780,24 +839,22 @@ public class Vet_Edit extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
         }
     }
-    
+
     private void updateVaccine() {
         // Get the text from the text fields
         String vaccineName = vaccineNameTxtField.getText();
         java.util.Date vaccinationDateValue = vaccinationDate.getDate();
         java.util.Date dueDateValue = dueDate.getDate();
-        int patientId = Integer.parseInt(patientIdTxtField.getText());
-
+        String patientId = patientIdTxtField.getText();
+        String docVacc = docVac.getSelectedItem().toString();
         // Convert the dates to SQL Date format
         java.sql.Date sqlVaccinationDate = new java.sql.Date(vaccinationDateValue.getTime());
         java.sql.Date sqlDueDate = new java.sql.Date(dueDateValue.getTime());
 
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
 
         String administeredBy = "";
-         JOptionPane.showMessageDialog(null, "Must complete all fields.");
+
         try {
             // Establish the database connection
             Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
@@ -819,23 +876,22 @@ public class Vet_Edit extends javax.swing.JPanel {
             }
 
             // Query to insert the vaccine information
-            String vaccineQuery = "INSERT INTO vaccine_history (patient_id, vaccine_name, vaccination_date, next_due_date, administered_by) VALUES (?, ?, ?, ?, ?)";
+            String vaccineQuery = "INSERT INTO vaccine_history (barcode, vaccine_name, vaccination_date, next_due_date, administered_by) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement vaccineStatement = connection.prepareStatement(vaccineQuery);
-            vaccineStatement.setInt(1, patientId);
+            vaccineStatement.setString(1, patientId);
             vaccineStatement.setString(2, vaccineName);
             vaccineStatement.setDate(3, sqlVaccinationDate);
             vaccineStatement.setDate(4, sqlDueDate);
-            vaccineStatement.setString(5, administeredBy);
+            vaccineStatement.setString(5, docVacc);
 
             int rowsAffected = vaccineStatement.executeUpdate();
 
             if (rowsAffected > 0) {
                 JOptionPane.showMessageDialog(null, "Vaccine information updated successfully.");
-                clearTextFields();
                 vaccineNameTxtField.setText("");
                 vaccinationDate.setDate(null);
                 dueDate.setDate(null);
-                
+
             } else {
                 JOptionPane.showMessageDialog(null, "Failed to update vaccine information.");
             }
@@ -850,16 +906,18 @@ public class Vet_Edit extends javax.swing.JPanel {
             e.printStackTrace();
         }
     }
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private swing.TextField addressTxtField;
-    private swing.TextField ageTxt;
+    private com.toedter.calendar.JDateChooser bDay;
     private swing.TextField breedTxtField;
     private swing.VetButton clearBtn;
     private swing.TextField colorTxtField;
     private swing.TextField contactTxtField;
     private swing.TextField diagnosisTxtField;
+    private javax.swing.JComboBox<String> docVac;
+    private javax.swing.JComboBox<String> doctorList;
     private com.toedter.calendar.JDateChooser dueDate;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel20;
@@ -867,6 +925,9 @@ public class Vet_Edit extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
@@ -879,10 +940,6 @@ public class Vet_Edit extends javax.swing.JPanel {
     private swing.VetButton searchBtn;
     private swing.Combobox sexComboBox;
     private javax.swing.JScrollPane sp;
-    private swing.TextField textField1;
-    private swing.TextField textField2;
-    private swing.TextField textField3;
-    private swing.TextField textField4;
     private swing.TextField treatmentTxtField;
     private swing.TextField typeTxtField;
     private com.toedter.calendar.JDateChooser vaccinationDate;

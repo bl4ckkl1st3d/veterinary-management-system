@@ -1,4 +1,3 @@
-
 package contents;
 
 import java.awt.Color;
@@ -28,7 +27,7 @@ public class Admin_Settings extends javax.swing.JPanel {
 
     private int realUserId;
     private int userId;
-    
+
     public Admin_Settings(int realUserId) {
         initComponents();
         this.realUserId = realUserId;
@@ -63,13 +62,13 @@ public class Admin_Settings extends javax.swing.JPanel {
         sp.revalidate();
         sp.repaint();
     }
-    
+
     private static final String DATABASE_NAME = "database";
     private static final String dbUsername = "root";
     private static final String dbPassword = "admin";
     private static final String MYSQL_SERVER_HOSTNAME = "DESKTOP-MVBR3DH"; // Replace with your MySQL server's hostname
     private static final int MYSQL_SERVER_PORT = 3306;
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -82,6 +81,7 @@ public class Admin_Settings extends javax.swing.JPanel {
         repeatNewPwPasswordField = new swing.PasswordField();
         adminButton3 = new swing.AdminButton();
         showBtn = new swing.AdminButton();
+        toggle1 = new javax.swing.JToggleButton();
         changeSecret1 = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -139,6 +139,18 @@ public class Admin_Settings extends javax.swing.JPanel {
                 showBtnMouseClicked(evt);
             }
         });
+        showBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showBtnActionPerformed(evt);
+            }
+        });
+
+        toggle1.setText("jToggleButton1");
+        toggle1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                toggle1MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout changePasswordLayout = new javax.swing.GroupLayout(changePassword);
         changePassword.setLayout(changePasswordLayout);
@@ -153,7 +165,9 @@ public class Admin_Settings extends javax.swing.JPanel {
                         .addComponent(currentPwPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(showBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(376, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(toggle1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(288, Short.MAX_VALUE))
                     .addGroup(changePasswordLayout.createSequentialGroup()
                         .addGroup(changePasswordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(repeatNewPwPasswordField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -171,8 +185,10 @@ public class Admin_Settings extends javax.swing.JPanel {
                     .addComponent(jLabel11))
                 .addGap(73, 73, 73)
                 .addGroup(changePasswordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(showBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(currentPwPasswordField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(toggle1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(changePasswordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(showBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(currentPwPasswordField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(18, 18, 18)
                 .addComponent(newPwPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -476,19 +492,19 @@ public class Admin_Settings extends javax.swing.JPanel {
             e.printStackTrace();
         }
     }
-    
+
     private boolean restoreDatabase(String databaseName, String dbUsername, String dbPassword, String importPath) {
         try {
             String mysqlPath = "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\\mysql"; // Adjust with your actual path
 
             // Construct the command and arguments
             String[] command = new String[]{
-                    mysqlPath,
-                    "-h" + MYSQL_SERVER_HOSTNAME,
-                    "-P" + MYSQL_SERVER_PORT,
-                    "-u" + dbUsername,
-                    "-p" + dbPassword,
-                    databaseName
+                mysqlPath,
+                "-h" + MYSQL_SERVER_HOSTNAME,
+                "-P" + MYSQL_SERVER_PORT,
+                "-u" + dbUsername,
+                "-p" + dbPassword,
+                databaseName
             };
 
             // Start the process
@@ -505,7 +521,7 @@ public class Admin_Settings extends javax.swing.JPanel {
             return false;
         }
     }
-    
+
     // Helper method to print error stream
     private void printErrorStream(Process process) {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getErrorStream()))) {
@@ -645,7 +661,7 @@ public class Admin_Settings extends javax.swing.JPanel {
 
                     if (secretQuestion.equals(dbSecretQuestion) && secretAnswer.equals(dbSecretAnswer)) {
                         nextScreen();
-                        JOptionPane.showMessageDialog(null, "Incorrect Question or Answer");
+                        JOptionPane.showMessageDialog(null, "Enter New Secret Question/Answer");
                     } else {
                         JOptionPane.showMessageDialog(null, "Incorrect Question or Answer");
                         secretAnswerTextField.setText("");
@@ -804,6 +820,27 @@ public class Admin_Settings extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_adminButton9ActionPerformed
 
+    private void showBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_showBtnActionPerformed
+
+    private void toggle1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_toggle1MouseClicked
+        if (toggle1.isSelected()) {
+            currentPwPasswordField.setEchoChar((char) 0);
+            newPwPasswordField.setEchoChar((char) 0);
+            repeatNewPwPasswordField.setEchoChar((char) 0);
+
+            toggle1.setText("HIDE");
+
+        } else {
+            currentPwPasswordField.setEchoChar('\u25cf');
+            newPwPasswordField.setEchoChar('\u25cf');
+            repeatNewPwPasswordField.setEchoChar('\u25cf');
+
+            toggle1.setText("Show");
+        }
+    }//GEN-LAST:event_toggle1MouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private swing.AdminButton adminButton1;
@@ -836,5 +873,6 @@ public class Admin_Settings extends javax.swing.JPanel {
     private javax.swing.JPanel settingsPanel;
     private swing.AdminButton showBtn;
     private javax.swing.JScrollPane sp;
+    private javax.swing.JToggleButton toggle1;
     // End of variables declaration//GEN-END:variables
 }

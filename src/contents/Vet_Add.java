@@ -1,4 +1,3 @@
-
 package contents;
 
 import java.sql.Connection;
@@ -20,7 +19,7 @@ import swing.ScrollBar;
 public class Vet_Add extends javax.swing.JPanel {
 
     private int realUserId;
-    
+
     public Vet_Add(int realUserId) {
         initComponents();
         String strCodeText = UUID.randomUUID().toString().substring(0, 8).toUpperCase(); // Generate a random 8-character string
@@ -35,7 +34,7 @@ public class Vet_Add extends javax.swing.JPanel {
     private static final String dbPassword = "admin";
     private static final String MYSQL_SERVER_HOSTNAME = "DESKTOP-MVBR3DH"; // Replace with your MySQL server's hostname
     private static final int MYSQL_SERVER_PORT = 3306;
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -207,12 +206,13 @@ public class Vet_Add extends javax.swing.JPanel {
     private void addressTxtFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addressTxtFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_addressTxtFieldActionPerformed
-private boolean isValidNumber(String text) {
+    private boolean isValidNumber(String text) {
         // Check if the text matches the pattern "63#########"
         return text.matches("639\\d{9}");
+
     }
 
- private void clearTextFields() {
+    private void clearTextFields() {
         patientTxtField.setText("");
         bDay.setDate(null);
         weightTxt.setText("");
@@ -228,110 +228,109 @@ private boolean isValidNumber(String text) {
 
     private void vetButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vetButton1ActionPerformed
         String text = numberField.getText();
-                    System.out.println(text);
-                     String realNo = text.replace("+", "").replace("-","");
-                      System.out.println(realNo);
-                    // Validate the text
-                    if (isValidNumber(realNo)) {
-                        addPatient();
-                        numberField.setText("+63-9");
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Invalid number: Must be in Philippine number format '+63-9#########'");
-                    }
+        System.out.println(text);
+        String realNo = text.replace("+", "").replace("-", "");
+        System.out.println(realNo);
+
+        // Validate the text
+        if (isValidNumber(realNo)) {
+            addPatient();
+            numberField.setText("639");
+        } else {
+            JOptionPane.showMessageDialog(null, "Invalid number: Must be in the format '639#########'");
+        }
 
     }//GEN-LAST:event_vetButton1ActionPerformed
     private void addPatient() {
-        
+
         String patientName = patientTxtField.getText();
         java.util.Date bDayVal = bDay.getDate();
-        
+
         String weight = weightTxt.getText();
         String type = typeTxtField.getText();
         String color = colorTxtField.getText();
         String breed = breedTxtField.getText();
         String marks = marksTxtField.getText();
         String sex = sexComboBox.getSelectedItem().toString().equals("MALE") ? "M" : "F";
-        
+
         String clientName = nameTxtField.getText();
         String address = addressTxtField.getText();
-        String contact = numberField.getText();      
+        String contact = numberField.getText();
         String strCodeText = barField.getText();
-        if(patientTxtField.getText().isEmpty() || bDayVal == null || type.isEmpty() || 
-        color.isEmpty() || breed.isEmpty() || marks.isEmpty() || clientName.isEmpty() || 
-        address.isEmpty() || contact.isEmpty()) {
+        if (patientTxtField.getText().isEmpty() || bDayVal == null || type.isEmpty()
+                || color.isEmpty() || breed.isEmpty() || marks.isEmpty() || clientName.isEmpty()
+                || address.isEmpty() || contact.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Error: Complete all text fields");
+        } else {
+            java.sql.Date sqlbDay = new java.sql.Date(bDayVal.getTime());
+            String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
+
+            try {
+                // Establish the database connection
+                Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
+
+                // Check if the client exists
+                String checkClientQuery = "SELECT * FROM client_information WHERE client_name = ?";
+                PreparedStatement checkClientStmt = connection.prepareStatement(checkClientQuery);
+                checkClientStmt.setString(1, clientName);
+                ResultSet clientResultSet = checkClientStmt.executeQuery();
+
+                // If client does not exist, insert into client_information table
+                if (!clientResultSet.next()) {
+                    String insertClientQuery = "INSERT INTO client_information (client_name, address, contact) VALUES (?, ?, ?)";
+                    PreparedStatement insertClientStmt = connection.prepareStatement(insertClientQuery);
+                    insertClientStmt.setString(1, clientName);
+                    insertClientStmt.setString(2, address);
+                    insertClientStmt.setString(3, contact);
+                    insertClientStmt.executeUpdate();
+                }
+
+                // Insert into patient_information table
+                String insertPatientQuery = "INSERT INTO patient_information (patient_name,barcode, weight, sex, type, color, breed, marks, client_name, registration_date, bday) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                PreparedStatement insertPatientStmt = connection.prepareStatement(insertPatientQuery);
+                insertPatientStmt.setString(1, patientName);
+                insertPatientStmt.setString(2, strCodeText);
+                insertPatientStmt.setFloat(3, Float.parseFloat(weight));
+                insertPatientStmt.setString(4, sex);
+                insertPatientStmt.setString(5, type);
+                insertPatientStmt.setString(6, color);
+                insertPatientStmt.setString(7, breed);
+                insertPatientStmt.setString(8, marks);
+                insertPatientStmt.setString(9, clientName);
+                insertPatientStmt.setDate(10, new java.sql.Date(System.currentTimeMillis()));
+                insertPatientStmt.setDate(11, sqlbDay); // Set the current date
+                insertPatientStmt.executeUpdate();
+
+                // Show success message
+                int input = JOptionPane.showOptionDialog(
+                        null,
+                        "Information Added Successfully",
+                        "Add User",
+                        JOptionPane.DEFAULT_OPTION,
+                        JOptionPane.INFORMATION_MESSAGE,
+                        null,
+                        new Object[]{"Yes"},
+                        "Yes"
+                );
+                if (input == JOptionPane.YES_OPTION) {
+                    PatientCard card = new PatientCard(patientName, clientName, contact, strCodeText);
+                    System.out.println(strCodeText);
+                    card.setLocationRelativeTo(null);
+                    card.setVisible(true);
+                    card.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+                }
+                clearTextFields();
+
+                // Close the database connection
+                connection.close();
+            } catch (SQLException e) {
+                // Handle any SQL exceptions
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+            }
         }
-        else{
-        java.sql.Date sqlbDay = new java.sql.Date(bDayVal.getTime());
-        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
-        
-        try {
-            // Establish the database connection
-            Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
-
-            // Check if the client exists
-            String checkClientQuery = "SELECT * FROM client_information WHERE client_name = ?";
-            PreparedStatement checkClientStmt = connection.prepareStatement(checkClientQuery);
-            checkClientStmt.setString(1, clientName);
-            ResultSet clientResultSet = checkClientStmt.executeQuery();
-
-            // If client does not exist, insert into client_information table
-            if (!clientResultSet.next()) {
-                String insertClientQuery = "INSERT INTO client_information (client_name, address, contact) VALUES (?, ?, ?)";
-                PreparedStatement insertClientStmt = connection.prepareStatement(insertClientQuery);
-                insertClientStmt.setString(1, clientName);
-                insertClientStmt.setString(2, address);
-                insertClientStmt.setString(3, contact);
-                insertClientStmt.executeUpdate();
-            }
-
-            // Insert into patient_information table
-            String insertPatientQuery = "INSERT INTO patient_information (patient_name,barcode, weight, sex, type, color, breed, marks, client_name, registration_date, bday) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-            PreparedStatement insertPatientStmt = connection.prepareStatement(insertPatientQuery);
-            insertPatientStmt.setString(1, patientName);
-            insertPatientStmt.setString(2, strCodeText);
-            insertPatientStmt.setFloat(3,  Float.parseFloat(weight));
-            insertPatientStmt.setString(4,sex);
-            insertPatientStmt.setString(5, type);
-            insertPatientStmt.setString(6, color);
-            insertPatientStmt.setString(7, breed);
-            insertPatientStmt.setString(8,marks );
-            insertPatientStmt.setString(9, clientName);
-            insertPatientStmt.setDate(10,  new java.sql.Date(System.currentTimeMillis()));
-            insertPatientStmt.setDate(11,sqlbDay); // Set the current date
-            insertPatientStmt.executeUpdate();
-
-            // Show success message
-             int input = JOptionPane.showOptionDialog(
-  null,
-       "Information Added Successfully",
-        "Add User",
-     JOptionPane.DEFAULT_OPTION,
-    JOptionPane.INFORMATION_MESSAGE,
-          null,
-              new Object[]{"Yes"},
-    "Yes"
-            );
-            if(input == JOptionPane.YES_OPTION)
-            {
-                PatientCard card =  new PatientCard(patientName,clientName,contact,strCodeText);
-                System.out.println(strCodeText);
-                card.setLocationRelativeTo(null);
-                card.setVisible(true);
-                card.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-            }
-            clearTextFields();
-
-            // Close the database connection
-            connection.close();
-        } catch (SQLException e) {
-            // Handle any SQL exceptions
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
-        }}
     }
-    
-    
+
     /**
      * @param args the command line arguments
      */
@@ -367,7 +366,7 @@ private boolean isValidNumber(String text) {
             }
         });
     }
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private swing.TextField addressTxtField;

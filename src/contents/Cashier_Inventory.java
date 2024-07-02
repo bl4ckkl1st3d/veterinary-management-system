@@ -104,6 +104,11 @@ public class Cashier_Inventory extends javax.swing.JPanel {
 
         cashierButton1.setText("Refresh");
         cashierButton1.setRadius(25);
+        cashierButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cashierButton1ActionPerformed(evt);
+            }
+        });
 
         cashierButton2.setText("Save As PDF");
         cashierButton2.setRadius(25);
@@ -190,6 +195,10 @@ public class Cashier_Inventory extends javax.swing.JPanel {
             searchByBar();
         }
     }//GEN-LAST:event_barcodeTxtFieldKeyReleased
+
+    private void cashierButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cashierButton1ActionPerformed
+        loadAllProductInformation();
+    }//GEN-LAST:event_cashierButton1ActionPerformed
     private void loadAllProductInformation() {
         // Database connection details
         String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;

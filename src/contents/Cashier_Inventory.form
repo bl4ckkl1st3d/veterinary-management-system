@@ -110,6 +110,9 @@
                 <Property name="text" type="java.lang.String" value="Refresh"/>
                 <Property name="radius" type="int" value="25"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cashierButton1ActionPerformed"/>
+              </Events>
             </Component>
             <Component class="swing.CashierButton" name="cashierButton2">
               <Properties>

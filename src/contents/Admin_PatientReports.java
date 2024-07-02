@@ -49,6 +49,7 @@ public class Admin_PatientReports extends javax.swing.JPanel {
         this.realUserId = realUserId;
         sp.setVerticalScrollBar(new ScrollBar());
         sp.setHorizontalScrollBar(new ScrollBar());
+        System.out.println(realUserId);
     }
     
     private static final String DATABASE_NAME = "database";
@@ -124,7 +125,6 @@ public class Admin_PatientReports extends javax.swing.JPanel {
         adminButton14 = new swing.AdminButton();
         adminButton15 = new swing.AdminButton();
         adminButton16 = new swing.AdminButton();
-        textField1 = new swing.TextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         sp = new javax.swing.JScrollPane();
@@ -624,8 +624,6 @@ public class Admin_PatientReports extends javax.swing.JPanel {
             }
         });
 
-        textField1.setLabelText("Total");
-
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/back.png"))); // NOI18N
         jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -662,11 +660,8 @@ public class Admin_PatientReports extends javax.swing.JPanel {
                                     .addComponent(dateChooser4, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(26, 26, 26)
                                     .addComponent(adminButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                                        .addComponent(textField1, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(adminButton14, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(adminButton14, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 689, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel20)
@@ -699,18 +694,15 @@ public class Admin_PatientReports extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(adminButton13, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(dateChooser3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(dateChooser4, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)))
+                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(dateChooser3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(dateChooser4, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE))
                 .addGap(28, 28, 28)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(adminButton14, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(82, 82, 82)
+                .addComponent(adminButton14, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(91, 91, 91)
                 .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -1596,106 +1588,95 @@ public class Admin_PatientReports extends javax.swing.JPanel {
     }//GEN-LAST:event_adminButton12ActionPerformed
 
     private void adminButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminButton13ActionPerformed
-        //  // Get the two dates from the date choosers
-        java.util.Date startDate = dateChooser1.getDate();
-        java.util.Date endDate = dateChooser2.getDate();
+       // Get the two dates from the date choosers
+    java.util.Date startDate = dateChooser3.getDate();
+    java.util.Date endDate = dateChooser4.getDate();
 
-        // Validate dates
-        if (startDate == null || endDate == null) {
-            JOptionPane.showMessageDialog(this, "Please select both start and end dates.");
-            return;
+    // Validate dates
+    if (startDate == null || endDate == null) {
+        JOptionPane.showMessageDialog(this, "Please select both start and end dates.");
+        return;
+    }
+    if (startDate.after(endDate)) {
+        JOptionPane.showMessageDialog(this, "The start date must not be after the end date.");
+        return;
+    }
+
+    // Set the start date's time to the beginning of the day (00:00:00)
+    Calendar startCal = Calendar.getInstance();
+    startCal.setTime(startDate);
+    startCal.set(Calendar.HOUR_OF_DAY, 0);
+    startCal.set(Calendar.MINUTE, 0);
+    startCal.set(Calendar.SECOND, 0);
+    startCal.set(Calendar.MILLISECOND, 0);
+    java.sql.Timestamp sqlStartDate = new java.sql.Timestamp(startCal.getTimeInMillis());
+
+    // Set the end date's time to the end of the day (23:59:59)
+    Calendar endCal = Calendar.getInstance();
+    endCal.setTime(endDate);
+    endCal.set(Calendar.HOUR_OF_DAY, 23);
+    endCal.set(Calendar.MINUTE, 59);
+    endCal.set(Calendar.SECOND, 59);
+    endCal.set(Calendar.MILLISECOND, 999);
+    java.sql.Timestamp sqlEndDate = new java.sql.Timestamp(endCal.getTimeInMillis());
+
+    // Database connection details
+    String url = "jdbc:mysql://127.0.0.1:3306/database";
+    String dbUsername = "root";
+    String dbPassword = "admin";
+
+    Connection conn = null;
+    PreparedStatement pstmt = null;
+    ResultSet rs = null;
+
+    try {
+        // Establish a connection to the database
+        conn = DriverManager.getConnection(url, dbUsername, dbPassword);
+
+        // SQL query to retrieve audit logs between the two dates (inclusive of the last day) and sorted by datetime in descending order
+        String sql = "SELECT log_id, userid, event, action_type, datetime FROM audit_logs WHERE datetime BETWEEN ? AND ? ORDER BY datetime DESC";
+
+        // Prepare the statement
+        pstmt = conn.prepareStatement(sql);
+        pstmt.setTimestamp(1, sqlStartDate);
+        pstmt.setTimestamp(2, sqlEndDate);
+
+        // Execute the query
+        rs = pstmt.executeQuery();
+
+        // Clear existing data in the table
+        DefaultTableModel model = (DefaultTableModel) transactionsTable1.getModel();
+        model.setRowCount(0);
+
+        // Populate the table with the retrieved data
+        while (rs.next()) {
+            int logId = rs.getInt("log_id");
+            String userId = rs.getString("userid");
+            String event = rs.getString("event");
+            String actionType = rs.getString("action_type");
+            java.sql.Timestamp dateTime = rs.getTimestamp("datetime");
+
+            // Add the row to the table
+            model.addRow(new Object[]{logId, userId, event, actionType, dateTime});
         }
-        if (startDate.after(endDate)) {
-            JOptionPane.showMessageDialog(this, "The start date must not be after the end date.");
-            return;
+
+        // Inform user if no audit logs were found
+        if (model.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(this, "No audit logs found for the selected date range.");
         }
 
-        // Set the start date's time to the beginning of the day (00:00:00)
-        Calendar startCal = Calendar.getInstance();
-        startCal.setTime(startDate);
-        startCal.set(Calendar.HOUR_OF_DAY, 0);
-        startCal.set(Calendar.MINUTE, 0);
-        startCal.set(Calendar.SECOND, 0);
-        startCal.set(Calendar.MILLISECOND, 0);
-        java.sql.Timestamp sqlStartDate = new java.sql.Timestamp(startCal.getTimeInMillis());
-
-        // Set the end date's time to the end of the day (23:59:59)
-        Calendar endCal = Calendar.getInstance();
-        endCal.setTime(endDate);
-        endCal.set(Calendar.HOUR_OF_DAY, 23);
-        endCal.set(Calendar.MINUTE, 59);
-        endCal.set(Calendar.SECOND, 59);
-        endCal.set(Calendar.MILLISECOND, 999);
-        java.sql.Timestamp sqlEndDate = new java.sql.Timestamp(endCal.getTimeInMillis());
-
-        // Database connection details
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
-
-        Connection conn = null;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
-
+    } catch (SQLException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+    } finally {
         try {
-            // Establish a connection to the database
-            conn = DriverManager.getConnection(url, dbUsername, dbPassword);
-
-            // SQL query to retrieve transactions between the two dates (inclusive of the last day) and sorted by date in descending order
-            String sql = "SELECT receipt_id, transaction_date, total_amount, cashier_name FROM sales_receipts WHERE transaction_date BETWEEN ? AND ? ORDER BY transaction_date DESC";
-
-            // Prepare the statement
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setTimestamp(1, sqlStartDate);
-            pstmt.setTimestamp(2, sqlEndDate);
-
-            // Execute the query
-            rs = pstmt.executeQuery();
-
-            // Clear existing data in the table
-            DefaultTableModel model = (DefaultTableModel) transactionsTable.getModel();
-            model.setRowCount(0);
-
-            // Variable to accumulate the total amount
-            BigDecimal totalSum = BigDecimal.ZERO;
-
-            // Populate the table with the retrieved data
-            while (rs.next()) {
-                int receiptId = rs.getInt("receipt_id");
-                java.sql.Timestamp transactionDate = rs.getTimestamp("transaction_date");
-                BigDecimal totalAmount = rs.getBigDecimal("total_amount");
-                String cashierName = rs.getString("cashier_name");
-
-                // Format the total amount with peso sign
-                String formattedTotalAmount = "₱" + totalAmount.toString();
-
-                // Add the row to the table
-                model.addRow(new Object[]{receiptId, transactionDate, formattedTotalAmount, cashierName});
-
-                // Accumulate the total amount
-                totalSum = totalSum.add(totalAmount);
-            }
-
-            // Inform user if no transactions were found
-            if (model.getRowCount() == 0) {
-                JOptionPane.showMessageDialog(this, "No transactions found for the selected date range.");
-            } else {
-                // Display the sum of total_amount in the text box with peso sign
-                txtTotalSum.setText("₱" + totalSum.toString());
-            }
-
+            if (rs != null) rs.close();
+            if (pstmt != null) pstmt.close();
+            if (conn != null) conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
-        } finally {
-            try {
-                if (rs != null) rs.close();
-                if (pstmt != null) pstmt.close();
-                if (conn != null) conn.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
+    }
     }//GEN-LAST:event_adminButton13ActionPerformed
 
     private void adminButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminButton14ActionPerformed
@@ -1708,13 +1689,13 @@ public class Admin_PatientReports extends javax.swing.JPanel {
             File selectedFolder = fileChooser.getSelectedFile();
 
             // Prepare the data to be written to the PDF
-            DefaultTableModel model = (DefaultTableModel) transactionsTable.getModel();
+            DefaultTableModel model = (DefaultTableModel) transactionsTable1.getModel();
             int columnCount = model.getColumnCount();
             int rowCount = model.getRowCount();
 
             // Get the dates for the sales report header
-            java.util.Date startDate = dateChooser1.getDate();
-            java.util.Date endDate = dateChooser2.getDate();
+            java.util.Date startDate = dateChooser3.getDate();
+            java.util.Date endDate = dateChooser4.getDate();
 
             // Validate dates
             if (startDate == null || endDate == null) {
@@ -1741,7 +1722,7 @@ public class Admin_PatientReports extends javax.swing.JPanel {
                 document.open();
 
                 // Add sales report date range to the document header
-                Paragraph reportHeader = new Paragraph("Sales Report from " + dateFormat.format(startDate) + " to " + dateFormat.format(endDate));
+                Paragraph reportHeader = new Paragraph("Audit Logs from " + dateFormat.format(startDate) + " to " + dateFormat.format(endDate));
                 reportHeader.setAlignment(Element.ALIGN_CENTER);
                 document.add(reportHeader);
                 document.add(Chunk.NEWLINE); // Add a blank line after the header
@@ -1765,8 +1746,6 @@ public class Admin_PatientReports extends javax.swing.JPanel {
                 document.add(table);
 
                 // Add the total amount
-                String totalAmount = txtTotalSum.getText();
-                document.add(new Paragraph("Total Amount: ₱" + totalAmount));
 
                 // Close the document
                 document.close();
@@ -2024,7 +2003,6 @@ public class Admin_PatientReports extends javax.swing.JPanel {
     private javax.swing.JPanel salesPanel;
     private javax.swing.JPanel salesReport;
     private javax.swing.JScrollPane sp;
-    private swing.TextField textField1;
     private com.toedter.calendar.JDateChooser toDate;
     private javax.swing.JTable transactionsTable;
     private javax.swing.JTable transactionsTable1;

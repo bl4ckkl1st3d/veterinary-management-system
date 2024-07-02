@@ -412,7 +412,7 @@ public class Vet_SendSMS extends javax.swing.JPanel {
     }//GEN-LAST:event_vetButton2ActionPerformed
 
     private void vetButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vetButton3ActionPerformed
-        updatedUser();
+        retrievePatients();
     }//GEN-LAST:event_vetButton3ActionPerformed
 
 

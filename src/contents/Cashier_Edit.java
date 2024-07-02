@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.LayoutManager;
 import java.awt.RenderingHints;
+import java.awt.event.KeyEvent;
 import java.math.BigDecimal;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -27,6 +28,11 @@ public class Cashier_Edit extends javax.swing.JPanel {
         sp.setHorizontalScrollBar(new ScrollBar());
         sp.setVerticalScrollBar(new ScrollBar());
     }
+    private static final String DATABASE_NAME = "database";
+    private static final String dbUsername = "root";
+    private static final String dbPassword = "admin";
+    private static final String MYSQL_SERVER_HOSTNAME = "DESKTOP-MVBR3DH"; // Replace with your MySQL server's hostname
+    private static final int MYSQL_SERVER_PORT = 3306;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -80,6 +86,11 @@ public class Cashier_Edit extends javax.swing.JPanel {
         jLabel13.setText("Exp Date");
 
         txtBarcode.setLabelText("Barcode");
+        txtBarcode.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtBarcodeKeyPressed(evt);
+            }
+        });
 
         txtName.setLabelText("Name");
 
@@ -230,7 +241,7 @@ public class Cashier_Edit extends javax.swing.JPanel {
             .addComponent(sp, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
-    private void editProdToDB() {
+private void editProdToDB() {
     // Get the information from the text fields and other components
     String barcode = txtBarcode.getText().trim();
     String name = txtName.getText().trim();
@@ -320,6 +331,16 @@ public class Cashier_Edit extends javax.swing.JPanel {
         return;
     }
     
+    // Validate supplier address and contact
+    if (supplierAddress.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Please enter supplier address.");
+        return;
+    }
+    if (supplierContact.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Please enter supplier contact.");
+        return;
+    }
+
     // Database connection details
     String url = "jdbc:mysql://127.0.0.1:3306/database";
     String dbUsername = "root";
@@ -337,7 +358,30 @@ public class Cashier_Edit extends javax.swing.JPanel {
         // Begin transaction
         conn.setAutoCommit(false);
         
-        // 1. Update product_information table
+        // 1. Update suppliers table
+        String updateSupplierSql = "UPDATE suppliers SET supplier_address = ?, supplier_contact = ? WHERE supplier_name = ?";
+        pstmtSupplier = conn.prepareStatement(updateSupplierSql);
+        pstmtSupplier.setString(1, supplierAddress);
+        pstmtSupplier.setString(2, supplierContact);
+        pstmtSupplier.setString(3, supplierName);
+
+        int rowsAffectedSupplier = pstmtSupplier.executeUpdate();
+        
+        if (rowsAffectedSupplier == 0) {
+            // If supplier does not exist, insert new supplier
+            String insertSupplierSql = "INSERT INTO suppliers (supplier_name, supplier_address, supplier_contact) VALUES (?, ?, ?)";
+            pstmtSupplier = conn.prepareStatement(insertSupplierSql);
+            pstmtSupplier.setString(1, supplierName);
+            pstmtSupplier.setString(2, supplierAddress);
+            pstmtSupplier.setString(3, supplierContact);
+            
+            rowsAffectedSupplier = pstmtSupplier.executeUpdate();
+            if (rowsAffectedSupplier <= 0) {
+                throw new SQLException("Failed to insert new supplier.");
+            }
+        }
+
+        // 2. Update product_information table
         String updateProductSql = "UPDATE product_information SET name = ?, price = ?, stocks = ?, critical_level = ?, perishable = ?, expiration_date = ?, supplier_name = ?, category = ? WHERE barcode = ?";
         
         pstmtProduct = conn.prepareStatement(updateProductSql);
@@ -360,37 +404,6 @@ public class Cashier_Edit extends javax.swing.JPanel {
         
         if (rowsAffectedProduct <= 0) {
             throw new SQLException("Failed to update product information.");
-        }
-        
-        // 2. Update suppliers table (if necessary)
-        String selectSupplierSql = "SELECT supplier_id FROM suppliers WHERE supplier_name = ?";
-        pstmtSupplier = conn.prepareStatement(selectSupplierSql);
-        pstmtSupplier.setString(1, supplierName);
-        
-        rsSupplier = pstmtSupplier.executeQuery();
-        int supplierId;
-        if (rsSupplier.next()) {
-            supplierId = rsSupplier.getInt("supplier_id");
-        } else {
-            // Insert new supplier if not exists
-            String insertSupplierSql = "INSERT INTO suppliers (supplier_name, supplier_address, supplier_contact) VALUES (?, ?, ?)";
-            pstmtSupplier = conn.prepareStatement(insertSupplierSql, Statement.RETURN_GENERATED_KEYS);
-            pstmtSupplier.setString(1, supplierName);
-            pstmtSupplier.setString(2, supplierAddress);
-            pstmtSupplier.setString(3, supplierContact);
-            
-            int rowsAffectedSupplier = pstmtSupplier.executeUpdate();
-            if (rowsAffectedSupplier <= 0) {
-                throw new SQLException("Failed to insert new supplier.");
-            }
-            
-            // Retrieve generated supplier ID
-            ResultSet generatedKeys = pstmtSupplier.getGeneratedKeys();
-            if (generatedKeys.next()) {
-                supplierId = generatedKeys.getInt(1);
-            } else {
-                throw new SQLException("Failed to retrieve new supplier ID.");
-            }
         }
         
         // Commit transaction
@@ -422,7 +435,7 @@ public class Cashier_Edit extends javax.swing.JPanel {
         }
     }
 }
-    
+
     private void rbtnPerishableNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnPerishableNoActionPerformed
         rbtnPerishableYes.setSelected(false);
         rbtnPerishableNo.setSelected(true);
@@ -435,82 +448,270 @@ public class Cashier_Edit extends javax.swing.JPanel {
 
     private void cashierButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cashierButton1ActionPerformed
         // Get the barcode from the text field
-        String barcode = txtBarcode.getText().trim();
+    String barcode = txtBarcode.getText().trim();
 
-        // Database connection details
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
+    // Database connection details
+    String url = "jdbc:mysql://127.0.0.1:3306/database";
+    String dbUsername = "root";
+    String dbPassword = "admin";
 
-        Connection conn = null;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
+    Connection conn = null;
+    PreparedStatement pstmt = null;
+    ResultSet rs = null;
 
-        try {
-            // Establish a connection to the database
-            conn = DriverManager.getConnection(url, dbUsername, dbPassword);
+    try {
+        // Establish a connection to the database
+        conn = DriverManager.getConnection(url, dbUsername, dbPassword);
 
-            // SQL query to retrieve product information
-            String sql = "SELECT * FROM product_information WHERE barcode = ?";
+        // SQL query to retrieve product information
+        String sql = "SELECT * FROM product_information WHERE barcode = ?";
 
-            // Prepare the statement
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, barcode);
+        // Prepare the statement
+        pstmt = conn.prepareStatement(sql);
+        pstmt.setString(1, barcode);
 
-            // Execute the query
-            rs = pstmt.executeQuery();
+        // Execute the query
+        rs = pstmt.executeQuery();
 
-            // Check if product exists
-            if (rs.next()) {
-                // Product details found, retrieve values
-                String name = rs.getString("name");
-                BigDecimal price = rs.getBigDecimal("price");
-                int stocks = rs.getInt("stocks");
-                int criticalLevel = rs.getInt("critical_level");
-                boolean perishable = rs.getBoolean("perishable");
-                Date expirationDate = rs.getDate("expiration_date");
-                String supplierName = rs.getString("supplier_name");
-                String category = rs.getString("category");
+        // Check if product exists
+        if (rs.next()) {
+            // Product details found, retrieve values
+            String name = rs.getString("name");
+            BigDecimal price = rs.getBigDecimal("price");
+            int stocks = rs.getInt("stocks");
+            int criticalLevel = rs.getInt("critical_level");
+            boolean perishable = rs.getBoolean("perishable");
+            Date expirationDate = rs.getDate("expiration_date");
+            String supplierName = rs.getString("supplier_name");
+            String category = rs.getString("category");
 
-                // Display values in corresponding text fields or other components
-                txtName.setText(name);
-                txtPrice.setText(price.toString());
-                txtStocks.setText(String.valueOf(stocks));
-                txtCriticalLevel.setText(String.valueOf(criticalLevel));
-                if (perishable) {
-                    rbtnPerishableYes.setSelected(true);
-                    jDateChooserExpirationDate.setDate(expirationDate);
-                } else {
-                    rbtnPerishableNo.setSelected(true);
-                    jDateChooserExpirationDate.setDate(null);
-                }
-                txtSupplierName.setText(supplierName);
-                cmbCategory.setSelectedItem(category);
-
-                // Inform user that product information is retrieved
-                JOptionPane.showMessageDialog(this, "Product found.");
+            // Display values in corresponding text fields or other components
+            txtName.setText(name);
+            txtPrice.setText(price.toString());
+            txtStocks.setText(String.valueOf(stocks));
+            txtCriticalLevel.setText(String.valueOf(criticalLevel));
+            if (perishable) {
+                rbtnPerishableYes.setSelected(true);
+                jDateChooserExpirationDate.setDate(expirationDate);
             } else {
-                // Product does not exist
-                JOptionPane.showMessageDialog(this, "Product not found.");
+                rbtnPerishableNo.setSelected(true);
+                jDateChooserExpirationDate.setDate(null);
+            }
+            txtSupplierName.setText(supplierName);
+            cmbCategory.setSelectedItem(category);
+
+            // Inform user that product information is retrieved
+            JOptionPane.showMessageDialog(this, "Product found.");
+
+            // Additional functionality: Retrieve supplier details
+            String supplierSql = "SELECT supplier_address, supplier_contact FROM suppliers WHERE supplier_name = ?";
+            PreparedStatement supplierPstmt = conn.prepareStatement(supplierSql);
+            supplierPstmt.setString(1, supplierName);
+            ResultSet supplierRs = supplierPstmt.executeQuery();
+
+            if (supplierRs.next()) {
+                // Supplier details found, retrieve values
+                String supplierAddress = supplierRs.getString("supplier_address");
+                String supplierContact = supplierRs.getString("supplier_contact");
+
+                // Display supplier details in corresponding text fields
+                txtSupplierAddress.setText(supplierAddress);
+                txtSupplierContact.setText(supplierContact);
+            } else {
+                // Supplier not found
+                JOptionPane.showMessageDialog(this, "Supplier details not found.");
             }
 
+            // Close supplier result set and statement
+            supplierRs.close();
+            supplierPstmt.close();
+
+        } else {
+            // Product does not exist
+            JOptionPane.showMessageDialog(this, "Product not found.");
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+    } finally {
+        try {
+            if (rs != null) rs.close();
+            if (pstmt != null) pstmt.close();
+            if (conn != null) conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
-        } finally {
-            try {
-                if (rs != null) rs.close();
-                if (pstmt != null) pstmt.close();
-                if (conn != null) conn.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
+    }
     }//GEN-LAST:event_cashierButton1ActionPerformed
 
     private void cashierButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cashierButton2ActionPerformed
         editProdToDB();
     }//GEN-LAST:event_cashierButton2ActionPerformed
+
+    private void txtBarcodeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBarcodeKeyPressed
+      if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+        boolean found = searchByBarcode();
+        if (found) {
+            // Ask for new quantity input
+            String newQuantityStr = JOptionPane.showInputDialog(this, "Enter the new quantity:");
+            if (newQuantityStr != null && !newQuantityStr.trim().isEmpty()) {
+                try {
+                    int newQuantity = Integer.parseInt(newQuantityStr);
+                    if (newQuantity > 0) {
+                        // Update the stock field
+                        int currentStocks = Integer.parseInt(txtStocks.getText());
+                        int updatedStocks = currentStocks + newQuantity;
+                        txtStocks.setText(String.valueOf(updatedStocks));
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Please enter a positive number.");
+                    }
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(this, "Invalid input. Please enter a valid number.");
+                }
+            }
+        }
+    }
+
+
+
+    }//GEN-LAST:event_txtBarcodeKeyPressed
+private boolean searchByBarcode() {
+    // Get the barcode from the text field
+    String barcode = txtBarcode.getText();
+
+    // Database connection details
+    String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
+
+    Connection conn = null;
+    PreparedStatement pstmt = null;
+    ResultSet rs = null;
+
+    try {
+        // Establish a connection to the database
+        conn = DriverManager.getConnection(url, dbUsername, dbPassword);
+
+        // SQL query to fetch data based on the exact barcode
+        String sql = "SELECT barcode, name, price, stocks, critical_level, perishable, expiration_date, supplier_name FROM product_information WHERE barcode = ?";
+
+        // Prepare the statement
+        pstmt = conn.prepareStatement(sql);
+        pstmt.setString(1, barcode); // Exact match
+
+        // Execute the query
+        rs = pstmt.executeQuery();
+
+        // Check if a match is found
+        if (rs.next()) {
+            // Get the attributes from the result set
+            String name = rs.getString("name");
+            String price = rs.getString("price");
+            int stocks = rs.getInt("stocks");
+            int criticalLevel = rs.getInt("critical_level");
+            boolean perishable = rs.getBoolean("perishable");
+            java.sql.Date expirationDate = rs.getDate("expiration_date");
+            String supplierName = rs.getString("supplier_name");
+
+            // Set the text fields with the retrieved data
+            txtName.setText(name);
+            txtPrice.setText(price);
+            txtStocks.setText(String.valueOf(stocks));
+            txtCriticalLevel.setText(String.valueOf(criticalLevel));
+            if (perishable) {
+                rbtnPerishableYes.setSelected(true);
+                rbtnPerishableNo.setSelected(false);
+            } else {
+                rbtnPerishableNo.setSelected(true);
+                rbtnPerishableYes.setSelected(false);
+            }
+            jDateChooserExpirationDate.setDate(expirationDate);
+            txtSupplierName.setText(supplierName);
+            searchSupplierDetails(supplierName);
+
+            return true;
+        } else {
+            // Clear the fields if no match is found
+            txtName.setText("");
+            txtPrice.setText("");
+            txtStocks.setText("");
+            txtCriticalLevel.setText("");
+            rbtnPerishableYes.setSelected(false);
+            rbtnPerishableNo.setSelected(false);
+            jDateChooserExpirationDate.setDate(null);
+            txtSupplierName.setText("");
+
+            return false;
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        return false;
+    } finally {
+        try {
+            if (rs != null) rs.close();
+            if (pstmt != null) pstmt.close();
+            if (conn != null) conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}
+private void searchSupplierDetails(String supplierName) {
+    // Database connection details
+    String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
+
+    Connection conn = null;
+    PreparedStatement pstmt = null;
+    ResultSet rs = null;
+
+    try {
+        // Establish a connection to the database
+        conn = DriverManager.getConnection(url, dbUsername, dbPassword);
+
+        // SQL query to retrieve supplier information
+        String sql = "SELECT supplier_address, supplier_contact FROM suppliers WHERE supplier_name = ?";
+
+        // Prepare the statement
+        pstmt = conn.prepareStatement(sql);
+        pstmt.setString(1, supplierName);
+
+        // Execute the query
+        rs = pstmt.executeQuery();
+
+        // Check if supplier exists
+        if (rs.next()) {
+            // Supplier details found, retrieve values
+            String supplierAddress = rs.getString("supplier_address");
+            String supplierContact = rs.getString("supplier_contact");
+
+            // Display values in corresponding text fields or other components
+            txtSupplierAddress.setText(supplierAddress);
+            txtSupplierContact.setText(supplierContact);
+        } else {
+            // Supplier does not exist
+            txtSupplierAddress.setText("");
+            txtSupplierContact.setText("");
+            JOptionPane.showMessageDialog(this, "Supplier details not found.");
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+    } finally {
+        try {
+            if (rs != null) rs.close();
+            if (pstmt != null) pstmt.close();
+            if (conn != null) conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+
+
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

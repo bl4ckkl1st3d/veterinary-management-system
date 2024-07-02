@@ -1,10 +1,44 @@
 package contents;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.LayoutManager;
+import java.awt.RenderingHints;
+import java.math.BigDecimal;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import java.sql.*;
+
+import java.util.UUID;
+import com.itextpdf.text.Image;
+import org.krysalis.barcode4j.impl.code39.Code39Bean;
+import org.krysalis.barcode4j.output.bitmap.BitmapCanvasProvider;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import javax.imageio.ImageIO;
+import javax.swing.*;
+
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import javax.swing.table.DefaultTableModel;
+
+import java.util.Date;
 import java.util.UUID;
 import javax.swing.JOptionPane;
 import swing.ScrollBar;
@@ -23,6 +57,11 @@ public class Cashier_Add extends javax.swing.JPanel {
         sp.setVerticalScrollBar(new ScrollBar());
         sp.setHorizontalScrollBar(new ScrollBar());
     }
+    private static final String DATABASE_NAME = "database";
+    private static final String dbUsername = "root";
+    private static final String dbPassword = "admin";
+    private static final String MYSQL_SERVER_HOSTNAME = "DESKTOP-MVBR3DH"; // Replace with your MySQL server's hostname
+    private static final int MYSQL_SERVER_PORT = 3306;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -43,7 +82,7 @@ public class Cashier_Add extends javax.swing.JPanel {
         txtStocks = new swing.TextField();
         rbtnPerishableYes = new javax.swing.JRadioButton();
         rbtnPerishableNo = new javax.swing.JRadioButton();
-        combobox1 = new swing.Combobox();
+        cmbCategory = new swing.Combobox();
         txtSupplierName = new swing.TextField();
         txtSupplierAddress = new swing.TextField();
         txtSupplierContact = new swing.TextField();
@@ -91,15 +130,20 @@ public class Cashier_Add extends javax.swing.JPanel {
             }
         });
 
-        combobox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Food", "Vitamin", "Medicine", "Vaccine", "Grooming", "Accessory", "Toy" }));
-        combobox1.setSelectedIndex(-1);
-        combobox1.setLabelText("Category");
+        cmbCategory.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Food", "Vitamin", "Medicine", "Vaccine", "Grooming", "Accessory", "Toy" }));
+        cmbCategory.setSelectedIndex(-1);
+        cmbCategory.setLabelText("Category");
 
         txtSupplierName.setLabelText("Supplier");
 
         txtSupplierAddress.setLabelText("Supplier Address");
 
         txtSupplierContact.setLabelText("Supplier Contact");
+        txtSupplierContact.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtSupplierContactActionPerformed(evt);
+            }
+        });
 
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel13.setText("Exp Date");
@@ -144,7 +188,7 @@ public class Cashier_Add extends javax.swing.JPanel {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel18)
-                            .addComponent(combobox1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cmbCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -204,7 +248,7 @@ public class Cashier_Add extends javax.swing.JPanel {
                     .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jDateChooserExpirationDate, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(25, 25, 25)
-                .addComponent(combobox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cmbCategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtSupplierName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -339,81 +383,310 @@ public class Cashier_Add extends javax.swing.JPanel {
     }//GEN-LAST:event_cashierButton2ActionPerformed
 
     private void cashierButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cashierButton3ActionPerformed
-        addProdToDB();
+        String barTxt = txtBarcode.getText();
+        int response = JOptionPane.showConfirmDialog(null, "Do you want to print the barcode for this product?", "Confirm",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (response == JOptionPane.YES_OPTION) {
+            System.out.println("User chose Yes.");
+            convertToPDF(barTxt);
+            addProdToDB();
+        } else if (response == JOptionPane.NO_OPTION) {
+            System.out.println("User chose No.");
+            addProdToDB();
+        } else if (response == JOptionPane.CLOSED_OPTION) {
+            JOptionPane.showMessageDialog(null, "User closed the dialog. No action performed.", "Closed", JOptionPane.INFORMATION_MESSAGE);
+            System.out.println("User closed the dialog. No action performed.");
+        }
+
+
     }//GEN-LAST:event_cashierButton3ActionPerformed
-    
-    private void addProdToDB(){
-   // Get the necessary information from the text fields and other input controls
-    String barcode = txtBarcode.getText();
-    String name = txtName.getText();
-    String price = txtPrice.getText();
-    int stocks = Integer.parseInt(txtStocks.getText());
-    int criticalLevel = Integer.parseInt(txtCriticalLevel.getText());
-    boolean perishable = rbtnPerishableYes.isSelected(); // Assuming you have two radio buttons for Yes and No
-    java.util.Date expirationDate = jDateChooserExpirationDate.getDate();
-    
-    // Database connection details
-    String url = "jdbc:mysql://127.0.0.1:3306/database";
-    String dbUsername = "root";
-    String dbPassword = "admin";
-    
-    Connection conn = null;
-    PreparedStatement pstmt = null;
-    
-    try {
-        // Establish a connection to the database
-        conn = DriverManager.getConnection(url, dbUsername, dbPassword);
-        
-        // SQL query to insert data into the product_information table
-        String sql = "INSERT INTO product_information (barcode, name, price, stocks, critical_level, perishable, expiration_date, supplier_name) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-        
-        // Prepare the statement
-        pstmt = conn.prepareStatement(sql);
-        pstmt.setString(1, barcode);
-        pstmt.setString(2, name);
-        pstmt.setBigDecimal(3, new java.math.BigDecimal(price));
-        pstmt.setInt(4, stocks);
-        pstmt.setInt(5, criticalLevel);
-        pstmt.setBoolean(6, perishable);
-        
-        if (perishable) {
-            // Convert the java.util.Date to java.sql.Date if the product is perishable
-            java.sql.Date sqlExpirationDate = new java.sql.Date(expirationDate.getTime());
-            pstmt.setDate(7, sqlExpirationDate);
-        } else {
-            // Set expiration_date to null if the product is not perishable
-            pstmt.setNull(7, java.sql.Types.DATE);
+
+    private void txtSupplierContactActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSupplierContactActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSupplierContactActionPerformed
+
+    private void addProdToDB() {
+        // Get the necessary information from the text fields and other input controls
+        String barcode = txtBarcode.getText().trim();
+        String name = txtName.getText().trim();
+        String priceStr = txtPrice.getText().trim();
+        String stocksStr = txtStocks.getText().trim();
+        String criticalLevelStr = txtCriticalLevel.getText().trim();
+
+        boolean perishable = rbtnPerishableYes.isSelected(); // Assuming you have two radio buttons for Yes and No
+        java.util.Date expirationDate = jDateChooserExpirationDate.getDate();
+        String supplierName = txtSupplierName.getText().trim();
+        String supplierAddress = txtSupplierAddress.getText().trim();
+        String supplierContact = txtSupplierContact.getText().trim();
+        String category = (String) cmbCategory.getSelectedItem(); // Assuming you have a JComboBox for category
+
+        // Validate name
+        if (name.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please enter a product name.");
+            return;
         }
-        
-        pstmt.setString(8, txtSupplierName.getText());
-        
-        // Execute the update
-        int rowsAffected = pstmt.executeUpdate();
-        
-        if (rowsAffected > 0) {
-            JOptionPane.showMessageDialog(this, "Product information added successfully.");
-        }
-        
-    } catch (SQLException e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
-    } finally {
+
+        // Validate price
+        BigDecimal price;
         try {
-            if (pstmt != null) pstmt.close();
-            if (conn != null) conn.close();
+            price = new BigDecimal(priceStr);
+            if (price.compareTo(BigDecimal.ZERO) <= 0) {
+                JOptionPane.showMessageDialog(this, "Price must be a positive number.");
+                return;
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Invalid price format.");
+            return;
+        }
+
+        // Validate stocks
+        int stocks;
+        try {
+            stocks = Integer.parseInt(stocksStr);
+            if (stocks <= 0) {
+                JOptionPane.showMessageDialog(this, "Stocks must be a positive number.");
+                return;
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Invalid stocks format.");
+            return;
+        }
+
+        // Validate critical level
+        int criticalLevel;
+        try {
+            criticalLevel = Integer.parseInt(criticalLevelStr);
+            if (criticalLevel <= 0) {
+                JOptionPane.showMessageDialog(this, "Critical level must be a positive number.");
+                return;
+            }
+            if (criticalLevel > stocks) {
+                JOptionPane.showMessageDialog(this, "Critical level cannot be greater than stocks.");
+                return;
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Invalid critical level format.");
+            return;
+        }
+
+        // Validate perishable
+        if (!rbtnPerishableYes.isSelected() && !rbtnPerishableNo.isSelected()) {
+            JOptionPane.showMessageDialog(this, "Please select if the product is perishable.");
+            return;
+        }
+
+        // Validate expiration date
+        if (perishable && expirationDate != null) {
+            Date today = new Date();
+            if (expirationDate.before(today)) {
+                JOptionPane.showMessageDialog(this, "Expiration date cannot be a past date.");
+                return;
+            }
+        }
+
+        // Validate supplier name, address, and contact
+        if (supplierName.isEmpty() || supplierAddress.isEmpty() || supplierContact.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please enter supplier information.");
+            return;
+        }
+
+        // Validate supplier contact format (11 digits)
+        if (!supplierContact.matches("\\d{11}")) {
+            JOptionPane.showMessageDialog(this, "Supplier contact must be 11 digits.");
+            return;
+        }
+
+        // Database connection details
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
+
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        PreparedStatement checkSupplierStmt = null;
+        ResultSet rs = null;
+
+        try {
+            // Establish a connection to the database
+            conn = DriverManager.getConnection(url, dbUsername, dbPassword);
+
+            // Check if the supplier already exists
+            String checkSupplierSql = "SELECT supplier_id FROM suppliers WHERE supplier_name = ?";
+            checkSupplierStmt = conn.prepareStatement(checkSupplierSql);
+            checkSupplierStmt.setString(1, supplierName);
+            rs = checkSupplierStmt.executeQuery();
+
+            int supplierId = -1;
+            if (rs.next()) {
+                // Supplier exists, get the supplier ID
+                supplierId = rs.getInt("supplier_id");
+            } else {
+                // Supplier does not exist, insert a new supplier
+                String insertSupplierSql = "INSERT INTO suppliers (supplier_name, supplier_address, supplier_contact) VALUES (?, ?, ?)";
+                pstmt = conn.prepareStatement(insertSupplierSql, Statement.RETURN_GENERATED_KEYS);
+                pstmt.setString(1, supplierName);
+                pstmt.setString(2, supplierAddress);
+                pstmt.setString(3, supplierContact);
+                pstmt.executeUpdate();
+
+                // Get the generated supplier ID
+                rs = pstmt.getGeneratedKeys();
+                if (rs.next()) {
+                    supplierId = rs.getInt(1);
+                }
+            }
+
+            // SQL query to insert data into the product_information table
+            String sql = "INSERT INTO product_information (barcode, name, price, stocks, critical_level, perishable, expiration_date, category, supplier_name) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+            // Prepare the statement
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, barcode);
+            pstmt.setString(2, name);
+            pstmt.setBigDecimal(3, price);
+            pstmt.setInt(4, stocks);
+            pstmt.setInt(5, criticalLevel);
+            pstmt.setBoolean(6, perishable);
+
+            if (perishable) {
+                // Convert the java.util.Date to java.sql.Date if the product is perishable
+                java.sql.Date sqlExpirationDate = new java.sql.Date(expirationDate.getTime());
+                pstmt.setDate(7, sqlExpirationDate);
+            } else {
+                // Set expiration_date to null if the product is not perishable
+                pstmt.setNull(7, java.sql.Types.DATE);
+            }
+
+            pstmt.setString(8, category);
+            pstmt.setString(9, supplierName);
+
+            // Execute the update
+            int rowsAffected = pstmt.executeUpdate();
+
+            if (rowsAffected > 0) {
+                JOptionPane.showMessageDialog(this, "Product information added successfully.");
+                clearTextFields();
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (checkSupplierStmt != null) {
+                    checkSupplierStmt.close();
+                }
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
-    
+
+    public InputStream generateCode39Barcode(String barcodeText) {
+        try {
+            Code39Bean bean = new Code39Bean();
+            final int dpi = 150;
+
+            // Configure the barcode generator
+            bean.setModuleWidth(0.2);
+            bean.setWideFactor(3);
+            bean.doQuietZone(false);
+
+            // Create a ByteArrayOutputStream to hold the generated barcode image
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
+            // Generate the barcode
+            BitmapCanvasProvider canvas = new BitmapCanvasProvider(
+                    outputStream, "image/x-png", dpi, BufferedImage.TYPE_BYTE_BINARY, false, 0);
+            bean.generateBarcode(canvas, barcodeText);
+            canvas.finish();
+
+            System.out.println(barcodeText);
+
+            // Convert the generated barcode image to InputStream
+            return new ByteArrayInputStream(outputStream.toByteArray());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
-    
+
+    private void clearTextFields() {
+        txtBarcode.setText("");
+        txtName.setText("");
+        txtPrice.setText("");
+        txtStocks.setText("");
+        txtCriticalLevel.setText("");
+        jDateChooserExpirationDate.setDate(null);
+        txtSupplierName.setText("");
+        txtSupplierAddress.setText("");
+        txtSupplierContact.setText("");
+
+    }
+
+    public void convertToPDF(String barcodeText) {
+        // Open a file chooser to select the folder
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int option = fileChooser.showSaveDialog(null);
+        String prodName = txtName.getText();
+        if (option == JFileChooser.APPROVE_OPTION) {
+            File selectedFolder = fileChooser.getSelectedFile();
+
+            // Define the PDF file path with formatted date range
+            String pdfFileName = "barcode_" + prodName + ".pdf";
+            String pdfFilePath = selectedFolder.getAbsolutePath() + "/" + pdfFileName;
+
+            // Create the PDF document
+            Document document = new Document();
+            try {
+                PdfWriter.getInstance(document, new FileOutputStream(pdfFilePath));
+                document.open();
+
+                Paragraph clinicTitle = new Paragraph("Product barcodes for: " + prodName + "", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16));
+                clinicTitle.setAlignment(Element.ALIGN_CENTER);
+                document.add(clinicTitle);
+                document.add(Chunk.NEWLINE); //
+
+                // Generate and add barcode to the PDF
+                InputStream barcodeInputStream = generateCode39Barcode(barcodeText);
+                if (barcodeInputStream != null) {
+                    BufferedImage bufferedBarcodeImage = ImageIO.read(barcodeInputStream);
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    ImageIO.write(bufferedBarcodeImage, "png", baos);
+                    Image barcodeImage = Image.getInstance(baos.toByteArray());
+                    barcodeImage.setAlignment(Element.ALIGN_CENTER);
+                    document.add(barcodeImage);
+                    document.add(barcodeImage);
+                    document.add(barcodeImage);
+                    document.add(barcodeImage);
+                    document.add(barcodeImage);
+                }
+
+                // Close the document
+                document.close();
+
+                JOptionPane.showMessageDialog(null, "PDF saved successfully as '" + pdfFileName + "'.");
+            } catch (Exception e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+            }
+        }
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private swing.CashierButton cashierButton1;
     private swing.CashierButton cashierButton2;
     private swing.CashierButton cashierButton3;
-    private swing.Combobox combobox1;
+    private swing.Combobox cmbCategory;
     private com.toedter.calendar.JDateChooser jDateChooserExpirationDate;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel17;
