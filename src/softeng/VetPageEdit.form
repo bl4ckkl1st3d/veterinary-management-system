@@ -1132,6 +1132,7 @@
                 <Component class="javax.swing.JToggleButton" name="updateOwnerBtn">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="UPDATE OWNER INFORMATION"/>
+                    <Property name="focusable" type="boolean" value="false"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="updateOwnerBtnActionPerformed"/>
@@ -1140,6 +1141,7 @@
                 <Component class="javax.swing.JToggleButton" name="updateVaccineBtn">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="UPDATE VACCINE HISTORY"/>
+                    <Property name="focusable" type="boolean" value="false"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="updateVaccineBtnActionPerformed"/>

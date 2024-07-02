@@ -57,8 +57,9 @@ public class Vet_Add extends javax.swing.JPanel {
         jScrollPane3 = new javax.swing.JScrollPane();
         barField = new javax.swing.JTextPane();
         jLabel1 = new javax.swing.JLabel();
-        vetButton1 = new swing.VetButton();
+        addBtn = new swing.VetButton();
         bDay = new com.toedter.calendar.JDateChooser();
+        jLabel2 = new javax.swing.JLabel();
 
         jPanel6.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -103,13 +104,15 @@ public class Vet_Add extends javax.swing.JPanel {
 
         jLabel1.setText("Barcode");
 
-        vetButton1.setText("Register");
-        vetButton1.setRadius(25);
-        vetButton1.addActionListener(new java.awt.event.ActionListener() {
+        addBtn.setText("Register");
+        addBtn.setRadius(25);
+        addBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                vetButton1ActionPerformed(evt);
+                addBtnActionPerformed(evt);
             }
         });
+
+        jLabel2.setText("Birth Date");
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -140,8 +143,11 @@ public class Vet_Add extends javax.swing.JPanel {
                             .addComponent(sexComboBox, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
                             .addComponent(colorTxtField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(marksTxtField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(vetButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(bDay, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(addBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(18, 18, 18)
+                                .addComponent(bDay, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                 .addContainerGap(219, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
@@ -153,9 +159,11 @@ public class Vet_Add extends javax.swing.JPanel {
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(36, 36, 36)
+                .addGap(35, 35, 35)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(patientTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(patientTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(bDay, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(25, 25, 25)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -178,7 +186,7 @@ public class Vet_Add extends javax.swing.JPanel {
                 .addGap(25, 25, 25)
                 .addComponent(numberField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(vetButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(30, Short.MAX_VALUE))
         );
 
@@ -200,9 +208,19 @@ public class Vet_Add extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_addressTxtFieldActionPerformed
 
-    private void vetButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vetButton1ActionPerformed
-        addPatient();
-    }//GEN-LAST:event_vetButton1ActionPerformed
+    private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
+        String text = numberField.getText();
+                    System.out.println(text);
+                     String realNo = text.replace("+", "").replace("-","");
+                      System.out.println(realNo);
+                    // Validate the text
+                    if (isValidNumber(realNo)) {
+                        addPatient();
+                        numberField.setText("+63-9");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Invalid number: Must be in Philippine number format '+63-9#########'");
+                    }
+    }//GEN-LAST:event_addBtnActionPerformed
     private void addPatient() {
         
         String patientName = patientTxtField.getText();
@@ -303,11 +321,16 @@ public class Vet_Add extends javax.swing.JPanel {
         breedTxtField.setText("");
         marksTxtField.setText("");
         sexComboBox.setSelectedIndex(-1);
-
         nameTxtField.setText("");
         addressTxtField.setText("");
         numberField.setText("");
     }
+    
+    private boolean isValidNumber(String text) {
+        // Check if the text matches the pattern "63#########"
+        return text.matches("639\\d{9}");
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -346,6 +369,7 @@ public class Vet_Add extends javax.swing.JPanel {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private swing.VetButton addBtn;
     private swing.TextField addressTxtField;
     private com.toedter.calendar.JDateChooser bDay;
     private javax.swing.JTextPane barField;
@@ -353,6 +377,7 @@ public class Vet_Add extends javax.swing.JPanel {
     private swing.TextField colorTxtField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane3;
@@ -363,7 +388,6 @@ public class Vet_Add extends javax.swing.JPanel {
     private swing.Combobox sexComboBox;
     private javax.swing.JScrollPane sp;
     private swing.TextField typeTxtField;
-    private swing.VetButton vetButton1;
     private swing.TextField weightTxt;
     // End of variables declaration//GEN-END:variables
 }

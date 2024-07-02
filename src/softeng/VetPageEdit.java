@@ -36,6 +36,11 @@ public class VetPageEdit extends javax.swing.JFrame {
         this.realUserId = realUserId;
         searchDoctor();
     }
+    private static final String DATABASE_NAME = "database";
+    private static final String dbUsername = "root";
+    private static final String dbPassword = "admin";
+    private static final String MYSQL_SERVER_HOSTNAME = "DESKTOP-MVBR3DH"; // Replace with your MySQL server's hostname
+    private static final int MYSQL_SERVER_PORT = 3306;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -532,6 +537,7 @@ public class VetPageEdit extends javax.swing.JFrame {
         });
 
         updateOwnerBtn.setText("UPDATE OWNER INFORMATION");
+        updateOwnerBtn.setFocusable(false);
         updateOwnerBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 updateOwnerBtnActionPerformed(evt);
@@ -539,6 +545,7 @@ public class VetPageEdit extends javax.swing.JFrame {
         });
 
         updateVaccineBtn.setText("UPDATE VACCINE HISTORY");
+        updateVaccineBtn.setFocusable(false);
         updateVaccineBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 updateVaccineBtnActionPerformed(evt);
@@ -871,9 +878,7 @@ public class VetPageEdit extends javax.swing.JFrame {
         System.out.println("test");
     }//GEN-LAST:event_settingsMouseClicked
     private void searchDoctor() {
-    String url = "jdbc:mysql://127.0.0.1:3306/database";
-    String dbUsername = "root";
-    String dbPassword = "admin";
+    String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
 
     try (Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword)) {
         String query = "SELECT ui.first_name, ui.last_name " +
@@ -919,9 +924,7 @@ public class VetPageEdit extends javax.swing.JFrame {
              JOptionPane.showMessageDialog(null, "Please enter Patient ID");
         }
         else{      
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
 
         try {
             // Establish the database connection
@@ -991,9 +994,7 @@ public class VetPageEdit extends javax.swing.JFrame {
            JOptionPane.showMessageDialog(null, "Please enter Patient ID");
        }
        else{
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
 
         String doctorName = "";
          if(diagnosis.isEmpty()|| treatment.isEmpty() || medications.isEmpty() || docList.isEmpty()) {
@@ -1076,9 +1077,7 @@ public class VetPageEdit extends javax.swing.JFrame {
         }
         
         else{
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
 
         try {
             // Establish the database connection
@@ -1128,9 +1127,7 @@ public class VetPageEdit extends javax.swing.JFrame {
            JOptionPane.showMessageDialog(null, "Please enter Patient ID");
        }
         else{
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
         
         try {
             // Establish the database connection
@@ -1184,9 +1181,7 @@ public class VetPageEdit extends javax.swing.JFrame {
         String sex = sexComboBox.getSelectedItem().toString().equalsIgnoreCase("MALE") ? "M" : "F";
         java.sql.Date sqlbDay = new java.sql.Date(bDayVal.getTime());
         // Database connection details
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
 
         try {
             // Establish the database connection
@@ -1237,9 +1232,7 @@ public class VetPageEdit extends javax.swing.JFrame {
         String contact = contactTxtField.getText();
 
         // Database connection details
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
+       String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
        
         try {
             // Establish the database connection
@@ -1257,13 +1250,7 @@ public class VetPageEdit extends javax.swing.JFrame {
 
             if (rowsAffected > 0) {
                 JOptionPane.showMessageDialog(null, "Client information updated successfully.");           
-                clearTextFields();
-                diagnosisTxtField.setText("");
-                treatmentTxtField.setText("");
-                medicationTxtField.setText("");
-                vaccineNameTxtField.setText("");
-                vaccinationDate.setDate(null);
-                dueDate.setDate(null);
+                searchPatient();
             } else {
                 JOptionPane.showMessageDialog(null, "Failed to update client information.");
             }
@@ -1291,9 +1278,7 @@ public class VetPageEdit extends javax.swing.JFrame {
         java.sql.Date sqlVaccinationDate = new java.sql.Date(vaccinationDateValue.getTime());
         java.sql.Date sqlDueDate = new java.sql.Date(dueDateValue.getTime());
 
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
 
         String administeredBy = "";
 
@@ -1318,19 +1303,19 @@ public class VetPageEdit extends javax.swing.JFrame {
             }
 
             // Query to insert the vaccine information
-            String vaccineQuery = "INSERT INTO vaccine_history (barcode, vaccine_name, vaccination_date, next_due_date, administered_by) VALUES (?, ?, ?, ?, ?)";
+            String vaccineQuery = "INSERT INTO vaccine_history (barcode, vaccine_name, vaccination_date, next_due_date, administered_by,reminded) VALUES (?, ?, ?, ?, ?,?)";
             PreparedStatement vaccineStatement = connection.prepareStatement(vaccineQuery);
             vaccineStatement.setString(1, patientId);
             vaccineStatement.setString(2, vaccineName);
             vaccineStatement.setDate(3, sqlVaccinationDate);
             vaccineStatement.setDate(4, sqlDueDate);
             vaccineStatement.setString(5, docVacc);
+            vaccineStatement.setString(6,"NO");
 
             int rowsAffected = vaccineStatement.executeUpdate();
 
             if (rowsAffected > 0) {
                 JOptionPane.showMessageDialog(null, "Vaccine information updated successfully.");
-                clearTextFields();
                 vaccineNameTxtField.setText("");
                 vaccinationDate.setDate(null);
                 dueDate.setDate(null);

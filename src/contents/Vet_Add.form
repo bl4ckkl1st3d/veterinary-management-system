@@ -69,8 +69,12 @@
                                   <Component id="sexComboBox" pref="300" max="32767" attributes="0"/>
                                   <Component id="colorTxtField" max="32767" attributes="0"/>
                                   <Component id="marksTxtField" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="vetButton1" max="32767" attributes="0"/>
-                                  <Component id="bDay" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="addBtn" max="32767" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="bDay" max="32767" attributes="0"/>
+                                  </Group>
                               </Group>
                           </Group>
                       </Group>
@@ -88,9 +92,12 @@
                           <Component id="jLabel1" min="-2" pref="58" max="-2" attributes="0"/>
                           <Component id="jScrollPane3" min="-2" pref="47" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="patientTxtField" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="patientTxtField" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel2" alignment="3" min="-2" pref="58" max="-2" attributes="0"/>
+                          </Group>
                           <Component id="bDay" min="-2" pref="50" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
@@ -117,7 +124,7 @@
                       <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                       <Component id="numberField" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="vetButton1" min="-2" pref="36" max="-2" attributes="0"/>
+                      <Component id="addBtn" min="-2" pref="36" max="-2" attributes="0"/>
                       <EmptySpace pref="30" max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -224,16 +231,21 @@
                 <Property name="text" type="java.lang.String" value="Barcode"/>
               </Properties>
             </Component>
-            <Component class="swing.VetButton" name="vetButton1">
+            <Component class="swing.VetButton" name="addBtn">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Register"/>
                 <Property name="radius" type="int" value="25"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="vetButton1ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addBtnActionPerformed"/>
               </Events>
             </Component>
             <Component class="com.toedter.calendar.JDateChooser" name="bDay">
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel2">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Birth Date"/>
+              </Properties>
             </Component>
           </SubComponents>
         </Container>
