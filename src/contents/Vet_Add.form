@@ -61,16 +61,16 @@
                                   <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
                                       <Component id="nameTxtField" alignment="0" max="32767" attributes="0"/>
                                       <Component id="addressTxtField" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="contactTxtField" alignment="1" pref="300" max="32767" attributes="0"/>
+                                      <Component id="numberField" alignment="1" pref="300" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace min="-2" pref="131" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Component id="sexComboBox" pref="300" max="32767" attributes="0"/>
-                                  <Component id="ageTxt" alignment="0" max="32767" attributes="0"/>
                                   <Component id="colorTxtField" max="32767" attributes="0"/>
                                   <Component id="marksTxtField" alignment="1" max="32767" attributes="0"/>
                                   <Component id="vetButton1" max="32767" attributes="0"/>
+                                  <Component id="bDay" alignment="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -89,9 +89,9 @@
                           <Component id="jScrollPane3" min="-2" pref="47" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="ageTxt" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="patientTxtField" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="patientTxtField" min="-2" max="-2" attributes="0"/>
+                          <Component id="bDay" min="-2" pref="50" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -115,7 +115,7 @@
                       <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                       <Component id="addressTxtField" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
-                      <Component id="contactTxtField" min="-2" max="-2" attributes="0"/>
+                      <Component id="numberField" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="vetButton1" min="-2" pref="36" max="-2" attributes="0"/>
                       <EmptySpace pref="30" max="32767" attributes="0"/>
@@ -172,11 +172,6 @@
                 <Property name="labelText" type="java.lang.String" value="Color"/>
               </Properties>
             </Component>
-            <Component class="swing.TextField" name="ageTxt">
-              <Properties>
-                <Property name="labelText" type="java.lang.String" value="Age"/>
-              </Properties>
-            </Component>
             <Component class="swing.Combobox" name="sexComboBox">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
@@ -202,7 +197,7 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addressTxtFieldActionPerformed"/>
               </Events>
             </Component>
-            <Component class="swing.TextField" name="contactTxtField">
+            <Component class="swing.TextField" name="numberField">
               <Properties>
                 <Property name="labelText" type="java.lang.String" value="Contact No."/>
               </Properties>
@@ -237,6 +232,8 @@
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="vetButton1ActionPerformed"/>
               </Events>
+            </Component>
+            <Component class="com.toedter.calendar.JDateChooser" name="bDay">
             </Component>
           </SubComponents>
         </Container>

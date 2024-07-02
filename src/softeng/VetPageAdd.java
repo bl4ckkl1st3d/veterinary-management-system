@@ -32,6 +32,11 @@ public class VetPageAdd extends javax.swing.JFrame {
         barField.setText(strCodeText);
         this.realUserId = realUserId;
     }
+     private static final String DATABASE_NAME = "database";
+    private static final String dbUsername = "root";
+    private static final String dbPassword = "admin";
+    private static final String MYSQL_SERVER_HOSTNAME = "DESKTOP-MVBR3DH"; // Replace with your MySQL server's hostname
+    private static final int MYSQL_SERVER_PORT = 3306;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -83,12 +88,12 @@ public class VetPageAdd extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         addressTxtField = new javax.swing.JTextArea();
         jLabel23 = new javax.swing.JLabel();
-        contactTxtField = new javax.swing.JTextField();
         addBtn = new javax.swing.JButton();
         bDay = new com.toedter.calendar.JDateChooser();
         jScrollPane3 = new javax.swing.JScrollPane();
         barField = new javax.swing.JTextPane();
         jLabel24 = new javax.swing.JLabel();
+        numberField = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -411,8 +416,6 @@ public class VetPageAdd extends javax.swing.JFrame {
         jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel23.setText("Address");
 
-        contactTxtField.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-
         addBtn.setText("Register");
         addBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -427,6 +430,13 @@ public class VetPageAdd extends javax.swing.JFrame {
         jLabel24.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel24.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel24.setText("Patient Name");
+
+        numberField.setText("+63-9");
+        numberField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                numberFieldActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -443,11 +453,15 @@ public class VetPageAdd extends javax.swing.JFrame {
                             .addComponent(jLabel22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel21, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel23, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 476, Short.MAX_VALUE)
-                            .addComponent(nameTxtField)
-                            .addComponent(contactTxtField, javax.swing.GroupLayout.Alignment.LEADING))))
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 476, Short.MAX_VALUE)
+                                    .addComponent(nameTxtField)))
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addGap(26, 26, 26)
+                                .addComponent(numberField, javax.swing.GroupLayout.PREFERRED_SIZE, 468, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(94, 94, 94))
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -558,7 +572,7 @@ public class VetPageAdd extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(contactTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(numberField, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(171, Short.MAX_VALUE))
@@ -621,7 +635,7 @@ public class VetPageAdd extends javax.swing.JFrame {
     }//GEN-LAST:event_editPatientMouseReleased
 
     private void addPatientMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addPatientMouseClicked
-
+        
     }//GEN-LAST:event_addPatientMouseClicked
 
     private void sendMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sendMouseClicked
@@ -650,8 +664,7 @@ public class VetPageAdd extends javax.swing.JFrame {
         
         String clientName = nameTxtField.getText();
         String address = addressTxtField.getText();
-        String contact = contactTxtField.getText();
-      
+        String contact = numberField.getText();      
         String strCodeText = barField.getText();
         if(patientTxtField.getText().isEmpty() || bDayVal == null || type.isEmpty() || 
         color.isEmpty() || breed.isEmpty() || marks.isEmpty() || clientName.isEmpty() || 
@@ -660,9 +673,7 @@ public class VetPageAdd extends javax.swing.JFrame {
         }
         else{
         java.sql.Date sqlbDay = new java.sql.Date(bDayVal.getTime());
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
         
         try {
             // Establish the database connection
@@ -730,9 +741,23 @@ public class VetPageAdd extends javax.swing.JFrame {
         }}
     }
     private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
-        addPatient();
-    }//GEN-LAST:event_addBtnActionPerformed
+      String text = numberField.getText();
+                    System.out.println(text);
+                     String realNo = text.replace("+", "").replace("-","");
+                      System.out.println(realNo);
+                    // Validate the text
+                    if (isValidNumber(realNo)) {
+                        addPatient();
+                        numberField.setText("+63-9");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Invalid number: Must be in Philippine number format '+63-9#########'");
+                    }
 
+    }//GEN-LAST:event_addBtnActionPerformed
+  private boolean isValidNumber(String text) {
+        // Check if the text matches the pattern "63#########"
+        return text.matches("639\\d{9}");
+    }
     private void logoutMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseReleased
         int response = JOptionPane.showConfirmDialog(this, "Do you want to log out?", "Confirm Logout", JOptionPane.YES_NO_OPTION);
         if (response == JOptionPane.YES_OPTION) {
@@ -742,6 +767,10 @@ public class VetPageAdd extends javax.swing.JFrame {
             // User clicked 'No' or closed the dialog, do nothing
         }        // TODO add your handling code here:
     }//GEN-LAST:event_logoutMouseReleased
+
+    private void numberFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_numberFieldActionPerformed
+
+    }//GEN-LAST:event_numberFieldActionPerformed
     private void clearTextFields() {
         patientTxtField.setText("");
         bDay.setDate(null);
@@ -751,10 +780,9 @@ public class VetPageAdd extends javax.swing.JFrame {
         breedTxtField.setText("");
         marksTxtField.setText("");
         sexComboBox.setSelectedIndex(-1);
-
         nameTxtField.setText("");
         addressTxtField.setText("");
-        contactTxtField.setText("");
+        numberField.setText("");
     }
     /**
      * @param args the command line arguments
@@ -801,7 +829,6 @@ public class VetPageAdd extends javax.swing.JFrame {
     private javax.swing.JLabel barcodeLabel;
     private javax.swing.JTextField breedTxtField;
     private javax.swing.JTextField colorTxtField;
-    private javax.swing.JTextField contactTxtField;
     private javax.swing.JPanel editPatient;
     private javax.swing.JPanel help;
     private javax.swing.JLabel jLabel1;
@@ -833,6 +860,7 @@ public class VetPageAdd extends javax.swing.JFrame {
     private javax.swing.JPanel logout;
     private javax.swing.JTextField marksTxtField;
     private javax.swing.JTextField nameTxtField;
+    private javax.swing.JFormattedTextField numberField;
     private javax.swing.JTextField patientTxtField;
     private javax.swing.JPanel searchPatient;
     private javax.swing.JPanel send;

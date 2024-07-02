@@ -34,7 +34,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import jnafilechooser.api.JnaFileChooser;
 import swing.ScrollBar;
 
 /**
