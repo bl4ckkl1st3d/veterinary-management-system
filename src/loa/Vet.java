@@ -1,11 +1,15 @@
 
 package loa;
 
+import contents.About;
+import contents.Help;
+import contents.Settings;
 import contents.Test1;
 import contents.Test2;
 import contents.Vet_Add;
 import contents.Vet_Edit;
 import contents.Vet_Search;
+import contents.Vet_SendSMS;
 import event.EventMenuSelected;
 import java.awt.Color;
 import java.awt.Point;
@@ -23,8 +27,12 @@ public class Vet extends javax.swing.JFrame {
 
     private Test1 home;
     private Vet_Search search;
-    private Vet_Edit edit;
     private Vet_Add add;
+    private Vet_Edit edit;
+    private Vet_SendSMS sendSMS;
+    private Settings settings;
+    private Help help;
+    private About about;
     private int userId;
     private Point initialClick;
     
@@ -36,6 +44,10 @@ public class Vet extends javax.swing.JFrame {
         search = new Vet_Search(0);
         edit = new Vet_Edit(0);
         add = new Vet_Add(0);
+        sendSMS = new Vet_SendSMS(0);
+        settings = new Settings(0);
+        help = new Help();
+        about = new About();
         
         vet_Menu.initMoving(Vet.this);
         vet_Menu.changeWelcome(userId);
@@ -49,6 +61,14 @@ public class Vet extends javax.swing.JFrame {
                     setForm(add);
                 } else if (index == 4){
                     setForm(edit);
+                } else if (index == 6){
+                    setForm(sendSMS);
+                } else if (index == 8){
+                    setForm(settings);
+                } else if (index == 10){
+                    setForm(help);  
+                } else if (index == 12){
+                    setForm(about);
                 } else if (index == 14){
                     int response = JOptionPane.showConfirmDialog(null, "Are you sure you want to log out?", "Confirm Logout", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                     if (response == JOptionPane.YES_OPTION) {

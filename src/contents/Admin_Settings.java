@@ -1,3 +1,4 @@
+
 package contents;
 
 import java.awt.Color;
@@ -11,16 +12,24 @@ import javax.swing.JPanel;
 import java.sql.*;
 import static softeng.login.sha256;
 import swing.ScrollBar;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.JFileChooser;
 
 /**
  *
  * @author Richard Reynald
  */
-public class Settings extends javax.swing.JPanel {
+public class Admin_Settings extends javax.swing.JPanel {
 
     private int realUserId;
+    private int userId;
     
-    public Settings(int realUserId) {
+    public Admin_Settings(int realUserId) {
         initComponents();
         this.realUserId = realUserId;
         addPanelToScrollPane();
@@ -55,6 +64,12 @@ public class Settings extends javax.swing.JPanel {
         sp.repaint();
     }
     
+    private static final String DATABASE_NAME = "database";
+    private static final String dbUsername = "root";
+    private static final String dbPassword = "admin";
+    private static final String MYSQL_SERVER_HOSTNAME = "DESKTOP-MVBR3DH"; // Replace with your MySQL server's hostname
+    private static final int MYSQL_SERVER_PORT = 3306;
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -79,11 +94,16 @@ public class Settings extends javax.swing.JPanel {
         newSecretQuestionComboBox = new swing.Combobox();
         newSecretAnswerTextField = new swing.TextField();
         adminButton5 = new swing.AdminButton();
+        backup = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        adminButton8 = new swing.AdminButton();
+        adminButton9 = new swing.AdminButton();
         sp = new javax.swing.JScrollPane();
         settingsPanel = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
         adminButton1 = new swing.AdminButton();
         adminButton2 = new swing.AdminButton();
+        adminButton7 = new swing.AdminButton();
 
         changePassword.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -280,6 +300,56 @@ public class Settings extends javax.swing.JPanel {
                 .addContainerGap(195, Short.MAX_VALUE))
         );
 
+        backup.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/back.png"))); // NOI18N
+        jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel5MouseClicked(evt);
+            }
+        });
+
+        adminButton8.setText("Backup");
+        adminButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                adminButton8ActionPerformed(evt);
+            }
+        });
+
+        adminButton9.setText("Restore");
+        adminButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                adminButton9ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout backupLayout = new javax.swing.GroupLayout(backup);
+        backup.setLayout(backupLayout);
+        backupLayout.setHorizontalGroup(
+            backupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(backupLayout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addComponent(jLabel5)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backupLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(backupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(adminButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(adminButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(50, Short.MAX_VALUE))
+        );
+        backupLayout.setVerticalGroup(
+            backupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(backupLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jLabel5)
+                .addGap(18, 18, 18)
+                .addComponent(adminButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(25, 25, 25)
+                .addComponent(adminButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(87, Short.MAX_VALUE))
+        );
+
         settingsPanel.setBackground(new java.awt.Color(255, 255, 255));
         settingsPanel.setPreferredSize(new java.awt.Dimension(1007, 714));
 
@@ -303,28 +373,39 @@ public class Settings extends javax.swing.JPanel {
             }
         });
 
+        adminButton7.setText("Backup");
+        adminButton7.setRadius(50);
+        adminButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                adminButton7ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout settingsPanelLayout = new javax.swing.GroupLayout(settingsPanel);
         settingsPanel.setLayout(settingsPanelLayout);
         settingsPanelLayout.setHorizontalGroup(
             settingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, settingsPanelLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(settingsPanelLayout.createSequentialGroup()
+                .addGap(0, 327, Short.MAX_VALUE)
                 .addGroup(settingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(adminButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(adminButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(adminButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(333, Short.MAX_VALUE))
         );
         settingsPanelLayout.setVerticalGroup(
             settingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, settingsPanelLayout.createSequentialGroup()
                 .addGap(50, 50, 50)
                 .addComponent(jLabel12)
-                .addGap(37, 37, 37)
+                .addGap(25, 25, 25)
+                .addComponent(adminButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(25, 25, 25)
                 .addComponent(adminButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
+                .addGap(25, 25, 25)
                 .addComponent(adminButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(371, Short.MAX_VALUE))
+                .addGap(194, 194, 194))
         );
 
         sp.setViewportView(settingsPanel);
@@ -333,14 +414,109 @@ public class Settings extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(sp)
+            .addComponent(sp, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(sp)
+            .addComponent(sp, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
+    private void clearPasswordFields() {
+        currentPwPasswordField.setText("");
+        newPwPasswordField.setText("");
+        repeatNewPwPasswordField.setText("");
+    }
 
+    public void addPasswordChangeAuditLog(int userId) {
+        String url = "jdbc:mysql://127.0.0.1:3306/database";
+        String dbUsername = "root";
+        String dbPassword = "admin";
+
+        try (Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword)) {
+            // Prepare the SQL query to add password change audit log
+            String query = "INSERT INTO audit_logs (userid, event, action_type) VALUES (?, 'user changed password', 'password_change')";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, userId);
+
+            // Execute the query
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                System.out.println("Password change audit log added successfully.");
+            } else {
+                System.out.println("Failed to add password change audit log.");
+            }
+        } catch (SQLException e) {
+            // Handle any SQL exceptions
+            e.printStackTrace();
+        }
+    }
+
+    public void addSecretQuestionChangeAuditLog(int userId) {
+        String url = "jdbc:mysql://127.0.0.1:3306/database";
+        String dbUsername = "root";
+        String dbPassword = "admin";
+
+        try (Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword)) {
+            // Prepare the SQL query to add secret question change audit log
+            String query = "INSERT INTO audit_logs (userid, event, action_type) VALUES (?, 'user changed secret question', 'secret_question_change')";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, userId);
+
+            // Execute the query
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                System.out.println("Secret question change audit log added successfully.");
+            } else {
+                System.out.println("Failed to add secret question change audit log.");
+            }
+        } catch (SQLException e) {
+            // Handle any SQL exceptions
+            e.printStackTrace();
+        }
+    }
+    
+    private boolean restoreDatabase(String databaseName, String dbUsername, String dbPassword, String importPath) {
+        try {
+            String mysqlPath = "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\\mysql"; // Adjust with your actual path
+
+            // Construct the command and arguments
+            String[] command = new String[]{
+                    mysqlPath,
+                    "-h" + MYSQL_SERVER_HOSTNAME,
+                    "-P" + MYSQL_SERVER_PORT,
+                    "-u" + dbUsername,
+                    "-p" + dbPassword,
+                    databaseName
+            };
+
+            // Start the process
+            ProcessBuilder processBuilder = new ProcessBuilder(command);
+            processBuilder.redirectInput(ProcessBuilder.Redirect.from(new File(importPath)));
+
+            Process process = processBuilder.start();
+            int exitCode = process.waitFor();
+
+            return exitCode == 0;
+
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    // Helper method to print error stream
+    private void printErrorStream(Process process) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getErrorStream()))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     private void adminButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminButton1ActionPerformed
         sp.setViewportView(null);
 
@@ -525,61 +701,109 @@ public class Settings extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
         }
     }//GEN-LAST:event_adminButton5ActionPerformed
-    private void clearPasswordFields() {
-        currentPwPasswordField.setText("");
-        newPwPasswordField.setText("");
-        repeatNewPwPasswordField.setText("");
-    }
 
-    public void addPasswordChangeAuditLog(int userId) {
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
+    private void adminButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminButton7ActionPerformed
+        sp.setViewportView(null);
+
+        // Add jPanel5 to the scroll pane
+        sp.setViewportView(backup);
+
+        // Refresh the scroll pane to ensure it displays the new content
+        sp.revalidate();
+        sp.repaint();
+    }//GEN-LAST:event_adminButton7ActionPerformed
+
+    private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
+        addPanelToScrollPane();
+    }//GEN-LAST:event_jLabel5MouseClicked
+
+    private void adminButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminButton8ActionPerformed
+        // Create a file chooser dialog
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Choose Backup Location");
+        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY); // Only directories
+
+        // Show the file chooser dialog
+        int userSelection = fileChooser.showSaveDialog(null);
+
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File selectedDirectory = fileChooser.getSelectedFile();
+
+            // Generate file name with date
+            String date = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+            String exportPath = selectedDirectory.getAbsolutePath() + File.separator + "backup_" + date + ".sql";
+
+            try {
+                String mysqlDumpPath = "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\\mysqldump"; // Adjust with your actual path
+
+                // Construct the command and arguments
+                String[] command = new String[]{
+                    mysqlDumpPath,
+                    "--single-transaction",
+                    "-h" + MYSQL_SERVER_HOSTNAME,
+                    "-P" + MYSQL_SERVER_PORT,
+                    "-u" + dbUsername,
+                    "-p" + dbPassword,
+                    DATABASE_NAME
+                };
+
+                // Redirect output to selected file
+                ProcessBuilder processBuilder = new ProcessBuilder(command);
+                processBuilder.redirectOutput(ProcessBuilder.Redirect.to(new File(exportPath)));
+
+                // Start the process
+                Process process = processBuilder.start();
+                int exitCode = process.waitFor();
+
+                // Check command execution success
+                if (exitCode == 0) {
+                    JOptionPane.showMessageDialog(null, "Backup created successfully at:\n" + exportPath);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error creating backup. Exit code: " + exitCode);
+                    printErrorStream(process);
+                }
+
+            } catch (IOException | InterruptedException e) {
+                e.printStackTrace();
+            }
+        } else if (userSelection == JFileChooser.CANCEL_OPTION) {
+            System.out.println("Backup operation canceled.");
+        } else if (userSelection == JFileChooser.ERROR_OPTION) {
+            System.out.println("Error selecting backup location.");
+        }
+    }//GEN-LAST:event_adminButton8ActionPerformed
+
+    private void adminButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminButton9ActionPerformed
+        String databaseName = "database"; // Replace with your database name
         String dbUsername = "root";
         String dbPassword = "admin";
 
-        try (Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword)) {
-            // Prepare the SQL query to add password change audit log
-            String query = "INSERT INTO audit_logs (userid, event, action_type) VALUES (?, 'user changed password', 'password_change')";
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1, userId);
+        // Create a file chooser dialog
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Choose Restore File");
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 
-            // Execute the query
-            int rowsAffected = preparedStatement.executeUpdate();
+        // Show the file chooser dialog
+        int userSelection = fileChooser.showOpenDialog(null);
 
-            if (rowsAffected > 0) {
-                System.out.println("Password change audit log added successfully.");
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            String importPath = selectedFile.getAbsolutePath();
+            // Call restoreDatabase method
+            boolean restoreSuccess = restoreDatabase(databaseName, dbUsername, dbPassword, importPath);
+
+            if (restoreSuccess) {
+                JOptionPane.showMessageDialog(null, "Database restored successfully from:\n" + importPath);
             } else {
-                System.out.println("Failed to add password change audit log.");
+                JOptionPane.showMessageDialog(null, "Error restoring database.");
             }
-        } catch (SQLException e) {
-            // Handle any SQL exceptions
-            e.printStackTrace();
+        } else if (userSelection == JFileChooser.CANCEL_OPTION) {
+            System.out.println("Restore operation canceled.");
+        } else if (userSelection == JFileChooser.ERROR_OPTION) {
+            System.out.println("Error selecting restore file.");
         }
-    }
+    }//GEN-LAST:event_adminButton9ActionPerformed
 
-    public void addSecretQuestionChangeAuditLog(int userId) {
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
-
-        try (Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword)) {
-            // Prepare the SQL query to add secret question change audit log
-            String query = "INSERT INTO audit_logs (userid, event, action_type) VALUES (?, 'user changed secret question', 'secret_question_change')";
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1, userId);
-
-            // Execute the query
-            int rowsAffected = preparedStatement.executeUpdate();
-
-            if (rowsAffected > 0) {
-                System.out.println("Secret question change audit log added successfully.");
-            } else {
-                System.out.println("Failed to add secret question change audit log.");
-            }
-        } catch (SQLException e) {
-            // Handle any SQL exceptions
-            e.printStackTrace();
-        }
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private swing.AdminButton adminButton1;
@@ -587,6 +811,10 @@ public class Settings extends javax.swing.JPanel {
     private swing.AdminButton adminButton3;
     private swing.AdminButton adminButton4;
     private swing.AdminButton adminButton5;
+    private swing.AdminButton adminButton7;
+    private swing.AdminButton adminButton8;
+    private swing.AdminButton adminButton9;
+    private javax.swing.JPanel backup;
     private javax.swing.JPanel changePassword;
     private javax.swing.JPanel changeSecret1;
     private javax.swing.JPanel changeSecret2;
@@ -598,6 +826,7 @@ public class Settings extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel5;
     private swing.PasswordField newPwPasswordField;
     private swing.TextField newSecretAnswerTextField;
     private swing.Combobox newSecretQuestionComboBox;

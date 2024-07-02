@@ -46,17 +46,8 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <EmptySpace min="-2" pref="75" max="-2" attributes="0"/>
-                              <Component id="addBtn" min="-2" pref="455" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <EmptySpace pref="469" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                      <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -65,8 +56,6 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                       <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="addBtn" min="-2" pref="52" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -94,15 +83,16 @@
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                      <Component id="cashierButton3" alignment="0" max="32767" attributes="0"/>
+                                      <Group type="102" alignment="0" attributes="0">
                                           <Group type="103" groupAlignment="1" max="-2" attributes="0">
                                               <Component id="txtSupplierContact" alignment="0" pref="300" max="32767" attributes="0"/>
                                               <Component id="txtSupplierAddress" alignment="0" max="32767" attributes="0"/>
                                               <Component id="txtSupplierName" alignment="0" max="32767" attributes="0"/>
                                           </Group>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="searchSupplier" min="-2" pref="98" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="cashierButton2" max="32767" attributes="0"/>
                                       </Group>
                                       <Group type="102" alignment="0" attributes="0">
                                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -120,17 +110,15 @@
                                               </Group>
                                               <Component id="txtBarcode" alignment="0" max="32767" attributes="0"/>
                                           </Group>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="1" attributes="0">
-                                              <Component id="jDateChooserExpirationDate" alignment="0" min="-2" pref="219" max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="txtCriticalLevel" min="-2" pref="219" max="-2" attributes="0"/>
-                                                  <Component id="generateBar" min="-2" max="-2" attributes="0"/>
-                                              </Group>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Component id="txtCriticalLevel" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="jDateChooserExpirationDate" alignment="0" pref="150" max="32767" attributes="0"/>
+                                              <Component id="cashierButton1" alignment="0" max="32767" attributes="0"/>
                                           </Group>
                                       </Group>
                                   </Group>
-                                  <EmptySpace pref="91" max="32767" attributes="0"/>
+                                  <EmptySpace pref="160" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -142,9 +130,9 @@
                           <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
                           <Component id="jLabel18" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="txtBarcode" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="generateBar" alignment="3" min="-2" pref="49" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="txtBarcode" min="-2" max="-2" attributes="0"/>
+                              <Component id="cashierButton1" min="-2" pref="50" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                           <Component id="txtName" min="-2" max="-2" attributes="0"/>
@@ -157,14 +145,14 @@
                           </Group>
                           <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel17" min="-2" pref="47" max="-2" attributes="0"/>
-                              <Group type="103" alignment="0" groupAlignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                                       <Component id="rbtnPerishableYes" alignment="3" max="32767" attributes="0"/>
                                       <Component id="rbtnPerishableNo" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <Component id="jLabel13" min="-2" pref="47" max="-2" attributes="0"/>
+                                  <Component id="jLabel17" min="-2" pref="47" max="-2" attributes="0"/>
                               </Group>
+                              <Component id="jLabel13" min="-2" pref="47" max="-2" attributes="0"/>
                               <Component id="jDateChooserExpirationDate" alignment="0" min="-2" pref="48" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
@@ -172,13 +160,15 @@
                           <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="txtSupplierName" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="searchSupplier" alignment="3" min="-2" pref="48" max="-2" attributes="0"/>
+                              <Component id="cashierButton2" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                           <Component id="txtSupplierAddress" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                           <Component id="txtSupplierContact" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="25" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+                          <Component id="cashierButton3" min="-2" pref="50" max="-2" attributes="0"/>
+                          <EmptySpace pref="50" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -261,14 +251,6 @@
                     <Property name="labelText" type="java.lang.String" value="Supplier Contact"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JButton" name="searchSupplier">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="SEARCH"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="searchSupplierActionPerformed"/>
-                  </Events>
-                </Component>
                 <Component class="javax.swing.JLabel" name="jLabel13">
                   <Properties>
                     <Property name="horizontalAlignment" type="int" value="11"/>
@@ -276,16 +258,6 @@
                   </Properties>
                 </Component>
                 <Component class="com.toedter.calendar.JDateChooser" name="jDateChooserExpirationDate">
-                </Component>
-                <Component class="javax.swing.JButton" name="generateBar">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                      <Connection code="&quot;Generate&quot;" type="code"/>
-                    </Property>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="generateBarActionPerformed"/>
-                  </Events>
                 </Component>
                 <Component class="swing.TextField" name="txtCriticalLevel">
                   <Properties>
@@ -301,16 +273,35 @@
                     <Property name="text" type="java.lang.String" value="NEW PRODUCT"/>
                   </Properties>
                 </Component>
+                <Component class="swing.CashierButton" name="cashierButton1">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Generate"/>
+                    <Property name="radius" type="int" value="25"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cashierButton1ActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="swing.CashierButton" name="cashierButton2">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Search"/>
+                    <Property name="radius" type="int" value="25"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cashierButton2ActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="swing.CashierButton" name="cashierButton3">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Add Product"/>
+                    <Property name="radius" type="int" value="25"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cashierButton3ActionPerformed"/>
+                  </Events>
+                </Component>
               </SubComponents>
             </Container>
-            <Component class="javax.swing.JButton" name="addBtn">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="ADD PRODUCT"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addBtnActionPerformed"/>
-              </Events>
-            </Component>
           </SubComponents>
         </Container>
       </SubComponents>

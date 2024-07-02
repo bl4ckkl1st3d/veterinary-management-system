@@ -6,8 +6,8 @@ import contents.Admin_Add;
 import contents.Admin_Home;
 import contents.Admin_PatientReports;
 import contents.Admin_Search;
+import contents.Admin_Settings;
 import contents.Help;
-import contents.Settings;
 import event.EventMenuSelected;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -37,7 +37,7 @@ public class Admin extends javax.swing.JFrame {
     private Vet vet;
     private Cashier cashier;
     private Admin_PatientReports report;
-    private Settings settings;
+    private Admin_Settings settings;
     private Help help;
     private About about;
     private int userId;
@@ -52,7 +52,7 @@ public class Admin extends javax.swing.JFrame {
         vet = new Vet(0);
         cashier = new Cashier(0);
         report = new Admin_PatientReports(0);
-        settings = new Settings(0);
+        settings = new Admin_Settings(0);
         help = new Help();
         about = new About();
         

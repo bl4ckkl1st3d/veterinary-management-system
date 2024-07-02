@@ -47,13 +47,13 @@ public class Cashier_Add extends javax.swing.JPanel {
         txtSupplierName = new swing.TextField();
         txtSupplierAddress = new swing.TextField();
         txtSupplierContact = new swing.TextField();
-        searchSupplier = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
         jDateChooserExpirationDate = new com.toedter.calendar.JDateChooser();
-        generateBar = new javax.swing.JButton();
         txtCriticalLevel = new swing.TextField();
         jLabel18 = new javax.swing.JLabel();
-        addBtn = new javax.swing.JButton();
+        cashierButton1 = new swing.CashierButton();
+        cashierButton2 = new swing.CashierButton();
+        cashierButton3 = new swing.CashierButton();
 
         setPreferredSize(new java.awt.Dimension(1100, 685));
 
@@ -101,28 +101,38 @@ public class Cashier_Add extends javax.swing.JPanel {
 
         txtSupplierContact.setLabelText("Supplier Contact");
 
-        searchSupplier.setText("SEARCH");
-        searchSupplier.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchSupplierActionPerformed(evt);
-            }
-        });
-
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel13.setText("Exp Date");
-
-        generateBar.setText("Generate");
-        generateBar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                generateBarActionPerformed(evt);
-            }
-        });
 
         txtCriticalLevel.setLabelText("Critical Level");
 
         jLabel18.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel18.setText("NEW PRODUCT");
+
+        cashierButton1.setText("Generate");
+        cashierButton1.setRadius(25);
+        cashierButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cashierButton1ActionPerformed(evt);
+            }
+        });
+
+        cashierButton2.setText("Search");
+        cashierButton2.setRadius(25);
+        cashierButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cashierButton2ActionPerformed(evt);
+            }
+        });
+
+        cashierButton3.setText("Add Product");
+        cashierButton3.setRadius(25);
+        cashierButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cashierButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -137,15 +147,16 @@ public class Cashier_Add extends javax.swing.JPanel {
                             .addComponent(combobox1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(cashierButton3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(txtSupplierContact, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
                                     .addComponent(txtSupplierAddress, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(txtSupplierName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(searchSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(cashierButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(txtName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(txtPrice, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -159,13 +170,12 @@ public class Cashier_Add extends javax.swing.JPanel {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
                                         .addComponent(jLabel13))
                                     .addComponent(txtBarcode, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jDateChooserExpirationDate, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(txtCriticalLevel, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(generateBar)))))
-                        .addContainerGap(91, Short.MAX_VALUE))))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtCriticalLevel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jDateChooserExpirationDate, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                                    .addComponent(cashierButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap(160, Short.MAX_VALUE))))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -173,9 +183,9 @@ public class Cashier_Add extends javax.swing.JPanel {
                 .addGap(34, 34, 34)
                 .addComponent(jLabel18)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtBarcode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(generateBar, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cashierButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(25, 25, 25)
                 .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25)
@@ -186,54 +196,41 @@ public class Cashier_Add extends javax.swing.JPanel {
                     .addComponent(txtCriticalLevel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(25, 25, 25)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(rbtnPerishableYes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(rbtnPerishableNo))
-                        .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jDateChooserExpirationDate, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(25, 25, 25)
                 .addComponent(combobox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtSupplierName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(searchSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cashierButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(25, 25, 25)
                 .addComponent(txtSupplierAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25)
                 .addComponent(txtSupplierContact, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addGap(25, 25, 25)
+                .addComponent(cashierButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(50, Short.MAX_VALUE))
         );
-
-        addBtn.setText("ADD PRODUCT");
-        addBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addBtnActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(75, 75, 75)
-                        .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(469, Short.MAX_VALUE))
+                .addGap(0, 0, 0)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -250,16 +247,6 @@ public class Cashier_Add extends javax.swing.JPanel {
             .addComponent(sp, javax.swing.GroupLayout.DEFAULT_SIZE, 685, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
-        addProdToDB();
-    }//GEN-LAST:event_addBtnActionPerformed
-
-    private void generateBarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateBarActionPerformed
-        System.out.println("generate");
-        String strCodeText = UUID.randomUUID().toString().substring(0, 8).toUpperCase(); // Generate a random 8-character string
-        txtBarcode.setText(strCodeText);
-    }//GEN-LAST:event_generateBarActionPerformed
     private void searchSupplier() {
         String supplierName = txtSupplierName.getText();
 
@@ -318,19 +305,6 @@ public class Cashier_Add extends javax.swing.JPanel {
             }
         }
     }
-    private void searchSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchSupplierActionPerformed
-        String supplierName = txtSupplierName.getText().trim(); // Trim to remove leading and trailing spaces
-
-        // Check if supplierName is empty
-        if (supplierName.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please enter a supplier name.");
-            return; // Exit the method if the supplier name is empty
-        }
-
-        // Call searchSupplier only if supplierName is not empty
-        searchSupplier();
-    }//GEN-LAST:event_searchSupplierActionPerformed
-
     private void rbtnPerishableYesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnPerishableYesActionPerformed
         rbtnPerishableYes.setSelected(true);
         rbtnPerishableNo.setSelected(false);
@@ -344,6 +318,29 @@ public class Cashier_Add extends javax.swing.JPanel {
     private void txtBarcodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBarcodeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtBarcodeActionPerformed
+
+    private void cashierButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cashierButton1ActionPerformed
+        System.out.println("generate");
+        String strCodeText = UUID.randomUUID().toString().substring(0, 8).toUpperCase(); // Generate a random 8-character string
+        txtBarcode.setText(strCodeText);
+    }//GEN-LAST:event_cashierButton1ActionPerformed
+
+    private void cashierButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cashierButton2ActionPerformed
+        String supplierName = txtSupplierName.getText().trim(); // Trim to remove leading and trailing spaces
+
+        // Check if supplierName is empty
+        if (supplierName.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please enter a supplier name.");
+            return; // Exit the method if the supplier name is empty
+        }
+
+        // Call searchSupplier only if supplierName is not empty
+        searchSupplier();
+    }//GEN-LAST:event_cashierButton2ActionPerformed
+
+    private void cashierButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cashierButton3ActionPerformed
+        addProdToDB();
+    }//GEN-LAST:event_cashierButton3ActionPerformed
     
     private void addProdToDB(){
    // Get the necessary information from the text fields and other input controls
@@ -413,9 +410,10 @@ public class Cashier_Add extends javax.swing.JPanel {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton addBtn;
+    private swing.CashierButton cashierButton1;
+    private swing.CashierButton cashierButton2;
+    private swing.CashierButton cashierButton3;
     private swing.Combobox combobox1;
-    private javax.swing.JButton generateBar;
     private com.toedter.calendar.JDateChooser jDateChooserExpirationDate;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel17;
@@ -424,7 +422,6 @@ public class Cashier_Add extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JRadioButton rbtnPerishableNo;
     private javax.swing.JRadioButton rbtnPerishableYes;
-    private javax.swing.JButton searchSupplier;
     private javax.swing.JScrollPane sp;
     private swing.TextField txtBarcode;
     private swing.TextField txtCriticalLevel;

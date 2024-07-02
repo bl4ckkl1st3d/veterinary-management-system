@@ -48,14 +48,14 @@ public class Cashier_PointOfSale extends javax.swing.JPanel {
         jPanel5 = new javax.swing.JPanel();
         sp1 = new javax.swing.JScrollPane();
         productTable = new javax.swing.JTable();
-        removeBtn = new javax.swing.JButton();
-        checkoutBtn = new javax.swing.JButton();
-        addBtn = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         receiptTextArea = new javax.swing.JTextArea();
         txtBarcode = new swing.TextField();
         txtQuantity = new swing.TextField();
         totalPriceTextField = new swing.TextField();
+        cashierButton1 = new swing.CashierButton();
+        cashierButton2 = new swing.CashierButton();
+        cashierButton3 = new swing.CashierButton();
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -77,27 +77,6 @@ public class Cashier_PointOfSale extends javax.swing.JPanel {
         });
         sp1.setViewportView(productTable);
 
-        removeBtn.setText("Remove");
-        removeBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                removeBtnActionPerformed(evt);
-            }
-        });
-
-        checkoutBtn.setText("CHECKOUT");
-        checkoutBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                checkoutBtnActionPerformed(evt);
-            }
-        });
-
-        addBtn.setText("Add");
-        addBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addBtnActionPerformed(evt);
-            }
-        });
-
         receiptTextArea.setColumns(20);
         receiptTextArea.setRows(5);
         receiptTextArea.setText("qwr");
@@ -109,6 +88,30 @@ public class Cashier_PointOfSale extends javax.swing.JPanel {
 
         totalPriceTextField.setLabelText("Total Price");
 
+        cashierButton1.setText("Add");
+        cashierButton1.setRadius(25);
+        cashierButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cashierButton1ActionPerformed(evt);
+            }
+        });
+
+        cashierButton2.setText("Remove");
+        cashierButton2.setRadius(25);
+        cashierButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cashierButton2ActionPerformed(evt);
+            }
+        });
+
+        cashierButton3.setText("Checkout");
+        cashierButton3.setRadius(25);
+        cashierButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cashierButton3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -117,23 +120,26 @@ public class Cashier_PointOfSale extends javax.swing.JPanel {
                 .addGap(300, 300, 300)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE)
                 .addGap(255, 255, 255))
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(checkoutBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(sp1)
-                        .addGroup(jPanel5Layout.createSequentialGroup()
-                            .addGap(0, 0, Short.MAX_VALUE)
-                            .addComponent(totalPriceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel5Layout.createSequentialGroup()
-                            .addComponent(txtBarcode, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGap(18, 18, 18)
-                            .addComponent(txtQuantity, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGap(18, 18, 18)
-                            .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(removeBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cashierButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(sp1, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel5Layout.createSequentialGroup()
+                                .addComponent(txtBarcode, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtQuantity, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(12, 12, 12)
+                                .addComponent(cashierButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(cashierButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(totalPriceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(20, 20, 20))
         );
         jPanel5Layout.setVerticalGroup(
@@ -143,15 +149,18 @@ public class Cashier_PointOfSale extends javax.swing.JPanel {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtBarcode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(removeBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cashierButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cashierButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(15, 15, 15)
-                .addComponent(sp1, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
+                .addComponent(sp1, javax.swing.GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(totalPriceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(checkoutBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(205, 205, 205)
+                .addComponent(cashierButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(216, 216, 216)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(175, 175, 175))
         );
@@ -170,94 +179,7 @@ public class Cashier_PointOfSale extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void removeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeBtnActionPerformed
-        // Get the selected row index
-        int selectedRow = productTable.getSelectedRow();
-
-        // Check if a row is selected
-        if (selectedRow == -1) {
-            JOptionPane.showMessageDialog(this, "No row selected.");
-            return;
-        }
-
-        // Prompt the user for confirmation
-        int confirm = JOptionPane.showConfirmDialog(this, "Do you want to remove the selected product from the cart?", "Confirm Remove", JOptionPane.YES_NO_OPTION);
-
-        // If the user confirms, remove the row
-        if (confirm == JOptionPane.YES_OPTION) {
-            DefaultTableModel model = (DefaultTableModel) productTable.getModel();
-
-            // Remove the selected row
-            model.removeRow(selectedRow);
-
-            // Update the total price text field
-            double sumTotalPrice = 0;
-            for (int i = 0; i < model.getRowCount(); i++) {
-                sumTotalPrice += (double) model.getValueAt(i, 3);
-            }
-            totalPriceTextField.setText(String.format("%.2f", sumTotalPrice));
-        }
-    }//GEN-LAST:event_removeBtnActionPerformed
-
-    private void checkoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkoutBtnActionPerformed
-        // Prompt user for payment amount
-        String paymentStr = JOptionPane.showInputDialog(this, "Enter payment amount:");
-        double paymentAmount;
-        try {
-            paymentAmount = Double.parseDouble(paymentStr);
-            if (paymentAmount <= 0) {
-                JOptionPane.showMessageDialog(this, "Invalid payment amount.");
-                return;
-            }
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Invalid payment amount.");
-            return;
-        }
-
-        // Get total price from totalPriceTextField
-        double totalPrice = Double.parseDouble(totalPriceTextField.getText());
-
-        // Validate payment amount
-        if (paymentAmount < totalPrice) {
-            JOptionPane.showMessageDialog(this, "Payment amount is less than the total price.");
-            return;
-        }
-
-        // Proceed with checkout process
-        String cashierName = getCashierName(realUserId);
-        if (cashierName == null) {
-            JOptionPane.showMessageDialog(this, "Cashier not found.");
-            return;
-        }
-
-        int receiptId = insertSalesReceipt(totalPrice, cashierName);
-        if (receiptId == -1) {
-            JOptionPane.showMessageDialog(this, "Error creating sales receipt.");
-            return;
-        }
-
-        if (!insertSalesDetails(receiptId)) {
-            JOptionPane.showMessageDialog(this, "Error adding sales details.");
-            return;
-        }
-
-        // Display change to user
-        double change = paymentAmount - totalPrice;
-        JOptionPane.showMessageDialog(this, "Checkout successful! Change: " + String.format("%.2f", change));
-
-        // Update receiptTextArea
-        updateReceiptTextArea(receiptId, cashierName);
-
-        // Generate receipt for printing or display
-        //generateReceipt(receiptId, totalPrice, paymentAmount, cashierName, productTable, receiptTextArea);
-
-        // Clear product table and reset total price
-        DefaultTableModel model = (DefaultTableModel) productTable.getModel();
-        model.setRowCount(0);
-        totalPriceTextField.setText("0.00");
-    }//GEN-LAST:event_checkoutBtnActionPerformed
-
-    private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
+    private void cashierButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cashierButton1ActionPerformed
         // Get the barcode from the barcode text field
         String barcode = txtBarcode.getText().trim();
 
@@ -380,7 +302,94 @@ public class Cashier_PointOfSale extends javax.swing.JPanel {
                 e.printStackTrace();
             }
         }
-    }//GEN-LAST:event_addBtnActionPerformed
+    }//GEN-LAST:event_cashierButton1ActionPerformed
+
+    private void cashierButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cashierButton2ActionPerformed
+        // Get the selected row index
+        int selectedRow = productTable.getSelectedRow();
+
+        // Check if a row is selected
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "No row selected.");
+            return;
+        }
+
+        // Prompt the user for confirmation
+        int confirm = JOptionPane.showConfirmDialog(this, "Do you want to remove the selected product from the cart?", "Confirm Remove", JOptionPane.YES_NO_OPTION);
+
+        // If the user confirms, remove the row
+        if (confirm == JOptionPane.YES_OPTION) {
+            DefaultTableModel model = (DefaultTableModel) productTable.getModel();
+
+            // Remove the selected row
+            model.removeRow(selectedRow);
+
+            // Update the total price text field
+            double sumTotalPrice = 0;
+            for (int i = 0; i < model.getRowCount(); i++) {
+                sumTotalPrice += (double) model.getValueAt(i, 3);
+            }
+            totalPriceTextField.setText(String.format("%.2f", sumTotalPrice));
+        }
+    }//GEN-LAST:event_cashierButton2ActionPerformed
+
+    private void cashierButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cashierButton3ActionPerformed
+        // Prompt user for payment amount
+        String paymentStr = JOptionPane.showInputDialog(this, "Enter payment amount:");
+        double paymentAmount;
+        try {
+            paymentAmount = Double.parseDouble(paymentStr);
+            if (paymentAmount <= 0) {
+                JOptionPane.showMessageDialog(this, "Invalid payment amount.");
+                return;
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Invalid payment amount.");
+            return;
+        }
+
+        // Get total price from totalPriceTextField
+        double totalPrice = Double.parseDouble(totalPriceTextField.getText());
+
+        // Validate payment amount
+        if (paymentAmount < totalPrice) {
+            JOptionPane.showMessageDialog(this, "Payment amount is less than the total price.");
+            return;
+        }
+
+        // Proceed with checkout process
+        String cashierName = getCashierName(realUserId);
+        if (cashierName == null) {
+            JOptionPane.showMessageDialog(this, "Cashier not found.");
+            return;
+        }
+
+        int receiptId = insertSalesReceipt(totalPrice, cashierName);
+        if (receiptId == -1) {
+            JOptionPane.showMessageDialog(this, "Error creating sales receipt.");
+            return;
+        }
+
+        if (!insertSalesDetails(receiptId)) {
+            JOptionPane.showMessageDialog(this, "Error adding sales details.");
+            return;
+        }
+
+        // Display change to user
+        double change = paymentAmount - totalPrice;
+        JOptionPane.showMessageDialog(this, "Checkout successful! Change: " + String.format("%.2f", change));
+
+        // Update receiptTextArea
+        updateReceiptTextArea(receiptId, cashierName);
+
+        // Generate receipt for printing or display
+        //generateReceipt(receiptId, totalPrice, paymentAmount, cashierName, productTable, receiptTextArea);
+
+        // Clear product table and reset total price
+        DefaultTableModel model = (DefaultTableModel) productTable.getModel();
+        model.setRowCount(0);
+        totalPriceTextField.setText("0.00");
+    }//GEN-LAST:event_cashierButton3ActionPerformed
     public void generateReceipt(int receiptId, double total, double pay, String cashierName, JTable table, JTextArea txtbill) {
     DefaultTableModel model = (DefaultTableModel) table.getModel();
     
@@ -613,13 +622,13 @@ public class Cashier_PointOfSale extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton addBtn;
-    private javax.swing.JButton checkoutBtn;
+    private swing.CashierButton cashierButton1;
+    private swing.CashierButton cashierButton2;
+    private swing.CashierButton cashierButton3;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable productTable;
     private javax.swing.JTextArea receiptTextArea;
-    private javax.swing.JButton removeBtn;
     private javax.swing.JScrollPane sp;
     private javax.swing.JScrollPane sp1;
     private swing.TextField totalPriceTextField;

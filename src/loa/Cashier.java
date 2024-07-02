@@ -1,11 +1,14 @@
 
 package loa;
 
+import contents.About;
 import contents.Admin_Home;
 import contents.Cashier_Inventory;
 import contents.Cashier_Add;
 import contents.Cashier_Edit;
 import contents.Cashier_PointOfSale;
+import contents.Help;
+import contents.Settings;
 import event.EventMenuSelected;
 import java.awt.Color;
 import java.awt.Point;
@@ -29,6 +32,9 @@ public class Cashier extends javax.swing.JFrame {
     private Cashier_Add add;
     private Cashier_Edit edit;
     private Cashier_PointOfSale pos;
+    private Settings settings;
+    private Help help;
+    private About about;
     private int userId;
     private Point initialClick;
     
@@ -41,6 +47,9 @@ public class Cashier extends javax.swing.JFrame {
         add = new Cashier_Add();
         edit = new Cashier_Edit();
         pos = new Cashier_PointOfSale(0);
+        settings = new Settings(0);
+        help = new Help();
+        about = new About();
         
         
         cashier_Menu.initMoving(Cashier.this);
@@ -56,7 +65,13 @@ public class Cashier extends javax.swing.JFrame {
                 } else if (index == 4){
                     setForm(edit);
                 } else if (index == 6){
-                    setForm(pos);  
+                    setForm(pos);
+                } else if (index == 8){
+                    setForm(settings);
+                } else if (index == 10){
+                    setForm(help);  
+                } else if (index == 12){
+                    setForm(about);
                 } else if (index == 14){
                     int response = JOptionPane.showConfirmDialog(null, "Are you sure you want to log out?", "Confirm Logout", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                     if (response == JOptionPane.YES_OPTION) {
