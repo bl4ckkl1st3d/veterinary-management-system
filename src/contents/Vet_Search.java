@@ -1,4 +1,3 @@
-
 package contents;
 
 import softeng.VetPageEdit;
