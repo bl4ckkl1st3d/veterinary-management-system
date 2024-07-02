@@ -9,6 +9,7 @@ import contents.Cashier_Edit;
 import contents.Cashier_PointOfSale;
 import contents.Help;
 import contents.Settings;
+import contents.SystemLogin;
 import event.EventMenuSelected;
 import java.awt.Color;
 import java.awt.Point;
@@ -76,7 +77,7 @@ public class Cashier extends javax.swing.JFrame {
                     int response = JOptionPane.showConfirmDialog(null, "Are you sure you want to log out?", "Confirm Logout", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                     if (response == JOptionPane.YES_OPTION) {
                     setVisible(false);
-                    new login().setVisible(true);
+                    new SystemLogin().setVisible(true);
                     }
                 }
             }

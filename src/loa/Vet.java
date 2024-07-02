@@ -4,6 +4,7 @@ package loa;
 import contents.About;
 import contents.Help;
 import contents.Settings;
+import contents.SystemLogin;
 import contents.Test1;
 import contents.Test2;
 import contents.Vet_Add;
@@ -41,11 +42,11 @@ public class Vet extends javax.swing.JFrame {
         initComponents();
         setBackground(new Color(0,0,0,0));
         home = new Test1();
-        search = new Vet_Search(0);
-        edit = new Vet_Edit(0);
-        add = new Vet_Add(0);
-        sendSMS = new Vet_SendSMS(0);
-        settings = new Settings(0);
+        search = new Vet_Search(userId);
+        edit = new Vet_Edit(userId);
+        add = new Vet_Add(userId);
+        sendSMS = new Vet_SendSMS(userId);
+        settings = new Settings(userId);
         help = new Help();
         about = new About();
         
@@ -73,7 +74,7 @@ public class Vet extends javax.swing.JFrame {
                     int response = JOptionPane.showConfirmDialog(null, "Are you sure you want to log out?", "Confirm Logout", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                     if (response == JOptionPane.YES_OPTION) {
                     setVisible(false);
-                    new login().setVisible(true);
+                    new SystemLogin().setVisible(true);
                     }
                 }
             }

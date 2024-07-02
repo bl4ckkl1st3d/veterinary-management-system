@@ -540,6 +540,7 @@ public class Vet_Edit extends javax.swing.JPanel {
                     String userQuery = "SELECT first_name, last_name FROM user_information WHERE userid = ?";
                     PreparedStatement userStatement = connection.prepareStatement(userQuery);
                     userStatement.setInt(1, realUserId);
+                    System.out.println(realUserId);
 
                     ResultSet userResultSet = userStatement.executeQuery();
 
@@ -781,8 +782,10 @@ public class Vet_Edit extends javax.swing.JPanel {
 
         // Validate the text
         if (isValidNumber(realNo)) {
+            
             updateOwner();
-            contactTxtField.setText("639");
+
+              searchPatient();
         } else {
             JOptionPane.showMessageDialog(null, "Invalid number: Must be in the format '639#########'");
         }
@@ -876,13 +879,14 @@ public class Vet_Edit extends javax.swing.JPanel {
             }
 
             // Query to insert the vaccine information
-            String vaccineQuery = "INSERT INTO vaccine_history (barcode, vaccine_name, vaccination_date, next_due_date, administered_by) VALUES (?, ?, ?, ?, ?)";
+            String vaccineQuery = "INSERT INTO vaccine_history (barcode, vaccine_name, vaccination_date, next_due_date, administered_by,reminded) VALUES (?, ?, ?, ?, ?,?)";
             PreparedStatement vaccineStatement = connection.prepareStatement(vaccineQuery);
             vaccineStatement.setString(1, patientId);
             vaccineStatement.setString(2, vaccineName);
             vaccineStatement.setDate(3, sqlVaccinationDate);
             vaccineStatement.setDate(4, sqlDueDate);
             vaccineStatement.setString(5, docVacc);
+            vaccineStatement.setString(6, "NO");
 
             int rowsAffected = vaccineStatement.executeUpdate();
 

@@ -8,6 +8,7 @@ import contents.Admin_PatientReports;
 import contents.Admin_Search;
 import contents.Admin_Settings;
 import contents.Help;
+import contents.SystemLogin;
 import event.EventMenuSelected;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -85,7 +86,7 @@ public class Admin extends javax.swing.JFrame {
                     int response = JOptionPane.showConfirmDialog(null, "Are you sure you want to log out?", "Confirm Logout", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                     if (response == JOptionPane.YES_OPTION) {
                     setVisible(false);
-                    new login().setVisible(true);
+                    new SystemLogin().setVisible(true);
                     }
                 }
             }
