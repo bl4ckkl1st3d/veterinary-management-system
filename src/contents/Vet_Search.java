@@ -303,7 +303,8 @@ public class Vet_Search extends javax.swing.JPanel {
         contactTxtField.setText("");
     }
 
-    private void searchPatient() {
+
+   private void searchPatient() {
         String patientIdText = patientIdTxtField.getText();
 
         if (patientIdText.isEmpty()) {
@@ -390,6 +391,7 @@ public class Vet_Search extends javax.swing.JPanel {
         }
     }
 
+   
     public void updateMedicalHistoryTable() {
         // Get the patient ID from the patientIdTxtField
         String patientId = patientIdTxtField.getText();
@@ -483,6 +485,8 @@ public class Vet_Search extends javax.swing.JPanel {
         }
     }
 
+
+
     private void clearTables() {
         DefaultTableModel dm = (DefaultTableModel) medicalHistoryTable.getModel();
         while (dm.getRowCount() > 0) {
@@ -494,6 +498,7 @@ public class Vet_Search extends javax.swing.JPanel {
             dm1.removeRow(0);
         }
     }
+
     private void vetButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vetButton1ActionPerformed
         Vet_PatientCard card =  new Vet_PatientCard(pName,oName,contacts,strCodeText);
         System.out.println(strCodeText);

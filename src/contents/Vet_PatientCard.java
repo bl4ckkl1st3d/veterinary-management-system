@@ -15,6 +15,40 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import org.krysalis.barcode4j.impl.code39.Code39Bean;
 import org.krysalis.barcode4j.output.bitmap.BitmapCanvasProvider;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.pdf.PdfWriter;
+import java.awt.BorderLayout;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+
+import javax.swing.ImageIcon;
+
+
+import org.krysalis.barcode4j.impl.code39.Code39Bean;
+import org.krysalis.barcode4j.output.bitmap.BitmapCanvasProvider;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
+import java.awt.Dimension;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 /**
  *
@@ -25,9 +59,9 @@ public class Vet_PatientCard extends javax.swing.JFrame {
     private String sex;
     private String owner;
     private String strCodeText;
-    
+
     public Vet_PatientCard(String patientName, String sex, String owner, String strCodeText) {
-        this.patientName = patientName;
+       this.patientName = patientName;
         this.sex = sex;
         this.owner = owner;
         this.strCodeText = strCodeText;
@@ -70,6 +104,7 @@ public class Vet_PatientCard extends javax.swing.JFrame {
         jTextPane4 = new javax.swing.JTextPane();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        savePDF = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -109,6 +144,13 @@ public class Vet_PatientCard extends javax.swing.JFrame {
         jLabel5.setMinimumSize(new java.awt.Dimension(100, 100));
         jLabel5.setPreferredSize(new java.awt.Dimension(20, 12));
 
+        savePDF.setText("Save as PDF");
+        savePDF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                savePDFActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -125,18 +167,26 @@ public class Vet_PatientCard extends javax.swing.JFrame {
                         .addGap(47, 47, 47)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel5Layout.createSequentialGroup()
+                                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(sexLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel5Layout.createSequentialGroup()
+                                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(nameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE))
+                            .addGroup(jPanel5Layout.createSequentialGroup()
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(ownerLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(sexLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(nameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(100, Short.MAX_VALUE))
+                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel5Layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(ownerLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(savePDF, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
+                .addContainerGap(47, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -157,8 +207,11 @@ public class Vet_PatientCard extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ownerLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(21, 21, 21))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(ownerLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(savePDF)))
+                .addGap(11, 11, 11))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -174,7 +227,13 @@ public class Vet_PatientCard extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    public InputStream generateCode39Barcode(String barcodeText) {
+
+    private void savePDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_savePDFActionPerformed
+        savePDF.setVisible(false);
+        savePanelAsPDF(jPanel5);
+        savePDF.setVisible(true);
+    }//GEN-LAST:event_savePDFActionPerformed
+   public InputStream generateCode39Barcode(String barcodeText) {
         try {
             Code39Bean bean = new Code39Bean();
             final int dpi = 150;
@@ -217,7 +276,61 @@ public class Vet_PatientCard extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
+      
+
+    public void savePanelAsPDF(JPanel panel) {
+        // Open a file chooser to select the folder
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int option = fileChooser.showSaveDialog(null);
+
+        if (option == JFileChooser.APPROVE_OPTION) {
+            File selectedFolder = fileChooser.getSelectedFile();
+            
+            // Define the PDF file path
+            String pdfFileName = "card_"+patientName+"_"+owner+".pdf";
+            String pdfFilePath = selectedFolder.getAbsolutePath() + "/" + pdfFileName;
+
+            // Create the PDF document
+            Document document = new Document();
+            try {
+                PdfWriter.getInstance(document, new FileOutputStream(pdfFilePath));
+                document.open();
+
+                // Convert the JPanel to an image
+                Dimension size = panel.getSize();
+                BufferedImage bufferedImage = new BufferedImage(size.width, size.height, BufferedImage.TYPE_INT_RGB);
+                Graphics2D g2 = bufferedImage.createGraphics();
+                panel.printAll(g2);
+                g2.dispose();
+
+                // Convert the BufferedImage to byte array
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                ImageIO.write(bufferedImage, "png", baos);
+                byte[] imageInBytes = baos.toByteArray();
+
+                // Add the image to the PDF
     
+                    ImageIO.write(bufferedImage, "png", baos);
+                    com.itextpdf.text.Image barcodeImage = com.itextpdf.text.Image.getInstance(baos.toByteArray());
+                com.itextpdf.text.Image image = com.itextpdf.text.Image.getInstance(imageInBytes);
+                image.setAlignment(Element.ALIGN_CENTER);
+                document.add(image);
+
+                // Close the document
+                document.close();
+
+                JOptionPane.showMessageDialog(null, "PDF saved successfully as '" + pdfFileName + "'.");
+                
+            } catch (DocumentException | IOException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+            }
+        }
+    }
+    /**
+     * @param args the command line arguments
+     */
     private void cardUpdate(){
         InputStream inputStream = generateCode39Barcode(strCodeText);
         displayBarcodeImage(inputStream);
@@ -225,7 +338,6 @@ public class Vet_PatientCard extends javax.swing.JFrame {
         sexLabel.setText(sex);
         ownerLabel.setText(owner);   
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -238,6 +350,7 @@ public class Vet_PatientCard extends javax.swing.JFrame {
     private javax.swing.JTextPane jTextPane4;
     private javax.swing.JLabel nameLabel;
     private javax.swing.JLabel ownerLabel;
+    private javax.swing.JButton savePDF;
     private javax.swing.JLabel sexLabel;
     // End of variables declaration//GEN-END:variables
 }
