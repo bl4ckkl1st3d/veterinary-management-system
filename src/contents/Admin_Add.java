@@ -31,6 +31,11 @@ public class Admin_Add extends javax.swing.JPanel {
         sp.setVerticalScrollBar(new ScrollBar());
         sp.setHorizontalScrollBar(new ScrollBar());
     }
+    private static final String DATABASE_NAME = "database";
+    private static final String dbUsername = "root";
+    private static final String dbPassword = "admin";
+    private static final String MYSQL_SERVER_HOSTNAME = "DESKTOP-MVBR3DH"; // Replace with your MySQL server's hostname
+    private static final int MYSQL_SERVER_PORT = 3306;
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -46,7 +51,6 @@ public class Admin_Add extends javax.swing.JPanel {
         sexBox = new swing.Combobox();
         contactTxtField = new swing.TextField();
         usernameTxtField = new swing.TextField();
-        passwordTxtField = new swing.TextField();
         loaBox = new swing.Combobox();
         secretQuestionBox = new swing.Combobox();
         answerTxtField = new swing.TextField();
@@ -57,6 +61,7 @@ public class Admin_Add extends javax.swing.JPanel {
         saveBtn = new swing.AdminButton();
         birthDate = new com.toedter.calendar.JDateChooser();
         jLabel1 = new javax.swing.JLabel();
+        passTxtField = new swing.PasswordField();
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -86,8 +91,6 @@ public class Admin_Add extends javax.swing.JPanel {
         contactTxtField.setLabelText("Contact No.");
 
         usernameTxtField.setLabelText("Username");
-
-        passwordTxtField.setLabelText("Password");
 
         loaBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "ADMIN", "VETERINARIAN", "CASHIER" }));
         loaBox.setSelectedIndex(-1);
@@ -150,11 +153,11 @@ public class Admin_Add extends javax.swing.JPanel {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(usernameTxtField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(passwordTxtField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(loaBox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(secretQuestionBox, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
                             .addComponent(answerTxtField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(addUserBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(addUserBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(passTxtField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -226,9 +229,9 @@ public class Admin_Add extends javax.swing.JPanel {
                 .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(usernameTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
-                .addComponent(passwordTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
+                .addGap(55, 55, 55)
+                .addComponent(passTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(38, 38, 38)
                 .addComponent(loaBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40)
                 .addComponent(secretQuestionBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -258,7 +261,7 @@ public class Admin_Add extends javax.swing.JPanel {
     private void clearAllFields() {
         // Clear all text fields and reset combo boxes
         usernameTxtField.setText("");
-        passwordTxtField.setText("");
+        passTxtField.setText("");
         answerTxtField.setText("");
         secretQuestionBox.setSelectedIndex(-1);
         loaBox.setSelectedIndex(-1);
@@ -272,9 +275,7 @@ public class Admin_Add extends javax.swing.JPanel {
     }
 
     public void updateUserAuditLog(int userId) {
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
         try {
             // Establish the database connection
             Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
@@ -296,9 +297,7 @@ public class Admin_Add extends javax.swing.JPanel {
     }
 
     public void addUserAuditLog(int userId) {
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
         try {
             // Establish the database connection
             Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
@@ -320,15 +319,14 @@ public class Admin_Add extends javax.swing.JPanel {
     }
 
     private void addUserToDatabase() {
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
 
-        String username = usernameTxtField.getText();
-        String password = new String(passwordTxtField.getText());
-        String answer = answerTxtField.getText();
+        String username = usernameTxtField.getText().trim();
+        String password = new String(passTxtField.getPassword());
+        String answer = answerTxtField.getText().trim();
         String secretQuestion = (String) secretQuestionBox.getSelectedItem();
         String loaString = (String) loaBox.getSelectedItem();
+        String hashed = sha256(password);
 
         int loa;
         switch (loaString.toLowerCase()) {
@@ -345,11 +343,17 @@ public class Admin_Add extends javax.swing.JPanel {
                 throw new IllegalArgumentException("Invalid LOA value");
         }
 
-        String firstName = firstNameTxtField.getText();
-        String lastName = lastNameTxtField.getText();
-        String address = addressTxtField.getText();
-        String contact = contactTxtField.getText();
+        String firstName = firstNameTxtField.getText().trim();
+        String lastName = lastNameTxtField.getText().trim();
+        String address = addressTxtField.getText().trim();
+        String contact = contactTxtField.getText().trim();
         String sex = sexBox.getSelectedItem().toString().equals("MALE") ? "M" : "F";
+
+        // Validate that required fields are not empty
+        if (username.isEmpty() || firstName.isEmpty() || lastName.isEmpty() || address.isEmpty() || contact.isEmpty() || password.isEmpty() || answer.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "All fields must be filled out.");
+            return;
+        }
 
         // Get the birthdate from JDateChooser
         java.util.Date birthDateValue = birthDate.getDate();
@@ -360,27 +364,56 @@ public class Admin_Add extends javax.swing.JPanel {
 
         LocalDate birthDateLocal = birthDateValue.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
+        // Check if the birthdate is in the future
+        if (birthDateLocal.isAfter(LocalDate.now())) {
+            JOptionPane.showMessageDialog(null, "Birthdate cannot be in the future.");
+            return;
+        }
+
         // Calculate age
         long age = ChronoUnit.YEARS.between(birthDateLocal, LocalDate.now());
 
         // Convert the birthdate to java.sql.Date
         java.sql.Date sqlBirthDate = java.sql.Date.valueOf(birthDateLocal);
 
+        // Validate contact number length
+        if (contact.length() != 11) {
+            JOptionPane.showMessageDialog(null, "Contact number must be 11 digits long.");
+            return;
+        }
+        if (!contact.matches("\\d+")) {
+            JOptionPane.showMessageDialog(null, "Contact number must contain only digits.");
+            return;
+        }
+
         Connection connection = null;
+        PreparedStatement checkUserStmt = null;
         PreparedStatement userStmt = null;
         PreparedStatement infoStmt = null;
         ResultSet generatedKeys = null;
+        ResultSet userResult = null;
 
         try {
             // Establish the database connection
             connection = DriverManager.getConnection(url, dbUsername, dbPassword);
             connection.setAutoCommit(false); // Start transaction
 
+            // Check if the username is unique
+            String checkUserQuery = "SELECT COUNT(*) FROM users WHERE username = ?";
+            checkUserStmt = connection.prepareStatement(checkUserQuery);
+            checkUserStmt.setString(1, username);
+            userResult = checkUserStmt.executeQuery();
+
+            if (userResult.next() && userResult.getInt(1) > 0) {
+                JOptionPane.showMessageDialog(null, "Username already exists. Please choose a different username.");
+                return;
+            }
+
             // Insert into users table
             String userQuery = "INSERT INTO users (username, password, secret_question, secret_answer, LOA) VALUES (?, ?, ?, ?, ?)";
             userStmt = connection.prepareStatement(userQuery, Statement.RETURN_GENERATED_KEYS);
             userStmt.setString(1, username);
-            userStmt.setString(2, password);
+            userStmt.setString(2, hashed);
             userStmt.setString(3, secretQuestion);
             userStmt.setString(4, answer);
             userStmt.setInt(5, loa);
@@ -439,6 +472,13 @@ public class Admin_Add extends javax.swing.JPanel {
                     e.printStackTrace();
                 }
             }
+            if (checkUserStmt != null) {
+                try {
+                    checkUserStmt.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
             if (userStmt != null) {
                 try {
                     userStmt.close();
@@ -462,6 +502,8 @@ public class Admin_Add extends javax.swing.JPanel {
             }
         }
     }
+
+
     private void adminButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminButton1ActionPerformed
         clearAllFields();
         saveBtn.setVisible(false);
@@ -491,7 +533,7 @@ public class Admin_Add extends javax.swing.JPanel {
 
         // Get data from the remaining text fields
         String username = usernameTxtField.getText();
-        String password = passwordTxtField.getText();
+        String password = new String(passTxtField.getPassword());
         String answer = answerTxtField.getText();
         String secretQuestion = secretQuestionBox.getSelectedItem().toString();
 
@@ -594,105 +636,119 @@ public class Admin_Add extends javax.swing.JPanel {
     }//GEN-LAST:event_saveBtnActionPerformed
 
     private void editBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnActionPerformed
-        String userIdText = useridTxtField.getText();
+        String user_Id = useridTxtField.getText();
+        String firstName = firstNameTxtField.getText();
+        String lastName = lastNameTxtField.getText();
+        String address = addressTxtField.getText();
+        String contact = contactTxtField.getText();
 
-        if (userIdText.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Please enter a User ID.");
+        // Get data from the combo box
+        String sex = sexBox.getSelectedItem().toString();
+        if (sex.equalsIgnoreCase("MALE")) {
+            sex = "M";
+        } else if (sex.equalsIgnoreCase("FEMALE")) {
+            sex = "F";
+        }
+
+        // Get data from the remaining text fields
+        String username = usernameTxtField.getText();
+        String password = new String(passTxtField.getPassword());
+        String answer = answerTxtField.getText();
+        String secretQuestion = secretQuestionBox.getSelectedItem().toString();
+
+        // Get the LOA and convert it to an integer
+        String loaString = loaBox.getSelectedItem().toString();
+        int loa = -1;  // default value if LOA is not recognized
+        switch (loaString.toLowerCase()) {
+            case "cashier":
+                loa = 0;
+                break;
+            case "veterinarian":
+                loa = 1;
+                break;
+            case "admin":
+                loa = 2;
+                break;
+        }
+
+        // Get the birthdate from JDateChooser
+        java.util.Date birthDateValue = birthDate.getDate();
+        if (birthDateValue == null) {
+            JOptionPane.showMessageDialog(null, "Please enter a valid birthdate.");
             return;
         }
 
-        int userId;
+        LocalDate birthDateLocal = birthDateValue.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+        // Calculate age
+        long age = ChronoUnit.YEARS.between(birthDateLocal, LocalDate.now());
+
+        // Convert the birthdate to java.sql.Date
+        java.sql.Date sqlBirthDate = java.sql.Date.valueOf(birthDateLocal);
+
+        // Database connection information
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
+
         try {
-            userId = Integer.parseInt(userIdText);
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Invalid User ID format.");
-            return;
-        }
+            // Establish the database connection
+            Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
+            connection.setAutoCommit(false); // Start transaction
 
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
-
-        try (Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword)) {
-            // Query to check if the user exists and get user information
-            String queryUserInfo = "SELECT * FROM user_information WHERE userid = ?";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(queryUserInfo)) {
-                preparedStatement.setInt(1, userId);
-                ResultSet resultSet = preparedStatement.executeQuery();
-
-                if (resultSet.next()) {
-                    String firstName = resultSet.getString("first_name");
-                    String lastName = resultSet.getString("last_name");
-                    String address = resultSet.getString("address");
-                    String sex = resultSet.getString("sex");
-                    String contact = resultSet.getString("contact");
-
-                    editBtn.setVisible(true);
-                    addUserBtn.setVisible(false);
-                    saveBtn.setVisible(true);
-
-                    // Set the retrieved data into the respective text fields and combo box
-                    firstNameTxtField.setText(firstName);
-                    lastNameTxtField.setText(lastName);
-                    addressTxtField.setText(address);
-                    contactTxtField.setText(contact);
-                    birthDate.setDate(Date.valueOf(resultSet.getDate("birthDate").toLocalDate()));
-
-                    System.out.println(sex);
-                    if (sex.equalsIgnoreCase("M")) {
-                        sexBox.setSelectedItem("MALE");
-                    } else if (sex.equalsIgnoreCase("F")) {
-                        sexBox.setSelectedItem("FEMALE");
-                    }
-
-                } else {
-                    JOptionPane.showMessageDialog(null, "User ID does not exist in the database.");
-                    addUserBtn.setVisible(true);
-                    saveBtn.setVisible(false);
-                    birthDate.setDate(null);
-                    clearAllFields();
-
-                    return;
-                }
+            // Update the 'users' table
+            String updateUsersQuery;
+            if (password.isEmpty()) {
+                updateUsersQuery = "UPDATE users SET username = ?, secret_question = ?, secret_answer = ?, LOA = ? WHERE userid = ?";
+            } else {
+                updateUsersQuery = "UPDATE users SET username = ?, password = ?, secret_question = ?, secret_answer = ?, LOA = ? WHERE userid = ?";
             }
 
-            // Query to get additional user information from the 'users' table
-            String queryUserDetails = "SELECT * FROM users WHERE userid = ?";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(queryUserDetails)) {
-                preparedStatement.setInt(1, userId);
-                ResultSet resultSet = preparedStatement.executeQuery();
-
-                if (resultSet.next()) {
-                    String username = resultSet.getString("username");
-                    String password = resultSet.getString("password");
-                    int loa = resultSet.getInt("loa");
-                    String secretQuestion = resultSet.getString("secret_question");
-                    String secretAnswer = resultSet.getString("secret_answer");
-
-                    // Set the retrieved data into the respective text fields and combo boxes
-                    usernameTxtField.setText(username);
-                    passwordTxtField.setText("");
-                    secretQuestionBox.setSelectedItem(secretQuestion);
-                    answerTxtField.setText(secretAnswer);
-
-                    switch (loa) {
-                        case 0:
-                            loaBox.setSelectedItem("CASHIER");
-                            break;
-                        case 1:
-                            loaBox.setSelectedItem("VETERINARIAN");
-                            break;
-                        case 2:
-                            loaBox.setSelectedItem("ADMIN");
-                            break;
-                        default:
-                            break;
-                    }
-                }
+            PreparedStatement usersPreparedStatement = connection.prepareStatement(updateUsersQuery);
+            usersPreparedStatement.setString(1, username);
+            if (!password.isEmpty()) {
+                String hashed = sha256(password);
+                usersPreparedStatement.setString(2, hashed);
+                usersPreparedStatement.setString(3, secretQuestion);
+                usersPreparedStatement.setString(4, answer);
+                usersPreparedStatement.setInt(5, loa);
+                usersPreparedStatement.setInt(6, Integer.parseInt(user_Id));
+            } else {
+                usersPreparedStatement.setString(2, secretQuestion);
+                usersPreparedStatement.setString(3, answer);
+                usersPreparedStatement.setInt(4, loa);
+                usersPreparedStatement.setInt(5, Integer.parseInt(user_Id));
             }
+            int rowsAffectedUsers = usersPreparedStatement.executeUpdate();
+
+            // Update the 'user_information' table
+            String updateUserInformationQuery = "UPDATE user_information SET first_name = ?, last_name = ?, address = ?, birthdate = ?, age = ?, contact = ?, sex = ? WHERE userid = ?";
+            PreparedStatement userInformationPreparedStatement = connection.prepareStatement(updateUserInformationQuery);
+            userInformationPreparedStatement.setString(1, firstName);
+            userInformationPreparedStatement.setString(2, lastName);
+            userInformationPreparedStatement.setString(3, address);
+            userInformationPreparedStatement.setDate(4, sqlBirthDate);
+            userInformationPreparedStatement.setLong(5, age);
+            userInformationPreparedStatement.setString(6, contact);
+            userInformationPreparedStatement.setString(7, sex);
+            userInformationPreparedStatement.setInt(8, Integer.parseInt(user_Id));
+            int rowsAffectedUserInformation = userInformationPreparedStatement.executeUpdate();
+
+            // Check if updates were successful
+            if (rowsAffectedUsers > 0 && rowsAffectedUserInformation > 0) {
+                connection.commit(); // Commit transaction
+                JOptionPane.showMessageDialog(null, "User information updated successfully.");
+                updateUserAuditLog(Integer.parseInt(user_Id));
+                clearAllFields();
+            } else {
+                connection.rollback(); // Rollback transaction
+                JOptionPane.showMessageDialog(null, "Failed to update user information.");
+            }
+
+            // Close the database connection
+            connection.close();
         } catch (SQLException e) {
-            // Handle SQL exception
+            // Handle any SQL exceptions
             e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
         }
     }//GEN-LAST:event_editBtnActionPerformed
 
@@ -720,7 +776,7 @@ public class Admin_Add extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel5;
     private swing.TextField lastNameTxtField;
     private swing.Combobox loaBox;
-    private swing.TextField passwordTxtField;
+    private swing.PasswordField passTxtField;
     private swing.AdminButton saveBtn;
     private swing.Combobox secretQuestionBox;
     private swing.Combobox sexBox;

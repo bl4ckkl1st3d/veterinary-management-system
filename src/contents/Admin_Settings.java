@@ -444,10 +444,7 @@ public class Admin_Settings extends javax.swing.JPanel {
     }
 
     public void addPasswordChangeAuditLog(int userId) {
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
-
+String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
         try (Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword)) {
             // Prepare the SQL query to add password change audit log
             String query = "INSERT INTO audit_logs (userid, event, action_type) VALUES (?, 'user changed password', 'password_change')";
@@ -469,9 +466,7 @@ public class Admin_Settings extends javax.swing.JPanel {
     }
 
     public void addSecretQuestionChangeAuditLog(int userId) {
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
+String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
 
         try (Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword)) {
             // Prepare the SQL query to add secret question change audit log
@@ -570,9 +565,7 @@ public class Admin_Settings extends javax.swing.JPanel {
             return;
         }
 
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
+String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
 
         try (Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword)) {
             // Check if the current password matches the one in the database
@@ -645,9 +638,7 @@ public class Admin_Settings extends javax.swing.JPanel {
         String secretQuestion = (String) secretQuestionComboBox.getSelectedItem();
         String secretAnswer = secretAnswerTextField.getText();
 
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
+String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
 
         try (Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword)) {
             String query = "SELECT secret_question, secret_answer FROM users WHERE userid = ?";
@@ -685,9 +676,7 @@ public class Admin_Settings extends javax.swing.JPanel {
         String newSecretQuestion = (String) newSecretQuestionComboBox.getSelectedItem();
         String newSecretAnswer = newSecretAnswerTextField.getText();
 
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
+String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
 
         // Check if the new secret question and answer fields are not empty
         if (newSecretQuestion == null || newSecretQuestion.isEmpty() || newSecretAnswer.isEmpty()) {

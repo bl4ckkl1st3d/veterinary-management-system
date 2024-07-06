@@ -206,7 +206,7 @@ public class SystemLogin extends javax.swing.JFrame {
                 errorCount++;
                 if (errorCount >= 3) {
                     JOptionPane.showMessageDialog(null, "Too many attempts, redirecting to Forgot Password");
-                    new ForgotPassword().setVisible(true);
+                    new SystemForgotPassword().setVisible(true);
                     setVisible(false);
                 } else {
                     JOptionPane.showMessageDialog(null, "Wrong Username or Password");

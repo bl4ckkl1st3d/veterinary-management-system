@@ -46,11 +46,11 @@
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="1" max="-2" attributes="0">
                                   <Component id="usernameTxtField" max="32767" attributes="0"/>
-                                  <Component id="passwordTxtField" max="32767" attributes="0"/>
                                   <Component id="loaBox" max="32767" attributes="0"/>
                                   <Component id="secretQuestionBox" pref="350" max="32767" attributes="0"/>
                                   <Component id="answerTxtField" max="32767" attributes="0"/>
                                   <Component id="addUserBtn" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="passTxtField" alignment="1" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace max="32767" attributes="0"/>
                           </Group>
@@ -151,9 +151,9 @@
                       <Component id="jLabel18" min="-2" pref="58" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="usernameTxtField" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
-                      <Component id="passwordTxtField" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
+                      <Component id="passTxtField" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                       <Component id="loaBox" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                       <Component id="secretQuestionBox" min="-2" max="-2" attributes="0"/>
@@ -226,11 +226,6 @@
             <Component class="swing.TextField" name="usernameTxtField">
               <Properties>
                 <Property name="labelText" type="java.lang.String" value="Username"/>
-              </Properties>
-            </Component>
-            <Component class="swing.TextField" name="passwordTxtField">
-              <Properties>
-                <Property name="labelText" type="java.lang.String" value="Password"/>
               </Properties>
             </Component>
             <Component class="swing.Combobox" name="loaBox">
@@ -316,6 +311,8 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="BirthDate"/>
               </Properties>
+            </Component>
+            <Component class="swing.PasswordField" name="passTxtField">
             </Component>
           </SubComponents>
         </Container>
