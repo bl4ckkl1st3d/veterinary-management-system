@@ -334,7 +334,7 @@ public class Vet_Add extends javax.swing.JPanel {
                         "Yes"
                 );
                 if (input == JOptionPane.YES_OPTION) {
-                    PatientCard card = new PatientCard(patientName, clientName, contact, strCodeText);
+                    Vet_PatientCard card =  new Vet_PatientCard(patientName, clientName, contact, strCodeText);
                     System.out.println(strCodeText);
                     card.setLocationRelativeTo(null);
                     card.setVisible(true);

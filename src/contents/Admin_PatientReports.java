@@ -1,6 +1,5 @@
 package contents;
 
-
 import com.itextpdf.text.Chunk;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -43,7 +42,7 @@ import swing.ScrollBar;
 public class Admin_PatientReports extends javax.swing.JPanel {
 
     private int realUserId;
-    
+
     public Admin_PatientReports(int realUserId) {
         initComponents();
         this.realUserId = realUserId;
@@ -52,20 +51,20 @@ public class Admin_PatientReports extends javax.swing.JPanel {
         System.out.println(realUserId);
         setWidth();
     }
-    private void setWidth(){
-    transactionsTable1.getColumnModel().getColumn(0).setPreferredWidth(5);
-    transactionsTable1.getColumnModel().getColumn(1).setPreferredWidth(5);
-    transactionsTable1.getColumnModel().getColumn(2).setPreferredWidth(200);
-    transactionsTable1.getColumnModel().getColumn(3).setPreferredWidth(100);
+
+    private void setWidth() {
+        transactionsTable1.getColumnModel().getColumn(0).setPreferredWidth(5);
+        transactionsTable1.getColumnModel().getColumn(1).setPreferredWidth(5);
+        transactionsTable1.getColumnModel().getColumn(2).setPreferredWidth(200);
+        transactionsTable1.getColumnModel().getColumn(3).setPreferredWidth(100);
     }
-    
+
     private static final String DATABASE_NAME = "database";
     private static final String dbUsername = "root";
     private static final String dbPassword = "admin";
     private static final String MYSQL_SERVER_HOSTNAME = "DESKTOP-MVBR3DH"; // Replace with your MySQL server's hostname
     private static final int MYSQL_SERVER_PORT = 3306;
 
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -85,17 +84,12 @@ public class Admin_PatientReports extends javax.swing.JPanel {
         adminButton9 = new swing.AdminButton();
         adminButton10 = new swing.AdminButton();
         adminButton11 = new swing.AdminButton();
-        bestSellingProduct = new javax.swing.JPanel();
+        criticalProduct = new javax.swing.JPanel();
         bestPanel = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         bestProductsTable = new javax.swing.JTable();
-        jLabel14 = new javax.swing.JLabel();
-        dateChooserStartDate = new com.toedter.calendar.JDateChooser();
-        dateChooserEndDate = new com.toedter.calendar.JDateChooser();
-        jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        adminButton6 = new swing.AdminButton();
         adminButton7 = new swing.AdminButton();
         salesReport = new javax.swing.JPanel();
         salesPanel = new javax.swing.JPanel();
@@ -121,25 +115,57 @@ public class Admin_PatientReports extends javax.swing.JPanel {
         jLabel18 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         transactionsTable1 = new javax.swing.JTable();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        bestProductsTable1 = new javax.swing.JTable();
-        jLabel20 = new javax.swing.JLabel();
-        jLabel21 = new javax.swing.JLabel();
-        dateChooserStartDate1 = new com.toedter.calendar.JDateChooser();
-        dateChooserEndDate1 = new com.toedter.calendar.JDateChooser();
-        jLabel22 = new javax.swing.JLabel();
         adminButton13 = new swing.AdminButton();
         adminButton14 = new swing.AdminButton();
-        adminButton15 = new swing.AdminButton();
-        adminButton16 = new swing.AdminButton();
         jLabel5 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
+        bestSellingProduct = new javax.swing.JPanel();
+        bestPanel2 = new javax.swing.JPanel();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        bestProductsTable3 = new javax.swing.JTable();
+        jLabel29 = new javax.swing.JLabel();
+        dateChooserStartDate = new com.toedter.calendar.JDateChooser();
+        dateChooserEndDate = new com.toedter.calendar.JDateChooser();
+        jLabel30 = new javax.swing.JLabel();
+        jLabel31 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        adminButton22 = new swing.AdminButton();
+        adminButton23 = new swing.AdminButton();
+        inventoryReports = new javax.swing.JPanel();
+        inventoryPanel = new javax.swing.JPanel();
+        expiringBtn = new swing.AdminButton();
+        bestsellingBtn = new swing.AdminButton();
+        criticalStocksBtn = new swing.AdminButton();
+        adminButton24 = new swing.AdminButton();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        criticalReports = new javax.swing.JPanel();
+        criticalPanel = new javax.swing.JPanel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        criticalTable = new javax.swing.JTable();
+        adminButton17 = new swing.AdminButton();
+        expiringProducts = new javax.swing.JPanel();
+        criticalPanel1 = new javax.swing.JPanel();
+        jLabel23 = new javax.swing.JLabel();
+        jLabel25 = new javax.swing.JLabel();
+        jScrollPane8 = new javax.swing.JScrollPane();
+        expirationTable = new javax.swing.JTable();
+        adminButton19 = new swing.AdminButton();
+        productLlist = new javax.swing.JPanel();
+        criticalPanel2 = new javax.swing.JPanel();
+        jLabel32 = new javax.swing.JLabel();
+        jLabel33 = new javax.swing.JLabel();
+        jScrollPane9 = new javax.swing.JScrollPane();
+        productTable = new javax.swing.JTable();
+        adminButton25 = new swing.AdminButton();
         sp = new javax.swing.JScrollPane();
         tryPanel = new javax.swing.JPanel();
         adminButton1 = new swing.AdminButton();
-        adminButton2 = new swing.AdminButton();
         adminButton3 = new swing.AdminButton();
         adminButton12 = new swing.AdminButton();
+        adminButton18 = new swing.AdminButton();
 
         patientReport.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -297,7 +323,7 @@ public class Admin_PatientReports extends javax.swing.JPanel {
                     .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
-        bestSellingProduct.setBackground(new java.awt.Color(255, 255, 255));
+        criticalProduct.setBackground(new java.awt.Color(255, 255, 255));
 
         bestPanel.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -314,30 +340,14 @@ public class Admin_PatientReports extends javax.swing.JPanel {
         ));
         jScrollPane5.setViewportView(bestProductsTable);
 
-        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel14.setText("From");
-        jLabel14.setToolTipText("");
-
-        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel15.setText("To");
-        jLabel15.setToolTipText("");
-
         jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel16.setText("Best Products Report");
+        jLabel16.setText("Critical Products");
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/back.png"))); // NOI18N
         jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel3MouseClicked(evt);
-            }
-        });
-
-        adminButton6.setText("Generate");
-        adminButton6.setRadius(25);
-        adminButton6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                adminButton6ActionPerformed(evt);
             }
         });
 
@@ -358,20 +368,10 @@ public class Admin_PatientReports extends javax.swing.JPanel {
                 .addGroup(bestPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(adminButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(bestPanelLayout.createSequentialGroup()
-                        .addGroup(bestPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel14))
+                        .addComponent(jLabel3)
                         .addGap(15, 15, 15)
-                        .addGroup(bestPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel16)
-                            .addGroup(bestPanelLayout.createSequentialGroup()
-                                .addComponent(dateChooserStartDate, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel15)
-                                .addGap(15, 15, 15)
-                                .addComponent(dateChooserEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(adminButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(jLabel16)
+                        .addGap(382, 382, 382))
                     .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 695, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 111, Short.MAX_VALUE))
         );
@@ -382,33 +382,28 @@ public class Admin_PatientReports extends javax.swing.JPanel {
                 .addGroup(bestPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
                     .addComponent(jLabel16))
-                .addGap(20, 20, 20)
-                .addGroup(bestPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(dateChooserStartDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(adminButton6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-                    .addComponent(dateChooserEndDate, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(31, 31, 31)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(adminButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(68, Short.MAX_VALUE))
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 342, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(adminButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(54, 54, 54))
         );
 
-        javax.swing.GroupLayout bestSellingProductLayout = new javax.swing.GroupLayout(bestSellingProduct);
-        bestSellingProduct.setLayout(bestSellingProductLayout);
-        bestSellingProductLayout.setHorizontalGroup(
-            bestSellingProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout criticalProductLayout = new javax.swing.GroupLayout(criticalProduct);
+        criticalProduct.setLayout(criticalProductLayout);
+        criticalProductLayout.setHorizontalGroup(
+            criticalProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 939, Short.MAX_VALUE)
-            .addGroup(bestSellingProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(criticalProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(bestPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        bestSellingProductLayout.setVerticalGroup(
-            bestSellingProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 461, Short.MAX_VALUE)
-            .addGroup(bestSellingProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(bestPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        criticalProductLayout.setVerticalGroup(
+            criticalProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 581, Short.MAX_VALUE)
+            .addGroup(criticalProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(criticalProductLayout.createSequentialGroup()
+                    .addComponent(bestPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
 
         salesReport.setBackground(new java.awt.Color(255, 255, 255));
@@ -576,29 +571,6 @@ public class Admin_PatientReports extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(transactionsTable1);
 
-        bestProductsTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "BARCODE", "PRODUCT_NAME", "AMOUNT SOLD", "TOTAL AMOUNT"
-            }
-        ));
-        jScrollPane3.setViewportView(bestProductsTable1);
-
-        jLabel20.setText("BEST SELLING PRODUCT");
-
-        jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel21.setText("FROM");
-        jLabel21.setToolTipText("");
-
-        jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel22.setText("TO");
-        jLabel22.setToolTipText("");
-
         adminButton13.setText("Generate");
         adminButton13.setRadius(25);
         adminButton13.addActionListener(new java.awt.event.ActionListener() {
@@ -612,22 +584,6 @@ public class Admin_PatientReports extends javax.swing.JPanel {
         adminButton14.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 adminButton14ActionPerformed(evt);
-            }
-        });
-
-        adminButton15.setText("Generate");
-        adminButton15.setRadius(25);
-        adminButton15.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                adminButton15ActionPerformed(evt);
-            }
-        });
-
-        adminButton16.setText("Save As PDF");
-        adminButton16.setRadius(25);
-        adminButton16.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                adminButton16ActionPerformed(evt);
             }
         });
 
@@ -646,46 +602,29 @@ public class Admin_PatientReports extends javax.swing.JPanel {
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(adminButton16, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 689, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel5Layout.createSequentialGroup()
-                                    .addGap(177, 177, 177)
-                                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel18)
-                                        .addGroup(jPanel5Layout.createSequentialGroup()
-                                            .addComponent(jLabel6)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(dateChooser3, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(jLabel17)))
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(adminButton14, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 689, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel5Layout.createSequentialGroup()
+                            .addGap(177, 177, 177)
+                            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel18)
+                                .addGroup(jPanel5Layout.createSequentialGroup()
+                                    .addComponent(jLabel6)
                                     .addGap(18, 18, 18)
-                                    .addComponent(dateChooser4, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(26, 26, 26)
-                                    .addComponent(adminButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(adminButton14, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 689, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel20)
-                                    .addGroup(jPanel5Layout.createSequentialGroup()
-                                        .addComponent(jLabel21)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(dateChooserStartDate1, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jLabel22)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(dateChooserEndDate1, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(adminButton15, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(163, 163, 163)
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel7)))
+                                    .addComponent(dateChooser3, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jLabel17)))
+                            .addGap(18, 18, 18)
+                            .addComponent(dateChooser4, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(26, 26, 26)
+                            .addComponent(adminButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel5Layout.createSequentialGroup()
+                            .addGap(163, 163, 163)
+                            .addComponent(jLabel5)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jLabel7))))
                 .addGap(108, 108, 108))
         );
         jPanel5Layout.setVerticalGroup(
@@ -708,21 +647,7 @@ public class Admin_PatientReports extends javax.swing.JPanel {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(adminButton14, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(91, 91, 91)
-                .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jLabel21, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(dateChooserStartDate1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(dateChooserEndDate1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(adminButton15, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(39, 39, 39)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(adminButton16, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addContainerGap(497, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout auditLogsLayout = new javax.swing.GroupLayout(auditLogs);
@@ -738,6 +663,438 @@ public class Admin_PatientReports extends javax.swing.JPanel {
             .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
+        bestSellingProduct.setBackground(new java.awt.Color(255, 255, 255));
+
+        bestPanel2.setBackground(new java.awt.Color(255, 255, 255));
+
+        bestProductsTable3.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "BARCODE", "PRODUCT_NAME", "AMOUNT SOLD", "TOTAL AMOUNT"
+            }
+        ));
+        jScrollPane7.setViewportView(bestProductsTable3);
+
+        jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel29.setText("From");
+        jLabel29.setToolTipText("");
+
+        jLabel30.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel30.setText("To");
+        jLabel30.setToolTipText("");
+
+        jLabel31.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLabel31.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel31.setText("Best Products Report");
+
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/back.png"))); // NOI18N
+        jLabel9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel9MouseClicked(evt);
+            }
+        });
+
+        adminButton22.setText("Generate");
+        adminButton22.setRadius(25);
+        adminButton22.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                adminButton22ActionPerformed(evt);
+            }
+        });
+
+        adminButton23.setText("Save As PDF");
+        adminButton23.setRadius(25);
+        adminButton23.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                adminButton23ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout bestPanel2Layout = new javax.swing.GroupLayout(bestPanel2);
+        bestPanel2.setLayout(bestPanel2Layout);
+        bestPanel2Layout.setHorizontalGroup(
+            bestPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(bestPanel2Layout.createSequentialGroup()
+                .addContainerGap(106, Short.MAX_VALUE)
+                .addGroup(bestPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(adminButton23, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(bestPanel2Layout.createSequentialGroup()
+                        .addGroup(bestPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel29))
+                        .addGap(15, 15, 15)
+                        .addGroup(bestPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel31)
+                            .addGroup(bestPanel2Layout.createSequentialGroup()
+                                .addComponent(dateChooserStartDate, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel30)
+                                .addGap(15, 15, 15)
+                                .addComponent(dateChooserEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(adminButton22, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 695, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 111, Short.MAX_VALUE))
+        );
+        bestPanel2Layout.setVerticalGroup(
+            bestPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(bestPanel2Layout.createSequentialGroup()
+                .addGap(50, 50, 50)
+                .addGroup(bestPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel9)
+                    .addComponent(jLabel31))
+                .addGap(20, 20, 20)
+                .addGroup(bestPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel29, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(dateChooserStartDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel30, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(adminButton22, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+                    .addComponent(dateChooserEndDate, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(31, 31, 31)
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(adminButton23, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(68, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout bestSellingProductLayout = new javax.swing.GroupLayout(bestSellingProduct);
+        bestSellingProduct.setLayout(bestSellingProductLayout);
+        bestSellingProductLayout.setHorizontalGroup(
+            bestSellingProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 939, Short.MAX_VALUE)
+            .addGroup(bestSellingProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(bestPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        bestSellingProductLayout.setVerticalGroup(
+            bestSellingProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 461, Short.MAX_VALUE)
+            .addGroup(bestSellingProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(bestPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        inventoryPanel.setBackground(new java.awt.Color(255, 255, 255));
+
+        expiringBtn.setText("Expiring Products");
+        expiringBtn.setRadius(50);
+        expiringBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                expiringBtnActionPerformed(evt);
+            }
+        });
+
+        bestsellingBtn.setText("Best Selling Product");
+        bestsellingBtn.setRadius(50);
+        bestsellingBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bestsellingBtnActionPerformed(evt);
+            }
+        });
+
+        criticalStocksBtn.setText("Critical Stocks");
+        criticalStocksBtn.setRadius(50);
+        criticalStocksBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                criticalStocksBtnActionPerformed(evt);
+            }
+        });
+
+        adminButton24.setText("Product List");
+        adminButton24.setRadius(50);
+        adminButton24.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                adminButton24ActionPerformed(evt);
+            }
+        });
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLabel8.setText("Inventory Reports");
+
+        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/back.png"))); // NOI18N
+        jLabel14.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel14MouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout inventoryPanelLayout = new javax.swing.GroupLayout(inventoryPanel);
+        inventoryPanel.setLayout(inventoryPanelLayout);
+        inventoryPanelLayout.setHorizontalGroup(
+            inventoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(inventoryPanelLayout.createSequentialGroup()
+                .addGroup(inventoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(inventoryPanelLayout.createSequentialGroup()
+                        .addGap(345, 345, 345)
+                        .addGroup(inventoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(adminButton24, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(expiringBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(criticalStocksBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(bestsellingBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(inventoryPanelLayout.createSequentialGroup()
+                        .addGap(104, 104, 104)
+                        .addComponent(jLabel14)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel8)))
+                .addContainerGap(371, Short.MAX_VALUE))
+        );
+        inventoryPanelLayout.setVerticalGroup(
+            inventoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(inventoryPanelLayout.createSequentialGroup()
+                .addGap(65, 65, 65)
+                .addGroup(inventoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel14)
+                    .addComponent(jLabel8))
+                .addGap(57, 57, 57)
+                .addComponent(criticalStocksBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(expiringBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(bestsellingBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(adminButton24, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(619, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout inventoryReportsLayout = new javax.swing.GroupLayout(inventoryReports);
+        inventoryReports.setLayout(inventoryReportsLayout);
+        inventoryReportsLayout.setHorizontalGroup(
+            inventoryReportsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(inventoryPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        inventoryReportsLayout.setVerticalGroup(
+            inventoryReportsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(inventoryPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        criticalPanel.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/back.png"))); // NOI18N
+        jLabel15.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel15MouseClicked(evt);
+            }
+        });
+
+        jLabel19.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLabel19.setText("Critical Products");
+
+        criticalTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "BARCODE", "PRODUCT_NAME", "STOCKS", "CRITICAL_LEVEL"
+            }
+        ));
+        jScrollPane6.setViewportView(criticalTable);
+
+        adminButton17.setText("Save As PDF");
+        adminButton17.setRadius(25);
+        adminButton17.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                adminButton17ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout criticalPanelLayout = new javax.swing.GroupLayout(criticalPanel);
+        criticalPanel.setLayout(criticalPanelLayout);
+        criticalPanelLayout.setHorizontalGroup(
+            criticalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(criticalPanelLayout.createSequentialGroup()
+                .addGap(102, 102, 102)
+                .addComponent(jLabel15)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel19)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, criticalPanelLayout.createSequentialGroup()
+                .addContainerGap(153, Short.MAX_VALUE)
+                .addGroup(criticalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(adminButton17, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 749, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(75, 75, 75))
+        );
+        criticalPanelLayout.setVerticalGroup(
+            criticalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(criticalPanelLayout.createSequentialGroup()
+                .addGap(71, 71, 71)
+                .addGroup(criticalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel19)
+                    .addComponent(jLabel15))
+                .addGap(48, 48, 48)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(adminButton17, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(481, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout criticalReportsLayout = new javax.swing.GroupLayout(criticalReports);
+        criticalReports.setLayout(criticalReportsLayout);
+        criticalReportsLayout.setHorizontalGroup(
+            criticalReportsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(criticalPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        criticalReportsLayout.setVerticalGroup(
+            criticalReportsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(criticalPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        criticalPanel1.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel23.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/back.png"))); // NOI18N
+        jLabel23.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel23MouseClicked(evt);
+            }
+        });
+
+        jLabel25.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLabel25.setText("Expiring Products");
+
+        expirationTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "BARCODE", "PRODUCT_NAME", "STOCKS", "EXPIRATION_DATE"
+            }
+        ));
+        jScrollPane8.setViewportView(expirationTable);
+
+        adminButton19.setText("Save As PDF");
+        adminButton19.setRadius(25);
+        adminButton19.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                adminButton19ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout criticalPanel1Layout = new javax.swing.GroupLayout(criticalPanel1);
+        criticalPanel1.setLayout(criticalPanel1Layout);
+        criticalPanel1Layout.setHorizontalGroup(
+            criticalPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(criticalPanel1Layout.createSequentialGroup()
+                .addGap(102, 102, 102)
+                .addComponent(jLabel23)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel25)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, criticalPanel1Layout.createSequentialGroup()
+                .addContainerGap(153, Short.MAX_VALUE)
+                .addGroup(criticalPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(adminButton19, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 749, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(75, 75, 75))
+        );
+        criticalPanel1Layout.setVerticalGroup(
+            criticalPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(criticalPanel1Layout.createSequentialGroup()
+                .addGap(71, 71, 71)
+                .addGroup(criticalPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel25)
+                    .addComponent(jLabel23))
+                .addGap(48, 48, 48)
+                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(adminButton19, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(481, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout expiringProductsLayout = new javax.swing.GroupLayout(expiringProducts);
+        expiringProducts.setLayout(expiringProductsLayout);
+        expiringProductsLayout.setHorizontalGroup(
+            expiringProductsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(criticalPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        expiringProductsLayout.setVerticalGroup(
+            expiringProductsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(criticalPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        criticalPanel2.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel32.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/back.png"))); // NOI18N
+        jLabel32.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel32MouseClicked(evt);
+            }
+        });
+
+        jLabel33.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLabel33.setText("Product List");
+
+        productTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane9.setViewportView(productTable);
+
+        adminButton25.setText("Save As PDF");
+        adminButton25.setRadius(25);
+        adminButton25.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                adminButton25ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout criticalPanel2Layout = new javax.swing.GroupLayout(criticalPanel2);
+        criticalPanel2.setLayout(criticalPanel2Layout);
+        criticalPanel2Layout.setHorizontalGroup(
+            criticalPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(criticalPanel2Layout.createSequentialGroup()
+                .addGap(102, 102, 102)
+                .addComponent(jLabel32)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel33)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, criticalPanel2Layout.createSequentialGroup()
+                .addContainerGap(153, Short.MAX_VALUE)
+                .addGroup(criticalPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(adminButton25, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 749, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(75, 75, 75))
+        );
+        criticalPanel2Layout.setVerticalGroup(
+            criticalPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(criticalPanel2Layout.createSequentialGroup()
+                .addGap(71, 71, 71)
+                .addGroup(criticalPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel33)
+                    .addComponent(jLabel32))
+                .addGap(48, 48, 48)
+                .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(adminButton25, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(481, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout productLlistLayout = new javax.swing.GroupLayout(productLlist);
+        productLlist.setLayout(productLlistLayout);
+        productLlistLayout.setHorizontalGroup(
+            productLlistLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(criticalPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        productLlistLayout.setVerticalGroup(
+            productLlistLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(criticalPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
         setLayout(new java.awt.BorderLayout());
 
         tryPanel.setBackground(new java.awt.Color(255, 255, 255));
@@ -747,14 +1104,6 @@ public class Admin_PatientReports extends javax.swing.JPanel {
         adminButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 adminButton1ActionPerformed(evt);
-            }
-        });
-
-        adminButton2.setText("Best Selling Product");
-        adminButton2.setRadius(50);
-        adminButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                adminButton2ActionPerformed(evt);
             }
         });
 
@@ -774,31 +1123,43 @@ public class Admin_PatientReports extends javax.swing.JPanel {
             }
         });
 
+        adminButton18.setText("Inventory Reports");
+        adminButton18.setRadius(50);
+        adminButton18.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                adminButton18ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout tryPanelLayout = new javax.swing.GroupLayout(tryPanel);
         tryPanel.setLayout(tryPanelLayout);
         tryPanelLayout.setHorizontalGroup(
             tryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(tryPanelLayout.createSequentialGroup()
-                .addContainerGap(350, Short.MAX_VALUE)
+                .addGap(182, 182, 182)
                 .addGroup(tryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(adminButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(adminButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE)
-                    .addComponent(adminButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(adminButton12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(350, Short.MAX_VALUE))
+                    .addGroup(tryPanelLayout.createSequentialGroup()
+                        .addComponent(adminButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
+                        .addComponent(adminButton18, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(tryPanelLayout.createSequentialGroup()
+                        .addComponent(adminButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(adminButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(191, Short.MAX_VALUE))
         );
         tryPanelLayout.setVerticalGroup(
             tryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(tryPanelLayout.createSequentialGroup()
-                .addGap(90, 90, 90)
-                .addComponent(adminButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25)
-                .addComponent(adminButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25)
-                .addComponent(adminButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25)
-                .addComponent(adminButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(114, Short.MAX_VALUE))
+                .addGap(97, 97, 97)
+                .addGroup(tryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(adminButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(adminButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(tryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(adminButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(adminButton18, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(314, Short.MAX_VALUE))
         );
 
         sp.setViewportView(tryPanel);
@@ -815,7 +1176,21 @@ public class Admin_PatientReports extends javax.swing.JPanel {
         // Refresh the scroll pane to ensure it displays the new content
         sp.revalidate();
         sp.repaint();
-    }    private String getProductInfo(Connection conn, int productId) throws SQLException {
+    }
+
+    private void inventoryBackBtn() {
+// Remove any existing component in the scroll pane
+        sp.setViewportView(null);
+
+        // Add jPanel5 to the scroll pane
+        sp.setViewportView(inventoryReports);
+
+        // Refresh the scroll pane to ensure it displays the new content
+        sp.revalidate();
+        sp.repaint();
+    }
+
+    private String getProductInfo(Connection conn, int productId) throws SQLException {
         String productName = "";
         // Example query, replace with your actual query to retrieve product information
         String sql = "SELECT name FROM product_information WHERE product_id = ?";
@@ -864,7 +1239,9 @@ public class Admin_PatientReports extends javax.swing.JPanel {
         }
 
         return productQuantityMap;
-    }    private void clearTables() {
+    }
+
+    private void clearTables() {
         DefaultTableModel dm = (DefaultTableModel) patientReportsTable.getModel();
         while (dm.getRowCount() > 0) {
             dm.removeRow(0);
@@ -969,27 +1346,18 @@ public class Admin_PatientReports extends javax.swing.JPanel {
     }
     private void adminButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminButton1ActionPerformed
         sp.setViewportView(null);
-        
+
         sp.setViewportView(salesReport);
-        
+
         sp.revalidate();
         sp.repaint();
     }//GEN-LAST:event_adminButton1ActionPerformed
 
-    private void adminButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminButton2ActionPerformed
-        sp.setViewportView(null);
-        
-        sp.setViewportView(bestSellingProduct);
-        
-        sp.revalidate();
-        sp.repaint();
-    }//GEN-LAST:event_adminButton2ActionPerformed
-
     private void adminButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminButton3ActionPerformed
         sp.setViewportView(null);
-        
+
         sp.setViewportView(patientReport);
-        
+
         sp.revalidate();
         sp.repaint();
     }//GEN-LAST:event_adminButton3ActionPerformed
@@ -997,115 +1365,6 @@ public class Admin_PatientReports extends javax.swing.JPanel {
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
         backBtn();
     }//GEN-LAST:event_jLabel1MouseClicked
-
-    private void adminButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminButton4ActionPerformed
-        //  // Get the two dates from the date choosers
-        java.util.Date startDate = dateChooser1.getDate();
-        java.util.Date endDate = dateChooser2.getDate();
-
-        // Validate dates
-        if (startDate == null || endDate == null) {
-            JOptionPane.showMessageDialog(this, "Please select both start and end dates.");
-            return;
-        }
-        if (startDate.after(endDate)) {
-            JOptionPane.showMessageDialog(this, "The start date must not be after the end date.");
-            return;
-        }
-
-        // Set the start date's time to the beginning of the day (00:00:00)
-        Calendar startCal = Calendar.getInstance();
-        startCal.setTime(startDate);
-        startCal.set(Calendar.HOUR_OF_DAY, 0);
-        startCal.set(Calendar.MINUTE, 0);
-        startCal.set(Calendar.SECOND, 0);
-        startCal.set(Calendar.MILLISECOND, 0);
-        java.sql.Timestamp sqlStartDate = new java.sql.Timestamp(startCal.getTimeInMillis());
-
-        // Set the end date's time to the end of the day (23:59:59)
-        Calendar endCal = Calendar.getInstance();
-        endCal.setTime(endDate);
-        endCal.set(Calendar.HOUR_OF_DAY, 23);
-        endCal.set(Calendar.MINUTE, 59);
-        endCal.set(Calendar.SECOND, 59);
-        endCal.set(Calendar.MILLISECOND, 999);
-        java.sql.Timestamp sqlEndDate = new java.sql.Timestamp(endCal.getTimeInMillis());
-
-        // Database connection details
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
-
-        Connection conn = null;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
-
-        try {
-            // Establish a connection to the database
-            conn = DriverManager.getConnection(url, dbUsername, dbPassword);
-
-            // SQL query to retrieve transactions between the two dates (inclusive of the last day) and sorted by date in descending order
-            String sql = "SELECT receipt_id, transaction_date, total_amount, cashier_name FROM sales_receipts WHERE transaction_date BETWEEN ? AND ? ORDER BY transaction_date DESC";
-
-            // Prepare the statement
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setTimestamp(1, sqlStartDate);
-            pstmt.setTimestamp(2, sqlEndDate);
-
-            // Execute the query
-            rs = pstmt.executeQuery();
-
-            // Clear existing data in the table
-            DefaultTableModel model = (DefaultTableModel) transactionsTable.getModel();
-            model.setRowCount(0);
-
-            // Variable to accumulate the total amount
-            BigDecimal totalSum = BigDecimal.ZERO;
-
-            // Populate the table with the retrieved data
-            while (rs.next()) {
-                int receiptId = rs.getInt("receipt_id");
-                java.sql.Timestamp transactionDate = rs.getTimestamp("transaction_date");
-                BigDecimal totalAmount = rs.getBigDecimal("total_amount");
-                String cashierName = rs.getString("cashier_name");
-
-                // Format the total amount with peso sign
-                String formattedTotalAmount = "₱" + totalAmount.toString();
-
-                // Add the row to the table
-                model.addRow(new Object[]{receiptId, transactionDate, formattedTotalAmount, cashierName});
-
-                // Accumulate the total amount
-                totalSum = totalSum.add(totalAmount);
-            }
-
-            // Inform user if no transactions were found
-            if (model.getRowCount() == 0) {
-                JOptionPane.showMessageDialog(this, "No transactions found for the selected date range.");
-            } else {
-                // Display the sum of total_amount in the text box with peso sign
-                txtTotalSum.setText("₱" + totalSum.toString());
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (pstmt != null) {
-                    pstmt.close();
-                }
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-    }//GEN-LAST:event_adminButton4ActionPerformed
 
     private void adminButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminButton5ActionPerformed
         // Open a file chooser to select the folder
@@ -1157,11 +1416,11 @@ public class Admin_PatientReports extends javax.swing.JPanel {
                 clinicTitle.setAlignment(Element.ALIGN_CENTER);
                 document.add(clinicTitle);
 
-                Paragraph clinicAddress = new Paragraph("123 Pet Street, Animal City, Country", FontFactory.getFont(FontFactory.HELVETICA, 12));
+                Paragraph clinicAddress = new Paragraph("6418 Zapote Street Area D., Camarin Rd, Caloocan", FontFactory.getFont(FontFactory.HELVETICA, 12));
                 clinicAddress.setAlignment(Element.ALIGN_CENTER);
                 document.add(clinicAddress);
 
-                Paragraph clinicContact = new Paragraph("Contact: (123) 456-7890", FontFactory.getFont(FontFactory.HELVETICA, 12));
+                Paragraph clinicContact = new Paragraph("Contact: (0923) 235 8209", FontFactory.getFont(FontFactory.HELVETICA, 12));
                 clinicContact.setAlignment(Element.ALIGN_CENTER);
                 document.add(clinicContact);
 
@@ -1245,6 +1504,7 @@ public class Admin_PatientReports extends javax.swing.JPanel {
             }
         }
     }//GEN-LAST:event_adminButton5ActionPerformed
+
     private String getUsername(int userid) {
         String username = null;
         Connection connection = null;
@@ -1294,109 +1554,6 @@ public class Admin_PatientReports extends javax.swing.JPanel {
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
         backBtn();
     }//GEN-LAST:event_jLabel3MouseClicked
-
-    private void adminButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminButton6ActionPerformed
-        // Get the two dates from the date choosers
-        java.util.Date startDate = dateChooserStartDate.getDate();
-        java.util.Date endDate = dateChooserEndDate.getDate();
-
-        // Validate dates
-        if (startDate == null || endDate == null) {
-            JOptionPane.showMessageDialog(this, "Please select both start and end dates.");
-            return;
-        }
-        if (startDate.after(endDate)) {
-            JOptionPane.showMessageDialog(this, "The start date must not be after the end date.");
-            return;
-        }
-
-        // Set the start date's time to the beginning of the day (00:00:00)
-        Calendar startCal = Calendar.getInstance();
-        startCal.setTime(startDate);
-        startCal.set(Calendar.HOUR_OF_DAY, 0);
-        startCal.set(Calendar.MINUTE, 0);
-        startCal.set(Calendar.SECOND, 0);
-        startCal.set(Calendar.MILLISECOND, 0);
-        java.sql.Timestamp sqlStartDate = new java.sql.Timestamp(startCal.getTimeInMillis());
-
-        // Set the end date's time to the end of the day (23:59:59)
-        Calendar endCal = Calendar.getInstance();
-        endCal.setTime(endDate);
-        endCal.set(Calendar.HOUR_OF_DAY, 23);
-        endCal.set(Calendar.MINUTE, 59);
-        endCal.set(Calendar.SECOND, 59);
-        endCal.set(Calendar.MILLISECOND, 999);
-        java.sql.Timestamp sqlEndDate = new java.sql.Timestamp(endCal.getTimeInMillis());
-
-        // Database connection details
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
-
-        Connection conn = null;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
-
-        try {
-            // Establish a connection to the database
-            conn = DriverManager.getConnection(url, dbUsername, dbPassword);
-
-            // SQL query to retrieve top 3 products sold based on total amount in descending order
-            String sql = "SELECT product_id, SUM(quantity) AS total_quantity "
-            + "FROM sales_details "
-            + "WHERE receipt_id IN (SELECT receipt_id FROM sales_receipts WHERE transaction_date BETWEEN ? AND ?) "
-            + "GROUP BY product_id "
-            + "ORDER BY SUM(quantity) DESC "
-            + "LIMIT 3";
-
-            // Prepare the statement
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setTimestamp(1, sqlStartDate);
-            pstmt.setTimestamp(2, sqlEndDate);
-
-            // Execute the query
-            rs = pstmt.executeQuery();
-
-            // Clear existing table model data
-            DefaultTableModel bestProductsModel = new DefaultTableModel();
-            bestProductsTable.setModel(bestProductsModel);
-
-            // Add columns to the table model
-            bestProductsModel.addColumn("Product ID");
-            bestProductsModel.addColumn("Product Name");
-            bestProductsModel.addColumn("Total Quantity Sold");
-
-            // Display the top 3 products in the table
-            while (rs.next()) {
-                int productId = rs.getInt("product_id");
-                int totalQuantity = rs.getInt("total_quantity");
-
-                // Get product information
-                String productName = getProductInfo(conn, productId);
-
-                // Add row to the table model
-                bestProductsModel.addRow(new Object[]{productId, productName, totalQuantity});
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (pstmt != null) {
-                    pstmt.close();
-                }
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-    }//GEN-LAST:event_adminButton6ActionPerformed
 
     private void adminButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminButton7ActionPerformed
         // Get the dates for the sales report header
@@ -1514,17 +1671,27 @@ public class Admin_PatientReports extends javax.swing.JPanel {
             String pdfFileName = "patient reports (" + dateRange + ").pdf";
             String pdfFilePath = selectedFolder.getAbsolutePath() + "/" + pdfFileName;
 
+            // Replace with the actual userid
+            String username = getUsername(realUserId);
+
             // Create the PDF document
             Document document = new Document();
             try {
-                PdfWriter.getInstance(document, new FileOutputStream(pdfFilePath));
+                PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(pdfFilePath));
                 document.open();
 
-                // Add clinic title to the document
                 Paragraph clinicTitle = new Paragraph("Sahagun's Veterinary Clinic", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16));
                 clinicTitle.setAlignment(Element.ALIGN_CENTER);
                 document.add(clinicTitle);
-                document.add(Chunk.NEWLINE); // Add a blank line after the title
+
+                Paragraph clinicAddress = new Paragraph("6418 Zapote Street Area D., Camarin Rd, Caloocan", FontFactory.getFont(FontFactory.HELVETICA, 12));
+                clinicAddress.setAlignment(Element.ALIGN_CENTER);
+                document.add(clinicAddress);
+
+                Paragraph clinicContact = new Paragraph("Contact: (0923) 235 8209", FontFactory.getFont(FontFactory.HELVETICA, 12));
+                clinicContact.setAlignment(Element.ALIGN_CENTER);
+                document.add(clinicContact);
+                document.add(Chunk.NEWLINE); // Add a blank line after the contact information
 
                 // Add report date range to the document header
                 Paragraph reportHeader = new Paragraph("Patient Reports from " + dateFormat.format(startDate) + " to " + dateFormat.format(endDate), FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14));
@@ -1561,11 +1728,23 @@ public class Admin_PatientReports extends javax.swing.JPanel {
                 // Add the table to the document
                 document.add(table);
 
+                // Add footer with generation date and username
+                String generationDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date());
+                PdfContentByte cb = writer.getDirectContent();
+                cb.beginText();
+                cb.setFontAndSize(BaseFont.createFont(), 10);
+                cb.showTextAligned(Element.ALIGN_LEFT, "Generated on: " + generationDate, 30, 30, 0);
+                cb.showTextAligned(Element.ALIGN_RIGHT, "Generated by: " + username, document.right() - 30, 30, 0);
+                cb.endText();
+
                 // Close the document
                 document.close();
 
                 JOptionPane.showMessageDialog(this, "PDF saved successfully as '" + pdfFileName + "'.");
-            } catch (FileNotFoundException | DocumentException e) {
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "File not found: " + e.getMessage());
+            } catch (IOException | DocumentException e) {
                 e.printStackTrace();
                 JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
             }
@@ -1586,103 +1765,109 @@ public class Admin_PatientReports extends javax.swing.JPanel {
 
     private void adminButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminButton12ActionPerformed
         sp.setViewportView(null);
-        
+
         sp.setViewportView(auditLogs);
-        
+
         sp.revalidate();
         sp.repaint();
     }//GEN-LAST:event_adminButton12ActionPerformed
 
     private void adminButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminButton13ActionPerformed
-       // Get the two dates from the date choosers
-    java.util.Date startDate = dateChooser3.getDate();
-    java.util.Date endDate = dateChooser4.getDate();
+        // Get the two dates from the date choosers
+        java.util.Date startDate = dateChooser3.getDate();
+        java.util.Date endDate = dateChooser4.getDate();
 
-    // Validate dates
-    if (startDate == null || endDate == null) {
-        JOptionPane.showMessageDialog(this, "Please select both start and end dates.");
-        return;
-    }
-    if (startDate.after(endDate)) {
-        JOptionPane.showMessageDialog(this, "The start date must not be after the end date.");
-        return;
-    }
-
-    // Set the start date's time to the beginning of the day (00:00:00)
-    Calendar startCal = Calendar.getInstance();
-    startCal.setTime(startDate);
-    startCal.set(Calendar.HOUR_OF_DAY, 0);
-    startCal.set(Calendar.MINUTE, 0);
-    startCal.set(Calendar.SECOND, 0);
-    startCal.set(Calendar.MILLISECOND, 0);
-    java.sql.Timestamp sqlStartDate = new java.sql.Timestamp(startCal.getTimeInMillis());
-
-    // Set the end date's time to the end of the day (23:59:59)
-    Calendar endCal = Calendar.getInstance();
-    endCal.setTime(endDate);
-    endCal.set(Calendar.HOUR_OF_DAY, 23);
-    endCal.set(Calendar.MINUTE, 59);
-    endCal.set(Calendar.SECOND, 59);
-    endCal.set(Calendar.MILLISECOND, 999);
-    java.sql.Timestamp sqlEndDate = new java.sql.Timestamp(endCal.getTimeInMillis());
-
-    // Database connection details
-    String url = "jdbc:mysql://127.0.0.1:3306/database";
-    String dbUsername = "root";
-    String dbPassword = "admin";
-
-    Connection conn = null;
-    PreparedStatement pstmt = null;
-    ResultSet rs = null;
-
-    try {
-        // Establish a connection to the database
-        conn = DriverManager.getConnection(url, dbUsername, dbPassword);
-
-        // SQL query to retrieve audit logs between the two dates (inclusive of the last day) and sorted by datetime in descending order
-        String sql = "SELECT log_id, userid, event, action_type, datetime FROM audit_logs WHERE datetime BETWEEN ? AND ? ORDER BY datetime DESC";
-
-        // Prepare the statement
-        pstmt = conn.prepareStatement(sql);
-        pstmt.setTimestamp(1, sqlStartDate);
-        pstmt.setTimestamp(2, sqlEndDate);
-
-        // Execute the query
-        rs = pstmt.executeQuery();
-
-        // Clear existing data in the table
-        DefaultTableModel model = (DefaultTableModel) transactionsTable1.getModel();
-        model.setRowCount(0);
-
-        // Populate the table with the retrieved data
-        while (rs.next()) {
-            int logId = rs.getInt("log_id");
-            String userId = rs.getString("userid");
-            String event = rs.getString("event");
-            String actionType = rs.getString("action_type");
-            java.sql.Timestamp dateTime = rs.getTimestamp("datetime");
-
-            // Add the row to the table
-            model.addRow(new Object[]{logId, userId, event, actionType, dateTime});
+        // Validate dates
+        if (startDate == null || endDate == null) {
+            JOptionPane.showMessageDialog(this, "Please select both start and end dates.");
+            return;
+        }
+        if (startDate.after(endDate)) {
+            JOptionPane.showMessageDialog(this, "The start date must not be after the end date.");
+            return;
         }
 
-        // Inform user if no audit logs were found
-        if (model.getRowCount() == 0) {
-            JOptionPane.showMessageDialog(this, "No audit logs found for the selected date range.");
-        }
+        // Set the start date's time to the beginning of the day (00:00:00)
+        Calendar startCal = Calendar.getInstance();
+        startCal.setTime(startDate);
+        startCal.set(Calendar.HOUR_OF_DAY, 0);
+        startCal.set(Calendar.MINUTE, 0);
+        startCal.set(Calendar.SECOND, 0);
+        startCal.set(Calendar.MILLISECOND, 0);
+        java.sql.Timestamp sqlStartDate = new java.sql.Timestamp(startCal.getTimeInMillis());
 
-    } catch (SQLException e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
-    } finally {
+        // Set the end date's time to the end of the day (23:59:59)
+        Calendar endCal = Calendar.getInstance();
+        endCal.setTime(endDate);
+        endCal.set(Calendar.HOUR_OF_DAY, 23);
+        endCal.set(Calendar.MINUTE, 59);
+        endCal.set(Calendar.SECOND, 59);
+        endCal.set(Calendar.MILLISECOND, 999);
+        java.sql.Timestamp sqlEndDate = new java.sql.Timestamp(endCal.getTimeInMillis());
+
+        // Database connection details
+        String url = "jdbc:mysql://127.0.0.1:3306/database";
+        String dbUsername = "root";
+        String dbPassword = "admin";
+
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
         try {
-            if (rs != null) rs.close();
-            if (pstmt != null) pstmt.close();
-            if (conn != null) conn.close();
+            // Establish a connection to the database
+            conn = DriverManager.getConnection(url, dbUsername, dbPassword);
+
+            // SQL query to retrieve audit logs between the two dates (inclusive of the last day) and sorted by datetime in descending order
+            String sql = "SELECT log_id, userid, event, action_type, datetime FROM audit_logs WHERE datetime BETWEEN ? AND ? ORDER BY datetime DESC";
+
+            // Prepare the statement
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setTimestamp(1, sqlStartDate);
+            pstmt.setTimestamp(2, sqlEndDate);
+
+            // Execute the query
+            rs = pstmt.executeQuery();
+
+            // Clear existing data in the table
+            DefaultTableModel model = (DefaultTableModel) transactionsTable1.getModel();
+            model.setRowCount(0);
+
+            // Populate the table with the retrieved data
+            while (rs.next()) {
+                int logId = rs.getInt("log_id");
+                String userId = rs.getString("userid");
+                String event = rs.getString("event");
+                String actionType = rs.getString("action_type");
+                java.sql.Timestamp dateTime = rs.getTimestamp("datetime");
+
+                // Add the row to the table
+                model.addRow(new Object[]{logId, userId, event, actionType, dateTime});
+            }
+
+            // Inform user if no audit logs were found
+            if (model.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(this, "No audit logs found for the selected date range.");
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
-    }
     }//GEN-LAST:event_adminButton13ActionPerformed
 
     private void adminButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminButton14ActionPerformed
@@ -1718,17 +1903,33 @@ public class Admin_PatientReports extends javax.swing.JPanel {
             String dateRange = dateFormat.format(startDate) + " to " + dateFormat.format(endDate);
 
             // Define the PDF file path with formatted date range
-            String pdfFileName = "sales report (" + dateRange + ").pdf";
+            String pdfFileName = "audit log (" + dateRange + ").pdf";
             String pdfFilePath = selectedFolder.getAbsolutePath() + "/" + pdfFileName;
+
+            // Replace with the actual userid
+            String username = getUsername(realUserId);
 
             // Create the PDF document
             Document document = new Document();
             try {
-                PdfWriter.getInstance(document, new FileOutputStream(pdfFilePath));
+                PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(pdfFilePath));
                 document.open();
 
+                // Clinic information
+                Paragraph clinicTitle = new Paragraph("Sahagun's Veterinary Clinic", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16));
+                clinicTitle.setAlignment(Element.ALIGN_CENTER);
+                document.add(clinicTitle);
+
+                Paragraph clinicAddress = new Paragraph("6418 Zapote Street Area D., Camarin Rd, Caloocan", FontFactory.getFont(FontFactory.HELVETICA, 12));
+                clinicAddress.setAlignment(Element.ALIGN_CENTER);
+                document.add(clinicAddress);
+
+                Paragraph clinicContact = new Paragraph("Contact: (0923) 235 8209", FontFactory.getFont(FontFactory.HELVETICA, 12));
+                clinicContact.setAlignment(Element.ALIGN_CENTER);
+                document.add(clinicContact);
+
                 // Add sales report date range to the document header
-                Paragraph reportHeader = new Paragraph("Audit Logs from " + dateFormat.format(startDate) + " to " + dateFormat.format(endDate));
+                Paragraph reportHeader = new Paragraph("Audit Logs from " + dateFormat.format(startDate) + " to " + dateFormat.format(endDate), FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14));
                 reportHeader.setAlignment(Element.ALIGN_CENTER);
                 document.add(reportHeader);
                 document.add(Chunk.NEWLINE); // Add a blank line after the header
@@ -1751,21 +1952,157 @@ public class Admin_PatientReports extends javax.swing.JPanel {
                 // Add the table to the document
                 document.add(table);
 
-                // Add the total amount
+                // Add footer with generation date and username
+                String generationDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date());
+                PdfContentByte cb = writer.getDirectContent();
+                cb.beginText();
+                cb.setFontAndSize(BaseFont.createFont(), 10);
+                cb.showTextAligned(Element.ALIGN_LEFT, "Generated on: " + generationDate, 30, 30, 0);
+                cb.showTextAligned(Element.ALIGN_RIGHT, "Generated by: " + username, document.right() - 30, 30, 0);
+                cb.endText();
 
                 // Close the document
                 document.close();
 
                 JOptionPane.showMessageDialog(this, "PDF saved successfully as '" + pdfFileName + "'.");
-            } catch (FileNotFoundException | DocumentException e) {
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "File not found: " + e.getMessage());
+            } catch (IOException | DocumentException e) {
                 e.printStackTrace();
                 JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
             }
         }
     }//GEN-LAST:event_adminButton14ActionPerformed
 
-    private void adminButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminButton15ActionPerformed
-        // Get the two dates from the date choosers
+    private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
+        backBtn();
+    }//GEN-LAST:event_jLabel5MouseClicked
+
+    private void adminButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminButton18ActionPerformed
+        sp.setViewportView(null);
+
+        sp.setViewportView(inventoryReports);
+
+        sp.revalidate();
+        sp.repaint();
+    }//GEN-LAST:event_adminButton18ActionPerformed
+
+    private void adminButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminButton4ActionPerformed
+        //  // Get the two dates from the date choosers
+        java.util.Date startDate = dateChooser1.getDate();
+        java.util.Date endDate = dateChooser2.getDate();
+
+        // Validate dates
+        if (startDate == null || endDate == null) {
+            JOptionPane.showMessageDialog(this, "Please select both start and end dates.");
+            return;
+        }
+        if (startDate.after(endDate)) {
+            JOptionPane.showMessageDialog(this, "The start date must not be after the end date.");
+            return;
+        }
+
+        // Set the start date's time to the beginning of the day (00:00:00)
+        Calendar startCal = Calendar.getInstance();
+        startCal.setTime(startDate);
+        startCal.set(Calendar.HOUR_OF_DAY, 0);
+        startCal.set(Calendar.MINUTE, 0);
+        startCal.set(Calendar.SECOND, 0);
+        startCal.set(Calendar.MILLISECOND, 0);
+        java.sql.Timestamp sqlStartDate = new java.sql.Timestamp(startCal.getTimeInMillis());
+
+        // Set the end date's time to the end of the day (23:59:59)
+        Calendar endCal = Calendar.getInstance();
+        endCal.setTime(endDate);
+        endCal.set(Calendar.HOUR_OF_DAY, 23);
+        endCal.set(Calendar.MINUTE, 59);
+        endCal.set(Calendar.SECOND, 59);
+        endCal.set(Calendar.MILLISECOND, 999);
+        java.sql.Timestamp sqlEndDate = new java.sql.Timestamp(endCal.getTimeInMillis());
+
+        // Database connection details
+        String url = "jdbc:mysql://127.0.0.1:3306/database";
+        String dbUsername = "root";
+        String dbPassword = "admin";
+
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            // Establish a connection to the database
+            conn = DriverManager.getConnection(url, dbUsername, dbPassword);
+
+            // SQL query to retrieve transactions between the two dates (inclusive of the last day) and sorted by date in descending order
+            String sql = "SELECT receipt_id, transaction_date, total_amount, cashier_name FROM sales_receipts WHERE transaction_date BETWEEN ? AND ? ORDER BY transaction_date DESC";
+
+            // Prepare the statement
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setTimestamp(1, sqlStartDate);
+            pstmt.setTimestamp(2, sqlEndDate);
+
+            // Execute the query
+            rs = pstmt.executeQuery();
+
+            // Clear existing data in the table
+            DefaultTableModel model = (DefaultTableModel) transactionsTable.getModel();
+            model.setRowCount(0);
+
+            // Variable to accumulate the total amount
+            BigDecimal totalSum = BigDecimal.ZERO;
+
+            // Populate the table with the retrieved data
+            while (rs.next()) {
+                int receiptId = rs.getInt("receipt_id");
+                java.sql.Timestamp transactionDate = rs.getTimestamp("transaction_date");
+                BigDecimal totalAmount = rs.getBigDecimal("total_amount");
+                String cashierName = rs.getString("cashier_name");
+
+                // Format the total amount with peso sign
+                String formattedTotalAmount = "₱" + totalAmount.toString();
+
+                // Add the row to the table
+                model.addRow(new Object[]{receiptId, transactionDate, formattedTotalAmount, cashierName});
+
+                // Accumulate the total amount
+                totalSum = totalSum.add(totalAmount);
+            }
+
+            // Inform user if no transactions were found
+            if (model.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(this, "No transactions found for the selected date range.");
+            } else {
+                // Display the sum of total_amount in the text box with peso sign
+                txtTotalSum.setText("₱" + totalSum.toString());
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_adminButton4ActionPerformed
+
+    private void jLabel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseClicked
+        inventoryBackBtn();
+    }//GEN-LAST:event_jLabel9MouseClicked
+
+    private void adminButton22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminButton22ActionPerformed
+        // Get the dates for the sales report header
         java.util.Date startDate = dateChooserStartDate.getDate();
         java.util.Date endDate = dateChooserEndDate.getDate();
 
@@ -1811,12 +2148,12 @@ public class Admin_PatientReports extends javax.swing.JPanel {
             conn = DriverManager.getConnection(url, dbUsername, dbPassword);
 
             // SQL query to retrieve top 3 products sold based on total amount in descending order
-            String sql = "SELECT product_id, SUM(quantity) AS total_quantity " +
-            "FROM sales_details " +
-            "WHERE receipt_id IN (SELECT receipt_id FROM sales_receipts WHERE transaction_date BETWEEN ? AND ?) " +
-            "GROUP BY product_id " +
-            "ORDER BY SUM(quantity) DESC " +
-            "LIMIT 3";
+            String sql = "SELECT product_id, SUM(quantity) AS total_quantity "
+                    + "FROM sales_details "
+                    + "WHERE receipt_id IN (SELECT receipt_id FROM sales_receipts WHERE transaction_date BETWEEN ? AND ?) "
+                    + "GROUP BY product_id "
+                    + "ORDER BY SUM(quantity) DESC "
+                    + "LIMIT 3";
 
             // Prepare the statement
             pstmt = conn.prepareStatement(sql);
@@ -1852,16 +2189,22 @@ public class Admin_PatientReports extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
         } finally {
             try {
-                if (rs != null) rs.close();
-                if (pstmt != null) pstmt.close();
-                if (conn != null) conn.close();
+                if (rs != null) {
+                    rs.close();
+                }
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
-    }//GEN-LAST:event_adminButton15ActionPerformed
+    }//GEN-LAST:event_adminButton22ActionPerformed
 
-    private void adminButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminButton16ActionPerformed
+    private void adminButton23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminButton23ActionPerformed
         // Get the dates for the sales report header
         java.util.Date startDate = dateChooserStartDate.getDate();
         java.util.Date endDate = dateChooserEndDate.getDate();
@@ -1892,14 +2235,31 @@ public class Admin_PatientReports extends javax.swing.JPanel {
             String pdfFileName = "best products (" + dateRange + ").pdf";
             String pdfFilePath = selectedFolder.getAbsolutePath() + "/" + pdfFileName;
 
+            // Replace with the actual userid
+            String username = getUsername(realUserId);
+
             // Create the PDF document
             Document document = new Document();
             try {
-                PdfWriter.getInstance(document, new FileOutputStream(pdfFilePath));
+                PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(pdfFilePath));
                 document.open();
 
+                // Add clinic title
+                Paragraph clinicTitle = new Paragraph("Sahagun's Veterinary Clinic", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16));
+                clinicTitle.setAlignment(Element.ALIGN_CENTER);
+                document.add(clinicTitle);
+
+                Paragraph clinicAddress = new Paragraph("6418 Zapote Street Area D., Camarin Rd, Caloocan", FontFactory.getFont(FontFactory.HELVETICA, 12));
+                clinicAddress.setAlignment(Element.ALIGN_CENTER);
+                document.add(clinicAddress);
+
+                Paragraph clinicContact = new Paragraph("Contact: (0923) 235 8209", FontFactory.getFont(FontFactory.HELVETICA, 12));
+                clinicContact.setAlignment(Element.ALIGN_CENTER);
+                document.add(clinicContact);
+                document.add(Chunk.NEWLINE); // Add a blank line after the contact information
+
                 // Add sales report date range to the document header
-                Paragraph reportHeader = new Paragraph("Top 3 Best Selling Products from " + dateFormat.format(startDate) + " to " + dateFormat.format(endDate));
+                Paragraph reportHeader = new Paragraph("Top 3 Best Selling Products from " + dateFormat.format(startDate) + " to " + dateFormat.format(endDate), FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14));
                 reportHeader.setAlignment(Element.ALIGN_CENTER);
                 document.add(reportHeader);
                 document.add(Chunk.NEWLINE); // Add a blank line after the header
@@ -1927,21 +2287,552 @@ public class Admin_PatientReports extends javax.swing.JPanel {
                 // Add the table to the document
                 document.add(table);
 
+                // Add footer with generation date and username
+                String generationDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date());
+                PdfContentByte cb = writer.getDirectContent();
+                cb.beginText();
+                cb.setFontAndSize(BaseFont.createFont(), 10);
+                cb.showTextAligned(Element.ALIGN_LEFT, "Generated on: " + generationDate, 30, 30, 0);
+                cb.showTextAligned(Element.ALIGN_RIGHT, "Generated by: " + username, document.right() - 30, 30, 0);
+                cb.endText();
+
                 // Close the document
                 document.close();
 
                 JOptionPane.showMessageDialog(this, "PDF saved successfully as '" + pdfFileName + "'.");
-            } catch (FileNotFoundException | DocumentException e) {
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "File not found: " + e.getMessage());
+            } catch (IOException | DocumentException e) {
                 e.printStackTrace();
                 JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
             }
         }
-    }//GEN-LAST:event_adminButton16ActionPerformed
+    }//GEN-LAST:event_adminButton23ActionPerformed
 
-    private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
+    private void expiringBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_expiringBtnActionPerformed
+        sp.setViewportView(null);
+
+        sp.setViewportView(expiringProducts);
+        loadexpiringProducts();
+
+        sp.revalidate();
+        sp.repaint();
+    }//GEN-LAST:event_expiringBtnActionPerformed
+
+    private void bestsellingBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bestsellingBtnActionPerformed
+        sp.setViewportView(null);
+
+        sp.setViewportView(bestSellingProduct);
+
+        sp.revalidate();
+        sp.repaint();
+    }//GEN-LAST:event_bestsellingBtnActionPerformed
+    private void criticalProduct() {
+        // Database connection details
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
+
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            // Establish a connection to the database
+            conn = DriverManager.getConnection(url, dbUsername, dbPassword);
+
+            // SQL query to fetch all data from the product_information table
+            String sql = "SELECT barcode, name, stocks, critical_level FROM product_information WHERE critical_level > stocks ORDER BY expiration_date IS NULL, expiration_date ASC";
+
+            // Prepare the statement
+            pstmt = conn.prepareStatement(sql);
+
+            // Execute the query
+            rs = pstmt.executeQuery();
+
+            // Get the table model for criticalTable and set the column names
+            DefaultTableModel criticalTableModel = (DefaultTableModel) criticalTable.getModel();
+            criticalTableModel.setColumnIdentifiers(new String[]{"Barcode", "Name", "Stocks", "Critical Level"});
+
+            // Clear the existing rows in the criticalTable
+            criticalTableModel.setRowCount(0);
+
+            // Process the result set and populate the criticalTable
+            while (rs.next()) {
+                Object[] rowData = {
+                    rs.getString("barcode"),
+                    rs.getString("name"),
+                    rs.getInt("stocks"),
+                    rs.getInt("critical_level")
+                };
+                criticalTableModel.addRow(rowData);
+            }
+
+            // Show popup if any products are on critical level
+            if (criticalTableModel.getRowCount() > 0) {
+                JOptionPane.showMessageDialog(this, "Some products are on critical level: restock soon.");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void criticalStocksBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criticalStocksBtnActionPerformed
+        sp.setViewportView(null);
+
+        sp.setViewportView(criticalReports);
+        criticalProduct();
+
+        sp.revalidate();
+        sp.repaint();
+    }//GEN-LAST:event_criticalStocksBtnActionPerformed
+    private void loadexpiringProducts() {
+        // Database connection details
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
+
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            // Establish a connection to the database
+            conn = DriverManager.getConnection(url, dbUsername, dbPassword);
+
+            // Calculate 7 days before the current date
+            Calendar calendar = Calendar.getInstance();
+            calendar.add(Calendar.DAY_OF_YEAR, -7);
+            Date sevenDaysAgo = (Date) calendar.getTime();
+
+            // Format the date as required by MySQL (YYYY-MM-DD)
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String formattedDate = dateFormat.format(sevenDaysAgo);
+
+            // SQL query to fetch products expiring 7 days before the current date
+            String sql = "SELECT barcode, name, stocks, expiration_date FROM product_information WHERE expiration_date <= ? ORDER BY expiration_date ASC";
+
+            // Prepare the statement
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, formattedDate);
+
+            // Execute the query
+            rs = pstmt.executeQuery();
+
+            // Get the table model for expirationTable and set the column names
+            DefaultTableModel expirationTableModel = (DefaultTableModel) expirationTable.getModel();
+            expirationTableModel.setColumnIdentifiers(new String[]{"Barcode", "Name", "Stocks", "Expiration Date"});
+
+            // Clear the existing rows in the expirationTable
+            expirationTableModel.setRowCount(0);
+
+            // Process the result set and populate the expirationTable
+            while (rs.next()) {
+                Object[] rowData = {
+                    rs.getString("barcode"),
+                    rs.getString("name"),
+                    rs.getInt("stocks"),
+                    rs.getDate("expiration_date")
+                };
+                expirationTableModel.addRow(rowData);
+            }
+
+            // Show message if no products are expiring within the specified period
+            if (expirationTableModel.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(this, "No products are expiring within the next 7 days.");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    private void adminButton24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminButton24ActionPerformed
+        sp.setViewportView(null);
+
+        sp.setViewportView(productLlist);
+        loadData();
+
+        sp.revalidate();
+        sp.repaint();
+    }//GEN-LAST:event_adminButton24ActionPerformed
+    private void loadData() {
+        // Database connection details
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            // Establish a connection to the database
+            conn = DriverManager.getConnection(url, dbUsername, dbPassword);
+
+            // SQL query to fetch barcode, name, price, stocks, and expiration date
+            String sql = "SELECT barcode, name, price, stocks, expiration_date FROM product_information";
+
+            // Prepare the statement
+            pstmt = conn.prepareStatement(sql);
+
+            // Execute the query
+            rs = pstmt.executeQuery();
+
+            // Get the table model for productTable and set the column names
+            DefaultTableModel productTableModel = (DefaultTableModel) productTable.getModel();
+            productTableModel.setColumnIdentifiers(new String[]{
+                "Barcode", "Name", "Price", "Stocks", "Expiration Date"
+            });
+
+            // Clear the existing rows in the productTable
+            productTableModel.setRowCount(0);
+
+            // Process the result set and populate the productTable
+            while (rs.next()) {
+                Object[] rowData = {
+                    rs.getString("barcode"),
+                    rs.getString("name"),
+                    rs.getDouble("price"),
+                    rs.getInt("stocks"),
+                    rs.getDate("expiration_date")
+                };
+                productTableModel.addRow(rowData);
+            }
+
+            // Optionally, you can set column widths or other table properties here
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error loading product data: " + e.getMessage());
+        } finally {
+            // Close resources
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    private void jLabel14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel14MouseClicked
         backBtn();
-    }//GEN-LAST:event_jLabel5MouseClicked
-    
+    }//GEN-LAST:event_jLabel14MouseClicked
+
+    private void jLabel15MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel15MouseClicked
+        inventoryBackBtn();
+    }//GEN-LAST:event_jLabel15MouseClicked
+
+    private void adminButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminButton17ActionPerformed
+        // Open a file chooser to select the folder
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int option = fileChooser.showSaveDialog(this);
+
+        if (option == JFileChooser.APPROVE_OPTION) {
+            File selectedFolder = fileChooser.getSelectedFile();
+
+            // Define the PDF file path
+            String generationDates = new SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date());
+            String pdfFileName = "critical products as of " + generationDates + ".pdf";
+            String pdfFilePath = selectedFolder.getAbsolutePath() + "/" + pdfFileName;
+
+            // Replace with the actual userid
+            String username = getUsername(realUserId);
+
+            // Create the PDF document
+            Document document = new Document();
+            try {
+                PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(pdfFilePath));
+                document.open();
+
+                // Clinic information
+                Paragraph clinicTitle = new Paragraph("Sahagun's Veterinary Clinic", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16));
+                clinicTitle.setAlignment(Element.ALIGN_CENTER);
+                document.add(clinicTitle);
+
+                Paragraph clinicAddress = new Paragraph("6418 Zapote Street Area D., Camarin Rd, Caloocan", FontFactory.getFont(FontFactory.HELVETICA, 12));
+                clinicAddress.setAlignment(Element.ALIGN_CENTER);
+                document.add(clinicAddress);
+
+                Paragraph clinicContact = new Paragraph("Contact: (0923) 235 8209", FontFactory.getFont(FontFactory.HELVETICA, 12));
+                clinicContact.setAlignment(Element.ALIGN_CENTER);
+                document.add(clinicContact);
+
+                document.add(Chunk.NEWLINE); // Add a blank line after the contact information
+
+                // Add critical products header to the document
+                Paragraph reportHeader = new Paragraph("Critical Products", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14));
+                reportHeader.setAlignment(Element.ALIGN_CENTER);
+                document.add(reportHeader);
+                document.add(Chunk.NEWLINE); // Add a blank line after the header
+
+                // Prepare the data to be written to the PDF from criticalTable
+                DefaultTableModel model = (DefaultTableModel) criticalTable.getModel();
+                int columnCount = model.getColumnCount();
+                int rowCount = model.getRowCount();
+
+                // Add the table header
+                PdfPTable table = new PdfPTable(columnCount);
+                for (int i = 0; i < columnCount; i++) {
+                    PdfPCell headerCell = new PdfPCell(new Phrase(model.getColumnName(i)));
+                    table.addCell(headerCell);
+                }
+
+                // Add the table rows
+                for (int i = 0; i < rowCount; i++) {
+                    for (int j = 0; j < columnCount; j++) {
+                        PdfPCell cell = new PdfPCell(new Phrase(model.getValueAt(i, j).toString()));
+                        table.addCell(cell);
+                    }
+                }
+
+                // Add the table to the document
+                document.add(table);
+
+                // Add footer with generation date and username
+                String generationDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date());
+                PdfContentByte cb = writer.getDirectContent();
+                cb.beginText();
+                cb.setFontAndSize(BaseFont.createFont(), 10);
+                cb.showTextAligned(Element.ALIGN_LEFT, "Generated on: " + generationDate, 30, 30, 0);
+                cb.showTextAligned(Element.ALIGN_RIGHT, "Generated by: " + username, document.right() - 30, 30, 0);
+                cb.endText();
+
+                // Close the document
+                document.close();
+
+                JOptionPane.showMessageDialog(this, "PDF saved successfully as '" + pdfFileName + "'.");
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "File not found: " + e.getMessage());
+            } catch (IOException | DocumentException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+            }
+        }
+    }//GEN-LAST:event_adminButton17ActionPerformed
+
+    private void jLabel23MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel23MouseClicked
+        inventoryBackBtn();
+    }//GEN-LAST:event_jLabel23MouseClicked
+
+    private void adminButton19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminButton19ActionPerformed
+        // Open a file chooser to select the folder
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int option = fileChooser.showSaveDialog(this);
+
+        if (option == JFileChooser.APPROVE_OPTION) {
+            File selectedFolder = fileChooser.getSelectedFile();
+
+            // Define the PDF file path
+            String generationDates = new SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date());
+            String pdfFileName = "expiring products as of " + generationDates + ".pdf";
+            String pdfFilePath = selectedFolder.getAbsolutePath() + "/" + pdfFileName;
+
+            // Replace with the actual userid
+            String username = getUsername(realUserId);
+
+            // Create the PDF document
+            Document document = new Document();
+            try {
+                PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(pdfFilePath));
+                document.open();
+
+                // Clinic information
+                Paragraph clinicTitle = new Paragraph("Sahagun's Veterinary Clinic", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16));
+                clinicTitle.setAlignment(Element.ALIGN_CENTER);
+                document.add(clinicTitle);
+
+                Paragraph clinicAddress = new Paragraph("6418 Zapote Street Area D., Camarin Rd, Caloocan", FontFactory.getFont(FontFactory.HELVETICA, 12));
+                clinicAddress.setAlignment(Element.ALIGN_CENTER);
+                document.add(clinicAddress);
+
+                Paragraph clinicContact = new Paragraph("Contact: (0923) 235 8209", FontFactory.getFont(FontFactory.HELVETICA, 12));
+                clinicContact.setAlignment(Element.ALIGN_CENTER);
+                document.add(clinicContact);
+
+                document.add(Chunk.NEWLINE); // Add a blank line after the contact information
+
+                // Add expiring products header to the document
+                Paragraph reportHeader = new Paragraph("Expiring Products", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14));
+                reportHeader.setAlignment(Element.ALIGN_CENTER);
+                document.add(reportHeader);
+                document.add(Chunk.NEWLINE); // Add a blank line after the header
+
+                // Prepare the data to be written to the PDF from expirationTable
+                DefaultTableModel model = (DefaultTableModel) expirationTable.getModel();
+                int columnCount = model.getColumnCount();
+                int rowCount = model.getRowCount();
+
+                // Add the table header
+                PdfPTable table = new PdfPTable(columnCount);
+                for (int i = 0; i < columnCount; i++) {
+                    PdfPCell headerCell = new PdfPCell(new Phrase(model.getColumnName(i)));
+                    table.addCell(headerCell);
+                }
+
+                // Add the table rows
+                for (int i = 0; i < rowCount; i++) {
+                    for (int j = 0; j < columnCount; j++) {
+                        PdfPCell cell = new PdfPCell(new Phrase(model.getValueAt(i, j).toString()));
+                        table.addCell(cell);
+                    }
+                }
+
+                // Add the table to the document
+                document.add(table);
+
+                // Add footer with generation date and username
+                String generationDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date());
+                PdfContentByte cb = writer.getDirectContent();
+                cb.beginText();
+                cb.setFontAndSize(BaseFont.createFont(), 10);
+                cb.showTextAligned(Element.ALIGN_LEFT, "Generated on: " + generationDate, 30, 30, 0);
+                cb.showTextAligned(Element.ALIGN_RIGHT, "Generated by: " + username, document.right() - 30, 30, 0);
+                cb.endText();
+
+                // Close the document
+                document.close();
+
+                JOptionPane.showMessageDialog(this, "PDF saved successfully as '" + pdfFileName + "'.");
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "File not found: " + e.getMessage());
+            } catch (IOException | DocumentException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+            }
+        }
+    }//GEN-LAST:event_adminButton19ActionPerformed
+
+    private void jLabel32MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel32MouseClicked
+        inventoryBackBtn();
+    }//GEN-LAST:event_jLabel32MouseClicked
+
+    private void adminButton25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminButton25ActionPerformed
+        // Open a file chooser to select the folder
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int option = fileChooser.showSaveDialog(this);
+
+        if (option == JFileChooser.APPROVE_OPTION) {
+            File selectedFolder = fileChooser.getSelectedFile();
+
+            // Define the PDF file path
+            String generationDates = new SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date());
+            String pdfFileName = "product_list as of " + generationDates + ".pdf";
+            String pdfFilePath = selectedFolder.getAbsolutePath() + "/" + pdfFileName;
+
+            // Replace with the actual userid
+            String username = getUsername(realUserId);
+
+            // Create the PDF document
+            Document document = new Document();
+            try {
+                PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(pdfFilePath));
+                document.open();
+
+                // Clinic information
+                Paragraph clinicTitle = new Paragraph("Sahagun's Veterinary Clinic", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16));
+                clinicTitle.setAlignment(Element.ALIGN_CENTER);
+                document.add(clinicTitle);
+
+                Paragraph clinicAddress = new Paragraph("6418 Zapote Street Area D., Camarin Rd, Caloocan", FontFactory.getFont(FontFactory.HELVETICA, 12));
+                clinicAddress.setAlignment(Element.ALIGN_CENTER);
+                document.add(clinicAddress);
+
+                Paragraph clinicContact = new Paragraph("Contact: (0923) 235 8209", FontFactory.getFont(FontFactory.HELVETICA, 12));
+                clinicContact.setAlignment(Element.ALIGN_CENTER);
+                document.add(clinicContact);
+
+                document.add(Chunk.NEWLINE); // Add a blank line after the contact information
+
+                // Add product list header to the document
+                Paragraph reportHeader = new Paragraph("Product List", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14));
+                reportHeader.setAlignment(Element.ALIGN_CENTER);
+                document.add(reportHeader);
+                document.add(Chunk.NEWLINE); // Add a blank line after the header
+
+                // Prepare the data to be written to the PDF from productTable
+                DefaultTableModel model = (DefaultTableModel) productTable.getModel();
+                int columnCount = model.getColumnCount();
+                int rowCount = model.getRowCount();
+
+                // Add the table header
+                PdfPTable table = new PdfPTable(columnCount);
+                for (int i = 0; i < columnCount; i++) {
+                    PdfPCell headerCell = new PdfPCell(new Phrase(model.getColumnName(i)));
+                    table.addCell(headerCell);
+                }
+
+                // Add the table rows
+                for (int i = 0; i < rowCount; i++) {
+                    for (int j = 0; j < columnCount; j++) {
+                        Object value = model.getValueAt(i, j);
+                        String cellValue = (value != null) ? value.toString() : "";
+                        PdfPCell cell = new PdfPCell(new Phrase(cellValue));
+                        table.addCell(cell);
+                    }
+                }
+
+                // Add the table to the document
+                document.add(table);
+
+                // Add footer with generation date and username
+                String generationDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date());
+                PdfContentByte cb = writer.getDirectContent();
+                cb.beginText();
+                cb.setFontAndSize(BaseFont.createFont(), 10);
+                cb.showTextAligned(Element.ALIGN_LEFT, "Generated on: " + generationDate, 30, 30, 0);
+                cb.showTextAligned(Element.ALIGN_RIGHT, "Generated by: " + username, document.right() - 30, 30, 0);
+                cb.endText();
+
+                // Close the document
+                document.close();
+
+                JOptionPane.showMessageDialog(this, "PDF saved successfully as '" + pdfFileName + "'.");
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "File not found: " + e.getMessage());
+            } catch (IOException | DocumentException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+            }
+        }
+    }//GEN-LAST:event_adminButton25ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private swing.AdminButton adminButton1;
@@ -1950,30 +2841,45 @@ public class Admin_PatientReports extends javax.swing.JPanel {
     private swing.AdminButton adminButton12;
     private swing.AdminButton adminButton13;
     private swing.AdminButton adminButton14;
-    private swing.AdminButton adminButton15;
-    private swing.AdminButton adminButton16;
-    private swing.AdminButton adminButton2;
+    private swing.AdminButton adminButton17;
+    private swing.AdminButton adminButton18;
+    private swing.AdminButton adminButton19;
+    private swing.AdminButton adminButton22;
+    private swing.AdminButton adminButton23;
+    private swing.AdminButton adminButton24;
+    private swing.AdminButton adminButton25;
     private swing.AdminButton adminButton3;
     private swing.AdminButton adminButton4;
     private swing.AdminButton adminButton5;
-    private swing.AdminButton adminButton6;
     private swing.AdminButton adminButton7;
     private swing.AdminButton adminButton8;
     private swing.AdminButton adminButton9;
     private javax.swing.JPanel auditLogs;
     private javax.swing.JPanel bestPanel;
+    private javax.swing.JPanel bestPanel2;
     private javax.swing.JTable bestProductsTable;
-    private javax.swing.JTable bestProductsTable1;
+    private javax.swing.JTable bestProductsTable3;
     private javax.swing.JPanel bestSellingProduct;
+    private swing.AdminButton bestsellingBtn;
+    private javax.swing.JPanel criticalPanel;
+    private javax.swing.JPanel criticalPanel1;
+    private javax.swing.JPanel criticalPanel2;
+    private javax.swing.JPanel criticalProduct;
+    private javax.swing.JPanel criticalReports;
+    private swing.AdminButton criticalStocksBtn;
+    private javax.swing.JTable criticalTable;
     private com.toedter.calendar.JDateChooser dateChooser1;
     private com.toedter.calendar.JDateChooser dateChooser2;
     private com.toedter.calendar.JDateChooser dateChooser3;
     private com.toedter.calendar.JDateChooser dateChooser4;
     private com.toedter.calendar.JDateChooser dateChooserEndDate;
-    private com.toedter.calendar.JDateChooser dateChooserEndDate1;
     private com.toedter.calendar.JDateChooser dateChooserStartDate;
-    private com.toedter.calendar.JDateChooser dateChooserStartDate1;
+    private javax.swing.JTable expirationTable;
+    private swing.AdminButton expiringBtn;
+    private javax.swing.JPanel expiringProducts;
     private com.toedter.calendar.JDateChooser fromDate;
+    private javax.swing.JPanel inventoryPanel;
+    private javax.swing.JPanel inventoryReports;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1984,28 +2890,40 @@ public class Admin_PatientReports extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JScrollPane jScrollPane8;
+    private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JPanel patientPanel;
     private javax.swing.JPanel patientReport;
     private javax.swing.JTable patientReportsTable;
+    private javax.swing.JPanel productLlist;
+    private javax.swing.JTable productTable;
     private javax.swing.JPanel salesPanel;
     private javax.swing.JPanel salesReport;
     private javax.swing.JScrollPane sp;

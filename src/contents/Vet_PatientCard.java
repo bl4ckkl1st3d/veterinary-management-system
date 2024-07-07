@@ -1,6 +1,7 @@
 
 package contents;
 
+import java.awt.geom.AffineTransform;
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
@@ -36,7 +37,9 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
@@ -66,9 +69,19 @@ public class Vet_PatientCard extends javax.swing.JFrame {
         this.owner = owner;
         this.strCodeText = strCodeText;
         initComponents();
+        scaleImage();
         setResizable(false);
         cardUpdate();
+        
     }
+    private void scaleImage(){
+    ImageIcon icon = new ImageIcon(getClass().getResource("/assets/testttt.png"));
+    Image img = icon.getImage();
+    Image imgScale = img.getScaledInstance(jLabel5.getWidth(),jLabel5.getHeight(), Image.SCALE_SMOOTH);
+    ImageIcon scaledIcon = new ImageIcon(imgScale);
+    jLabel5.setIcon(scaledIcon);
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -110,13 +123,16 @@ public class Vet_PatientCard extends javax.swing.JFrame {
         jPanel5.setAlignmentY(0.0F);
 
         sexLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        sexLabel.setForeground(new java.awt.Color(255, 255, 255));
         sexLabel.setText("jLabel1");
         sexLabel.setAlignmentX(0.5F);
 
         nameLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        nameLabel.setForeground(new java.awt.Color(255, 255, 255));
         nameLabel.setText("jLabel1");
 
         ownerLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        ownerLabel.setForeground(new java.awt.Color(255, 255, 255));
         ownerLabel.setText("jLabel1");
 
         jLabel4.setText("jLabel4");
@@ -136,56 +152,57 @@ public class Vet_PatientCard extends javax.swing.JFrame {
         });
 
         nameLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        nameLabel1.setForeground(new java.awt.Color(255, 255, 255));
         nameLabel1.setText("Name");
 
         nameLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        nameLabel2.setForeground(new java.awt.Color(255, 255, 255));
         nameLabel2.setText("Owner");
 
         nameLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        nameLabel3.setForeground(new java.awt.Color(255, 255, 255));
         nameLabel3.setText("Contact");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                        .addContainerGap(409, Short.MAX_VALUE)
+                        .addComponent(savePDF, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(89, 89, 89)
-                        .addComponent(jLabel4))
-                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                            .addContainerGap(409, Short.MAX_VALUE)
-                            .addComponent(savePDF, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel5Layout.createSequentialGroup()
-                            .addGap(56, 56, 56)
-                            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel5Layout.createSequentialGroup()
-                                    .addComponent(nameLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(sexLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel5Layout.createSequentialGroup()
-                                    .addComponent(nameLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(nameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel5Layout.createSequentialGroup()
-                                    .addComponent(nameLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(ownerLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                        .addGap(56, 56, 56)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addComponent(nameLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(sexLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addComponent(nameLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(nameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addComponent(nameLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(ownerLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(47, Short.MAX_VALUE))
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(89, 89, 89)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(15, 15, 15)
-                        .addComponent(jLabel4)))
-                .addGap(26, 26, 26)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(11, 11, 11)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(nameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(nameLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -266,57 +283,69 @@ public class Vet_PatientCard extends javax.swing.JFrame {
     }
       
 
-    public void savePanelAsPDF(JPanel panel) {
-        // Open a file chooser to select the folder
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        int option = fileChooser.showSaveDialog(null);
+public void savePanelAsPDF(JPanel panel) {
+    // Open a file chooser to select the folder
+    JFileChooser fileChooser = new JFileChooser();
+    fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+    int option = fileChooser.showSaveDialog(null);
 
-        if (option == JFileChooser.APPROVE_OPTION) {
-            File selectedFolder = fileChooser.getSelectedFile();
+    if (option == JFileChooser.APPROVE_OPTION) {
+        File selectedFolder = fileChooser.getSelectedFile();
+
+        // Define the PDF file path
+        String pdfFileName = "card_" + patientName + "_" + owner + ".pdf";
+        String pdfFilePath = selectedFolder.getAbsolutePath() + "/" + pdfFileName;
+
+        // A2 paper size in points (1 point = 1/72 inch)
+        // A2 size is 420mm x 594mm, which is 1190.551 x 1683.78 points
+        final float A2_WIDTH = 1190.551f;
+        final float A2_HEIGHT = 1683.78f;
+        
+        // Create the PDF document
+        
+
+        Document document = new Document(new Rectangle(A2_WIDTH, A2_HEIGHT));
+        try {
             
-            // Define the PDF file path
-            String pdfFileName = "card_"+patientName+"_"+owner+".pdf";
-            String pdfFilePath = selectedFolder.getAbsolutePath() + "/" + pdfFileName;
+            PdfWriter.getInstance(document, new FileOutputStream(pdfFilePath));
+            document.open();
 
-            // Create the PDF document
-            Document document = new Document();
-            try {
-                PdfWriter.getInstance(document, new FileOutputStream(pdfFilePath));
-                document.open();
+            // Create a new BufferedImage with A2 size
+            BufferedImage bufferedImage = new BufferedImage((int) A2_WIDTH, (int) A2_HEIGHT, BufferedImage.TYPE_INT_RGB);
+            Graphics2D g2 = bufferedImage.createGraphics();
+            
+            // Set background color
+            g2.setColor(Color.WHITE);
+            g2.fillRect(0, 0, (int) A2_WIDTH, (int) A2_HEIGHT);
+            
+            // Render the JPanel onto the BufferedImage without scaling
+            panel.printAll(g2);
+            g2.dispose();
 
-                // Convert the JPanel to an image
-                Dimension size = panel.getSize();
-                BufferedImage bufferedImage = new BufferedImage(size.width, size.height, BufferedImage.TYPE_INT_RGB);
-                Graphics2D g2 = bufferedImage.createGraphics();
-                panel.printAll(g2);
-                g2.dispose();
+            // Convert the BufferedImage to byte array
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ImageIO.write(bufferedImage, "png", baos);
+            byte[] imageInBytes = baos.toByteArray();
 
-                // Convert the BufferedImage to byte array
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                ImageIO.write(bufferedImage, "png", baos);
-                byte[] imageInBytes = baos.toByteArray();
+            // Add the image to the PDF
+            com.itextpdf.text.Image image = com.itextpdf.text.Image.getInstance(imageInBytes);
+            image.setAbsolutePosition(0, 0);
+            image.scaleAbsolute(A2_WIDTH, A2_HEIGHT);
+            document.add(image);
 
-                // Add the image to the PDF
-    
-                    ImageIO.write(bufferedImage, "png", baos);
-                    com.itextpdf.text.Image barcodeImage = com.itextpdf.text.Image.getInstance(baos.toByteArray());
-                com.itextpdf.text.Image image = com.itextpdf.text.Image.getInstance(imageInBytes);
-                image.setAlignment(Element.ALIGN_CENTER);
-                document.add(image);
+            // Close the document
+            document.close();
 
-                // Close the document
-                document.close();
-
-                JOptionPane.showMessageDialog(null, "PDF saved successfully as '" + pdfFileName + "'.");
-                
-            } catch (DocumentException | IOException e) {
-                e.printStackTrace();
-                JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
-            }
+            JOptionPane.showMessageDialog(null, "PDF saved successfully as '" + pdfFileName + "'.");
+            
+        } catch (DocumentException | IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
         }
     }
-    /**
+}
+
+/**
      * @param args the command line arguments
      */
     private void cardUpdate(){

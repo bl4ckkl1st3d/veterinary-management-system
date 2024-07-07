@@ -55,7 +55,11 @@ public class About extends javax.swing.JPanel {
         jLabel17.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel17.setText("Software Name: Sahagun's Veterinary Management System");
 
+        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+
         textArea.setColumns(20);
+        textArea.setLineWrap(true);
         textArea.setRows(5);
         textArea.setText("Sahagun's Veterinary Clinic was established on November 8, 2009, in Camarin, Caloocan City and was named after the founder, Dr. Philmer Sahagun. The clinic \n\noffers different services to its patients to suit their needs. From professional consultation to accurate vaccinations to ensure the integrity and aspect of patient's \n\nhealth is attended with care. This software was developed by Kenneth Jerome E. Anioay, Mark Kevin D. Baniqued and Richard Reynald B. Guevarra offers a \n\ncomprehensive tools for veterinary and database management which utilizes barcode and SMS technology to help with transactional and notification purposes. \n\nIt also contains backup and restoration features to prevent data loss and corruption. This is the version 1.0.0. of the software and operates on the \n\noperating system of Windows. Java 21 is the programming language that is used.");
         jScrollPane1.setViewportView(textArea);
@@ -69,8 +73,8 @@ public class About extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel24)
                     .addComponent(jLabel17)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 860, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(12, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 800, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(72, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -78,10 +82,10 @@ public class About extends javax.swing.JPanel {
                 .addGap(61, 61, 61)
                 .addComponent(jLabel17)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel24)
-                .addContainerGap(178, Short.MAX_VALUE))
+                .addContainerGap(108, Short.MAX_VALUE))
         );
 
         materialTabbed1.addTab("Software Specifications", jPanel1);
