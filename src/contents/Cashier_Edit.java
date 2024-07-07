@@ -23,11 +23,13 @@ public class Cashier_Edit extends javax.swing.JPanel {
     /**
      * Creates new form Cashier_Edit
      */
-    public Cashier_Edit() {
+    public Cashier_Edit(int realUserId) {
         initComponents();
+        this.realUserId = realUserId;
         sp.setHorizontalScrollBar(new ScrollBar());
         sp.setVerticalScrollBar(new ScrollBar());
     }
+    private int realUserId;
     private static final String DATABASE_NAME = "database";
     private static final String dbUsername = "root";
     private static final String dbPassword = "admin";
@@ -241,7 +243,29 @@ public class Cashier_Edit extends javax.swing.JPanel {
             .addComponent(sp, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
-private void editProdToDB() {
+public void editProductAuditLog(int userId, String name) {
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
+        try {
+            // Establish the database connection
+            Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
+
+            // Prepare the SQL query to add login audit log
+            String query = "INSERT INTO audit_logs (userid, event, action_type) VALUES (?, ?, 'edit product')";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, userId);
+            preparedStatement.setString(2, "updated product information: " + name);
+
+            // Execute the query
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            // Close the database connection
+            connection.close();
+        } catch (SQLException e) {
+            // Handle any SQL exceptions
+            e.printStackTrace();
+        }
+    }
+    private void editProdToDB() {
     // Get the information from the text fields and other components
     String barcode = txtBarcode.getText().trim();
     String name = txtName.getText().trim();
@@ -342,9 +366,7 @@ private void editProdToDB() {
     }
 
     // Database connection details
-    String url = "jdbc:mysql://127.0.0.1:3306/database";
-    String dbUsername = "root";
-    String dbPassword = "admin";
+    String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
     
     Connection conn = null;
     PreparedStatement pstmtProduct = null;
@@ -410,6 +432,7 @@ private void editProdToDB() {
         conn.commit();
         
         JOptionPane.showMessageDialog(this, "Product information updated successfully.");
+        editProductAuditLog(realUserId,name);
         
     } catch (SQLException e) {
         try {
@@ -451,10 +474,7 @@ private void editProdToDB() {
     String barcode = txtBarcode.getText().trim();
 
     // Database connection details
-    String url = "jdbc:mysql://127.0.0.1:3306/database";
-    String dbUsername = "root";
-    String dbPassword = "admin";
-
+    String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
     Connection conn = null;
     PreparedStatement pstmt = null;
     ResultSet rs = null;

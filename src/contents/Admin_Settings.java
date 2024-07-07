@@ -26,7 +26,7 @@ import javax.swing.JFileChooser;
 public class Admin_Settings extends javax.swing.JPanel {
 
     private int realUserId;
-    private int userId;
+
 
     public Admin_Settings(int realUserId) {
         initComponents();
@@ -186,16 +186,15 @@ public class Admin_Settings extends javax.swing.JPanel {
                 .addGap(73, 73, 73)
                 .addGroup(changePasswordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(toggle1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(changePasswordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(showBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(currentPwPasswordField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(showBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(currentPwPasswordField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(newPwPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(repeatNewPwPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(adminButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(200, Short.MAX_VALUE))
+                .addComponent(adminButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(184, Short.MAX_VALUE))
         );
 
         changeSecret1.setBackground(new java.awt.Color(255, 255, 255));
@@ -721,6 +720,50 @@ String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT +
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
         addPanelToScrollPane();
     }//GEN-LAST:event_jLabel5MouseClicked
+public void backupUserAuditLog(int userId, String name) {
+    String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
+    try {
+        // Establish the database connection
+        Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
+
+        // Prepare the SQL query to add login audit log with the dynamic event
+        String query = "INSERT INTO audit_logs (userid, event, action_type) VALUES (?, ?, 'backup')";
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setInt(1, userId);
+        preparedStatement.setString(2, "created backup: " + name);
+
+        // Execute the query
+        int rowsAffected = preparedStatement.executeUpdate();
+
+        // Close the database connection
+        connection.close();
+    } catch (SQLException e) {
+        // Handle any SQL exceptions
+        e.printStackTrace();
+    }
+}
+public void restoreUserAuditLog(int userId, String name) {
+    String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
+    try {
+        // Establish the database connection
+        Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
+
+        // Prepare the SQL query to add login audit log with the dynamic event
+        String query = "INSERT INTO audit_logs (userid, event, action_type) VALUES (?, ?, 'restore')";
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setInt(1, userId);
+        preparedStatement.setString(2, "restored file: " + name);
+
+        // Execute the query
+        int rowsAffected = preparedStatement.executeUpdate();
+
+        // Close the database connection
+        connection.close();
+    } catch (SQLException e) {
+        // Handle any SQL exceptions
+        e.printStackTrace();
+    }
+}
 
     private void adminButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminButton8ActionPerformed
         // Create a file chooser dialog
@@ -758,11 +801,13 @@ String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT +
 
                 // Start the process
                 Process process = processBuilder.start();
+                backupUserAuditLog(realUserId,"backup_" + date);
                 int exitCode = process.waitFor();
 
                 // Check command execution success
                 if (exitCode == 0) {
                     JOptionPane.showMessageDialog(null, "Backup created successfully at:\n" + exportPath);
+                    
                 } else {
                     JOptionPane.showMessageDialog(null, "Error creating backup. Exit code: " + exitCode);
                     printErrorStream(process);
@@ -799,6 +844,7 @@ String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT +
 
             if (restoreSuccess) {
                 JOptionPane.showMessageDialog(null, "Database restored successfully from:\n" + importPath);
+                restoreUserAuditLog(realUserId,importPath);
             } else {
                 JOptionPane.showMessageDialog(null, "Error restoring database.");
             }

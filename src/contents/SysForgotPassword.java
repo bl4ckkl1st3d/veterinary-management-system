@@ -114,6 +114,7 @@ public class SysForgotPassword extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
     private String user1 = "";
 
@@ -285,7 +286,7 @@ public class SysForgotPassword extends javax.swing.JFrame {
                 int userid = getUserIdByUsername(user1);
                 addPasswordChangeAuditLog(userid);
                 JOptionPane.showMessageDialog(null, "Password updated successfully for user: " + username, "Success", JOptionPane.INFORMATION_MESSAGE);
-                new login().setVisible(true);
+                new SystemLogin().setVisible(true);
                 setVisible(false);
             } else {
                 JOptionPane.showMessageDialog(null, "User not found or password not updated.", "Error", JOptionPane.ERROR_MESSAGE);

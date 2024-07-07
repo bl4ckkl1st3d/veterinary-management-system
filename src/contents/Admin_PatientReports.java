@@ -50,6 +50,13 @@ public class Admin_PatientReports extends javax.swing.JPanel {
         sp.setVerticalScrollBar(new ScrollBar());
         sp.setHorizontalScrollBar(new ScrollBar());
         System.out.println(realUserId);
+        setWidth();
+    }
+    private void setWidth(){
+    transactionsTable1.getColumnModel().getColumn(0).setPreferredWidth(5);
+    transactionsTable1.getColumnModel().getColumn(1).setPreferredWidth(5);
+    transactionsTable1.getColumnModel().getColumn(2).setPreferredWidth(200);
+    transactionsTable1.getColumnModel().getColumn(3).setPreferredWidth(100);
     }
     
     private static final String DATABASE_NAME = "database";
@@ -564,7 +571,7 @@ public class Admin_PatientReports extends javax.swing.JPanel {
                 {null, null, null, null}
             },
             new String [] {
-                "Reciept ID", "Transaction Date", "Total Amount", "Cashier Name"
+                "Audit ID", "User ID", "Event", "Action Type"
             }
         ));
         jScrollPane1.setViewportView(transactionsTable1);
@@ -660,9 +667,8 @@ public class Admin_PatientReports extends javax.swing.JPanel {
                                     .addComponent(dateChooser4, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(26, 26, 26)
                                     .addComponent(adminButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(adminButton14, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 689, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(adminButton14, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 689, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel20)
                                     .addGroup(jPanel5Layout.createSequentialGroup()
@@ -680,7 +686,7 @@ public class Admin_PatientReports extends javax.swing.JPanel {
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel7)))
-                .addContainerGap(108, Short.MAX_VALUE))
+                .addGap(108, 108, 108))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

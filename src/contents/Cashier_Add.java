@@ -52,8 +52,10 @@ public class Cashier_Add extends javax.swing.JPanel {
     /**
      * Creates new form Cashier_Add
      */
-    public Cashier_Add() {
+    private int realUserId;
+    public Cashier_Add(int realUserId) {
         initComponents();
+        this.realUserId = realUserId;
         sp.setVerticalScrollBar(new ScrollBar());
         sp.setHorizontalScrollBar(new ScrollBar());
     }
@@ -381,7 +383,28 @@ public class Cashier_Add extends javax.swing.JPanel {
         // Call searchSupplier only if supplierName is not empty
         searchSupplier();
     }//GEN-LAST:event_cashierButton2ActionPerformed
+public void addProductAuditLog(int userId, String name) {
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
+        try {
+            // Establish the database connection
+            Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
 
+            // Prepare the SQL query to add login audit log
+            String query = "INSERT INTO audit_logs (userid, event, action_type) VALUES (?, ?, 'add product')";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, userId);
+            preparedStatement.setString(2, "added new product: " + name);
+
+            // Execute the query
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            // Close the database connection
+            connection.close();
+        } catch (SQLException e) {
+            // Handle any SQL exceptions
+            e.printStackTrace();
+        }
+    }
     private void cashierButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cashierButton3ActionPerformed
         String barTxt = txtBarcode.getText();
         int response = JOptionPane.showConfirmDialog(null, "Do you want to print the barcode for this product?", "Confirm",
@@ -563,6 +586,7 @@ public class Cashier_Add extends javax.swing.JPanel {
 
             if (rowsAffected > 0) {
                 JOptionPane.showMessageDialog(this, "Product information added successfully.");
+                addProductAuditLog(realUserId,name);
                 clearTextFields();
             }
 

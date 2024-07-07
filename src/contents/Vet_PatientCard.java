@@ -109,17 +109,19 @@ public class Vet_PatientCard extends javax.swing.JFrame {
         jPanel5.setAlignmentX(0.0F);
         jPanel5.setAlignmentY(0.0F);
 
+        sexLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         sexLabel.setText("jLabel1");
         sexLabel.setAlignmentX(0.5F);
 
+        nameLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         nameLabel.setText("jLabel1");
 
+        ownerLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         ownerLabel.setText("jLabel1");
 
         jLabel4.setText("jLabel4");
 
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/barbar.png"))); // NOI18N
         jLabel5.setText("jLabel5");
         jLabel5.setAlignmentY(0.0F);
         jLabel5.setMaximumSize(new java.awt.Dimension(100, 100));
@@ -133,10 +135,13 @@ public class Vet_PatientCard extends javax.swing.JFrame {
             }
         });
 
+        nameLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         nameLabel1.setText("Name");
 
+        nameLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         nameLabel2.setText("Owner");
 
+        nameLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         nameLabel3.setText("Contact");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
@@ -188,7 +193,7 @@ public class Vet_PatientCard extends javax.swing.JFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(sexLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(nameLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ownerLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(nameLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))

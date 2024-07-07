@@ -202,7 +202,28 @@ public class Vet_Add extends javax.swing.JPanel {
             .addComponent(sp, javax.swing.GroupLayout.DEFAULT_SIZE, 685, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
+ public void addPatientAuditLog(int userId, String name) {
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
+        try {
+            // Establish the database connection
+            Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
 
+            // Prepare the SQL query to add login audit log with the dynamic event
+            String query = "INSERT INTO audit_logs (userid, event, action_type) VALUES (?, ?, 'add patient')";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, userId);
+            preparedStatement.setString(2, "add new patient: " + name);
+
+            // Execute the query
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            // Close the database connection
+            connection.close();
+        } catch (SQLException e) {
+            // Handle any SQL exceptions
+            e.printStackTrace();
+        }
+    }
     private void addressTxtFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addressTxtFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_addressTxtFieldActionPerformed
@@ -320,6 +341,7 @@ public class Vet_Add extends javax.swing.JPanel {
                     card.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
                 }
                 clearTextFields();
+                addPatientAuditLog(realUserId,strCodeText);
 
                 // Close the database connection
                 connection.close();

@@ -438,6 +438,72 @@ public class Vet_Edit extends javax.swing.JPanel {
             e.printStackTrace();
         }
     }
+    public void editPatientAuditLog(int userId, String name) {
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
+        try {
+            // Establish the database connection
+            Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
+
+            // Prepare the SQL query to add login audit log with the dynamic event
+            String query = "INSERT INTO audit_logs (userid, event, action_type) VALUES (?, ?, 'edit patient')";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, userId);
+            preparedStatement.setString(2, "edit patient information: " + name);
+
+            // Execute the query
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            // Close the database connection
+            connection.close();
+        } catch (SQLException e) {
+            // Handle any SQL exceptions
+            e.printStackTrace();
+        }
+    }
+    public void addMedicalInformationAuditLog(int userId, String name) {
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
+        try {
+            // Establish the database connection
+            Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
+
+            // Prepare the SQL query to add login audit log with the dynamic event
+            String query = "INSERT INTO audit_logs (userid, event, action_type) VALUES (?, ?, 'add medical')";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, userId);
+            preparedStatement.setString(2, "added medical information for: " + name);
+
+            // Execute the query
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            // Close the database connection
+            connection.close();
+        } catch (SQLException e) {
+            // Handle any SQL exceptions
+            e.printStackTrace();
+        }
+    }
+    public void addVaccineAuditLog(int userId, String name) {
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
+        try {
+            // Establish the database connection
+            Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
+
+            // Prepare the SQL query to add login audit log with the dynamic event
+            String query = "INSERT INTO audit_logs (userid, event, action_type) VALUES (?, ?, 'add vaccine')";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, userId);
+            preparedStatement.setString(2, "added vaccine information for: " + name);
+
+            // Execute the query
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            // Close the database connection
+            connection.close();
+        } catch (SQLException e) {
+            // Handle any SQL exceptions
+            e.printStackTrace();
+        }
+    }
 
     private void clearTextFields() {
         patientTxtField.setText("");
@@ -566,6 +632,7 @@ public class Vet_Edit extends javax.swing.JPanel {
 
                     if (rowsAffected > 0) {
                         JOptionPane.showMessageDialog(null, "Medical history updated successfully.");
+                        addMedicalInformationAuditLog(realUserId,patientId);
 
                         diagnosisTxtField.setText("");
                         treatmentTxtField.setText("");
@@ -735,6 +802,7 @@ public class Vet_Edit extends javax.swing.JPanel {
 
             if (rowsAffected > 0) {
                 JOptionPane.showMessageDialog(null, "Patient information updated successfully.");
+                editPatientAuditLog(realUserId,patientId);
 
             } else {
                 JOptionPane.showMessageDialog(null, "Failed to update patient information.");
@@ -892,6 +960,7 @@ public class Vet_Edit extends javax.swing.JPanel {
 
             if (rowsAffected > 0) {
                 JOptionPane.showMessageDialog(null, "Vaccine information updated successfully.");
+                addVaccineAuditLog(realUserId,patientId);
                 vaccineNameTxtField.setText("");
                 vaccinationDate.setDate(null);
                 dueDate.setDate(null);

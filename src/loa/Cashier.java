@@ -1,4 +1,3 @@
-
 package loa;
 
 import contents.About;
@@ -15,6 +14,10 @@ import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import softeng.login;
@@ -28,7 +31,6 @@ public class Cashier extends javax.swing.JFrame {
     /**
      * Creates new form Admin
      */
-
     private Cashier_Inventory inv;
     private Cashier_Add add;
     private Cashier_Edit edit;
@@ -38,53 +40,53 @@ public class Cashier extends javax.swing.JFrame {
     private About about;
     private int userId;
     private Point initialClick;
-    
+
     public Cashier(int userId) {
         this.userId = userId;
         initComponents();
-        setBackground(new Color(0,0,0,0));
+        setBackground(new Color(0, 0, 0, 0));
 
         inv = new Cashier_Inventory(userId);
-        add = new Cashier_Add();
-        edit = new Cashier_Edit();
+        add = new Cashier_Add(userId);
+        edit = new Cashier_Edit(userId);
         pos = new Cashier_PointOfSale(userId);
         settings = new Settings(userId);
         help = new Help();
         about = new About();
-        
-        
+
         cashier_Menu.initMoving(Cashier.this);
         cashier_Menu.changeWelcome(userId);
-        
+
         cashier_Menu.addEventMenuSelected(new EventMenuSelected() {
             @Override
             public void selected(int index) {
-                if(index == 0) {
+                if (index == 0) {
                     setForm(inv);
-                } else if (index == 2){
+                } else if (index == 2) {
                     setForm(add);
-                } else if (index == 4){
+                } else if (index == 4) {
                     setForm(edit);
-                } else if (index == 6){
+                } else if (index == 6) {
                     setForm(pos);
-                } else if (index == 8){
+                } else if (index == 8) {
                     setForm(settings);
-                } else if (index == 10){
-                    setForm(help);  
-                } else if (index == 12){
+                } else if (index == 10) {
+                    setForm(help);
+                } else if (index == 12) {
                     setForm(about);
-                } else if (index == 14){
+                } else if (index == 14) {
                     int response = JOptionPane.showConfirmDialog(null, "Are you sure you want to log out?", "Confirm Logout", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                     if (response == JOptionPane.YES_OPTION) {
-                    setVisible(false);
-                    new SystemLogin().setVisible(true);
+                        logoutUserAuditLog(userId);
+                        setVisible(false);
+                        new SystemLogin().setVisible(true);
                     }
                 }
             }
         });
         //set when system open start with home form
         setForm(new Cashier_Inventory(0));
-        
+
         header2.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -109,15 +111,20 @@ public class Cashier extends javax.swing.JFrame {
                 int Y = thisY + yMoved;
                 setLocation(X, Y);
             }
-        }); 
+        });
     }
-    
+
     private void setForm(JComponent com) {
         mainPanel.removeAll();
         mainPanel.add(com);
         mainPanel.repaint();
         mainPanel.revalidate();
     }
+    private static final String DATABASE_NAME = "database";
+    private static final String dbUsername = "root";
+    private static final String dbPassword = "admin";
+    private static final String MYSQL_SERVER_HOSTNAME = "DESKTOP-MVBR3DH"; // Replace with your MySQL server's hostname
+    private static final int MYSQL_SERVER_PORT = 3306;
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -220,14 +227,35 @@ public class Cashier extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+    public void logoutUserAuditLog(int userId) {
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
+        try {
+            // Establish the database connection
+            Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
 
+            // Prepare the SQL query to add login audit log with the dynamic event
+            String query = "INSERT INTO audit_logs (userid, event, action_type) VALUES (?, ?, 'logout')";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, userId);
+            preparedStatement.setString(2, "user logged out");
+
+            // Execute the query
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            // Close the database connection
+            connection.close();
+        } catch (SQLException e) {
+            // Handle any SQL exceptions
+            e.printStackTrace();
+        }
+    }
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
         dispose();
     }//GEN-LAST:event_jLabel1MouseClicked
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
         // maximize
-        if(this.getExtendedState() != Cashier.MAXIMIZED_BOTH) {
+        if (this.getExtendedState() != Cashier.MAXIMIZED_BOTH) {
             this.setExtendedState(Cashier.MAXIMIZED_BOTH);
         } else {
             this.setExtendedState(Cashier.NORMAL);
@@ -238,7 +266,6 @@ public class Cashier extends javax.swing.JFrame {
         // minimize
         this.setExtendedState(Cashier.ICONIFIED);
     }//GEN-LAST:event_jLabel3MouseClicked
-
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
