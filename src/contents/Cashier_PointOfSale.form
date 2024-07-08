@@ -46,10 +46,7 @@
                           <Group type="102" attributes="0">
                               <Component id="jScrollPane3" pref="349" max="32767" attributes="0"/>
                               <EmptySpace min="-2" pref="340" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="cashierButton3" min="-2" pref="175" max="-2" attributes="0"/>
-                                  <Component id="cashierButton4" min="-2" pref="175" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="cashierButton4" min="-2" pref="175" max="-2" attributes="0"/>
                           </Group>
                           <Component id="sp1" alignment="0" max="32767" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
@@ -99,8 +96,6 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                               <Component id="cashierButton4" min="-2" pref="50" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="cashierButton3" min="-2" pref="50" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace min="-2" pref="399" max="-2" attributes="0"/>
@@ -184,15 +179,6 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cashierButton2ActionPerformed"/>
-              </Events>
-            </Component>
-            <Component class="swing.CashierButton" name="cashierButton3">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Checkout"/>
-                <Property name="radius" type="int" value="25"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cashierButton3ActionPerformed"/>
               </Events>
             </Component>
             <Component class="swing.CashierButton" name="cashierButton4">

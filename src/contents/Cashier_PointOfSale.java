@@ -62,7 +62,6 @@ public class Cashier_PointOfSale extends javax.swing.JPanel {
         totalPriceTextField = new swing.TextField();
         cashierButton1 = new swing.CashierButton();
         cashierButton2 = new swing.CashierButton();
-        cashierButton3 = new swing.CashierButton();
         cashierButton4 = new swing.CashierButton();
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
@@ -120,14 +119,6 @@ public class Cashier_PointOfSale extends javax.swing.JPanel {
             }
         });
 
-        cashierButton3.setText("Checkout");
-        cashierButton3.setRadius(25);
-        cashierButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cashierButton3ActionPerformed(evt);
-            }
-        });
-
         cashierButton4.setText("Checkout");
         cashierButton4.setRadius(25);
         cashierButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -146,9 +137,7 @@ public class Cashier_PointOfSale extends javax.swing.JPanel {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE)
                         .addGap(340, 340, 340)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(cashierButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cashierButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(cashierButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(sp1, javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel5Layout.createSequentialGroup()
                         .addComponent(txtBarcode, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
@@ -186,9 +175,7 @@ public class Cashier_PointOfSale extends javax.swing.JPanel {
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(31, 31, 31)
-                        .addComponent(cashierButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(cashierButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(cashierButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(399, 399, 399))
         );
 
@@ -418,11 +405,6 @@ private void addToCart() {
         model.setRowCount(0);
         totalPriceTextField.setText("0.00");
     }
-
-    private void cashierButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cashierButton3ActionPerformed
-new Cashier_Reciept(0, "kevin", 0, 0, 0).setVisible(true);
-
-    }//GEN-LAST:event_cashierButton3ActionPerformed
 
     private void txtBarcodeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBarcodeKeyPressed
         String barcode = txtBarcode.getText();
@@ -716,7 +698,6 @@ new Cashier_Reciept(0, "kevin", 0, 0, 0).setVisible(true);
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private swing.CashierButton cashierButton1;
     private swing.CashierButton cashierButton2;
-    private swing.CashierButton cashierButton3;
     private swing.CashierButton cashierButton4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane3;
