@@ -297,9 +297,7 @@ public class Cashier_Add extends javax.swing.JPanel {
         String supplierName = txtSupplierName.getText();
 
         // Database connection details
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
 
         Connection conn = null;
         PreparedStatement pstmt = null;

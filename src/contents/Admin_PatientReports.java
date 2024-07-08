@@ -1249,9 +1249,7 @@ public class Admin_PatientReports extends javax.swing.JPanel {
     }
 
     private void searchFunc() {
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
 
         java.util.Date fromD = fromDate.getDate();
         java.util.Date toD = toDate.getDate();
@@ -1302,9 +1300,7 @@ public class Admin_PatientReports extends javax.swing.JPanel {
     }
 
     private void generatePatientReport() {
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
 
         try {
             // Establish the database connection
@@ -1806,9 +1802,7 @@ public class Admin_PatientReports extends javax.swing.JPanel {
         java.sql.Timestamp sqlEndDate = new java.sql.Timestamp(endCal.getTimeInMillis());
 
         // Database connection details
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
 
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -2022,9 +2016,7 @@ public class Admin_PatientReports extends javax.swing.JPanel {
         java.sql.Timestamp sqlEndDate = new java.sql.Timestamp(endCal.getTimeInMillis());
 
         // Database connection details
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
 
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -2135,9 +2127,7 @@ public class Admin_PatientReports extends javax.swing.JPanel {
         java.sql.Timestamp sqlEndDate = new java.sql.Timestamp(endCal.getTimeInMillis());
 
         // Database connection details
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
+       String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
 
         Connection conn = null;
         PreparedStatement pstmt = null;

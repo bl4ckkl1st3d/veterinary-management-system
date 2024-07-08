@@ -876,9 +876,7 @@ public class Vet_Edit extends javax.swing.JPanel {
         String contact = contactTxtField.getText();
 
         // Database connection details
-        String url = "jdbc:mysql://127.0.0.1:3306/database";
-        String dbUsername = "root";
-        String dbPassword = "admin";
+        String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
 
         try {
             // Establish the database connection

@@ -8,6 +8,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.LayoutManager;
 import java.awt.RenderingHints;
+import java.awt.event.KeyEvent;
 import javax.swing.JPanel;
 import java.sql.*;
 import javax.swing.*;
@@ -127,6 +128,11 @@ public class Vet_Search extends javax.swing.JPanel {
         jScrollPane4.setViewportView(vaccineHistoryTable);
 
         patientIdTxtField.setLabelText("Patient ID");
+        patientIdTxtField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                patientIdTxtFieldKeyPressed(evt);
+            }
+        });
 
         patientTxtField.setLabelText("Patient Name");
 
@@ -519,6 +525,16 @@ public class Vet_Search extends javax.swing.JPanel {
         patientIdTxtField.setText("");
         patientIdTxtField.requestFocus();
     }//GEN-LAST:event_vetButton3ActionPerformed
+
+    private void patientIdTxtFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_patientIdTxtFieldKeyPressed
+
+        System.out.println(evt.getKeyCode() == KeyEvent.VK_ENTER);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            searchPatient();
+        updateMedicalHistoryTable();
+        updateVaccineHistoryTable();
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_patientIdTxtFieldKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
