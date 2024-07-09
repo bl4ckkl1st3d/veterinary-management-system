@@ -646,9 +646,8 @@ public class Admin_Add extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
         }
     }//GEN-LAST:event_saveBtnActionPerformed
-
-    private void editBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnActionPerformed
-        String userIdText = useridTxtField.getText();
+private void search(){
+ String userIdText = useridTxtField.getText();
 
         if (userIdText.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Please enter a User ID.");
@@ -737,6 +736,9 @@ public class Admin_Add extends javax.swing.JPanel {
             // Handle SQL exception
             e.printStackTrace();
         }
+}
+    private void editBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnActionPerformed
+       search();
     }//GEN-LAST:event_editBtnActionPerformed
 
     private void useridTxtFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_useridTxtFieldActionPerformed

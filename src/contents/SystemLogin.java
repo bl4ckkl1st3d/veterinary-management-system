@@ -22,11 +22,27 @@ import loa.Vet;
 import softeng.ForgotPassword;
 import static softeng.login.sha256;
 
+
+import static org.mockito.Mockito.*;
+import static org.junit.Assert.*;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.*;
+import java.sql.*;
+
 /**
  *
  * @author Richard Reynald
  */
+
 public class SystemLogin extends javax.swing.JFrame {
+    
+    
+    
+    
+    
+    
     
     private boolean passwordVisible = false;
     
@@ -34,7 +50,68 @@ public class SystemLogin extends javax.swing.JFrame {
     public SystemLogin() {
         initComponents();
         passTxtField.setEchoChar('\u25cf');
+        
     }
+    @InjectMocks
+    private SystemLogin systemLogin; // This is your class under test
+
+    @Mock
+    private Connection mockConnection;
+
+    @Mock
+    private PreparedStatement mockPreparedStatement;
+
+    @Mock
+    private ResultSet mockResultSet;
+
+    @Before
+    public void setUp() throws Exception {
+        MockitoAnnotations.initMocks(this);
+        when(mockConnection.prepareStatement(any(String.class))).thenReturn(mockPreparedStatement);
+        when(mockPreparedStatement.executeQuery()).thenReturn(mockResultSet);
+    }
+
+    @Test
+    public void testSuccessfulLoginAsCashier() throws Exception {
+        // Set up mock behavior
+        when(mockResultSet.next()).thenReturn(true);
+        when(mockResultSet.getString("LOA")).thenReturn("0");
+        when(mockResultSet.getInt("userid")).thenReturn(1);
+
+        // Call the method
+        systemLogin.performLogin("cashier_user", "password1");
+
+        // Verify interactions and state
+        verify(mockPreparedStatement).setString(1, "cashier_user");
+        verify(mockPreparedStatement).setString(2, systemLogin.sha256("password1"));
+        verify(mockPreparedStatement).executeQuery();
+
+        // Add further assertions to verify the correct behavior (e.g., correct UI actions)
+        // This part can involve verifying the state changes in the UI components
+    }
+
+    @Test
+    public void testUnsuccessfulLogin() throws Exception {
+        // Set up mock behavior
+        when(mockResultSet.next()).thenReturn(false);
+
+        // Call the method
+        systemLogin.performLogin("invalidUsername", "invalidPassword");
+
+        // Verify interactions and state
+        verify(mockPreparedStatement).setString(1, "invalidUsername");
+        verify(mockPreparedStatement).setString(2, systemLogin.sha256("invalidPassword"));
+        verify(mockPreparedStatement).executeQuery();
+
+        // Add further assertions to verify the correct behavior (e.g., correct UI actions)
+        // This part can involve verifying the state changes in the UI components
+    }
+    
+    
+    
+    
+    
+    
 
     private static final String DATABASE_NAME = "database";
     private static final String DB_USERNAME = "root";
@@ -161,7 +238,7 @@ public class SystemLogin extends javax.swing.JFrame {
     }
     private int errorCount = 0;
 
-    private void performLogin(String username, String password) {
+    public void performLogin(String username, String password) {
         String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
         String hashedPass = sha256(password);
         try {
@@ -221,6 +298,9 @@ public class SystemLogin extends javax.swing.JFrame {
             System.out.println("Login failed: " + e.getMessage());
         }
     }
+    
+    
+    
     private void adminButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminButton1ActionPerformed
         String username = userTxtfield.getText();
         String password = new String(passTxtField.getPassword());
