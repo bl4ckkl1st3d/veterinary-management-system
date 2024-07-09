@@ -650,7 +650,7 @@ public class VetPageAdd extends javax.swing.JFrame {
         System.out.println("test");
     }//GEN-LAST:event_settingsMouseClicked
     
-    private void addPatient() {
+    public void addPatient() {
         
         String patientName = patientTxtField.getText();
         java.util.Date bDayVal = bDay.getDate();
@@ -740,8 +740,9 @@ public class VetPageAdd extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
         }}
     }
-    private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
-      String text = numberField.getText();
+    
+    public void checkNumber(){
+     String text = numberField.getText();
                     System.out.println(text);
                      String realNo = text.replace("+", "").replace("-","");
                       System.out.println(realNo);
@@ -753,6 +754,9 @@ public class VetPageAdd extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(null, "Invalid number: Must be in Philippine number format '+63-9#########'");
                     }
 
+    }
+    private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
+     
     }//GEN-LAST:event_addBtnActionPerformed
   private boolean isValidNumber(String text) {
         // Check if the text matches the pattern "63#########"

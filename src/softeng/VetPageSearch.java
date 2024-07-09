@@ -785,7 +785,7 @@ public class VetPageSearch extends javax.swing.JFrame {
         contactTxtField.setText("");
     }
 
-    private void searchPatient() {
+    public void searchPatient() {
         String patientIdText = patientIdTxtField.getText();
 
         if (patientIdText.isEmpty()) {

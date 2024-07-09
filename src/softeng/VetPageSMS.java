@@ -431,7 +431,7 @@ public class VetPageSMS extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
- private void retrievePatients() {
+ public void retrievePatients() {
         List<String[]> data = new ArrayList<>();
 
         try (Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword)) {
@@ -460,7 +460,7 @@ public class VetPageSMS extends javax.swing.JFrame {
         populateTable(data);
     }
 
-    private String getClientName(Connection connection, String barcode) throws SQLException {
+    public String getClientName(Connection connection, String barcode) throws SQLException {
         String query = "SELECT client_name FROM patient_information WHERE barcode = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setString(1, barcode);
@@ -473,7 +473,7 @@ public class VetPageSMS extends javax.swing.JFrame {
         return null;
     }
 
-    private String getClientContact(Connection connection, String clientName) throws SQLException {
+    public String getClientContact(Connection connection, String clientName) throws SQLException {
         String query = "SELECT contact FROM client_information WHERE client_name = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setString(1, clientName);
@@ -495,7 +495,7 @@ public class VetPageSMS extends javax.swing.JFrame {
         }
     }
 
-    private String getPatientName(Connection connection, String barcode) throws SQLException {
+    public String getPatientName(Connection connection, String barcode) throws SQLException {
         String query = "SELECT patient_name FROM patient_information WHERE barcode = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setString(1, barcode);
@@ -623,7 +623,7 @@ public class VetPageSMS extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         updatedUser();
     }//GEN-LAST:event_jButton1ActionPerformed
-    private boolean checkArduinoReady() {
+    public boolean checkArduinoReady() {
         try (OutputStream out = comPort.getOutputStream(); InputStream in = comPort.getInputStream()) {
             Thread.sleep(5000); // Wait for Arduino initialization
             String response = readResponse(in);
@@ -640,7 +640,7 @@ public class VetPageSMS extends javax.swing.JFrame {
         return false;
     }
 
-    private void sendSms(String patientName, String contactNumber, String vaccineName, String date) {
+    public void sendSms(String patientName, String contactNumber, String vaccineName, String date) {
         initializePort();
         try (OutputStream out = comPort.getOutputStream(); InputStream in = comPort.getInputStream()) {
             if (checkArduinoReady()) {

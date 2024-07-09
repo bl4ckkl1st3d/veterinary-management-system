@@ -923,9 +923,8 @@ private void addPanelToScrollPane() {
         jScrollPane3.revalidate();
         jScrollPane3.repaint();
     }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void generateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateBtnActionPerformed
-        //  // Get the two dates from the date choosers
+public void generateReport(){
+   //  // Get the two dates from the date choosers
         java.util.Date startDate = dateChooser1.getDate();
         java.util.Date endDate = dateChooser2.getDate();
 
@@ -1029,10 +1028,12 @@ private void addPanelToScrollPane() {
                 e.printStackTrace();
             }
         }
+}
+    private void generateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateBtnActionPerformed
+     generateReport();
     }//GEN-LAST:event_generateBtnActionPerformed
-
-    private void savePdfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_savePdfActionPerformed
-        // Open a file chooser to select the folder
+public void saveAsPdf(){
+// Open a file chooser to select the folder
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         int option = fileChooser.showSaveDialog(this);
@@ -1168,6 +1169,9 @@ private void addPanelToScrollPane() {
                 JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
             }
         }
+}
+    private void savePdfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_savePdfActionPerformed
+        saveAsPdf();
     }//GEN-LAST:event_savePdfActionPerformed
     private String getUsername(int userid) {
         String username = null;

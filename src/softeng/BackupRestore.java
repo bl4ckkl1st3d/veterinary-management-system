@@ -116,9 +116,8 @@ public class BackupRestore extends javax.swing.JFrame {
        new AdminPage(userId).setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_backButtonActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-     // Create a file chooser dialog
+public void saveBackup(){
+  // Create a file chooser dialog
     JFileChooser fileChooser = new JFileChooser();
     fileChooser.setDialogTitle("Choose Backup Location");
     fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY); // Only directories
@@ -172,10 +171,12 @@ public class BackupRestore extends javax.swing.JFrame {
         System.out.println("Error selecting backup location.");
     }                    
 
+}
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+   saveBackup();
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-       String databaseName = "database"; // Replace with your database name
+public void restoreBackup(){
+  String databaseName = "database"; // Replace with your database name
         String dbUsername = "root";
         String dbPassword = "admin";
       
@@ -203,6 +204,9 @@ public class BackupRestore extends javax.swing.JFrame {
         } else if (userSelection == JFileChooser.ERROR_OPTION) {
             System.out.println("Error selecting restore file.");
         }
+}
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+     restoreBackup();
     }//GEN-LAST:event_jButton2ActionPerformed
   private boolean restoreDatabase(String databaseName, String dbUsername, String dbPassword, String importPath) {
         try {

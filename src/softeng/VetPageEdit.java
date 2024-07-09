@@ -917,7 +917,7 @@ public class VetPageEdit extends javax.swing.JFrame {
         contactTxtField.setText("");
     }
 
-    private void searchPatient() {
+    public void searchPatient() {
         String patientIdText = patientIdTxtField.getText();
 
         if (patientIdText.isEmpty()) {
@@ -983,7 +983,7 @@ public class VetPageEdit extends javax.swing.JFrame {
     private void patientIdTxtFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_patientIdTxtFieldKeyReleased
         
     }//GEN-LAST:event_patientIdTxtFieldKeyReleased
-    private void updateMedical() {
+    public void updateMedical() {
         // Get the necessary information from text fields
         String diagnosis = diagnosisTxtField.getText();
         String treatment = treatmentTxtField.getText();
@@ -1168,7 +1168,7 @@ public class VetPageEdit extends javax.swing.JFrame {
             e.printStackTrace();
         }}
     }
-    private void updatePatient() {
+    public void updatePatient() {
         // Get the data from the text fields
         String patientId = patientIdTxtField.getText();
         String patientName = patientTxtField.getText();
@@ -1226,7 +1226,7 @@ public class VetPageEdit extends javax.swing.JFrame {
         updatePatient();
     }//GEN-LAST:event_updatePatientBtnActionPerformed
 
-    private void updateOwner() {
+    public void updateOwner() {
         String clientName = nameTxtField.getText();
         String address = addressTxtField.getText();
         String contact = contactTxtField.getText();
@@ -1267,7 +1267,7 @@ public class VetPageEdit extends javax.swing.JFrame {
         updateOwner();
     }//GEN-LAST:event_updateOwnerBtnActionPerformed
 
-    private void updateVaccine() {
+    public void updateVaccine() {
         // Get the text from the text fields
         String vaccineName = vaccineNameTxtField.getText();
         java.util.Date vaccinationDateValue = vaccinationDate.getDate();

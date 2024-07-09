@@ -537,7 +537,7 @@ public class StaffPageInventory extends javax.swing.JFrame {
         }        // TODO add your handling code here:
     }//GEN-LAST:event_logoutMouseReleased
 
-    private void loadAllProductInformation() {
+    public void loadAllProductInformation() {
         // Database connection details
         String url = "jdbc:mysql://" + MYSQL_SERVER_HOSTNAME + ":" + MYSQL_SERVER_PORT + "/" + DATABASE_NAME;
 
@@ -635,7 +635,7 @@ public class StaffPageInventory extends javax.swing.JFrame {
         }
     }
 
-    private void searchByBar() {
+    public void searchByBar() {
 // Get the barcode from the text field
         String barcode = barcodeTxtField.getText();
 

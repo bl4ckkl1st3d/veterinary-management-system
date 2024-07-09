@@ -883,9 +883,8 @@ public class AdminPageAdd extends javax.swing.JFrame {
             // User clicked 'No' or closed the dialog, do nothing
         }
     }//GEN-LAST:event_logoutMouseClicked
-
-    private void searchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBtnActionPerformed
-        String userIdText = useridTxtField.getText();
+public void search(){
+  String userIdText = useridTxtField.getText();
 
         if (userIdText.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Please enter a User ID.");
@@ -972,6 +971,10 @@ public class AdminPageAdd extends javax.swing.JFrame {
             // Handle SQL exception
             e.printStackTrace();
         }
+}
+    
+    private void searchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBtnActionPerformed
+      search();
     }//GEN-LAST:event_searchBtnActionPerformed
 
     private void editBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnActionPerformed
